@@ -1,0 +1,179 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: url(vec.png);
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  margin: 100px auto;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: #fff;
+  border-radius: 20px;
+  border: 2.5px solid #FA856E;
+  z-index: -1;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.input-group label {
+  font-size: 1em;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.input-group input {
+  width: calc(100% - 22px);
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 1em;
+  border: 2px solid #FA856E;
+  border-left: 7px solid #FA856E;
+}
+
+.submit-button {
+  width: 90%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #4CAF50;
+  color: #fff;
+  font-size: 1em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.submit-button:hover {
+  background: #45a049;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.forgot-password {
+  text-align: right;
+  font-size: 0.9em;
+  color: #555;
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.other-options {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.other-options button {
+  background-color: transparent;
+  border: 1px solid #FA856E;
+  color: #FA856E;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.btn1 {
+  display: flex;
+  align-items: center;
+}
+
+.other-options button:hover {
+  background-color: #FA856E;
+  color: #fff;
+}
+
+.separation-line {
+  width: 100%;
+  border-bottom: 2px solid #FA856E;
+  margin-bottom: 20px;
+  margin-top: -5px;
+}
+
+.separation-line1 {
+  width: 50%;
+  border-bottom: 2px solid #FA856E;
+  margin: 20px auto;
+}
+
+.services-text {
+  text-align: center;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    padding: 20px;
+    margin: 50px auto;
+  }
+}
+
+.quad {
+  background-color: white;
+  width: 10px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.isenha {
+  display: flex;
+  flex-direction: row;
+}
+
+.isenha img {
+  max-width: 25px;
+  max-height: 25px;
+}
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert-danger {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+.alert-danger hr {
+  border-top-color: #e4b9c0;
+}
+
+.alert-danger .alert-link {
+  color: #843534;
+}
