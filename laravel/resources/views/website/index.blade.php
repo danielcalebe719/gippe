@@ -401,6 +401,7 @@
         </div>
 
         <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+<<<<<<< HEAD
     <!-- Imagem 1 -->
     <div class='col-lg-3 portfolio-item'>
         <div class='resolve portfolio-item-overlay'>
@@ -411,6 +412,24 @@
                 <h4>Evento 1</h4>
                 <p>Descrição 1</p>
             </div>
+=======
+            
+                <div class='col-lg-3 portfolio-item ' data-index=''>
+                <div class='resolve portfolio-item-overlay'>
+                <a href='data:image/jpeg;base64' data-lightbox='portfolio' title=''>
+                <img class='img-fluid gallery-image' src='GaleriaImagens/' />"
+                </a>
+                <div class='portfolio-info'>
+               <h4>  </h4>
+                <p></p>
+                </div>
+                </div>
+                </div>
+
+                
+            
+            
+>>>>>>> 009280e92a49b9808c7847fd750a61f041082efa
         </div>
     </div>
 
