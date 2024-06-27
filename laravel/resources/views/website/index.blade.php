@@ -1,4 +1,6 @@
 
+<!-- 27/06/2024-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,7 +38,7 @@
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  var loggedIn = <?php echo json_encode($loggedIn); ?>;
+  var loggedIn = true;
 
   window.addEventListener('DOMContentLoaded', (event) => {
     if (loggedIn) {
@@ -115,7 +117,7 @@
         <li id="profile-btn" style="display: none;">
              <div style="height: 14px;"></div>
           <form action="perfil.php" method="get">
-            <input type="hidden" name="idClientes" value="<?php echo $_SESSION['idClientes']?>" >
+            <input type="hidden" name="idClientes" value="" >
           <a href="perfil.php"><button type='submit' class="nav-link btn"><i class="bi bi-person"></i> Perfil</button></a>
           </form>
         </li>
@@ -134,39 +136,40 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <?php
-if (isset($_SESSION['email'])) {
-    $email = mysqli_real_escape_string($conexao, $_SESSION['email']);
-
-    $querySelecao = "SELECT n.mensagem, n.dataEnvio
-                    FROM notificacoes n
-                    INNER JOIN notificacoesClientes nc ON n.idNotificacoes = nc.idNotificacoes
-                    WHERE nc.idClientes = (
-                        SELECT idClientes FROM clientes WHERE email = '$email'
-                    )";
-    $resultado = mysqli_query($conexao, $querySelecao);
-
-    if (mysqli_num_rows($resultado) > 0) {
-        while ($row = mysqli_fetch_assoc($resultado)) {
-            echo '<div class="card mb-3">';
-            echo '<div class="card-body">';
-            echo '<h5 class="card-title">' . $row['mensagem'] . '</h5>';
-            echo '<p class="card-text">' . $row['dataEnvio'] . '</p>';
-            echo '</div>';
-            echo '</div>';
-        }
-    } else {
-        echo '<p>Nenhuma notificação encontrada.</p>';
-    }
-} else {
-    echo '<p>Usuário não logado.</p>';
-}
-?>
-
+        <!-- Notificação 1 -->
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Mensagem de notificação 1</h5>
+            <p class="card-text">2024-06-27 10:00</p>
+          </div>
+        </div>
+        
+        <!-- Notificação 2 -->
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Mensagem de notificação 2</h5>
+            <p class="card-text">2024-06-26 14:30</p>
+          </div>
+        </div>
+        
+        <!-- Notificação 3 -->
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Mensagem de notificação 3</h5>
+            <p class="card-text">2024-06-25 09:15</p>
+          </div>
+        </div>
+        
+        <!-- Caso não haja notificações -->
+        <!-- <p>Nenhuma notificação encontrada.</p> -->
+        
+        <!-- Caso o usuário não esteja logado -->
+        <!-- <p>Usuário não logado.</p> -->
       </div>
     </div>
   </div>
 </div>
+
 
   
 
@@ -398,37 +401,59 @@ if (isset($_SESSION['email'])) {
         </div>
 
         <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-            <?php
-            require("conecta.php");
-
-            $querySelecao = "SELECT id, evento, descricao, nome_imagem, tamanho_imagem, imagemCaminho FROM galeriaImagens";
-            $resultado = mysqli_query($conexao, $querySelecao);
-
-            $imageIndex = 0;
-            while ($aquivos = mysqli_fetch_array($resultado)) {
-                $categorias = explode(',', $aquivos['descricao']);
-                $classes = array_map(function($cat) {
-                    return 'filter-' . strtolower(trim($cat));
-                }, $categorias);
-
-                $hiddenClass = ($imageIndex >= 15) ? 'hidden' : '';
-
-                echo "<div class='col-lg-3 portfolio-item $hiddenClass " . implode(' ', $classes) . "' data-index='{$imageIndex}'>";
-                echo "<div class='resolve portfolio-item-overlay'>";
-                echo "<a href='data:image/jpeg;base64," . base64_encode($aquivos['imagemCaminho']) . "' data-lightbox='portfolio' title='" . $aquivos['evento'] . "'>";
-                echo "<img class='img-fluid gallery-image' src='GaleriaImagens/" . $aquivos['imagemCaminho'] . "' />";
-                echo "</a>";
-                echo "<div class='portfolio-info'>";
-                echo "<h4>" . $aquivos['evento'] . "</h4>";
-                echo "<p>" . $aquivos['descricao'] . "</p>";
-                echo "</div>";
-                echo "</div>";
-                echo "</div>";
-
-                $imageIndex++;
-            }
-            ?>
+    <!-- Imagem 1 -->
+    <div class='col-lg-3 portfolio-item'>
+        <div class='resolve portfolio-item-overlay'>
+            <a href='data:image/jpeg;base64,[base64_image_data]' data-lightbox='portfolio' title='Evento 1'>
+                <img class='img-fluid gallery-image' src='GaleriaImagens/imagem1.jpg' />
+            </a>
+            <div class='portfolio-info'>
+                <h4>Evento 1</h4>
+                <p>Descrição 1</p>
+            </div>
         </div>
+    </div>
+
+    <!-- Imagem 2 -->
+    <div class='col-lg-3 portfolio-item'>
+        <div class='resolve portfolio-item-overlay'>
+            <a href='data:image/jpeg;base64,[base64_image_data]' data-lightbox='portfolio' title='Evento 2'>
+                <img class='img-fluid gallery-image' src='GaleriaImagens/imagem2.jpg' />
+            </a>
+            <div class='portfolio-info'>
+                <h4>Evento 2</h4>
+                <p>Descrição 2</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Imagem 3 -->
+    <div class='col-lg-3 portfolio-item'>
+        <div class='resolve portfolio-item-overlay'>
+            <a href='data:image/jpeg;base64,[base64_image_data]' data-lightbox='portfolio' title='Evento 3'>
+                <img class='img-fluid gallery-image' src='GaleriaImagens/imagem3.jpg' />
+            </a>
+            <div class='portfolio-info'>
+                <h4>Evento 3</h4>
+                <p>Descrição 3</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Imagem 4 -->
+    <div class='col-lg-3 portfolio-item hidden'>
+        <div class='resolve portfolio-item-overlay'>
+            <a href='data:image/jpeg;base64,[base64_image_data]' data-lightbox='portfolio' title='Evento 4'>
+                <img class='img-fluid gallery-image' src='GaleriaImagens/imagem4.jpg' />
+            </a>
+            <div class='portfolio-info'>
+                <h4>Evento 4</h4>
+                <p>Descrição 4</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 
         <div class="row">
             <div class="col-lg-12 d-flex justify-content-center">
@@ -636,7 +661,7 @@ if (isset($_SESSION['email'])) {
 
 
 
-
+loggedInner = true;
     // Função para alternar a exibição dos botões de perfil e notificações com base no status de login
     function toggleButtons() {
       if (loggedInner) {
