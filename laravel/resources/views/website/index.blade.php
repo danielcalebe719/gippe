@@ -398,36 +398,22 @@ if (isset($_SESSION['email'])) {
         </div>
 
         <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-            <?php
-            require("conecta.php");
+            
+                <div class='col-lg-3 portfolio-item ' data-index=''>
+                <div class='resolve portfolio-item-overlay'>
+                <a href='data:image/jpeg;base64' data-lightbox='portfolio' title=''>
+                <img class='img-fluid gallery-image' src='GaleriaImagens/' />"
+                </a>
+                <div class='portfolio-info'>
+               <h4>  </h4>
+                <p></p>
+                </div>
+                </div>
+                </div>
 
-            $querySelecao = "SELECT id, evento, descricao, nome_imagem, tamanho_imagem, imagemCaminho FROM galeriaImagens";
-            $resultado = mysqli_query($conexao, $querySelecao);
-
-            $imageIndex = 0;
-            while ($aquivos = mysqli_fetch_array($resultado)) {
-                $categorias = explode(',', $aquivos['descricao']);
-                $classes = array_map(function($cat) {
-                    return 'filter-' . strtolower(trim($cat));
-                }, $categorias);
-
-                $hiddenClass = ($imageIndex >= 15) ? 'hidden' : '';
-
-                echo "<div class='col-lg-3 portfolio-item $hiddenClass " . implode(' ', $classes) . "' data-index='{$imageIndex}'>";
-                echo "<div class='resolve portfolio-item-overlay'>";
-                echo "<a href='data:image/jpeg;base64," . base64_encode($aquivos['imagemCaminho']) . "' data-lightbox='portfolio' title='" . $aquivos['evento'] . "'>";
-                echo "<img class='img-fluid gallery-image' src='GaleriaImagens/" . $aquivos['imagemCaminho'] . "' />";
-                echo "</a>";
-                echo "<div class='portfolio-info'>";
-                echo "<h4>" . $aquivos['evento'] . "</h4>";
-                echo "<p>" . $aquivos['descricao'] . "</p>";
-                echo "</div>";
-                echo "</div>";
-                echo "</div>";
-
-                $imageIndex++;
-            }
-            ?>
+                
+            
+            
         </div>
 
         <div class="row">
