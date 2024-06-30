@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="img/logo/logo.png" rel="icon">
+    <title>Cadastro de Clientes</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/ruang-admin.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .row {
+            justify-content: center;
+            width: 100%;
+        }
+        .col.mr-2 {
+            text-align: center;
+        }
+        .card-body {
+            min-height: 100px;
+        }
+        .tudu {
+            display: flex;
+            flex-flow: column nowrap;
+            align-content: center;
+            height: 100%;
+            justify-content: center;
+        }
+        .container-fluid {
+            height: 80%;
+        }
+        .details {
+            display: none;
+        }
+    </style>
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="painel-operacional.html">
+                <div class="sidebar-brand-icon">
+                    <img src="img/logo/logo.png">
+                </div>
+            </a>
+            
+            <hr class="sidebar-divider my-0">
+            <br>
+            <div id="operacional">
+                <h5 class="text-center">Operações</h5>
+            <li class="nav-item active">
+                <a class="nav-link" href="painel-operacional.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/painel-op.png" alt="">
+                    <span class="text-gray-1000">Painel Operacional</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="clientes.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/clientes.png" alt="">
+                    <span class="text-gray-1000">Clientes</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="pedidos.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/pedidos.png" alt="">
+                    <span class="text-gray-1000">Pedidos</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="produtos.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/produtos.png" alt="">
+                    <span class="text-gray-1000">Produtos</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="MateriaPrimaEstoque.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/estoque.png" alt="">
+                    <span class="text-gray-1000">Matérias Primas</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="servicos.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/servicos.png" alt="">
+                    <span class="text-gray-1000">Serviços</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="fornecedores.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/fornecedores.png" alt="">
+                    <span class="text-gray-1000">Fornecedores</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="notificacoes.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/notificacoes.png" alt="">
+                    <span class="text-gray-1000">Notificações</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="agendamento.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/agenda.png" alt="">
+                    <span class="text-gray-1000">Agenda</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="receitasItem.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/cardapio.png" alt="">
+                    <span class="text-gray-1000">Itens de Receita</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="galeriaImagens.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/clientes.png" alt="">
+                    <span class="text-gray-1000">Galeria de Imagens</span>
+                </a>
+            </li>
+        </div>
+        <div id="financeiro">
+            <hr class="sidebar-divider my-0">
+            <h5 class="text-center">Financeiro</h5>
+            <li class="nav-item active">
+              <a class="nav-link" href="painel-financeiro.html">  
+                <img class='fas fa-fw fa-tachometer-alt'src="img/menu-img1.png" alt="">
+                <span class="text-gray-1000">Painel Financeiro</h5></span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="painel-financeiro.html#scroll-graficos">
+                <img class='fas fa-fw fa-tachometer-alt'src="img/menu-img2.png" alt="">
+                <span class="text-gray-1000">Relatórios Gráficos</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="painel-financeiro.html#scroll-apagar">
+                <img class='fas fa-fw fa-tachometer-alt'src="img/menu-img3.png" alt="">
+                <span class="text-gray-1000">À Pagar</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="painel-financeiro.html#scroll-areceber">
+                <img class='fas fa-fw fa-tachometer-alt'src="img/menu-img4.png" alt="">
+                <span class="text-gray-1000" >À Receber</span></a>
+            </li>
+        </div>
+            <hr class="sidebar-divider">
+        </ul>
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+                    <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <h5 class="text-gray-1000">Olá, Nome da Pessoa!</h5>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                                <form class="navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-1 small" placeholder="O que você está procurando?" aria-label="Search" aria-describedby="basic-addon2" style="border-color: #8ebba791">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                        <div class="topbar-divider d-none d-sm-block"></div>
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="boyimg" src="img/boy.png">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+             
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="index.html">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Sair
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+
+
+
+<!-- o que esta em cima vai mudar, usarei php para nao precisa usar isso sempre-->
+
+
+
+
+
+
+
+
+                <div class="container-fluid" id="container-wrapper">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Clientes</h1>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="./">Home</a></li>
+                            <li class="breadcrumb-item">Clientes</li>
+                        </ol>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card mb-4">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Clientes</h6>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalAdicionarCliente">Adicionar Cliente</button>
+                                </div>
+                                <div class="table-responsive p-3">
+                                    <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Nome</th>
+                                                <th>CPF</th>
+                                                <th>Data de nascimento</th>
+                                                <th>STATUS</th>
+                                                <th>Email</th>
+                                                <th>Senha</th>
+
+                                                <th>Ações</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Aqui vai o conteúdo da tabela vindo do banco de dados -->
+                                            <!-- Exemplo estático para ilustrar -->
+                                            <tr>
+                                                <td>1</td>
+                                                <td>João Silva</td>
+                                                <td>123.456.789-00</td>
+                                                <td>01/01/1980</td>
+                                                <td>Ativo</td>
+                                                <td>joao.silva@example.com</td>
+                                                <td>••••••••</td>
+                                
+                                                <td>
+                                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarCliente">Editar</button>
+                                                    <button class="btn btn-danger btn-sm" onclick="excluirCliente(1)">Excluir</button>
+                                                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalDetalhesCliente">Detalhes</button>
+                                               
+                                                </td>
+                                            </tr>
+                                            <!-- Fim do exemplo -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Adicionar Cliente -->
+                    <div class="modal fade" id="modalAdicionarCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Adicionar Cliente</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="formAdicionarCliente">
+                                        <div class="form-group">
+                                            <label for="nome">Nome</label>
+                                            <input type="text" class="form-control" id="nome" name="nome" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cpf">CPF</label>
+                                            <input type="text" class="form-control" id="cpf" name="cpf" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="dataNascimento">Data de Nascimento</label>
+                                            <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="status">Status</label>
+                                            <select class="form-control" id="status" name="status" required>
+                                                <option value="ativo">Ativo</option>
+                                                <option value="inativo">Inativo</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="email" class="form-control" id="email" name="email" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="senha">Senha</label>
+                                            <input type="password" class="form-control" id="senha" name="senha" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="imgPerfil">Imagem de Perfil</label>
+                                            <input type="file" class="form-control-file" id="imgPerfil" name="imgPerfil">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Salvar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Editar Cliente -->
+                    <div class="modal fade" id="modalEditarCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Editar Cliente</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="formEditarCliente">
+                                        <div class="form-group">
+                                            <label for="editNome">Nome</label>
+                                            <input type="text" class="form-control" id="editNome" name="nome" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editCpf">CPF</label>
+                                            <input type="text" class="form-control" id="editCpf" name="cpf" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editDataNascimento">Data de Nascimento</label>
+                                            <input type="date" class="form-control" id="editDataNascimento" name="dataNascimento" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editStatus">Status</label>
+                                            <select class="form-control" id="editStatus" name="status" required>
+                                                <option value="ativo">Ativo</option>
+                                                <option value="inativo">Inativo</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editEmail">Email</label>
+                                            <input type="email" class="form-control" id="editEmail" name="email" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editSenha">Senha</label>
+                                            <input type="password" class="form-control" id="editSenha" name="senha" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editImgPerfil">Imagem de Perfil</label>
+                                            <input type="file" class="form-control-file" id="editImgPerfil" name="imgPerfil">
+                                        </div>
+                                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalVisualizarEndereco">Visualizar Endereço</button>
+
+                                        <button class="btn btn-primary btn-sm" id="btnAdicionarEndereco">Adicionar Novo Endereço ao Cliente</button>
+                                        <button type="submit" class="btn btn-primary">Salvar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+              
+                </div>
+            </footer>
+        </div>
+    </div>
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                  
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal Detalhes Cliente -->
+<div class="modal fade" id="modalDetalhesCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Detalhes do Cliente</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <div class="form-group row">
+                  <label for="detalhesNome" class="col-sm-3 col-form-label">Nome:</label>
+                  <div class="col-sm-9">
+                      <input type="text" class="form-control" id="detalhesNome" readonly>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="detalhesCPF" class="col-sm-3 col-form-label">CPF:</label>
+                  <div class="col-sm-9">
+                      <input type="text" class="form-control" id="detalhesCPF" readonly>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="detalhesDataNascimento" class="col-sm-3 col-form-label">Data de Nascimento:</label>
+                  <div class="col-sm-9">
+                      <input type="text" class="form-control" id="detalhesDataNascimento" readonly>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="detalhesStatus" class="col-sm-3 col-form-label">Status:</label>
+                  <div class="col-sm-9">
+                      <input type="text" class="form-control" id="detalhesStatus" readonly>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="detalhesEmail" class="col-sm-3 col-form-label">Email:</label>
+                  <div class="col-sm-9">
+                      <input type="text" class="form-control" id="detalhesEmail" readonly>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="detalhesDataCadastro" class="col-sm-3 col-form-label">Data de Cadastro:</label>
+                  <div class="col-sm-9">
+                      <input type="text" class="form-control" id="detalhesDataCadastro" readonly>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="detalhesDataAtualizacao" class="col-sm-3 col-form-label">Data de Atualização:</label>
+                  <div class="col-sm-9">
+                      <input type="text" class="form-control" id="detalhesDataAtualizacao" readonly>
+                  </div>
+              </div>
+              <div class="form-group row">
+                <label for="detalhesDataRemocao" class="col-sm-3 col-form-label">Data de Remoção:</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="detalhesDataRemocao" readonly>
+                </div>
+            </div>
+              <div class="form-group row">
+                  <label for="detalhesImgPerfil" class="col-sm-3 col-form-label">Imagem de Perfil:</label>
+                  <div class="col-sm-9">
+                      <img src="" alt="Imagem de Perfil" id="detalhesImgPerfil" style="max-width: 100%;">
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- Modal para adicionar novo endereço -->
+<div class="modal fade" id="modalAdicionarEndereco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Adicionar Novo Endereço</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulário para adicionar novo endereço -->
+                <form id="formAdicionarEndereco">
+                    <div class="form-group">
+                        <label for="tipoEndereco">Tipo de Endereço</label>
+                        <select class="form-control" id="tipoEndereco" name="tipoEndereco" required>
+                            <option value="residencial">Residencial</option>
+                            <option value="comercial">Comercial</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cep">CEP</label>
+                        <input type="text" class="form-control" id="cep" name="cep" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cidade">Cidade</label>
+                        <input type="text" class="form-control" id="cidade" name="cidade" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bairro">Bairro</label>
+                        <input type="text" class="form-control" id="bairro" name="bairro" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rua">Rua</label>
+                        <input type="text" class="form-control" id="rua" name="rua" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="numero">Número</label>
+                        <input type="text" class="form-control" id="numero" name="numero" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="complemento">Complemento</label>
+                        <input type="text" class="form-control" id="complemento" name="complemento">
+                    </div>
+                    <!-- Adicione um campo oculto para armazenar o ID do cliente -->
+                    <input type="hidden" id="idCliente" name="idCliente" value="<?php echo $idCliente; ?>">
+                    <!-- Botão para enviar o formulário -->
+                    <button type="submit" class="btn btn-primary">Salvar Endereço</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para visualizar detalhes do endereço -->
+<div class="modal fade" id="modalVisualizarEndereco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detalhes do Endereço</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Detalhes do endereço -->
+                <div class="form-group">
+                    <label for="tipoEnderecoVisualizar">Tipo de Endereço</label>
+                    <input type="text" class="form-control" id="tipoEnderecoVisualizar" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="cepVisualizar">CEP</label>
+                    <input type="text" class="form-control" id="cepVisualizar" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="cidadeVisualizar">Cidade</label>
+                    <input type="text" class="form-control" id="cidadeVisualizar" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="bairroVisualizar">Bairro</label>
+                    <input type="text" class="form-control" id="bairroVisualizar" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="ruaVisualizar">Rua</label>
+                    <input type="text" class="form-control" id="ruaVisualizar" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="numeroVisualizar">Número</label>
+                    <input type="text" class="form-control" id="numeroVisualizar" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="complementoVisualizar">Complemento</label>
+                    <input type="text" class="form-control" id="complementoVisualizar" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/ruang-admin.min.js"></script>
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script>
+      
+    $(document).ready(function () {
+        // Abrir o modal de detalhes ao clicar no botão
+        $('#dataTableHover').on('click', '.btn-detalhes', function () {
+            $('#modalDetalhesCliente').modal('show');
+        });
+    });
+
+
+        $(document).ready(function () {
+            $('#dataTableHover').DataTable(); // Initialize the DataTable
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Abrir modal ao clicar no botão "Adicionar Novo Endereço"
+            $('#btnAdicionarEndereco').click(function () {
+                $('#modalAdicionarEndereco').modal('show');
+            });
+        });
+    </script>
+</body>
+</html>

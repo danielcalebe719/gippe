@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="img/logo/logo.png" rel="icon">
+    <title>Cadastro de Produtos</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/ruang-admin.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        // Função para excluir Produto e seus pedidos
+        function excluirProduto(idProduto) {
+            if (confirm("Tem certeza que deseja excluir este Produto e todos os seus pedidos?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "remover_Produto.php",
+                    data: { id: idProduto },
+                    success: function(response) {
+                        alert(response);
+                        window.location.reload(); // Atualizar a página após a exclusão
+                    },
+                    error: function(xhr, status, error) {
+                        alert("Erro ao excluir Produto: " + xhr.responseText);
+                    }
+                });
+            }
+        }
+    </script>
+    <style>
+        .row {
+            justify-content: center;
+            width: 100%;
+        }
+        .col.mr-2 {
+            text-align: center;
+        }
+        .card-body {
+            min-height: 100px;
+        }
+        .tudu {
+            display: flex;
+            flex-flow: column nowrap;
+            align-content: center;
+            height: 100%;
+            justify-content: center;
+        }
+        .container-fluid {
+            height: 80%;
+        }
+        .details {
+            display: none;
+        }
+    </style>
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="painel-operacional.html">
+                <div class="sidebar-brand-icon">
+                    <img src="img/logo/logo.png">
+                </div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="painel-operacional.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/painel-op.png" alt="">
+                    <span class="text-gray-1000">Painel Operacional</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="clientes.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/clientes.png" alt="">
+                    <span class="text-gray-1000">Clientes</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="cardapio.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/cardapio.png" alt="">
+                    <span class="text-gray-1000">Config cardápio</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="estoque.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/estoque.png" alt="">
+                    <span class="text-gray-1000">Estoque</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="produtos.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/produtos.png" alt="">
+                    <span class="text-gray-1000">Produtos</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="pedidos.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/pedidos.png" alt="">
+                    <span class="text-gray-1000">Pedidos</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider">
+        </ul>
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+                    <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <h5 class="text-gray-1000">Olá, Nome da Pessoa!</h5>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                                <form class="navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-1 small" placeholder="O que você está procurando?" aria-label="Search" aria-describedby="basic-addon2" style="border-color: #8ebba791">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                        <div class="topbar-divider d-none d-sm-block"></div>
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="boyimg" src="img/boy.png">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Settings
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Activity Log
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="index.html">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="container-fluid" id="container-wrapper">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Produtos</h1>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="./">Home</a></li>
+                            <li class="breadcrumb-item">Produtos</li>
+                        </ol>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card mb-4">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Produtos</h6>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalAdicionarProduto">Adicionar Produto</button>
+                                </div>
+                                <div class="table-responsive p-3">
+                                    <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Nome</th>
+                                                <th>Tipo</th>
+                                                <th>STATUS</th>
+                                                <th>Quantidade</th>
+                                                <th>Preço Unitário</th>
+                                                <th>Ações</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Aqui vai o conteúdo da tabela vindo do banco de dados -->
+                                            <!-- Exemplo estático para ilustrar -->
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Coxinha</td>
+                                                <td>Salgado</td>
+                                                <td>Ativo</td>
+                                                <td>15</td>
+                                                <td>R$1.49</td>
+                                               
+                                                <td>
+                                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarProduto">Editar</button>
+                                                    <button class="btn btn-danger btn-sm" onclick="excluirProduto(1)">Excluir</button>
+                                                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalDetalhesProduto">Detalhes</button>
+                                               
+                                                </td>
+                                            </tr>
+                                            <!-- Fim do exemplo -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Adicionar Produto -->
+                    <div class="modal fade" id="modalAdicionarProduto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Adicionar Produto</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="formAdicionarProduto">
+                                        <div class="form-group">
+                                            <label for="nome">Nome</label>
+                                            <input type="text" class="form-control" id="nome" name="nome" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Descrição">Descrição</label>
+                                            <input type="text" class="form-control" id="Descrição" name="Descrição" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="status">Tipo</label>
+                                            <select class="form-control" id="tipo" name="tipo" required>
+                                                <option value="salgado">Salgado</option>
+                                                <option value="doce">Doce</option>
+                                                <option value="bebida">Bebida</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="status">Status</label>
+                                            <select class="form-control" id="status" name="status" required>
+                                                <option value="ativo">Ativo</option>
+                                                <option value="inativo">Inativo</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Quantidade">Quantidade</label>
+                                            <input type="number" class="form-control" id="Quantidade" name="Quantidade" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="QuantidadeProducao">Quantidade por Producão</label>
+                                            <input type="number" class="form-control" id="QuantidadeProducao" name="QuantidadeProducao" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Preço Unitário">Preço Unitário</label>
+                                            <input type="number" class="form-control" id="Preço Unitário" name="Preço Unitário" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="imgPerfil">Imagem de Perfil</label>
+                                            <input type="file" class="form-control-file" id="imgPerfil" name="imgPerfil">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Salvar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Editar Produto -->
+                    <div class="modal fade" id="modalEditarProduto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Editar Produto</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="formEditarProduto">
+                                        <div class="form-group">
+                                            <label for="editNome">Nome</label>
+                                            <input type="text" class="form-control" id="editNome" name="nome" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editDescrição">Descrição</label>
+                                            <input type="text" class="form-control" id="editDescrição" name="Descrição" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editDataNascimento">Tipo</label>
+                                            <input type="date" class="form-control" id="editDataNascimento" name="dataNascimento" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editStatus">Status</label>
+                                            <select class="form-control" id="editStatus" name="status" required>
+                                                <option value="ativo">Ativo</option>
+                                                <option value="inativo">Inativo</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editQuantidade">Quantidade</label>
+                                            <input type="Quantidade" class="form-control" id="editQuantidade" name="Quantidade" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editQuantidadeProducao">Quantidade Produção</label>
+                                            <input type="text" class="form-control" id="editQuantidadeProducao" name="QuantidadeProducao" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editPreço Unitário">Preço Unitário</label>
+                                            <input type="password" class="form-control" id="editPreço Unitário" name="Preço Unitário" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editImgPerfil">Imagem de Perfil</label>
+                                            <input type="file" class="form-control-file" id="editImgPerfil" name="imgPerfil">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Salvar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                
+                </div>
+            </footer>
+        </div>
+    </div>
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                  
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal Detalhes Produto -->
+<div class="modal fade" id="modalDetalhesProduto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Detalhes do Produto</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <div class="form-group row">
+                  <label for="detalhesNome" class="col-sm-3 col-form-label">Nome:</label>
+                  <div class="col-sm-9">
+                      <input type="text" class="form-control" id="detalhesNome" readonly>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="detalhesDescrição" class="col-sm-3 col-form-label">Descrição:</label>
+                  <div class="col-sm-9">
+                      <input type="text" class="form-control" id="detalhesDescrição" readonly>
+                  </div>
+              </div>
+              <div class="form-group row">
+                <label for="detalhesQuantidadeProducao" class="col-sm-3 col-form-label">Quantidade por produção/label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="detalhesQuantidadeProducao" readonly>
+                </div>
+            </div>
+              <div class="form-group row">
+                  <label for="detalhesDataCadastro" class="col-sm-3 col-form-label">Data de Cadastro:</label>
+                  <div class="col-sm-9">
+                      <input type="text" class="form-control" id="detalhesDataCadastro" readonly>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="detalhesDataAtualizacao" class="col-sm-3 col-form-label">Data de Atualização:</label>
+                  <div class="col-sm-9">
+                      <input type="text" class="form-control" id="detalhesDataAtualizacao" readonly>
+                  </div>
+              </div>
+              <div class="form-group row">
+                <label for="detalhesDataRemocao" class="col-sm-3 col-form-label">Data de Remoção:</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="detalhesDataRemocao" readonly>
+                </div>
+            </div>
+              <div class="form-group row">
+                  <label for="detalhesImgPerfil" class="col-sm-3 col-form-label">Imagem de Perfil:</label>
+                  <div class="col-sm-9">
+                      <img src="" alt="Imagem de Perfil" id="detalhesImgPerfil" style="max-width: 100%;">
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/ruang-admin.min.js"></script>
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script>
+      
+    $(document).ready(function () {
+        // Abrir o modal de detalhes ao clicar no botão
+        $('#dataTableHover').on('click', '.btn-detalhes', function () {
+            $('#modalDetalhesProduto').modal('show');
+        });
+    });
+
+
+        $(document).ready(function () {
+            $('#dataTableHover').DataTable(); // Initialize the DataTable
+        });
+    </script>
+</body>
+</html>

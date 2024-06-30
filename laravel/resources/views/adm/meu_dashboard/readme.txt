@@ -1,0 +1,2 @@
+Lembre se de ligar o servidor node que exibe graficos na porta 3000 com (npm start) no terminal no diretorio do projeto
+Ligue tambem o gerador de pdf (pdfGenerator1.js) com o comando no terminal "node pdfGenerator1.js" no diretorio do projeto

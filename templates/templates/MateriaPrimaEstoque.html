@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="img/logo/logo.png" rel="icon">
+    <title>Cadastro de Matéria Primas</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/ruang-admin.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        // Função para excluir Matéria Prima e seus pedidos
+        function excluirMatériaPrima(idMatériaPrima) {
+            if (confirm("Tem certeza que deseja excluir este Matéria Prima e todos os seus pedidos?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "remover_MatériaPrima.php",
+                    data: { id: idMatériaPrima },
+                    success: function(response) {
+                        alert(response);
+                        window.location.reload(); // Atualizar a página após a exclusão
+                    },
+                    error: function(xhr, status, error) {
+                        alert("Erro ao excluir Matéria Prima: " + xhr.responseText);
+                    }
+                });
+            }
+        }
+    </script>
+    <style>
+        .row {
+            justify-content: center;
+            width: 100%;
+        }
+        .col.mr-2 {
+            text-align: center;
+        }
+        .card-body {
+            min-height: 100px;
+        }
+        .tudu {
+            display: flex;
+            flex-flow: column nowrap;
+            align-content: center;
+            height: 100%;
+            justify-content: center;
+        }
+        .container-fluid {
+            height: 80%;
+        }
+        .details {
+            display: none;
+        }
+    </style>
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="painel-operacional.html">
+                <div class="sidebar-brand-icon">
+                    <img src="img/logo/logo.png">
+                </div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="painel-operacional.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/painel-op.png" alt="">
+                    <span class="text-gray-1000">Painel Operacional</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="MatériaPrimas.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/MatériaPrimas.png" alt="">
+                    <span class="text-gray-1000">Matérias Primas</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="cardapio.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/cardapio.png" alt="">
+                    <span class="text-gray-1000">Config cardápio</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="estoque.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/estoque.png" alt="">
+                    <span class="text-gray-1000">Estoque</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="produtos.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/produtos.png" alt="">
+                    <span class="text-gray-1000">Produtos</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="pedidos.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/pedidos.png" alt="">
+                    <span class="text-gray-1000">Pedidos</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider">
+        </ul>
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+                    <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <h5 class="text-gray-1000">Olá, Nome da Pessoa!</h5>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                                <form class="navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-1 small" placeholder="O que você está procurando?" aria-label="Search" aria-describedby="basic-addon2" style="border-color: #8ebba791">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                        <div class="topbar-divider d-none d-sm-block"></div>
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="boyimg" src="img/boy.png">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Settings
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Activity Log
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="index.html">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="container-fluid" id="container-wrapper">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Matéria Primas</h1>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="./">Home</a></li>
+                            <li class="breadcrumb-item">Matéria Primas</li>
+                        </ol>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card mb-4">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Matéria Primas</h6>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalAdicionarMatériaPrima">Adicionar Matéria Prima</button>
+                                </div>
+                                <div class="table-responsive p-3">
+                                    <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Nome</th>
+                                                <th>Fornecedor ID</th>
+                                                <th>Classificação</th>
+                                                <th>Quantidade</th>
+                                                <th>Preço Unitário</th>
+                                                <th>Ações</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Aqui vai o conteúdo da tabela vindo do banco de dados -->
+                                            <!-- Exemplo estático para ilustrar -->
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Farinha</td>
+                                                <td>2</td>
+                                                <td>15</td>
+                                                <td>Não Perecivel</td>
+                                                <td>R$9,99</td>
+                    
+                                                <td>
+                                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarMatériaPrima">Editar</button>
+                                                    <button class="btn btn-danger btn-sm" onclick="excluirMatériaPrima(1)">Excluir</button>
+                                                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalDetalhesMatériaPrima">Detalhes</button>
+                                               
+                                                </td>
+                                            </tr>
+                                            <!-- Fim do exemplo -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Adicionar Matéria Prima -->
+                    <div class="modal fade" id="modalAdicionarMatériaPrima" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Adicionar Matéria Prima</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="formAdicionarMatériaPrima">
+                                        <div class="form-group">
+                                            <label for="nome">Nome</label>
+                                            <input type="text" class="form-control" id="nome" name="nome" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="FornecedorID">Fornecedor ID</label>
+                                            <input type="text" class="form-control" id="FornecedorID" name="FornecedorID" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Classificacao">Classificação</label>
+                                            <select name="Classificacao" id="Classificacao">
+                                              <option value="Perecivel"> Perecível</option>
+                                              <option value="NaoPerecivel"> Não Perecível</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="quantidade">Quantidade</label>
+                                          <input type="number" class="form-control" id="quantidade" name="quantidade" required>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="precoUnitario">Preço Unitário</label>
+                                        <input type="text" class="form-control" id="precoUnitario" name="precoUnitario" required>
+                                    </div>
+                                    
+                                        <button type="submit" class="btn btn-primary">Salvar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Editar Matéria Prima -->
+                    <div class="modal fade" id="modalEditarMatériaPrima" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Editar Matéria Prima</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="formEditarMatériaPrima">
+                                        <div class="form-group">
+                                            <label for="editNome">Nome</label>
+                                            <input type="text" class="form-control" id="editNome" name="nome" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editFornecedor ID">Fornecedor ID</label>
+                                            <input type="text" class="form-control" id="editFornecedorID" name="FornecedorID" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editClassificacao">Classificação</label>
+                                            <select name="Classificacao" id="editClassificacao">
+                                              <option value="Perecivel"> Perecível</option>
+                                              <option value="NaoPerecivel"> Não Perecível</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="editQuantidade">Quantidade</label>
+                                          <input type="number" class="form-control" id="editQuantidade" name="quantidade" required>
+                                      </div>
+                                        <div class="form-group">
+                                            <label for="editPreçoUnitario">Preço Unitário</label>
+                                            <input type="text" class="form-control" id="editPrecoUnitario" name="precoUnitario" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Salvar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+              
+                </div>
+            </footer>
+        </div>
+    </div>
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                  
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal Detalhes Matéria Prima -->
+<div class="modal fade" id="modalDetalhesMatériaPrima" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Detalhes do Matéria Prima</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <div class="form-group row">
+                  <label for="detalhesNome" class="col-sm-3 col-form-label">Nome:</label>
+                  <div class="col-sm-9">
+                      <input type="text" class="form-control" id="detalhesNome" readonly>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="detalhesDataCadastro" class="col-sm-3 col-form-label">Data de Cadastro:</label>
+                  <div class="col-sm-9">
+                      <input type="text" class="form-control" id="detalhesDataCadastro" readonly>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="detalhesDataAtualizacao" class="col-sm-3 col-form-label">Data de Atualização:</label>
+                  <div class="col-sm-9">
+                      <input type="text" class="form-control" id="detalhesDataAtualizacao" readonly>
+                  </div>
+              </div>
+           
+          </div>
+      </div>
+  </div>
+</div>
+
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/ruang-admin.min.js"></script>
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script>
+      
+    $(document).ready(function () {
+        // Abrir o modal de detalhes ao clicar no botão
+        $('#dataTableHover').on('click', '.btn-detalhes', function () {
+            $('#modalDetalhesMatériaPrima').modal('show');
+        });
+    });
+
+
+        $(document).ready(function () {
+            $('#dataTableHover').DataTable(); // Initialize the DataTable
+        });
+    </script>
+</body>
+</html>

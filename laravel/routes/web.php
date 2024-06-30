@@ -40,3 +40,59 @@ Route::get('/produtos', function () {
 });
 
 
+
+
+Route::get('adm/', function () {
+    return view('adm.templates.template');
+});
+
+Route::get('adm/clientes', function () {
+    return view('adm.clientes');    
+});
+
+Route::get('adm/agendamentos', function () {
+    return view('adm.agendamentos');    
+});
+Route::get('adm/fornecedores', function () {
+    return view('adm.fornecedores');    
+});
+Route::get('adm/galeriaImagens', function () {
+    return view('adm.galeriaImagens');    
+});
+Route::get('adm/index', function () {
+    return view('adm.index');    
+});
+Route::get('adm/MateriaPrimaEstoque', function () {
+    return view('adm.MateriaPrimaEstoque');    
+});
+Route::get('adm/mensagens', function () {
+    return view('adm.mensagens');    
+});
+Route::get('adm/notificacoes', function () {
+    return view('adm.notificacoes');    
+});
+Route::get('adm/painel-financeiro', function () {
+    return view('adm.painel-financeiro');    
+});
+Route::get('adm/painel-operacional', function () {
+    return view('adm.painel-operacional');    
+});
+Route::get('adm/pedidos', function () {
+    return view('adm.pedidos');    
+});
+Route::get('adm/produtos', function () {
+    return view('adm.produtos');    
+});
+Route::get('adm/receitasItens', function () {
+    return view('adm.receitasItens');    
+});
+Route::get('adm/servicos', function () {
+    return view('adm.servicos');    
+});
+
+
+Route::get('/adm/financeiro', function () {
+    return view('adm.painel-financeiro'); // Esta view pode conter um iframe ou um redirecionamento para a porta onde o servidor Node.js está rodando
+});
+
+

@@ -237,7 +237,7 @@
         <h3>Veja mais sobre os destaques do nosso<span style="color: #FF944E;"> cardápio</span></h3>
         <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
       </div>
-      <img src="assets/img/Cardapio.png" alt="" style="max-width: 90%;" class="rounded mx-auto d-block img-fluid"> 
+      <img src="assets/img/CardapioBuffet.png" alt="" style="max-width: 90%;" class="rounded mx-auto d-block img-fluid"> 
     </section>
 
 

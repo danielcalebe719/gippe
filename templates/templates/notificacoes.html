@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificações</title>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="css/ruang-admin.min.css" rel="stylesheet">
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/ruang-admin.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .row {
+            justify-content: center;
+            width: 100%;
+        }
+
+        .col.mr-2 {
+            text-align: center;
+        }
+
+        .card-body {
+            min-height: 100px;
+        }
+
+        .tudu {
+            display: flex;
+            flex-flow: column nowrap;
+            align-content: center;
+            height: 100%;
+            justify-content: center;
+        }
+
+        .container-fluid {
+            height: 80%;
+        }
+
+        .details {
+            display: none;
+        }
+    </style>
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="painel-operacional.html">
+                <div class="sidebar-brand-icon">
+                    <img src="img/logo/logo.png">
+                </div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="painel-operacional.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/painel-op.png" alt="">
+                    <span class="text-gray-1000">Painel Operacional</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="clientes.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/clientes.png" alt="">
+                    <span class="text-gray-1000">Clientes</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="cardapio.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/cardapio.png" alt="">
+                    <span class="text-gray-1000">Config cardápio</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="estoque.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/estoque.png" alt="">
+                    <span class="text-gray-1000">Estoque</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="produtos.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/produtos.png" alt="">
+                    <span class="text-gray-1000">Produtos</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="pedidos.html">
+                    <img class='fas fa-fw fa-tachometer-alt' src="img/pedidos.png" alt="">
+                    <span class="text-gray-1000">Pedidos</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider">
+        </ul>
+        <!-- Sidebar -->
+
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+                    <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <h5 class="text-gray-1000">Olá, Nome da Pessoa!</h5>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                                <form class="navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-1 small" placeholder="O que você está procurando?" aria-label="Search" aria-describedby="basic-addon2" style="border-color: #8ebba791">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                        <div class="topbar-divider d-none d-sm-block"></div>
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="boyimg" src="img/boy.png">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Settings
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Activity Log
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="index.html">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid" id="container-wrapper">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Clientes</h1>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="./">Home</a></li>
+                            <li class="breadcrumb-item">Clientes</li>
+                        </ol>
+                    </div>
+
+                    <!-- Notificações para Funcionários -->
+                    <div class="card mb-4">
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">Notificações para Funcionários</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table align-items-center table-flush" id="dataTableFuncionario">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Título</th>
+                                            <th>Mensagem</th>
+                                            <th>Data</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Conteúdo da tabela para notificações de funcionários -->
+                                        <!-- Exemplo estático -->
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Pedido Recebido</td>
+                                            <td>Um novo pedido foi recebido.</td>
+                                            <td>01/06/2024</td>
+                                            <td>
+                                                <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalDetalhesNotificacaoFuncionario" onclick="mostrarDetalhes(1, 'funcionario')">Detalhes</button>
+                                            </td>
+                                        </tr>
+                                        <!-- Fim do exemplo -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notificações para Clientes -->
+                    <div class="card mb-4">
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">Notificações para Clientes</h6>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#modalAdicionarNotificacaoCliente">Adicionar Notificação</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table align-items-center table-flush" id="dataTableCliente">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>CLiente ID</th>
+                                            <th>Título</th>
+                                            <th>Mensagem</th>
+                                            <th>Data</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Conteúdo da tabela para notificações de clientes -->
+                                        <tr>
+                                            <td>1</td>
+                                            <td>2</td>
+                                            <td>Promoção Especial</td>
+                                            <td>Desconto de 20% para você.</td>
+                                            <td>01/06/2024</td>
+                                            <td>
+                                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarNotificacaoCliente" onclick="editarNotificacao(1, 'cliente')">Editar</button>
+                                                <button class="btn btn-danger btn-sm" onclick="excluirNotificacao(1, 'cliente')">Excluir</button>
+                                                <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalDetalhesNotificacaoCliente" onclick="mostrarDetalhes(1, 'cliente')">Detalhes</button>
+                                            </td>
+                                        </tr>
+                                        <!-- Fim do exemplo -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Adicionar Notificação para Cliente -->
+                    <div class="modal fade" id="modalAdicionarNotificacaoCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Adicionar Notificação para Cliente</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                              
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="idCliente"> ID do Cliente</label>
+                                        <input type="text" class="form-control" id="idCliente" required>
+                                    </div>
+                                    <form id="formAdicionarNotificacaoCliente">
+                                        <div class="form-group">
+                                            <label for="tituloCliente">Título</label>
+                                            <input type="text" class="form-control" id="tituloCliente" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="mensagemCliente">Mensagem</label>
+                                            <textarea class="form-control" id="mensagemCliente" rows="3" required></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="dataCliente">Data</label>
+                                            <input type="date" class="form-control" id="data
+                                            Cliente" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Adicionar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Editar Notificação para Cliente -->
+                    <div class="modal fade" id="modalEditarNotificacaoCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Editar Notificação para Cliente</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                
+                                <div class="modal-body">
+                                    <form id="formEditarNotificacaoCliente">
+                                        <div class="form-group">
+                                            <label for="editaridCliente"> ID do Cliente</label>
+                                            <input type="text" class="form-control" id="editaridCliente" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editarTituloCliente">Título</label>
+                                            <input type="text" class="form-control" id="editarTituloCliente" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editarMensagemCliente">Mensagem</label>
+                                            <textarea class="form-control" id="editarMensagemCliente" rows="3" required></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editarDataCliente">Data</label>
+                                            <input type="date" class="form-control" id="editarDataCliente" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Detalhes Notificação para Funcionário -->
+                    <div class="modal fade" id="modalDetalhesNotificacaoFuncionario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Detalhes da Notificação para Funcionário</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><strong>ID:</strong> <span id="detalhesIdFuncionario"></span></p>
+                                    <p><strong>Título:</strong> <span id="detalhesTituloFuncionario"></span></p>
+                                    <p><strong>Mensagem:</strong> <span id="detalhesMensagemFuncionario"></span></p>
+                                    <p><strong>Data:</strong> <span id="detalhesDataFuncionario"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Detalhes Notificação para Cliente -->
+                    <div class="modal fade" id="modalDetalhesNotificacaoCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Detalhes da Notificação para Cliente</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><strong>ID:</strong> <span id="detalhesIdCliente"></span></p>
+                                    <p><strong>Título:</strong> <span id="detalhesTituloCliente"></span></p>
+                                    <p><strong>Mensagem:</strong> <span id="detalhesMensagemCliente"></span></p>
+                                    <p><strong>Data:</strong> <span id="detalhesDataCliente"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!---Container Fluid-->
+            </div>
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        
+                        </span>
+                    </div>
+                </div>
+            </footer>
+            <!-- Footer -->
+        </div>
+    </div>
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/ruang-admin.min.js"></script>
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#dataTableFuncionario').DataTable();
+            $('#dataTableCliente').DataTable();
+
+            $('#formAdicionarNotificacaoCliente').on('submit', function(event) {
+                event.preventDefault();
+                // Código para adicionar notificação para cliente
+                adicionarNotificacaoCliente();
+            });
+
+            $('#formEditarNotificacaoCliente').on('submit', function(event) {
+                event.preventDefault();
+                // Código para editar notificação para cliente
+                editarNotificacaoCliente();
+            });
+        });
+
+        function adicionarNotificacaoCliente() {
+            // Implementar lógica para adicionar notificação para cliente
+        }
+
+        function editarNotificacaoCliente() {
+            // Implementar lógica para editar notificação para cliente
+        }
+
+        function excluirNotificacao(id, tipo) {
+            // Implementar lógica para excluir notificação
+        }
+
+        function mostrarDetalhes(id, tipo) {
+            // Implementar lógica para mostrar detalhes da notificação
+        }
+    </script>
+</body>
+
+</html>
+
+

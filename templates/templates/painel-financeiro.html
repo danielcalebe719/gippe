@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="FEMDA" content="">
+  <link href="img/logo/logo.png" rel="icon">
+  <title>Gestão Financeira</title>
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="css/ruang-admin.min.css" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
+
+ 
+
+
+<body id="page-top">
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="painel-financeiro.html">
+        <div class="sidebar-brand-icon">
+          <img src="img/logo/logo.png">
+        </div>
+     
+      </a>
+      <hr class="sidebar-divider my-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="index.html">  
+          <img class='fas fa-fw fa-tachometer-alt'src="img/menu-img1.png" alt="">
+          <span class="text-gray-1000">Painel Financeiro</h5></span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#scroll-graficos">
+          <img class='fas fa-fw fa-tachometer-alt'src="img/menu-img2.png" alt="">
+          <span class="text-gray-1000">Relatórios Gráficos</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#scroll-apagar">
+          <img class='fas fa-fw fa-tachometer-alt'src="img/menu-img3.png" alt="">
+          <span class="text-gray-1000">À Pagar</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#scroll-areceber">
+          <img class='fas fa-fw fa-tachometer-alt'src="img/menu-img4.png" alt="">
+          <span class="text-gray-1000" >À Receber</span></a>
+      </li>
+     
+    
+      
+    </ul>
+
+
+
+
+  
+    <!-- Sidebar -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+
+            <!-- TopBar -->
+            <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+              <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
+                <i class="fa fa-bars"></i>
+              </button>
+              <h5 class="text-gray-1000">Olá, Nome da Pessoa! </h5>
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown no-arrow">
+                  <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-search fa-fw"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                    aria-labelledby="searchDropdown">
+                    <form class="navbar-search">
+                      <div class="input-group">
+                        <input type="text" class="form-control bg-light border-1 small" placeholder="O que você está procurando?"
+                          aria-label="Search" aria-describedby="basic-addon2" style="border-color: #8ebba791">
+                        <div class="input-group-append">
+                          <button class="btn btn-primary" type="button">
+                            <i class="fas fa-search fa-sm"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </li>
+                
+                 
+                </li>
+                <div class="topbar-divider d-none d-sm-block"></div>
+                <li class="nav-item dropdown no-arrow">
+                  <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <img class="boyimg" src="img/boy.png" >
+                   
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                    <a class="dropdown-item" href="#">
+                      <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                      Perfil
+                    </a>
+                    <a class="dropdown-item" href="#">
+                      <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                      Configurações
+                    </a>
+                    <a class="dropdown-item" href="#">
+                      <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                      Log de Atividade
+                    </a>
+                    
+                </li>
+              </ul>
+            </nav>
+            <!-- Topbar -->
+     
+
+
+
+        <!-- Container Fluid-->
+        <div class="container-fluid" id="container-wrapper" >
+          <div  class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-1000">Painel Financeiro</h1>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item" ><a style="color: #8ebba7;" href="./">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Painel Financeiro</li>
+            </ol>
+          </div>
+
+          <div class="row mb-3">
+            <!-- Á receber Card  -->
+            <div class="col-xl-3 col-md-6 mb-4 text-gray-1000 " >
+              <div class="card h-100" >
+                <div class="card-body" style=" background-color: rgba(72, 223, 19, 0.6); border-radius: 10px;">
+                  <div class="row align-items-center">
+                    <div class="col mr-2">
+                      <div > Á receber</div>
+                      <div class="h5 mb-0  text-gray-1000">R$0,00</div>
+                      <div  style="font-size: 11.5px;" class="mt-2 mb-0 text-muted text-xs text-gray-1000">
+                        <span class="text-gray-100 text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                        <span>Em relação ao último mês</span>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <img style="width: 50%;" src="img/Vector.png" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Á pagar Card-->
+            <div class="col-xl-3 col-md-6 mb-4 text-gray-1000" >
+              <div class="card h-100" >
+                <div class="card-body"  style="background-color: #f15858bb; border-radius: 10px;"  >
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2" >
+                      <div > Á pagar</div>
+                      <div class="h5 mb-0  text-gray-1000">R$0,00</div>
+                      <div style="font-size: 11.5px;" class="mt-2 mb-0  text-xs ">
+                        <span class="text-gray-100 mr-2" ><i class="fas fa-arrow-down"></i> 1.10%</span>
+                        <span>Em relação ao último mês</span>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <img style="width: 50%;" src="img/Vector2.png" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- vendas mensal Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4 text-gray-1000">
+              <div class="card h-100">
+                <div class="card-body"  style="background-color: #f8d93eee; border-radius: 10px;">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div>Vendas (Último Mês)</div>
+                      <div class="h5 mb-0  text-gray-1000">R$0,00</div>
+                      <div style="font-size: 11.5px;" class=" mt-2 mb-0 text-muted text-xs text-gray-1000">
+                        <span class="text-success mr-2 text-gray-100"><i class="fas fa-arrow-up"></i> 20.4%</span>
+                        <span >Em relação ao último mês</span>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <img style="width: 55%;" src="img/Vector3.png" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--vendas hoje Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4 text-gray-1000">
+              <div class="card h-100">
+                <div class="card-body"  style="background-color: #468bcbd8; border-radius: 10px;">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div >Vendas Hoje</div>
+                      <div class="h5 mb-0 text-gray-1000">R$0,00</div>
+                      <div style="font-size: 11.5px;" class="mt-2 mb-0 text-muted text-xs text-gray-1000">
+                        <span class="text-gray-100 text-danger mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>
+                        <span>Em relação a ontem</span>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <img style="width: 55%;" src="img/Vector4.png" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          
+            </div>
+            
+            
+           
+          
+
+        
+       
+      </div>
+
+       <!---Container Fluid-->
+      <div id="scroll-graficos" class="container-fluid" id="container-wrapper">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-1000" >Gráficos</h1>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a style="color: #8ebba7;" href="./">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Gráficos</li>
+          </ol>
+        </div>
+          <!-- Row -->
+          <div class="row">
+            <!-- Area Charts -->
+            <div class="col-lg-12">
+              <div class="card mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Crescimento mensal</h6>
+                </div>
+                <div class="card-body">
+                  <div class="chart-area">
+                    <canvas id="myAreaChart"></canvas>
+                  </div>
+                  <hr>
+                 
+                </div>
+              </div>
+            </div>
+            <!-- Bar Chart -->
+            <div class="col-lg-8">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Lucro</h6>
+                </div>
+                <div class="card-body">
+                  <div class="chart-bar">
+                    <canvas id="myBarChart"></canvas>
+                  </div>
+                  <hr>
+                
+                </div>
+              </div>
+            </div>
+            <!-- Donut Chart -->
+            <div class="col-lg-4">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Dinheiro Gasto Por Departamento</h6>
+                </div>
+                <div class="card-body">
+                  <div class="chart-pie pt-4">
+                    <canvas id="myPieChart"></canvas>
+                  </div>
+                  <hr>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+            <!---Container Fluid-->
+      <div  id="scroll-apagar" class="container-fluid" id="container-wrapper">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-1000" >À Pagar</h1>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a style="color: #8ebba7;" href="./">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">À pagar</li>
+          </ol>
+        </div>
+          <!-- Simple Tables -->
+          <div class="card">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-primary">Custos</h6>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Custos</th>
+                    <th>Departamento</th>
+                    <th>Item</th>
+                    <th>Total</th>
+                    <th>Ação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><a href="#">RA0449</a></td>
+                    <td>Lorem</td>
+                    <td>Lorem</td>
+                    <td>R$0,00</td>
+                    
+                    <td><a href="#" class="btn btn-sm btn-primary">Detalhes</a></td>
+                  </tr>
+                  <tr>
+                    <td><a href="#">RA5324</a></td>
+                    <td>Loremr</td>
+                    <td>Lorem</td>
+                    <td>R$0,00</td>
+                   
+                    <td><a href="#" class="btn btn-sm btn-primary">Detalhes</a></td>
+                  </tr>
+                  <tr>
+                    <td><a href="#">RA8568</a></td>
+                    <td>Lorem</td>
+                    <td>Lorem</td>
+                    <td>R$0,00</td>
+                 
+                    <td><a href="#" class="btn btn-sm btn-primary">Detalhes</a></td>
+                  </tr>
+                  <tr>
+                    <td><a href="#">RA1453</a></td>
+                    <td>Lorem</td>
+                    <td>Lorem</td>
+                    <td>R$0,00</td>
+                    
+                
+                    <td><a href="#" class="btn btn-sm btn-primary">Detalhes</a></td>
+                  </tr>
+                  <tr>
+                    <td><a href="#">RA1998</a></td>
+                    <td>Lorem</td>
+                    <td>Lorem</td>
+                    <td>R$0,00</td>                      
+                    <td><a href="#" class="btn btn-sm btn-primary">Detalhes</a></td>
+                  </tr>
+                  <tr>
+                  <td><a href="#" class="btn btn-sm btn-info">Adicionar Gasto</a></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer"></div>
+          </div>
+        </div>
+      </div>
+            
+          
+
+
+
+
+
+         <!---Container Fluid a receber-->
+         <br>
+         <div  id="scroll-areceber" class="container-fluid" id="container-wrapper">
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-1000" >À Receber</h1>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a style="color: #8ebba7;"  href="./">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">À Receber</li>
+              
+            </ol>
+          </div>
+           <!-- Simple Tables 2 -->
+           
+           <div class="card">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-primary">Consolidado (O serviço/produto foi entregue)</h6>
+              <td><a href="#" class="btn btn-sm btn-info">Adicionar recebimento</a></td>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th>ID</th>
+                    <th>Tipo</th>
+                    <th>Data</th>
+                    <th>Total</th>
+                    <th>Ação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><a href="#">RA0449</a></td>
+                    <td>Lorem</td>
+                    <td>Lorem</td>
+                    <td>R$0,00</td>
+                    
+                    <td><a href="#" class="btn btn-sm btn-primary">Detalhes</a></td>
+                  </tr>
+                  <tr>
+                    <td><a href="#">RA5324</a></td>
+                    <td>Lorem</td>
+                    <td>Lorem</td>
+                    <td>R$0,00</td>
+                   
+                    <td><a href="#" class="btn btn-sm btn-primary">Detalhes</a></td>
+                  </tr>
+                  <tr>
+                    <td><a href="#">RA8568</a></td>
+                    <td>Lorem</td>
+                    <td>Lorem</td>
+                    <td>R$0,00</td>
+                 
+                    <td><a href="#" class="btn btn-sm btn-primary">Detalhes</a></td>
+                  </tr>
+                  <tr>
+                    <td><a href="#">RA1453</a></td>
+                    <td>Lorem</td>
+                    <td>Lorem</td>
+                    <td>R$0,00</td>
+                
+                    <td><a href="#" class="btn btn-sm btn-primary">Detalhes</a></td>
+                  </tr>
+                  <tr>
+                    <td><a href="#">RA1998</a></td>
+                    <td>Lorem</td>
+                    <td>Lorem</td>
+                    <td>R$0,00</td>
+                    
+                  
+                    <td><a href="#" class="btn btn-sm btn-primary">Detalhes</a></td>
+                  </tr>
+                  
+                  
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer"></div>
+          </div>
+        </div>
+      </div>
+      
+         <!---Container Fluid a receber 2-->
+         <br>
+         <div  id="scroll-areceber" class="container-fluid" id="container-wrapper">
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          
+           
+          </div>
+           <!-- Simple Tables 3 -->
+           
+           <div class="card">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-primary">Não Consolidado (O serviço/produto não foi entregue)</h6>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th>ID</th>
+                    <th>Tipo</th>
+                    <th>Data</th>
+                    <th>Total</th>
+                    <th>Ação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><a href="#">RA0449</a></td>
+                    <td>Lorem</td>
+                    <td>Lorem</td>
+                    <td>R$0,00</td>
+                    
+                    <td><a href="#" class="btn btn-sm btn-primary">Detalhes</a></td>
+                  </tr>
+                  <tr>
+                    <td><a href="#">RA5324</a></td>
+                    <td>Lorem</td>
+                    <td>Lorem</td>
+                    <td>R$0,00</td>
+                   
+                    <td><a href="#" class="btn btn-sm btn-primary">Detalhes</a></td>
+                  </tr>
+                  <tr>
+                    <td><a href="#">RA8568</a></td>
+                    <td>Lorem</td>
+                    <td>Lorem</td>
+                    <td>R$0,00</td>
+                 
+                    <td><a href="#" class="btn btn-sm btn-primary">Detalhes</a></td>
+                  </tr>
+                  <tr>
+                    <td><a href="#">RA1453</a></td>
+                    <td>Lorem</td>
+                    <td>Lorem</td>
+                    <td>R$0,00</td>
+                
+                    <td><a href="#" class="btn btn-sm btn-primary">Detalhes</a></td>
+                  </tr>
+                  <tr>
+                    <td><a href="#">RA1998</a></td>
+                    <td>Lorem</td>
+                    <td>Lorem</td>
+                    <td>R$0,00</td>
+                    
+                  
+                    <td><a href="#" class="btn btn-sm btn-primary">Detalhes</a></td>
+                  </tr>
+                 
+                  
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer"></div>
+          </div>
+        </div>
+      </div>
+            
+     
+    </div>
+    
+        
+  </div>
+
+      
+
+  <!-- Scroll to top -->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  
+
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="js/ruang-admin.min.js"></script>
+  
+  
+
+ 
+  <!-- Page level plugins -->
+  <script src="vendor/chart.js/Chart.min.js"></script>
+  <!-- Page level custom scripts -->
+  <script src="js/demo/chart-area-demo.js"></script>
+  <script src="js/demo/chart-pie-demo.js"></script>
+  <script src="js/demo/chart-bar-demo.js"></script>
+</body>
+
+</html>

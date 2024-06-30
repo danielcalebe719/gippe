@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link href="img/logo/logo.png" rel="icon">
+  <title>Gestão Operacional</title>
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="css/ruang-admin.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  
+
+ <style>
+  .row{
+    justify-content: center;
+    width: 100%;
+    height: auto;
+  
+    
+  }
+
+  
+ 
+  .col.mr-2{
+   /* text-align: center;*/
+    
+  }
+  .card-body{
+   height: 100px;
+    max-width: 700px;
+    
+  
+  }
+  .tudu{
+    display: flex;
+    flex-flow:column nowrap;
+    align-content: center;
+    height: 100%;
+    justify-content: center;
+    
+    
+  }
+  .container-fluid{
+    height: 80%;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+  }
+  .col-md-5 {
+    padding: 0;
+    margin: 0;
+  }
+  .nav-link{
+    padding: 0;
+    margin: 0;
+    margin-right: 5px;
+    margin-left: 5px;
+ 
+  }
+  .boyimg{
+    width: 100%; 
+    height: 70%
+   }
+  @media screen and (max-width:768px) {
+    .nav-link{
+      margin-bottom: 10px;
+    }
+   .boyimg{
+    width: 40px; 
+    height: auto
+   }
+  }
+  
+ </style>
+</head>
+
+<body id="page-top">
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="painel-operacional.html">
+        <div class="sidebar-brand-icon">
+          <img id="logo" src="img/logo/logo.png">
+        </div>
+     
+      
+      <hr class="sidebar-divider">
+      <div class="sidebar-heading">
+        
+    </ul>
+
+
+    <!-- Sidebar -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+
+            <!-- TopBar -->
+            <nav class="navbar navbar-expand navbar-light bg-navbar topbar  static-top">
+            
+              <h5 class="text-gray-1000" style="padding-left: 20px;">  Olá, Nome da Pessoa! </h5>
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown no-arrow">
+                  <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-search fa-fw"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                    aria-labelledby="searchDropdown">
+                    <form class="navbar-search">
+                      <div class="input-group">
+                        <input type="text" class="form-control bg-light border-1 small" placeholder="O que você está procurando?"
+                          aria-label="Search" aria-describedby="basic-addon2" style="border-color: #8ebba791">
+                        <div class="input-group-append">
+                          <button class="btn btn-primary" type="button">
+                            <i class="fas fa-search fa-sm"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </li>
+                
+                 
+                </li>
+                <div class="topbar-divider d-none d-sm-block"></div>
+                <li class="nav-item dropdown no-arrow">
+                  <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <img class="boyimg" src="img/boy.png" >
+                   
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                    <a class="dropdown-item" href="#">
+                      <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                      Perfil
+                    </a>
+                    <a class="dropdown-item" href="#">
+                      <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                     Configurações
+                    </a>
+                    <a class="dropdown-item" href="#">
+                      <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                     Log de Atividade
+                    </a>
+                    <div  class="dropdown-divider"></div>                  
+                    <a class="dropdown-item" href="logout.php" >
+                      <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                      Logout
+                    </a>          
+                  </div>
+                </li>
+              </ul>
+            </nav>
+            <!-- Topbar -->
+     
+
+
+
+        <!-- Container Fluid-->
+        <div class="container-fluid" id="container-wrapper" >
+          <div class="tudu">
+            
+              <div  class="d-sm-flex align-items-center justify-content-between ">
+                <h1 class="h3 mb-0 text-gray-1000">Painel Operacional</h1>
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item" ><a style="color: #8ebba7;" href="./">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Painel Operacional</li>
+                </ol>
+              </div>
+          <div class="row mb-3">
+            <!--  Card Clientes -->
+            
+            <div class=" col-xl-3  col-md-5  " >
+              <a class="nav-link" href="clientes.html"> 
+              <div class="card h-100" >
+                
+                <div class="card-body" style=" background-color: #276359; border-radius: 10px;">
+  
+                  <div class="row align-items-center">
+                    
+                    <div class="col mr-2">
+                      
+                      <div class="h5 mb-0 font-weight-bold text-gray-1001">Clientes</div>
+                     
+                    </div>
+                    <div class="col-4">
+                      <img class="imgsss" src="img/clientes.png" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </a>
+            <!--  Card Cardapio-->
+            
+            <div class="col-xl-3 col-md-5  text-gray-1000" >
+              <a class="nav-link" href="pedidos.php">
+              <div class="card h-100" >
+                <div class="card-body"  style="background-color: #276359; border-radius: 10px;"  >
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2" >
+                      
+                      <div class="h5 mb-0 font-weight-bold  text-gray-1001">Pedidos</div>
+                     
+                    </div>
+                    <div class="col-4">
+                      <img class="imgss" src="img/pedidos.png" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+          <div class="row mb-3">
+            <!-- Card Estoque  -->
+            
+            <div class="col-xl-3 col-md-5  text-gray-1000">
+              <a class="nav-link" href="produtos.html">
+              <div class="card h-100">
+                <div class="card-body"  style="background-color: #276359; border-radius: 10px;">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      
+                      <div class="h5 mb-0 font-weight-bold  text-gray-1001">Produtos</div>
+                    
+                    </div>
+                    <div class="col-4">
+                      <img class="imgss" src="img/produtos.png" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </a>
+          
+          
+             <!-- Card Materias primsa-->
+             
+             <div class="col-xl-3 col-md-5  text-gray-1000">
+              <a class="nav-link" href="MateriaPrimaEstoque.html">
+              <div class="card h-100">
+                <div class="card-body"  style="background-color: #276359; border-radius: 10px;">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      
+                      <div class="h5 mb-0 font-weight-bold  text-gray-1001">Matérias Primas</div>
+                      <div class=" mt-2 mb-0 text-muted text-xs text-gray-1000">
+                       
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <img class="imgss" src="img/estoque.png" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+          <div class="row mb-3  ">
+             <!-- Card servicos-->
+             
+             <div class="col-xl-3 col-md-5  text-gray-1000">
+              <a class="nav-link" href="servicos.html">
+              <div class="card h-100">
+                <div class="card-body"  style="background-color: #276359; border-radius: 10px;">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      
+                      <div class="h5 mb-0 font-weight-bold  text-gray-1001">Serviços</div>
+                      <div class=" mt-2 mb-0 text-muted text-xs text-gray-1000">
+                        <span class="text-success mr-2 text-gray-100"></i></span>
+                        <span></span>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <img class="imgss" src="img/servicos.png" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+          
+            <!-- Card Agenda -->
+            
+            <div class="col-xl-3 col-md-5  text-gray-1000">
+              <a class="nav-link" href="agendamento.html">
+              <div class="card h-100">
+                <div class="card-body"  style="background-color: #276359; border-radius: 10px;">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      
+                      <div class="h5 mb-0 font-weight-bold  text-gray-1001">Agenda</div>
+                      <div class=" mt-2 mb-0 text-muted text-xs text-gray-1000">
+                        <span class="text-success mr-2 text-gray-100"></i></span>
+                        <span></span>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <img class="imgss" src="img/agenda.png" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+          
+          </div> 
+          
+          <div class="row mb-3" >
+            <!--  Card Forncedores -->
+            
+            <div class=" col-xl-3  col-md-5  " >
+              <a class="nav-link" href="fornecedores.html"> 
+              <div class="card h-100" >
+                
+                <div class="card-body" style=" background-color: #276359; border-radius: 10px;">
+    
+                  <div class="row align-items-center">
+                    
+                    <div class="col mr-2">
+                      
+                      <div class="h5 mb-0 font-weight-bold text-gray-1001">Fornecedores</div>
+                     
+                    </div>
+                    <div class="col-4">
+                      <img class="imgsss"  src="img/fornecedores.png" alt="" s>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </a>
+            <!--  Card Notificacoes-->
+            
+            <div class="col-xl-3 col-md-5  text-gray-1000" >
+              <a class="nav-link" href="notificacoes.html">
+              <div class="card h-100" >
+                <div class="card-body"  style="background-color: #276359; border-radius: 10px;"  >
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2" >
+                      
+                      <div class="h5 mb-0 font-weight-bold  text-gray-1001">Notificações</div>
+                     
+                    </div>
+                    <div class="col-4">
+                      <img class="imgss" src="img/notificacoes.png" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+        <div class="row mb-3"> 
+          <!-- Card receita  -->
+          
+          <div class="col-xl-3 col-md-5  text-gray-1000">
+            <a class="nav-link" href="produtos.html">
+            <div class="card h-100">
+              <div class="card-body"  style="background-color: #276359; border-radius: 10px;">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    
+                    <div class="h5 mb-0 font-weight-bold  text-gray-1001">Receitas</div>
+                  
+                  </div>
+                  <div class="col-4">
+                    <img class="imgss" src="img/cardapio.png" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            
+  
+  
+          </div>
+          <div class="col-xl-3 col-md-5  text-gray-1000">
+            <a class="nav-link" href="galeriaImagens.html">
+            <div class="card h-100">
+              <div class="card-body"  style="background-color: #276359; border-radius: 10px;">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    
+                    <div class="h5 mb-0 font-weight-bold  text-gray-1001">Galeria de Imagens</div>
+                  
+                  </div>
+                  <div class="col-4">
+                    <img class="imgss" src="img/clientes.png" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          <div class="row mb-3">
+            <div class="col-xl-3 col-md-5  text-gray-1000">
+              <a class="nav-link" href="mensagens.html">
+              <div class="card h-100">
+                <div class="card-body"  style="background-color: #276359; border-radius: 10px;">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      
+                      <div class="h5 mb-0 font-weight-bold  text-gray-1001">Mensagens</div>
+                    
+                    </div>
+                    <div class="col-3">
+                      <img class="imgss" src="img/clientes.png" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+        
+        
+      </a>  
+    
+    
+    
+    
+    
+
+      
+    
+      
+       
+      </div>
+
+      <div class="tudu">
+            
+        <div  class="d-sm-flex align-items-center justify-content-between ">
+          <h1 class="h3 mb-0 text-gray-1000">Painel Operacional</h1>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item" ><a style="color: #8ebba7;" href="./">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Painel Operacional</li>
+          </ol>
+        </div>
+    <div class="row mb-3">
+      <!--  Card Clientes -->
+      
+      <div class=" col-xl-3  col-md-5  " >
+        <a class="nav-link" href="clientes.html"> 
+        <div class="card h-100" >
+          
+          <div class="card-body" style=" background-color: #276359; border-radius: 10px;">
+
+            <div class="row align-items-center">
+              
+              <div class="col mr-2">
+                
+                <div class="h5 mb-0 font-weight-bold text-gray-1001">Clientes</div>
+               
+              </div>
+              <div class="col-4">
+                <img class="imgsss" src="img/clientes.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </a>
+      <!--  Card Cardapio-->
+      
+      <div class="col-xl-3 col-md-5  text-gray-1000" >
+        <a class="nav-link" href="pedidos.php">
+        <div class="card h-100" >
+          <div class="card-body"  style="background-color: #276359; border-radius: 10px;"  >
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2" >
+                
+                <div class="h5 mb-0 font-weight-bold  text-gray-1001">Pedidos</div>
+               
+              </div>
+              <div class="col-4">
+                <img class="imgss" src="img/pedidos.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+    <div class="row mb-3">
+      <!-- Card Estoque  -->
+      
+      <div class="col-xl-3 col-md-5  text-gray-1000">
+        <a class="nav-link" href="produtos.html">
+        <div class="card h-100">
+          <div class="card-body"  style="background-color: #276359; border-radius: 10px;">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                
+                <div class="h5 mb-0 font-weight-bold  text-gray-1001">Produtos</div>
+              
+              </div>
+              <div class="col-4">
+                <img class="imgss" src="img/produtos.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </a>
+    
+    
+       <!-- Card Materias primsa-->
+       
+       <div class="col-xl-3 col-md-5  text-gray-1000">
+        <a class="nav-link" href="MateriaPrimaEstoque.html">
+        <div class="card h-100">
+          <div class="card-body"  style="background-color: #276359; border-radius: 10px;">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                
+                <div class="h5 mb-0 font-weight-bold  text-gray-1001">Matérias Primas</div>
+                <div class=" mt-2 mb-0 text-muted text-xs text-gray-1000">
+                 
+                </div>
+              </div>
+              <div class="col-4">
+                <img class="imgss" src="img/estoque.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+    <div class="row mb-3  ">
+       <!-- Card servicos-->
+       
+       <div class="col-xl-3 col-md-5  text-gray-1000">
+        <a class="nav-link" href="servicos.html">
+        <div class="card h-100">
+          <div class="card-body"  style="background-color: #276359; border-radius: 10px;">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                
+                <div class="h5 mb-0 font-weight-bold  text-gray-1001">Serviços</div>
+                <div class=" mt-2 mb-0 text-muted text-xs text-gray-1000">
+                  <span class="text-success mr-2 text-gray-100"></i></span>
+                  <span></span>
+                </div>
+              </div>
+              <div class="col-4">
+                <img class="imgss" src="img/servicos.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+    
+      <!-- Card Agenda -->
+      
+      <div class="col-xl-3 col-md-5  text-gray-1000">
+        <a class="nav-link" href="agendamento.html">
+        <div class="card h-100">
+          <div class="card-body"  style="background-color: #276359; border-radius: 10px;">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                
+                <div class="h5 mb-0 font-weight-bold  text-gray-1001">Agenda</div>
+                <div class=" mt-2 mb-0 text-muted text-xs text-gray-1000">
+                  <span class="text-success mr-2 text-gray-100"></i></span>
+                  <span></span>
+                </div>
+              </div>
+              <div class="col-4">
+                <img class="imgss" src="img/agenda.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+    
+    </div> 
+    
+    <div class="row mb-3" >
+      <!--  Card Forncedores -->
+      
+      <div class=" col-xl-3  col-md-5  " >
+        <a class="nav-link" href="fornecedores.html"> 
+        <div class="card h-100" >
+          
+          <div class="card-body" style=" background-color: #276359; border-radius: 10px;">
+
+            <div class="row align-items-center">
+              
+              <div class="col mr-2">
+                
+                <div class="h5 mb-0 font-weight-bold text-gray-1001">Fornecedores</div>
+               
+              </div>
+              <div class="col-4">
+                <img class="imgsss"  src="img/fornecedores.png" alt="" s>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </a>
+      <!--  Card Notificacoes-->
+      
+      <div class="col-xl-3 col-md-5  text-gray-1000" >
+        <a class="nav-link" href="notificacoes.html">
+        <div class="card h-100" >
+          <div class="card-body"  style="background-color: #276359; border-radius: 10px;"  >
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2" >
+                
+                <div class="h5 mb-0 font-weight-bold  text-gray-1001">Notificações</div>
+               
+              </div>
+              <div class="col-4">
+                <img class="imgss" src="img/notificacoes.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+  <div class="row mb-3"> 
+    <!-- Card receita  -->
+    
+    <div class="col-xl-3 col-md-5  text-gray-1000">
+      <a class="nav-link" href="produtos.html">
+      <div class="card h-100">
+        <div class="card-body"  style="background-color: #276359; border-radius: 10px;">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              
+              <div class="h5 mb-0 font-weight-bold  text-gray-1001">Receitas</div>
+            
+            </div>
+            <div class="col-4">
+              <img class="imgss" src="img/cardapio.png" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+
+
+    </div>
+    <div class="col-xl-3 col-md-5  text-gray-1000">
+      <a class="nav-link" href="galeriaImagens.html">
+      <div class="card h-100">
+        <div class="card-body"  style="background-color: #276359; border-radius: 10px;">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              
+              <div class="h5 mb-0 font-weight-bold  text-gray-1001">Galeria de Imagens</div>
+            
+            </div>
+            <div class="col-4">
+              <img class="imgss" src="img/clientes.png" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="row mb-3">
+      <div class="col-xl-3 col-md-5  text-gray-1000">
+        <a class="nav-link" href="mensagens.html">
+        <div class="card h-100">
+          <div class="card-body"  style="background-color: #276359; border-radius: 10px;">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                
+                <div class="h5 mb-0 font-weight-bold  text-gray-1001">Mensagens</div>
+              
+              </div>
+              <div class="col-3">
+                <img class="imgss" src="img/clientes.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+  
+  
+</a>  
+
+
+
+
+
+
+
+
+
+ 
+</div>
+      </div>
+      
+
+      </a>
+
+
+      
+      
+      
+     
+     
+      
+      </div>   
+    </div>
+    
+  </a>  
+    </div>
+
+    <footer>
+
+      <div class="footer">
+<br><br>
+
+        </div>
+      </div>
+    </footer>
+  <!-- Scroll to top -->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  
+
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="js/ruang-admin.min.js"></script>
+  <script src="vendor/chart.js/Chart.min.js"></script>
+  <script src="js/demo/chart-area-demo.js"></script>  
+  <script src="vendor/jquery/jquery.min.js"></script>
+ 
+  <!-- Page level plugins -->
+  <script src="vendor/chart.js/Chart.min.js"></script>
+  <!-- Page level custom scripts -->
+  <script src="js/demo/chart-area-demo.js"></script>
+  <script src="js/demo/chart-pie-demo.js"></script>
+  <script src="js/demo/chart-bar-demo.js"></script>
+</body>
+
+</html>

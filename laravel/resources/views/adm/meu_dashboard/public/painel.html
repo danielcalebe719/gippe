@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="FEMDA" content="">
+  <link href="img/logo/logo.png" rel="icon">
+  <title>Gestão Financeira</title>
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="css/ruang-admin.min.css" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body id="page-top">
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="painel-financeiro.html">
+        <div class="sidebar-brand-icon">
+        <a class="nav-link" href="index.html">  
+          <img class='fas fa-fw fa-tachometer-alt'src="img/menu-img1.png" alt="">
+          <span class="text-gray-1000">Painel Financeiro</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#scroll-graficos">
+          <img class='fas fa-fw fa-tachometer-alt'src="img/menu-img2.png" alt="">
+          <span class="text-gray-1000">Relatórios Gráficos</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#scroll-apagar">
+          <img class='fas fa-fw fa-tachometer-alt'src="img/menu-img3.png" alt="">
+          <span class="text-gray-1000">À Pagar</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#scroll-areceber">
+          <img class='fas fa-fw fa-tachometer-alt'src="img/menu-img4.png" alt="">
+          <span class="text-gray-1000">À Receber</span></a>
+      </li>
+    </ul>
+    <!-- Sidebar -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <!-- TopBar -->
+        <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+          <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+          <h5 class="text-gray-1000">Olá, Nome da Pessoa!</h5>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                aria-labelledby="searchDropdown">
+                <form class="navbar-search">
+                  <div class="input-group">
+                    <input type="text" class="form-control bg-light border-1 small" placeholder="O que você está procurando?"
+                      aria-label="Search" aria-describedby="basic-addon2" style="border-color: #8ebba791">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </li>
+            <div class="topbar-divider d-none d-sm-block"></div>
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <img class="boyimg" src="img/boy.png" >
+              </a>
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Perfil
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Configurações
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Log de Atividade
+                </a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+        <!-- Topbar -->
+        <!-- Container Fluid-->
+        <div class="container-fluid" id="container-wrapper">
+          <div  class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-1000">Painel Financeiro</h1>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item" ><a style="color: #8ebba7;" href="./">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Painel Financeiro</li>
+            </ol>
+          </div>
+          <div class="row mb-3">
+            <!-- Á receber Card  -->
+            <div class="col-xl-3 col-md-6 mb-4 text-gray-1000" >
+              <div class="card h-100" >
+                <div class="card-body" style=" background-color: rgba(72, 223, 19, 0.6); border-radius: 10px;">
+                  <div class="row align-items-center">
+                    <div class="col mr-2">
+                      <div > À receber</div>
+                      <div class="h5 mb-0  text-gray-1000">R$0,00</div>
+                      <div  style="font-size: 11.5px;" class="mt-2 mb-0 text-muted text-xs text-gray-1000">
+                        <span class="text-gray-100 text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                        <span>Em relação ao último mês</span>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <img style="width: 50%;" src="img/Vector.png" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Á pagar Card-->
+            <div class="col-xl-3 col-md-6 mb-4 text-gray-1000" >
+              <div class="card h-100" >
+                <div class="card-body"  style="background-color: #f15858bb; border-radius: 10px;"  >
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2" >
+                      <div > À pagar</div>
+                      <div class="h5 mb-0  text-gray-1000">R$0,00</div>
+                      <div style="font-size: 11.5px;" class="mt-2 mb-0  text-xs ">
+                        <span class="text-gray-100 mr-2" ><i class="fas fa-arrow-down"></i> 1.10%</span>
+                        <span>Em relação ao último mês</span>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <img style="width: 50%;" src="img/Vector2.png" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- vendas mensal Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4 text-gray-1000" >
+              <div class="card h-100" >
+                <div class="card-body" style=" background-color: rgba(72, 223, 19, 0.6); border-radius: 10px;">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div > Vendas mensal</div>
+                      <div class="h5 mb-0  text-gray-1000">R$0,00</div>
+                      <div  style="font-size: 11.5px;" class="mt-2 mb-0 text-muted text-xs">
+                        <span class="text-gray-100 text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>
+                        <span>Em relação ao último mês</span>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <img style="width: 50%;" src="img/Vector3.png" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+            <!-- lucro Mensal Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4 text-gray-1000" >
+              <div class="card h-100" >
+                <div class="card-body"  style="background-color: #f15858bb; border-radius: 10px;" >
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div > Lucro mensal</div>
+                      <div class="h5 mb-0  text-gray-1000">R$0,00</div>
+                      <div  style="font-size: 11.5px;" class="mt-2 mb-0  text-xs ">
+                        <span class="text-gray-100 mr-2" ><i class="fas fa-arrow-down"></i> 5.42%</span>
+                        <span>Em relação ao último mês</span>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <img style="width: 50%;" src="img/Vector4.png" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="scroll-graficos" class="row mb-3">
+            <div class="col-xl-8 col-lg-7">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-gray-1000">Despesas Mensais</h6>
+                </div>
+                <div class="card-body">
+                  <div class="chart-area">
+                    <canvas id="despesasMensais"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-5">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-gray-1000">Receitas e Despesas</h6>
+                </div>
+                <div class="card-body">
+                  <div class="chart-pie pt-4">
+                    <canvas id="despesasMensais"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div id="scroll-apagar" class="row mb-3">
+            <div class="col-xl-12 col-lg-12">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-gray-1000">Despesas à Pagar</h6>
+                </div>
+                <div class="card-body">
+                  <div class="chart-bar">
+                    <canvas id="despesasPagar"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div id="scroll-areceber" class="row mb-3">
+            <div class="col-xl-12 col-lg-12">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-gray-1000">Receitas à Receber</h6>
+                </div>
+                <div class="card-body">
+                  <div class="chart-bar">
+                    <canvas id="receitasReceber"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal Logout -->
+          <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabelLogout">Ohh Não!</h5>
+                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>Você quer mesmo sair?</p>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-outline-primary" type="button" data-dismiss="modal">Cancelar</button>
+                  <a class="btn btn-primary" href="login.html">Sair</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!---Container Fluid-->
+        
+      </div>
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>copyright &copy; <script> document.write(new Date().getFullYear()); </script> - Painel Financeiro
+            </span>
+          </div>
+        </div>
+      </footer>
+      <!-- Footer -->
+    </div>
+  </div>
+     <img src="img/logo/logo.png">
+        </div>
+      </a>
+      <hr class="sidebar-divider my-0">
+      <li class="nav-item active">
+     
+  <!-- Scroll to top -->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="js/ruang-admin.min.js"></script>
+  <script src="vendor/chart.js/Chart.min.js"></script>
+
+  <script>
+    // Dados para os gráficos
+    const despesasMensaisData = {
+      labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+      datasets: [{
+        label: 'Despesas Mensais',
+        data: [1200, 1900, 3000, 500, 2000, 3000, 700, 1500, 1300, 2300, 2000, 1700],
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1
+      }]
+    };
+
+    const receitasDespesasData = {
+      labels: ['Receitas', 'Despesas'],
+      datasets: [{
+        label: 'Receitas e Despesas',
+        data: [5000, 4000],
+        backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+        borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+        borderWidth: 1
+      }]
+    };
+
+    const despesasPagarData = {
+      labels: ['Aluguel', 'Serviços', 'Salaries', 'Outros'],
+      datasets: [{
+        label: 'Despesas à Pagar',
+        data: [1000, 2000, 1500, 700],
+        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+        borderColor: 'rgba(255, 206, 86, 1)',
+        borderWidth: 1
+      }]
+    };
+
+    const receitasReceberData = {
+      labels: ['Vendas', 'Investimentos', 'Outros'],
+      datasets: [{
+        label: 'Receitas à Receber',
+        data: [3000, 2000, 1000],
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1
+      }]
+    };
+
+    // Opções para os gráficos
+    const options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    };
+
+    // Inicialização dos gráficos
+    window.onload = function () {
+      const ctxDespesasMensais = document.getElementById('despesasMensais').getContext('2d');
+      new Chart(ctxDespesasMensais, {
+        type: 'line',
+        data: despesasMensaisData,
+        options: options
+      });
+
+      const ctxReceitasDespesas = document.getElementById('receitasDespesas').getContext('2d');
+      new Chart(ctxReceitasDespesas, {
+        type: 'pie',
+        data: receitasDespesasData,
+        options: options
+      });
+
+      const ctxDespesasPagar = document.getElementById('despesasPagar').getContext('2d');
+      new Chart(ctxDespesasPagar, {
+        type: 'bar',
+        data: despesasPagarData,
+        options: options
+      });
+
+      const ctxReceitasReceber = document.getElementById('receitasReceber').getContext('2d');
+      new Chart(ctxReceitasReceber, {
+        type: 'bar',
+        data: receitasReceberData,
+        options: options
+      });
+    };
+  </script>
+</body>
+
+</html>
