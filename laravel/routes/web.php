@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ClienteController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,9 +46,7 @@ Route::get('adm/', function () {
     return view('adm.templates.template');
 });
 
-Route::get('adm/clientes', function () {
-    return view('adm.clientes');    
-});
+
 
 Route::get('adm/agendamentos', function () {
     return view('adm.agendamentos');    
@@ -94,5 +92,17 @@ Route::get('adm/servicos', function () {
 Route::get('/adm/financeiro', function () {
     return view('adm.painel-financeiro'); // Esta view pode conter um iframe ou um redirecionamento para a porta onde o servidor Node.js está rodando
 });
+
+
+
+
+Route::get('adm/clientes', [ClienteController::class, 'index']);
+Route::get('adm/clientes/{idClientes}', [ClienteController::class, 'show']);
+
+Route::put('adm/clientes/update/{idClientes}', [ClienteController::class, 'update'])->name('clientes.update');
+    
+
+
+
 
 

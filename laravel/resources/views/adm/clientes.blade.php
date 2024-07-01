@@ -3,6 +3,8 @@
 @section('title', 'Clientes')
 
 @section('content')
+
+
     <div class="container-fluid" id="container-wrapper">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Clientes</h1>
@@ -29,27 +31,46 @@
                                     <th>Data de nascimento</th>
                                     <th>STATUS</th>
                                     <th>Email</th>
-                                    <th>Senha</th>
+                                   
                                     <th>Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <!-- Aqui vai o conteúdo da tabela vindo do banco de dados -->
                                 <!-- Exemplo estático para ilustrar -->
-                                <tr>
-                                    <td>1</td>
-                                    <td>João Silva</td>
-                                    <td>123.456.789-00</td>
-                                    <td>01/01/1980</td>
-                                    <td>Ativo</td>
-                                    <td>joao.silva@example.com</td>
-                                    <td>••••••••</td>
-                                    <td>
-                                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarCliente">Editar</button>
-                                        <button class="btn btn-danger btn-sm" onclick="excluirCliente(1)">Excluir</button>
-                                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalDetalhesCliente">Detalhes</button>
-                                    </td>
+                                @foreach($clientes as $cliente)
+                <tr>
+                    <td>{{ $cliente->idClientes }}</td>
+                    <td>{{ $cliente->nome }}</td>
+                    <td>{{ $cliente->cpf }}</td>
+                    <td>{{ $cliente->dataNascimento }}</td>
+                    <td>{{ $cliente->status }}</td>
+                    <td>{{ $cliente->email }}</td>
+                  
+                
+                    <td>
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">
+            <button class="btn btn-primary btn-sm"  onclick="carregarDadosParaEdicao('{{ $cliente->idClientes }}')" data-toggle="modal" data-target="#modalEditarCliente">
+                Editar
+            </button>
+        </div>
+        <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">
+            <button class="btn btn-danger btn-sm" onclick="excluirCliente(1)">
+                Excluir
+            </button>
+        </div>
+        <div class="btn-group" role="group" aria-label="Ações do Cliente">
+            <button class="btn btn-info btn-sm" onclick="mostrarDetalhes('{{ $cliente->idClientes }}')" data-toggle="modal" data-target="#modalDetalhesCliente">
+                Detalhes
+            </button>
+        </div>
+    </div>
+</td>
+
+
                                 </tr>
+                                @endforeach
                                 <!-- Fim do exemplo -->
                             </tbody>
                         </table>
@@ -108,60 +129,85 @@
             </div>
         </div>
 
-        <!-- Modal Editar Cliente -->
-        <div class="modal fade" id="modalEditarCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Editar Cliente</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+<!-- Modal Editar Cliente -->
+<div class="modal fade" id="modalEditarCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar Cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <form id="formEditarCliente" method="POST" action="{{ route('clientes.update', ['idClientes' => $cliente->idClientes]) }}">
+    @csrf
+    @method('PUT')
+                    <input type="hidden" id="editarIdCliente" name="idCliente">
+
+                    <div class="form-group row">
+                        <label for="editarNome" class="col-sm-3 col-form-label">Nome:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="editarNome" name="nome">
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <form id="formEditarCliente">
-                            <div class="form-group">
-                                <label for="editNome">Nome</label>
-                                <input type="text" class="form-control" id="editNome" name="nome" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="editCpf">CPF</label>
-                                <input type="text" class="form-control" id="editCpf" name="cpf" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="editDataNascimento">Data de Nascimento</label>
-                                <input type="date" class="form-control" id="editDataNascimento" name="dataNascimento" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="editStatus">Status</label>
-                                <select class="form-control" id="editStatus" name="status" required>
-                                    <option value="ativo">Ativo</option>
-                                    <option value="inativo">Inativo</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="editEmail">Email</label>
-                                <input type="email" class="form-control" id="editEmail" name="email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="editSenha">Senha</label>
-                                <input type="password" class="form-control" id="editSenha" name="senha" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="editImgPerfil">Imagem de Perfil</label>
-                                <input type="file" class="form-control-file" id="editImgPerfil" name="imgPerfil">
-                            </div>
-                            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalVisualizarEndereco">Visualizar Endereço</button>
-                            <button class="btn btn-primary btn-sm" id="btnAdicionarEndereco">Adicionar Novo Endereço ao Cliente</button>
-                            <button type="submit" class="btn btn-primary">Salvar</button>
-                        </form>
+                    <div class="form-group row">
+                        <label for="editarCPF" class="col-sm-3 col-form-label">CPF:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="editarCPF" name="cpf">
+                        </div>
                     </div>
-                </div>
+                    <div class="form-group row">
+                        <label for="editarDataNascimento" class="col-sm-3 col-form-label">Data de Nascimento:</label>
+                        <div class="col-sm-9">
+                            <input type="date" class="form-control" id="editarDataNascimento" name="dataNascimento">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="editarStatus" class="col-sm-3 col-form-label">Status:</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="editarStatus" name="status">
+                                <option value="ativo">Ativo</option>
+                                <option value="inativo">Inativo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="editarEmail" class="col-sm-3 col-form-label">Email:</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" id="editarEmail" name="email">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="editarSenha" class="col-sm-3 col-form-label">Senha:</label>
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control" id="editarSenha" name="senha">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="editarTelefone" class="col-sm-3 col-form-label">Telefone:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="editarTelefone" name="telefone">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="editarImgCaminho" class="col-sm-3 col-form-label">Imagem de Perfil:</label>
+                        <div class="col-sm-9">
+                            <input type="file" class="form-control-file" id="editarImgCaminho" name="imgCaminho">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info" data-dismiss="modal">Editar Endereço</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                    </div>
+                </form>
             </div>
         </div>
-
-        <!-- Modal Detalhes Cliente -->
-        <div class="modal fade" id="modalDetalhesCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    </div>
+</div>
+  <!-- Modal Detalhes Cliente -->
+  <div class="modal fade" id="modalDetalhesCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -171,6 +217,12 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                        <div class="form-group row">
+                            <label for="detalhesId" class="col-sm-3 col-form-label">ID:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="detalhesId" readonly>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label for="detalhesNome" class="col-sm-3 col-form-label">Nome:</label>
                             <div class="col-sm-9">
@@ -202,15 +254,100 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="detalhesImgPerfil" class="col-sm-3 col-form-label">Imagem de Perfil:</label>
+                            <label for="detalhesSenha" class="col-sm-3 col-form-label">Senha:</label>
                             <div class="col-sm-9">
-                                <img id="detalhesImgPerfil" src="" class="img-fluid">
+                                <input type="text" class="form-control" id="detalhesSenha" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="detalhesDataCadastro" class="col-sm-3 col-form-label">Data de Cadastro:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="detalhesDataCadastro" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="detalhesDataAtualizacao" class="col-sm-3 col-form-label">Data de Atualização:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="detalhesDataAtualizacao" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="detalhesDataRemocao" class="col-sm-3 col-form-label">Data de Remoção:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="detalhesDataRemocao" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="detalhesImgCaminho" class="col-sm-3 col-form-label">Imagem de Perfil:</label>
+                            <div class="col-sm-9">
+                                <img id="detalhesImgCaminho" src="" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="detalhesTelefone" class="col-sm-3 col-form-label">Telefone:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="detalhesTelefone" readonly>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <script>
+function mostrarDetalhes(idCliente) {
+    // Faça uma requisição AJAX para obter os detalhes do cliente
+    fetch(`/adm/clientes/${idCliente}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao carregar os detalhes do cliente');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Preencha os campos do modal com os dados do cliente
+            document.getElementById('detalhesId').value = data.idClientes;
+            document.getElementById('detalhesNome').value = data.nome;
+            document.getElementById('detalhesCPF').value = data.cpf;
+            document.getElementById('detalhesDataNascimento').value = data.dataNascimento ? formatarData(data.dataNascimento) : '';
+            document.getElementById('detalhesDataCadastro').value = data.dataCadastro ? formatarData(data.dataCadastro) : '';
+            document.getElementById('detalhesDataAtualizacao').value = data.dataAtualizacao ? formatarData(data.dataAtualizacao) : '';
+            document.getElementById('detalhesStatus').value = data.status;
+            document.getElementById('detalhesEmail').value = data.email;
+            document.getElementById('detalhesTelefone').value = data.telefone;
+            
+            // Exibir apenas parte da senha
+            let senhaOculta = '*'.repeat(data.senha.length - 3) + data.senha.slice(-3); // Exibe apenas os últimos 3 caracteres
+            document.getElementById('detalhesSenha').value = senhaOculta;
+            
+            document.getElementById('detalhesImgPerfil').src = 'GaleriaImagens/' + data.imgCaminho;
+            
+            // Abra o modal de detalhes do cliente
+            $('#modalDetalhesCliente').modal('show');
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os detalhes do cliente:', error);
+        });
+}
+
+function formatarData(data) {
+    // Formato de exibição de data desejado
+    let options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(data).toLocaleDateString('pt-BR', options);
+}
+
+
+
+
+
+
+
+
+</script>
+
+
+
 
         <!-- Modal Adicionar Endereço -->
         <div class="modal fade" id="modalAdicionarEndereco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -331,4 +468,35 @@
             </div>
         </div>
     </div>
+    <script>
+function carregarDadosParaEdicao(idCliente) {
+    fetch(`/adm/clientes/${idCliente}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao carregar os detalhes do cliente');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Preencher os campos do formulário com os dados do cliente
+            document.getElementById('editarIdCliente').value = data.idClientes;
+            document.getElementById('editarNome').value = data.nome;
+            document.getElementById('editarCPF').value = data.cpf;
+            document.getElementById('editarDataNascimento').value = data.dataNascimento;
+            document.getElementById('editarStatus').value = data.status;
+            document.getElementById('editarEmail').value = data.email;
+            document.getElementById('editarTelefone').value = data.telefone;
+            document.getElementById('editarImgCaminho').src = 'GaleriaImagens' + data.imgCaminho;
+
+            // Abrir o modal de edição do cliente
+            $('#modalEditarCliente').modal('show');
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os detalhes do cliente:', error);
+        });
+}
+
+
+
+</script>
 @endsection
