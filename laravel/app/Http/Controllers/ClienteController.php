@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cliente;
-
+use Illuminate\Support\Carbon;
 class ClienteController extends Controller
 {
     public function index()
@@ -52,5 +52,50 @@ class ClienteController extends Controller
         }
     }
     
+
+    public function store(Request $request)
+    {
+        // Validação dos dados do formulário
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'cpf' => 'required|string|unique:clientes|max:14',
+            'dataNascimento' => 'required|date',
+            'status' => 'required|in:ativo,inativo',
+            'email' => 'required|string|email|unique:clientes|max:255',
+            'senha' => 'required|string|min:6',
+            'imgPerfil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Upload da imagem de perfil, se fornecida
+        if ($request->hasFile('imgPerfil')) {
+            $path = $request->file('imgPerfil')->store('public/GaleriaImagens');
+            $imgCaminho = basename($path);
+        } else {
+            $imgCaminho = null;
+        }
+
+        // Criação do cliente no banco de dados
+       
+
+// ...
+
+$cliente = new Cliente();
+$cliente->nome = $request->nome;
+$cliente->cpf = $request->cpf;
+$cliente->dataNascimento = $request->dataNascimento;
+$cliente->status = $request->status;
+$cliente->email = $request->email;
+$cliente->senha = bcrypt($request->senha); // Recomendado para armazenamento seguro da senha
+$cliente->imgCaminho = $imgCaminho;
+
+$dataAtual = Carbon::now();
+$cliente->dataCadastro = $dataAtual;    
+$cliente->dataAtualizacao = $dataAtual;
+
+$cliente->save();
+
+        // Redirecionamento ou resposta de sucesso
+        return redirect()->back()->with('success', 'Cliente adicionado com sucesso!');
+    }
 
 }

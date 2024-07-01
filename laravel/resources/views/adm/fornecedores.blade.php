@@ -19,6 +19,7 @@
                                     <h6 class="m-0 font-weight-bold text-primary">Fornecedores</h6>
                                     <button class="btn btn-primary" data-toggle="modal" data-target="#modalAdicionarFornecedor">Adicionar Fornecedor</button>
                                 </div>
+                                
                                 <div class="table-responsive p-3">
                                     <table class="table align-items-center table-flush table-hover" id="dataTableHover">
                                         <thead class="thead-light">
@@ -58,6 +59,8 @@
                             </div>
                         </div>
                     </div>
+
+                    
 
                     <!-- Modal Adicionar Fornecedor -->
                     <div class="modal fade" id="modalAdicionarFornecedor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

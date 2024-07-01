@@ -95,11 +95,28 @@ Route::get('/adm/financeiro', function () {
 
 
 
+//exemplo cargos
+Route::prefix('/cargos')->group(function () {
+    Route::get('/', 'App\Http\Controllers\Administrativo\CargosController@index');
+    Route::get('/cadastro', 'App\Http\Controllers\Administrativo\CargosController@cadastro');
+    Route::get('/cadastro/{id}', 'App\Http\Controllers\Administrativo\CargosController@cadastro');
+    Route::get('/remover/{id}', 'App\Http\Controllers\Administrativo\CargosController@remover');
+    Route::post('/salvar', 'App\Http\Controllers\Administrativo\CargosController@salvar');
+});
 
-Route::get('adm/clientes', [ClienteController::class, 'index']);
-Route::get('adm/clientes/{idClientes}', [ClienteController::class, 'show']);
+//aplique aqui
+// Rotas para clientes
+Route::prefix('adm/clientes')->group(function () {
+    Route::get('/', [ClienteController::class, 'index']);
+    Route::get('/{idClientes}', [ClienteController::class, 'show']);
+    Route::get('/{idClientes}', [ClienteController::class, 'update'])->name('clientes.update');
+    Route::post('/store', [ClienteController::class, 'store'])->name('clientes.store');
+    Route::get('/show/{idClientes}', [ClienteController::class, 'show']);
+});
 
-Route::put('adm/clientes/update/{idClientes}', [ClienteController::class, 'update'])->name('clientes.update');
+
+
+
     
 
 
