@@ -101,18 +101,21 @@ Route::prefix('/cargos')->group(function () {
     Route::get('/cadastro', 'App\Http\Controllers\Administrativo\CargosController@cadastro');
     Route::get('/cadastro/{id}', 'App\Http\Controllers\Administrativo\CargosController@cadastro');
     Route::get('/remover/{id}', 'App\Http\Controllers\Administrativo\CargosController@remover');
-    Route::post('/salvar', 'App\Http\Controllers\Administrativo\CargosController@salvar');
 });
 
 //aplique aqui
 // Rotas para clientes
+
+// Rotas para clientes
+
 Route::prefix('adm/clientes')->group(function () {
-    Route::get('/', [ClienteController::class, 'index']);
-    Route::get('/{idClientes}', [ClienteController::class, 'show']);
-    Route::get('/{idClientes}', [ClienteController::class, 'update'])->name('clientes.update');
-    Route::post('/store', [ClienteController::class, 'store'])->name('clientes.store');
-    Route::get('/show/{idClientes}', [ClienteController::class, 'show']);
+    Route::get('/', [ClienteController::class, 'index'])->name('clientes.index');
+    Route::get('/show/{idClientes}', [ClienteController::class, 'show'])->name('clientes.show');
+    Route::post('/guardar', 'App\Http\Controllers\ClienteController@guardar');
+    Route::get('/remover/{idClientes}', 'App\Http\Controllers\ClienteController@remover');
 });
+
+
 
 
 

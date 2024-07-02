@@ -14,6 +14,7 @@ class Cliente extends Model
     protected $fillable = [   
         'nome', 
         'cpf', 
+        'telefone'.
         'data_de_nascimento', 
         'status', 
         'email', 
@@ -21,8 +22,17 @@ class Cliente extends Model
         'dataCadastro',
         'dataAtualizacao',
         'dataRemocao',
-        'imgCaminho',
-        'telefone'
+        'imgCaminho'
         // Adicione outros campos aqui
     ];
+    public $timestamps = false;
+
+
+    public function pedidos(){
+        return $this->hasMany(Pedido::class,'idClientes','id');
+    }
+
+
 }
+
+

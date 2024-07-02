@@ -200,7 +200,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="Editcomplemento">Complemento</label>
-                                            <input type="text" class="form-control" id=Edit"complemento" name="complemento" required>
+                                            <input type="text" class="form-control" id="Editcomplemento" name="complemento" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="Editstatus">Status</label>
