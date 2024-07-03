@@ -1,10 +1,6 @@
     @extends('adm.templates.template')
-
     @section('title', 'Clientes')
-
     @section('content')
-
-
     <div class="container-fluid" id="container-wrapper">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Clientes</h1>
@@ -36,8 +32,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Aqui vai o conteúdo da tabela vindo do banco de dados -->
-                                <!-- Exemplo estático para ilustrar -->
                                 @foreach($clientes as $cliente)
                                 <tr>
                                     <td>{{ $cliente->idClientes }}</td>
@@ -95,7 +89,6 @@
                     <div class="modal-body">
                         <form id="formAdicionarCliente" action="/adm/clientes/guardar" method="POST" enctype="multipart/form-data">
                             @csrf
-
                             <div class="form-group">
                                 <label for="nome">Nome</label>
                                 <input type="text" class="form-control" id="nome" name="nome" required>
@@ -163,91 +156,8 @@
             </div>
         </div>
 
-        <script>
-            // Função para abrir o modal de confirmação de exclusão
-            function abrirModalExclusao(idCliente) {
-                document.getElementById('excluirIdCliente').value = idCliente;
-                $('#modalConfirmarExclusao').modal('show');
-            }
-
-            // Função para confirmar a exclusão
-            document.getElementById('confirmarExclusao').addEventListener('click', function() {
-                var idCliente = document.getElementById('excluirIdCliente').value;
-
-                // Enviar requisição AJAX para excluir o cliente
-                fetch(`/adm/clientes/remover/${idCliente}`, {
-                        method: 'GET',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        }
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Erro ao excluir o cliente');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        // Fechar o modal de confirmação de exclusão
-                        $('#modalConfirmarExclusao').modal('hide');
-
-                        // Remover a linha do cliente na tabela, se existir
-                        let clienteRow = document.getElementById(`clienteRow${idCliente}`);
-                        if (clienteRow) {
-                            clienteRow.remove();
-                        } else {
-                            console.warn(`Elemento clienteRow${idCliente} não encontrado para remoção.`);
-                        }
-
-                        // Exibir mensagem de sucesso
-                        location.replace(location.href)
-
-                    })
-                    .catch(error => {
-
-                        console.error('Erro ao excluir o cliente:', error);
-                        alert('Erro ao excluir o clienteeeeeeee');
-                    });
-            });
 
 
-            // Função para excluir o cliente sem modal de confirmação
-            function excluirCliente(idCliente) {
-
-                if (confirm('Tem certeza que deseja excluir este cliente?')) {
-
-                    return false;
-                    fetch(`/adm/clientes/remover/${idCliente}`, {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                            }
-                        })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Erro ao excluir o cliente');
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            location.replace(location.href)
-                            console.log('Cliente excluído com sucesso:', data.message);
-
-                            let clienteRow = document.getElementById(`clienteRow${idCliente}`);
-                            if (clienteRow) {
-                                clienteRow.remove();
-                            } else {
-                                console.warn(`Elemento clienteRow${idCliente} não encontrado para remoção.`);
-                            }
-                        })
-                        .catch(error => {
-                            console.log(error);
-                            console.error('Erro ao excluir o cliente:', error);
-                        });
-                }
-            }
-        </script>
 
         <!-- Modal Editar Cliente -->
         <div class="modal fade" id="modalEditarCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -298,12 +208,12 @@
                                     <input type="email" class="form-control" id="editarEmail" name="email">
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <label for="editarSenha" class="col-sm-3 col-form-label">Senha:</label>
                                 <div class="col-sm-9">
                                     <input type="password" class="form-control" id="editarSenha" name="senha">
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="form-group row">
                                 <label for="editarTelefone" class="col-sm-3 col-form-label">Telefone:</label>
                                 <div class="col-sm-9">
@@ -389,11 +299,11 @@
                             </div>
                         </div>
                         <div class="form-group">
-    <label for="detalhesImgPerfil">Imagem de Perfil</label><br>
-    <div class="img-container">
-        <img id="detalhesImgCaminho" src="" class="img-fluid img-thumbnail" alt="Imagem de Perfil" style="max-width: 200px;">
-    </div>
-</div>
+                            <label for="detalhesImgPerfil">Imagem de Perfil</label><br>
+                            <div class="img-container">
+                                <img id="detalhesImgCaminho" src="" class="img-fluid img-thumbnail" alt="Imagem de Perfil" style="max-width: 200px;">
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label for="detalhesTelefone" class="col-sm-3 col-form-label">Telefone:</label>
@@ -405,7 +315,96 @@
                 </div>
             </div>
         </div>
+
+
+
+
         <script>
+            // Função para abrir o modal de confirmação de exclusão
+            function abrirModalExclusao(idCliente) {
+                document.getElementById('excluirIdCliente').value = idCliente;
+                $('#modalConfirmarExclusao').modal('show');
+            }
+
+            // Função para confirmar a exclusão
+            document.getElementById('confirmarExclusao').addEventListener('click', function() {
+                var idCliente = document.getElementById('excluirIdCliente').value;
+
+                // Enviar requisição AJAX para excluir o cliente
+                fetch(`/adm/clientes/remover/${idCliente}`, {
+                        method: 'GET',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erro ao excluir o cliente');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Fechar o modal de confirmação de exclusão
+                        $('#modalConfirmarExclusao').modal('hide');
+
+                        // Remover a linha do cliente na tabela, se existir
+                        let clienteRow = document.getElementById(`clienteRow${idCliente}`);
+                        if (clienteRow) {
+                            clienteRow.remove();
+                        } else {
+                            console.warn(`Elemento clienteRow${idCliente} não encontrado para remoção.`);
+                        }
+
+                        // Exibir mensagem de sucesso
+                        location.replace(location.href)
+
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        console.error('Erro ao excluir o cliente:', error);
+                        alert('Erro ao excluir o clienteeeeeeee');
+                    });
+            });
+
+
+            // Função para excluir o cliente sem modal de confirmação
+            function excluirCliente(idCliente) {
+
+                if (confirm('Tem certeza que deseja excluir este cliente?')) {
+
+                    return false;
+                    fetch(`/adm/clientes/remover/${idCliente}`, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            }
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Erro ao excluir o cliente');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            location.replace(location.href)
+                            console.log('Cliente excluído com sucesso:', data.message);
+
+                            let clienteRow = document.getElementById(`clienteRow${idCliente}`);
+                            if (clienteRow) {
+                                clienteRow.remove();
+                            } else {
+                                console.warn(`Elemento clienteRow${idCliente} não encontrado para remoção.`);
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            console.error('Erro ao excluir o cliente:', error);
+                        });
+                }
+            }
+
+            //Preencher os campos do moodal detalhes
             function mostrarDetalhes(idCliente) {
                 fetch(`/adm/clientes/show/${idCliente}`)
                     .then(response => {
@@ -419,19 +418,20 @@
                         document.getElementById('detalhesId').value = data.idClientes || '';
                         document.getElementById('detalhesNome').value = data.nome || '';
                         document.getElementById('detalhesCPF').value = data.cpf || '';
-                        document.getElementById('detalhesDataNascimento').value = data.dataNascimento ? formatarData(data.dataNascimento) : '';
-                        document.getElementById('detalhesDataCadastro').value = data.dataCadastro ? formatarData(data.dataCadastro) : '';
-                        document.getElementById('detalhesDataAtualizacao').value = data.dataAtualizacao ? formatarData(data.dataAtualizacao) : '';
+                        document.getElementById('detalhesDataNascimento').value = formatarDataEdit(data.dataNascimento) || '';
+                        document.getElementById('detalhesDataCadastro').value =  formatarDataEdit(data.dataCadastro) || '';
+                        document.getElementById('detalhesDataAtualizacao').value = formatarDataEdit(data.dataAtualizacao) || '';
                         document.getElementById('detalhesStatus').value = data.status || '';
                         document.getElementById('detalhesEmail').value = data.email || '';
                         document.getElementById('detalhesTelefone').value = data.telefone || ''; // Verifique se 'telefone' está corretamente definido em 'data'
 
+
                         // Exibir apenas parte da senha ou string vazia se não houver senha
-                        
+
 
                         // Atualizar a imagem de perfil ou usar uma imagem padrão caso o caminho seja nulo
-                        let imgPath = data.imgCaminho ? `/storage/GaleriaImagens/${data.imgCaminho}` : '/storage/padrao.png';
-document.getElementById('detalhesImgCaminho').src = imgPath;    
+                        let imgPath = data.imgCaminho ? `/storage/GaleriaImagens/${data.imgCaminho}` : '/storage/GaleriaImagens/padrao.png';
+                        document.getElementById('detalhesImgCaminho').src = imgPath;
 
                         // Abra o modal de detalhes do cliente
                         $('#modalDetalhesCliente').modal('show');
@@ -452,12 +452,71 @@ document.getElementById('detalhesImgCaminho').src = imgPath;
                 };
                 return new Date(data).toLocaleDateString('pt-BR', options);
             }
+
+
+
+
+
+
+            function formatarDataEdit(dataString) {
+                // Verifica se a dataString está no formato esperado "yyyy-mm-dd"
+                if (!dataString) return '';
+
+                // A data já está no formato correto, não é necessário fazer split
+                return dataString;
+            }
+
+            function carregarDadosParaEdicao(idCliente) {
+                fetch(`/adm/clientes/show/${idCliente}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erro ao carregar os detalhes do cliente');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('API Response:', data); // Log the API response
+
+                        // Preencher os campos do formulário com os dados do cliente
+                        document.getElementById('editarIdCliente').value = data.idClientes || '';
+                        document.getElementById('editarNome').value = data.nome || '';
+                        document.getElementById('editarCPF').value = data.cpf || '';
+
+                        // Format the date for display
+                        let dataFormatada = data.dataNascimento ? formatarDataEdit(data.dataNascimento) : '';
+                        console.log('Formatted Date:', dataFormatada); // Log the formatted date
+                        document.getElementById('editarDataNascimento').value = dataFormatada || '';
+
+                        document.getElementById('editarStatus').value = data.status || '';
+                        document.getElementById('editarEmail').value = data.email || '';
+                        document.getElementById('editarTelefone').value = data.email || '';
+
+                        //document.getElementById('editarSenha').value = data.senha;
+
+                        document.getElementById('editarTelefone').value = data.telefone || '';
+                        //document.getElementById('editarImgCaminho').src = 'GaleriaImagens/' + data.imgCaminho || '';
+
+                        // Abrir o modal de edição do cliente
+                        $('#modalEditarCliente').modal('show');
+                    })
+                    .catch(error => {
+                        console.error('Erro ao carregar os detalhes do cliente:', error);
+                    });
+            }
+
+            $(document).ready(function() {
+                $('#dataTableHover').DataTable(); // Initialize the DataTable
+            });
         </script>
 
+        @endsection
 
 
-        <!-- Modal Adicionar Endereço -->
-        <div class="modal fade" id="modalAdicionarEndereco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+
+        <!-- Modal Adicionar Endereço 
+            <div class="modal fade" id="modalAdicionarEndereco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -517,7 +576,7 @@ document.getElementById('detalhesImgCaminho').src = imgPath;
             </div>
         </div>
 
-        <!-- Modal Visualizar Endereço -->
+        <!-- Modal Visualizar Endereço 
         <div class="modal fade" id="modalVisualizarEndereco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -574,74 +633,4 @@ document.getElementById('detalhesImgCaminho').src = imgPath;
                 </div>
             </div>
         </div>
-    </div>
-    <script>
-        function carregarDadosParaEdicao(idCliente) {
-            fetch(`/adm/clientes/show/${idCliente}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Erro ao carregar os detalhes do cliente');
-                    }
-                    return response.json();
-                    console.log(data)   
-                })
-                .then(data => {
-                    console.log(data)
-                    // Preencher os campos do formulário com os dados do cliente
-                    document.getElementById('editarIdCliente').value = data.idClientes;
-                    document.getElementById('editarNome').value = data.nome;
-                    document.getElementById('editarCPF').value = data.cpf;
-                    document.getElementById('editarDataNascimento').value = data.dataNascimento ? formatarDataEdit(data.dataNascimento) : '';
-
-                    document.getElementById('editarStatus').value = data.status;
-                    document.getElementById('editarEmail').value = data.email;
-                    document.getElementById('editarTelefone').value = data.telefone;
-                    document.getElementById('editarImgCaminho').src = 'GaleriaImagens' + data.imgCaminho;
-
-
-
-
-
-                    // Abrir o modal de edição do cliente
-                    $('#modalEditarCliente').modal('show');
-                })
-                .catch(error => {
-                    console.error('Erro ao carregar os detalhes do cliente:', error);
-                });
-        }
-        function formatarDataEdit(dataString) {
-    // Verifica se a dataString está no formato "dd/mm/aaaa"
-    if (!dataString) return '';
-
-    let partesData = dataString.split('/');
-    if (partesData.length !== 3) return ''; // Verifica o formato esperado
-
-    // Constrói a data no formato "yyyy-mm-dd" para compatibilidade com o servidor
-    let dataFormatada = `${partesData[2]}-${partesData[1]}-${partesData[0]}`;
-    
-    return dataFormatada;
-}
-
-    </script>
-
-
-
-
-
-
-
-    <script>
-        // $(document).ready(function () {
-        //     // Abrir o modal de detalhes ao clicar no botão
-        //     $('#dataTableHover').on('click', '.btn-detalhes', function () {
-        //         $('#modalDetalhesPedido').modal('show');
-        //     });
-        // });
-
-
-        $(document).ready(function() {
-            $('#dataTableHover').DataTable(); // Initialize the DataTable
-        });
-    </script>
-
-    @endsection
+    </div>-->

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\Adm\ClienteController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -87,13 +87,20 @@ Route::get('adm/receitasItens', function () {
 Route::get('adm/servicos', function () {
     return view('adm.servicos');    
 });
+Route::get('adm/colaboradores', function () {
+    return view('adm.colaboradores');    
+});
+
+
 
 
 Route::get('/adm/financeiro', function () {
     return view('adm.painel-financeiro'); // Esta view pode conter um iframe ou um redirecionamento para a porta onde o servidor Node.js está rodando
 });
 
-
+Route::get('/j', function () {
+    return view('website.templates.menu');    
+});
 
 //exemplo cargos
 Route::prefix('/cargos')->group(function () {
@@ -111,8 +118,8 @@ Route::prefix('/cargos')->group(function () {
 Route::prefix('adm/clientes')->group(function () {
     Route::get('/', [ClienteController::class, 'index'])->name('clientes.index');
     Route::get('/show/{idClientes}', [ClienteController::class, 'show'])->name('clientes.show');
-    Route::post('/guardar', 'App\Http\Controllers\ClienteController@guardar');
-    Route::get('/remover/{idClientes}', 'App\Http\Controllers\ClienteController@remover');
+    Route::post('/guardar', 'App\Http\Controllers\Adm\ClienteController@guardar');
+    Route::get('/remover/{idClientes}', 'App\Http\Controllers\Adm\ClienteController@remover');
 });
 
 

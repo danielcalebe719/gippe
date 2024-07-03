@@ -120,6 +120,12 @@
                     <span class="text-gray-1000">Galeria de Imagens</span>
                 </a>
             </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{url('adm/colaboradores')}}">
+                    <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/fornecedores.png') }}" alt="">
+                    <span class="text-gray-1000">Colaboradores</span>
+                </a>
+            </li>
         </div>
         <div id="financeiro">
     <hr class="sidebar-divider my-0">
@@ -206,7 +212,7 @@
 
         <script src="{{ asset('assets/vendor_adm/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/vendor_adm/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor_adm/jquery-easing/jquery.easing.min.js') }}"></script>
+<!--  <script src="{{ asset('assets/vendor_adm/jquery-easing/jquery.easing.min.js') }}"></script>-->
     <script src="{{ asset('assets/js/js_adm/ruang-admin.min.js') }}"></script>
     <script src="{{ asset('assets/vendor_adm/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/vendor_adm/datatables/dataTables.bootstrap4.min.js') }}"></script>

@@ -1,57 +1,61 @@
 <?php
+namespace App\Http\Controllers\Adm;
 
-namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Cliente;
+use App\Models\Clientes;
 use App\Models\EnderecosClientes;
 use App\Models\NotificacoesClientes;
 use App\Models\Pedido;
+use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+
 
 class ClienteController extends Controller
 {
     public function index()
     {
-        $clientes = Cliente::all();
+        $clientes = Clientes::all();
         return view('adm.clientes', compact('clientes'));
     }
 
     public function show($idClientes)
     {
-        $cliente = Cliente::find($idClientes);
+        $cliente = Clientes::find($idClientes);
+        
         if ($cliente) {
+
+            
             return response()->json($cliente);
         } else {
             return response()->json(['error' => 'Cliente não encontrado'], 404);
         }
     }
-
-
-
-
+    
+    
     public function guardar(Request $request)
     {
         // Validação dos dados
-        $request->validate([
-            'nome' => 'string|max:255',
-            'cpf' => 'string|max:14|unique:clientes,cpf,' . $request->idCliente . ',idClientes',
-            'dataNascimento' => 'date', // Removido o caractere extra antes de date
-            'status' => 'string|in:ativo,inativo',
-            'email' => 'email|max:255|unique:clientes,email,' . $request->idCliente . ',idClientes',
-            'senha' => 'string|min:6',
-            'telefone' => 'string|max:20',
-            'imgCaminho' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        /*$request->validate([
+            'nome' => 'nullable|string|max:255',
+            'cpf' => 'nullable|string|max:14|unique:clientes,cpf,' . $request->idCliente . ',idClientes',
+            'dataNascimento' => 'nullable|date',
+            'status' => 'nullable|string|in:ativo,inativo',
+            'email' => 'nullable|email|max:255|unique:clientes,email,' . $request->idCliente . ',idClientes',
+            'senha' => 'nullable|string|min:6',
+            'telefone' => 'nullable|string|max:20',
+            // 'imgCaminho' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);*/   
     
         try {
-            if ($request->idCliente) {
-                $cliente = Cliente::findOrFail($request->idCliente);
-            } else {
-                $cliente = new Cliente();
-            }
+            // Busca ou cria um novo cliente
+            $cliente = $request->idCliente ? Clientes::findOrFail($request->idCliente) : new Clientes();
+    
+            // Preenche os outros campos do cliente
             $cliente->nome = $request->input('nome');
             $cliente->cpf = $request->input('cpf');
             $cliente->dataNascimento = $request->input('dataNascimento');
@@ -59,35 +63,40 @@ class ClienteController extends Controller
             $cliente->email = $request->input('email');
             $cliente->telefone = $request->input('telefone');
     
+            // Verifica se foi fornecida uma nova senha
+            if ($request->filled('senha')) {
+                $cliente->senha = Hash::make($request->input('senha'));
+            }
     
-            $senha = $request->input('senha');
-            if (!empty($senha)) {
-                $cliente->senha = bcrypt($senha);
-            } 
-    
-            $cliente->telefone = $request->input('telefone');
-    
+            // Trata o upload da imagem, se fornecida
             if ($request->hasFile('imgCaminho')) {
-                if ($cliente->imgCaminho) {
+                // Deleta a imagem antiga, se existir
+                if ($cliente->imgCaminho && Storage::exists('public/GaleriaImagens/' . $cliente->imgCaminho)) {
                     Storage::delete('public/GaleriaImagens/' . $cliente->imgCaminho);
                 }
                 
+                // Armazena a nova imagem
                 $path = $request->file('imgCaminho')->store('public/GaleriaImagens');
                 $cliente->imgCaminho = basename($path);
             }
     
-            $cliente->dataAtualizacao = Carbon::now();
-            $cliente->save();
+            // Atualiza o timestamp de atualização
+            $cliente->dataAtualizacao = now();  
     
+            // Salva o cliente
+            $cliente->save();
+            
             return redirect()->back()->with('success', 'Cliente adicionado/atualizado com sucesso!');
             
         } catch (\Exception $e) {
+            // Loga o erro para fins de debug
+            Log::error('Erro ao atualizar o cliente: ' . $e->getMessage());
             return response()->json(['error' => 'Erro ao atualizar o cliente: ' . $e->getMessage()], 500);
         }
     }
     
-
-
+    
+    
 
 
 
@@ -106,9 +115,9 @@ class ClienteController extends Controller
 
             $notificacoesclientes = NotificacoesClientes::where('idClientes',$idCliente)->delete();
             $enderecosclientes = EnderecosClientes::where('idClientes',$idCliente)->delete();
-            //$pedido = Pedido::where('idClientes',$idCliente)->delete();
-            $cliente = Cliente::findOrFail($idCliente);
-            $cliente->pedidos->delete();
+            $pedido = Pedido::where('idClientes',$idCliente)->delete();
+            $cliente = Clientes::findOrFail($idCliente);
+           
             
             // Excluir a imagem associada, se existir
             if ($cliente->imgCaminho) {

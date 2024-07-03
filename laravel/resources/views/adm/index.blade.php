@@ -1,3 +1,4 @@
+<!--test-->
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -26,11 +27,8 @@
     
     </div>
     
-    <div class="input-group forgot-password">
-      <button class="quad"></button> <a href="#" > Lembre senha</a>
-      <a href="#" style="padding-left: 17%;">Esqueci a senha</a>
-    </div>
-    
+
+
     <button class="submit-button" type="submit"  >Entrar</button>
   </form>
     <div  class="separation-line1"></div>

@@ -16,7 +16,8 @@
             <h2>Cadastre-se para descobrir os nossos serviços e produtos para sua festa com um <br> Divino Sabor!</h2>
         </div>
 
-        <form id="cadastroForm" method="post">
+        <form id="cadastroForm" method="post" >
+            
             <div class="input-group">
                 <label for="username">Email</label>
                 <input type="text" id="username" name="username" placeholder="Ex: email@gmail.com">

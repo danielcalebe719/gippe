@@ -9,12 +9,12 @@ class Pedido extends Model
 {
     use HasFactory;
 
-    protected $table = 'pedidos'; // Nome da tabela no banco de dados
-    protected $primaryKey = 'idPedidos'; // Nome da chave primária
+   
+  
     protected $fillable = [   
         'idCliente', 
         'observacao', 
-        'status', 
+        'status',   
         'totalPedido', 
         'dataPedido', 
         'dataEntrega',
