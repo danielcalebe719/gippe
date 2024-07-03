@@ -4,16 +4,29 @@ namespace App\Http\Controllers\Adm;
 
 use Illuminate\Http\Request;
 use App\Models\Pedidos;
+use App\Models\Clientes;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class PedidoController extends Controller
 {
+    // public function index()
+    // {
+    //     $pedidos = Pedidos::all();
+    //     return view('adm.pedidos', compact('pedidos'));
+    // }
+
     public function index()
-    {
-        $pedidos = Pedidos::all();
-        return view('adm.pedidos', compact('pedidos'));
-    }
+{
+    $pedidosPendentes = Pedidos::where('status', 'pendente')->get();
+    $outrosPedidos = Pedidos::where('status', '!=', 'pendente')->get();
+    
+    return view('adm.pedidos', compact('pedidosPendentes', 'outrosPedidos'));
+}
 
     public function show($idPedidos)
     {
@@ -25,74 +38,63 @@ class PedidoController extends Controller
         }
     }
 
-    public function update(Request $request, $idPedidos)
+    public function guardar(Request $request)
     {
+
+        // $validator = Validator::make($request->all(), [
+        //     'idCLientes' => 'required',
+        //     'observacao' => 'required|max : 500',
+        //     'status' => 'required|in:Pendente, Aceito, Cancelado, Entregue',
+        //     'totalPedido' => 'required',
+        //     'dataEntrega' => 'required'
+        // ]);
+ 
+        // if ($validator->fails()) {
+	    //     return $validator->errors()->all();
+        // }
         // Validação dos dados
-        $request->validate([
-            'idCLiente' => 'required|exists:clientes,idCLientes',
-            'observacao' => 'required|sring|max:500',
-            'status' => 'required|string|in:Pendente, Aceito, Cancelado, Entregue',
-            'totalPedido' => 'required|numeric|between:0,999999999.99',
-            'dataEntrega' => 'required|date'
-            
-            
-            // Adicione outras regras de validação conforme necessário
-        ]);
-
+        // $request->validate([
+        //     'idCLientes' => 'required',
+        //     'observacao' => 'required|max : 500',
+        //     'status' => 'required|in:Pendente, Aceito, Cancelado, Entregue',
+        //     'totalPedido' => 'required',
+        //     'dataEntrega' => 'required'
+        // ]);  
+    
         try {
-            // Buscar o cliente pelo idClientes
-            $pedido = Pedidos::findOrFail($idPedidos);
-
-            // Atribuir os novos valores ao pedido
-            $pedido->idCLiente = $request->input('idCliente');
+            // Busca ou cria um novo cliente
+            $pedido = $request->idPedido ? Pedidos::findOrFail($request->idPedido) : new Pedidos();
+    
+            // Preenche os outros campos do cliente
+            $pedido->idClientes = $request->input('idCliente');
             $pedido->observacao = $request->input('observacao');
             $pedido->status = $request->input('status');
             $pedido->totalPedido = $request->input('totalPedido');
             $pedido->dataEntrega = $request->input('dataEntrega');
 
-            // Salvar as alterações
-            $pedido->dataAtualizacao = Carbon::now();
+            if(!$request->idPedido){
+                $pedido->dataPedido = now();
+            }
+            
+    
+    
+            // Atualiza o timestamp de atualização
+            $pedido->dataAtualizacao = now();  
+    
+            // Salva o pedido
             $pedido->save();
-
-            return response()->json(['message' => 'Pedido atualizado com sucesso']);
+            
+            return redirect()->back()->with('success', 'Pedido adicionado/atualizado com sucesso!');
+            
         } catch (\Exception $e) {
-            // Capturar e tratar exceções, se necessário
+            // Loga o erro para fins de debug
+            Log::error('Erro ao atualizar o pedido: ' . $e->getMessage());
             return response()->json(['error' => 'Erro ao atualizar o pedido: ' . $e->getMessage()], 500);
         }
     }
 
-    public function store(Request $request)
-    {
-        // Validação dos dados do formulário
-        $request->validate([
-            'idCLiente' => 'required|exists:clientes,idCLientes',
-            'observacao' => 'required|sring|max:500',
-            'status' => 'required|string|in:Pendente, Aceito, Cancelado, Entregue',
-            'totalPedido' => 'required|numeric|between:0,999999999.99',
-            'dataEntrega' => 'required|date'
-        ]);
-
-        
-
-        // Criação do pedido no banco de dados
-        $pedido = new Pedidos();
-        $pedido->idCliente = $request->idCliente;
-        $pedido->observacao = $request->observacao;
-        $pedido->status = $request->status;
-        $pedido->totalPedido = $request->totalPedido;
-        $pedido->dataEntrega = $request->dataEntrega;
-        $dataAtual = Carbon::now();
-        $pedido->dataPedido = $dataAtual;
-        $pedido->dataAtualizacao = $dataAtual;
-
-        $pedido->save();
-
-        // Redirecionamento ou resposta de sucesso
-        return redirect()->back()->with('success', 'Pedido adicionado com sucesso!');
-    }
-
     
-    public function destroy($idPedidos)
+    public function remover($idPedidos)
     {
         try {
             $pedido = Pedidos::findOrFail($idPedidos);

@@ -39,7 +39,7 @@
                         <thead class="thead-light">
                             <tr>
                                 <th>ID</th>
-                                <th>Cliente ID</th>
+                                <th>Nome</th>
                                 <th>STATUS</th>
                                 <th>Total Pedido</th>
                                 <th>Data Entrega</th>
@@ -48,10 +48,10 @@
                         </thead>
 
                         <tbody>
-                            @foreach($pedidos as $pedido)
+                            @foreach($pedidosPendentes as $pedido)
                             <tr>
-                                <td>{{ $pedido->idPedidos }}</td>
-                                <td>{{ $pedido->idCliente }}</td>
+                                <td>{{ $pedido->id }}</td>
+                                <td>{{ $pedido->cliente->nome }}</td>
                                 <td>{{ $pedido->status }}</td>
                                 <td>{{ $pedido->totalPedido }}</td>
                                 <td>{{ $pedido->dataEntrega }}</td>
@@ -59,20 +59,86 @@
                                 <td>
                                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                                             <div class="btn-group mr-2" role="group" aria-label="Ações do Pedido">
-                                                <button class="btn btn-primary btn-sm" onclick="carregarDadosParaEdicao('{{ $pedido->idPedidos }}')" data-toggle="modal" data-target="#modalEditarPedido">
+                                                <button class="btn btn-primary btn-sm" onclick="carregarDadosParaEdicao('{{ $pedido->id }}')" data-toggle="modal" data-target="#modalEditarPedido">
                                                     Editar
                                                 </button>
                                             </div>
 
                                             <div class="btn-group mr-2" role="group" aria-label="Ações do Pedido">
-                                                <button type="button" class="btn btn-danger btn-sm" onclick="abrirModalExclusao('{{ $pedido->idPedidos }}')">
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="abrirModalExclusao('{{ $pedido->id }}')">
                                                     Excluir
                                                 </button>
                                             </div>
 
 
                                             <div class="btn-group" role="group" aria-label="Ações do Pedido">
-                                                <button class="btn btn-info btn-sm" onclick="mostrarDetalhes('{{ $pedido->idPedidos }}')" data-toggle="modal" data-target="#modalDetalhesPedido">
+                                                <button class="btn btn-info btn-sm" onclick="mostrarDetalhes('{{ $pedido->id }}')" data-toggle="modal" data-target="#modalDetalhesPedido">
+                                                    Detalhes
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                            </tr>
+                            @endforeach
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Pedidos pendentes</h6>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalAdicionarPedido">Adicionar Pedido</button>
+                </div>
+                <div class="table-responsive p-3">
+                    <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>STATUS</th>
+                                <th>Total Pedido</th>
+                                <th>Data Entrega</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach($outrosPedidos as $pedido)
+                            <tr>
+                                <td>{{ $pedido->id }}</td>
+                                <td>{{ $pedido->cliente->nome }}</td>
+                                <td>{{ $pedido->status }}</td>
+                                <td>{{ $pedido->totalPedido }}</td>
+                                <td>{{ $pedido->dataEntrega }}</td>
+                                
+                                <td>
+                                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Pedido">
+                                                <button class="btn btn-primary btn-sm" onclick="carregarDadosParaEdicao('{{ $pedido->id }}')" data-toggle="modal" data-target="#modalEditarPedido">
+                                                    Editar
+                                                </button>
+                                            </div>
+
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Pedido">
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="abrirModalExclusao('{{ $pedido->id }}')">
+                                                    Excluir
+                                                </button>
+                                            </div>
+
+
+                                            <div class="btn-group" role="group" aria-label="Ações do Pedido">
+                                                <button class="btn btn-info btn-sm" onclick="mostrarDetalhes('{{ $pedido->id }}')" data-toggle="modal" data-target="#modalDetalhesPedido">
                                                     Detalhes
                                                 </button>
                                             </div>
@@ -99,7 +165,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="formAdicionarPedido" method="POST" action="{{ route('pedidos.store') }}" enctype="multipart/form-data">
+                    <form id="formAdicionarPedido" method="POST" action="/adm/pedidos/guardar" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <input type="hidden" name="acao" id="acao" value="adicionar">
@@ -157,6 +223,7 @@
             </div>
         </div>
 
+
         <script>
             // Função para abrir o modal de confirmação de exclusão
             function abrirModalExclusao(idPedido) {
@@ -166,11 +233,11 @@
 
             // Função para confirmar a exclusão
             document.getElementById('confirmarExclusao').addEventListener('click', function() {
-                var idCliente = document.getElementById('excluirIdPedido').value;
+                var idPedido = document.getElementById('excluirIdPedido').value;
 
                 // Enviar requisição AJAX para excluir o cliente
-                fetch(`/adm/pedidos/${idPedido}`, {
-                        method: 'DELETE',
+                fetch(`/adm/pedidos/remover/${idPedido}`, {
+                        method: 'GET',
                         headers: {
                             'X-CSRF-TOKEN': '{{ csrf_token() }}'
                         }
@@ -194,19 +261,25 @@
                         }
 
                         // Exibir mensagem de sucesso
-                        alert('Pedido excluído com sucesso');
+                        location.replace(location.href)
+
                     })
                     .catch(error => {
+                        console.log(error)
                         console.error('Erro ao excluir o pedido:', error);
                         alert('Erro ao excluir o pedido');
                     });
             });
 
+
             // Função para excluir o cliente sem modal de confirmação
-            function excluirCliente(idPedido) {
-                if (confirm('Tem certeza que deseja excluir este pedido?')) {
-                    fetch(`/adm/pedidos/${idPedido}`, {
-                            method: 'DELETE',
+            function excluirCliente(idCliente) {
+
+                if (confirm('Tem certeza que deseja excluir este cliente?')) {
+
+                    return false;
+                    fetch(`/adm/clientes/remover/${idCliente}`, {
+                            method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json',
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -214,27 +287,28 @@
                         })
                         .then(response => {
                             if (!response.ok) {
-                                throw new Error('Erro ao excluir o pedido');
+                                throw new Error('Erro ao excluir o cliente');
                             }
                             return response.json();
                         })
                         .then(data => {
-                            console.log('Pedido excluído com sucesso:', data.message);
-                            // Atualizar a lista de clientes ou tomar outra ação necessária
-                            let pedidoRow = document.getElementById(`pedidoRow${idPedido}`);
-                            if (pedidoRow) {
-                                pedidoRow.remove();
+                            location.replace(location.href)
+                            console.log('Cliente excluído com sucesso:', data.message);
+
+                            let clienteRow = document.getElementById(`clienteRow${idCliente}`);
+                            if (clienteRow) {
+                                clienteRow.remove();
                             } else {
-                                console.warn(`Elemento pedidoRow${idPedido} não encontrado para remoção.`);
+                                console.warn(`Elemento clienteRow${idCliente} não encontrado para remoção.`);
                             }
                         })
                         .catch(error => {
-                            console.error('Erro ao excluir o pedido:', error);
+                            console.log(error);
+                            console.error('Erro ao excluir o cliente:', error);
                         });
                 }
             }
-        </script>
-
+</script>
     <!-- Modal Editar Pedido -->
     <div class="modal fade" id="modalEditarPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -246,18 +320,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="formEditarPedido" method="POST"action="{{ route('pedidos.update', ['idPedidos' => $pedido->idPedidos]) }}" enctype="multipart/form-data" >
+                    <form id="formEditarPedido" method="POST"action="/adm/pedidos/guardar" enctype="multipart/form-data" >
                     @csrf
-                    @method('PUT') <!-- Utiliza o método PUT para atualização -->
-                        <div class="form-group">
-                            <input type="hidden" name="acao" id="acao" value="editar">
-                            <label for="editID">ID</label>
-                            <input type="text" class="form-control" id="EditarIdPedido" name="idPedidos" value="" required>
-                        </div>
+                    <input type="hidden" id="EditarIdPedido" name="idPedido" value="">
                         <div class="form-group">
 
                             <label for="editClienteID">Cliente ID</label>
-                            <input type="text" class="form-control" id="EditarIdCliente" name="idCliente" value="" required>
+                            <input type="text" class="form-control" id="EditarIdCliente" name="idCliente" value="" required readonly>
                         </div>
                         <div class="form-group">
                             <label for="editobservacao">Observação</label>
@@ -377,7 +446,7 @@
         })
         .then(data => {
             // Preencha os campos do modal com os dados do cliente, ou valores padrão
-            document.getElementById('DetalhesIdPedidos').value = data.idPedidos || '';
+            document.getElementById('DetalhesIdPedidos').value = data.id || '';
             document.getElementById('DetalhesObservacao').value = data.observacao || '';
             document.getElementById('DetalhesDataPedido').value = data.dataPedido ? formatarData(data.dataPedido) : '';
            
@@ -410,18 +479,19 @@ function formatarData(data) {
             fetch(`/adm/pedidos/show/${idPedido}`)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Erro ao carregar os detalhes do cliente');
+                        throw new Error('Erro ao carregar os detalhes do pedido');
                     }
                     return response.json();
                 })
                 .then(data => {
+                    console.log('API Response:', data);
                     // Preencher os campos do formulário com os dados do cliente
-                    document.getElementById('EditarIdPedidos').value = data.idPedidos;
-                    document.getElementById('EditarIdCliente').value = data.idCliente;
-                    document.getElementById('EditarObservacao').value = data.nome;
-                    document.getElementById('EditarDataEntrega').value = data.cpf;
-                    document.getElementById('EditarStatus').value = data.dataNascimento;
-                    document.getElementById('EditarTotalPedido').value = data.status;
+                    document.getElementById('EditarIdPedido').value = data.id;
+                    document.getElementById('EditarIdCliente').value = data.idClientes;
+                    document.getElementById('EditarObservacao').value = data.observacao;
+                    document.getElementById('EditarDataEntrega').value = data.dataEntrega;
+                    document.getElementById('EditarStatus').value = data.status;
+                    document.getElementById('EditarTotalPedido').value = data.totalPedido;
 
                     // Abrir o modal de edição do cliente
                     $('#modalEditarPedido').modal('show');

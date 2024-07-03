@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Adm\ClienteController;
+use App\Http\Controllers\Adm\PedidoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -120,6 +121,13 @@ Route::prefix('adm/clientes')->group(function () {
     Route::get('/show/{idClientes}', [ClienteController::class, 'show'])->name('clientes.show');
     Route::post('/guardar', 'App\Http\Controllers\Adm\ClienteController@guardar');
     Route::get('/remover/{idClientes}', 'App\Http\Controllers\Adm\ClienteController@remover');
+});
+
+Route::prefix('adm/pedidos')->group(function () {
+    Route::get('/', [PedidoController::class, 'index'])->name('pedidos.index');
+    Route::get('/show/{idPedidos}', [PedidoController::class, 'show'])->name('pedidos.show');
+    Route::post('/guardar', 'App\Http\Controllers\Adm\PedidoController@guardar');
+    Route::get('/remover/{idPedidos}', 'App\Http\Controllers\Adm\PedidoController@remover');
 });
 
 
