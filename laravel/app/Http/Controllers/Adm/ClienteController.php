@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Clientes;
 use App\Models\EnderecosClientes;
 use App\Models\NotificacoesClientes;
-use App\Models\Pedido;
+use App\Models\Pedidos;
 use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Carbon;
@@ -115,7 +115,7 @@ class ClienteController extends Controller
 
             $notificacoesclientes = NotificacoesClientes::where('idClientes',$idCliente)->delete();
             $enderecosclientes = EnderecosClientes::where('idClientes',$idCliente)->delete();
-            $pedido = Pedido::where('idClientes',$idCliente)->delete();
+            $pedido = Pedidos::where('idClientes',$idCliente)->delete();
             $cliente = Clientes::findOrFail($idCliente);
            
             

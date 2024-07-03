@@ -1,4 +1,6 @@
-    @extends('adm.templates.template')
+<!--test-->
+   
+   @extends('adm.templates.template')
     @section('title', 'Clientes')
     @section('content')
     <div class="container-fluid" id="container-wrapper">

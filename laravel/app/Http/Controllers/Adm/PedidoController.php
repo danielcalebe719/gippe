@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Adm;
 
 use Illuminate\Http\Request;
-use App\Models\Pedido;
+use App\Models\Pedidos;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 
@@ -11,13 +11,13 @@ class PedidoController extends Controller
 {
     public function index()
     {
-        $pedidos = Pedido::all();
+        $pedidos = Pedidos::all();
         return view('adm.pedidos', compact('pedidos'));
     }
 
     public function show($idPedidos)
     {
-        $pedido = Pedido::find($idPedidos);
+        $pedido = Pedidos::find($idPedidos);
         if ($pedido) {
             return response()->json($pedido);
         } else {
@@ -41,7 +41,7 @@ class PedidoController extends Controller
 
         try {
             // Buscar o cliente pelo idClientes
-            $pedido = Pedido::findOrFail($idPedidos);
+            $pedido = Pedidos::findOrFail($idPedidos);
 
             // Atribuir os novos valores ao pedido
             $pedido->idCLiente = $request->input('idCliente');
@@ -75,7 +75,7 @@ class PedidoController extends Controller
         
 
         // Criação do pedido no banco de dados
-        $pedido = new Pedido();
+        $pedido = new Pedidos();
         $pedido->idCliente = $request->idCliente;
         $pedido->observacao = $request->observacao;
         $pedido->status = $request->status;
@@ -95,7 +95,7 @@ class PedidoController extends Controller
     public function destroy($idPedidos)
     {
         try {
-            $pedido = Pedido::findOrFail($idPedidos);
+            $pedido = Pedidos::findOrFail($idPedidos);
             $pedido->delete();
     
             return response()->json(['message' => 'Pedido excluído com sucesso']);
