@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Adm;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Clientes;
-use App\Models\EnderecosClientes;
+use App\Models\Notificacoes;
 use App\Models\NotificacoesClientes;
-use App\Models\Pedidos;
+use App\Models\NotificacoesColaboradores;
+
 use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Carbon;
@@ -15,22 +15,39 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 
-class ClienteController extends Controller
+class NotificacaoController extends Controller
 {
-    public function index()
-    {
-        $clientes = Clientes::all();
-        return view('adm.clientes', compact('clientes'));
-    }
+    // public function index()
+    // {
+    //     $notificacaoCliente = Notificacoes::where('idNotificacoes = id');
+    //     $notificacaoColaborador = Notificacoes::where('idNotificacoes = id');
+    //     return view('adm.notificacoes', compact('notificacaoCliente', 'notificacaoColaborador'));
+    // }
 
-    public function show($idClientes)
+    public function index()
+{
+    $notificacaoCliente = Notificacoes::whereIn('id', function($query) {
+        $query->select('idNotificacoes')
+              ->from('notificacoes_clientes');
+    })->get();
+    
+    $notificacaoColaborador = Notificacoes::whereIn('id', function($query) {
+        $query->select('idNotificacoes')
+              ->from('notificacoes_colaboradores');
+    })->get();
+    
+    return view('adm.notificacoes', compact('notificacaoCliente', 'notificacaoColaborador'));
+}
+
+
+    public function show($idNotificacoes)
     {
-        $cliente = Clientes::find($idClientes);
+        $notificacao = Clientes::find($idNotificacoes);
         
-        if ($cliente) {
+        if ($notificacao) {
 
             
-            return response()->json($cliente);
+            return response()->json($notificacao);
         } else {
             return response()->json(['error' => 'Cliente não encontrado'], 404);
         }
@@ -53,38 +70,18 @@ class ClienteController extends Controller
     
         try {
             // Busca ou cria um novo cliente
-            $cliente = $request->idCliente ? Clientes::findOrFail($request->idCliente) : new Clientes();
+            $notificacao = $request->idNotificacao ? Notificacoes::findOrFail($request->idNotificacao) : new Notificacoes();
     
             // Preenche os outros campos do cliente
-            $cliente->nome = $request->input('nome');
-            $cliente->cpf = $request->input('cpf');
-            $cliente->dataNascimento = $request->input('dataNascimento');
-            $cliente->status = $request->input('status');
-            $cliente->email = $request->input('email');
-            $cliente->telefone = $request->input('telefone');
+            $notificacao->mensagem = $request->input('mensagem');
+            $notificacao->dataEnvio = $request->input('dataEnvio');
+            $notificacao->titulo = $request->input('titulo');
+            
     
-            // Verifica se foi fornecida uma nova senha
-            if ($request->filled('senha')) {
-                $cliente->senha = Hash::make($request->input('senha'));
-            }
-    
-            // Trata o upload da imagem, se fornecida
-            if ($request->hasFile('imgCaminho')) {
-                // Deleta a imagem antiga, se existir
-                if ($cliente->imgCaminho && Storage::exists('public/GaleriaImagens/' . $cliente->imgCaminho)) {
-                    Storage::delete('public/GaleriaImagens/' . $cliente->imgCaminho);
-                }
-                
-                // Armazena a nova imagem
-                $path = $request->file('imgCaminho')->store('public/GaleriaImagens');
-                $cliente->imgCaminho = basename($path);
-            }
-    
-            // Atualiza o timestamp de atualização
-            $cliente->dataAtualizacao = now();  
+            
     
             // Salva o cliente
-            $cliente->save();
+            $notificacao->save();
             
             return redirect()->back()->with('success', 'Cliente adicionado/atualizado com sucesso!');
             
@@ -113,8 +110,8 @@ class ClienteController extends Controller
     {
         try {
 
-            $notificacoesclientes = NotificacoesClientes::where('idClientes',$idCliente)->delete();
-            $enderecosclientes = EnderecosClientes::where('idClientes',$idCliente)->delete();
+            $notificacoesclientes = NotificacoesClientes::where('idNotificacao',$idCliente)->delete();
+            $enderecosclientes = NotificacoesColaboradores::where('idNotificacao',$idCliente)->delete();
             $pedido = Pedidos::where('idClientes',$idCliente)->delete();
             $cliente = Clientes::findOrFail($idCliente);
            
