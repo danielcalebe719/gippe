@@ -17,7 +17,7 @@ class AgendamentoController extends Controller
 {
     public function index()
     {
-        $agendamento = Agendamentos::all();
+        $agendamentos = Agendamentos::all();
         return view('adm.agendamentos', compact('agendamentos'));
     }
 
@@ -60,13 +60,15 @@ class AgendamentoController extends Controller
             $agendamento->horaInicio = $request->input('horaInicio');
             $agendamento->horaFim = $request->input('horaFim');
         
-    
+            if(!$request->idAgendamento){
+                $agendamento->dataCadastro = now();
+            }
             
     
              
     
             // Salva o cliente
-            $cliente->save();
+            $agendamento->save();
             
             return redirect()->back()->with('success', 'Agendamento adicionado/atualizado com sucesso!');
             

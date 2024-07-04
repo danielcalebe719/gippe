@@ -34,24 +34,44 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <!-- Aqui vai o conteúdo da tabela vindo do banco de dados -->
-                                            <!-- Exemplo estático para ilustrar -->
-                                            <tr>
-                                                <td>1</td>
-                                                <td>2</td>
-                                                <td>15/02/2024</td>
-                                                <td>15/02/2024</td>
-                                                <td>15:00</td>
-                                                <td>20:00</td>
-    
-                                                <td>
-                                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarAgendamento">Editar</button>
-                                                    <button class="btn btn-danger btn-sm" onclick="excluirAgendamento(1)">Excluir</button>
-                                                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalDetalhesAgendamento">Detalhes</button>
-                                               
-                                                </td>
-                                            </tr>
-                                            <!-- Fim do exemplo -->
+                                        @foreach($agendamentos as $agendamento)
+                                <tr>
+                                    <td>{{ $agendamento->id }}</td>
+                                    <td>{{ $agendamento->idPedidos }}</td>
+                                    <td>{{ $agendamento->dataInicio }}</td>
+                                    <td>{{ $agendamento->dataFim }}</td>
+                                    <td>{{ $agendamento->horaInicio }}</td>
+                                    <td>{{ $agendamento->horaFim }}</td>
+
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Pedido">
+                                                <button class="btn btn-primary btn-sm"
+                                                    onclick="carregarDadosParaEdicao('{{ $agendamento->id }}')"
+                                                    data-toggle="modal" data-target="#modalEditarPedido">
+                                                    Editar
+                                                </button>
+                                            </div>
+
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Pedido">
+                                                <button type="button" class="btn btn-danger btn-sm"
+                                                    onclick="abrirModalExclusao('{{ $agendamento->id }}')">
+                                                    Excluir
+                                                </button>
+                                            </div>
+
+
+                                            <div class="btn-group" role="group" aria-label="Ações do Pedido">
+                                                <button class="btn btn-info btn-sm"
+                                                    onclick="mostrarDetalhes('{{ $agendamento->id }}')" data-toggle="modal"
+                                                    data-target="#modalDetalhesPedido">
+                                                    Detalhes
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
