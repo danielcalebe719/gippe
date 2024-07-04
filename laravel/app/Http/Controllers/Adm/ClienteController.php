@@ -65,7 +65,7 @@ class ClienteController extends Controller
     
             // Verifica se foi fornecida uma nova senha
             if ($request->filled('senha')) {
-                $cliente->senha = Hash::make($request->input('senha'));
+                $cliente->password = Hash::make($request->input('senha'));
             }
     
             // Trata o upload da imagem, se fornecida

@@ -36,10 +36,23 @@ return [
     */
 
     'guards' => [
+
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
+    
+        'cliente' => [
+            'driver' => 'session',
+            'provider' => 'clientes',
+        ],
+
+        'admin' => [
+            'driver' => 'session', // Pode ser 'session' ou 'token' dependendo de como você deseja autenticar
+            'provider' => 'admins', // Nome do provider configurado para administradores
+        
+ ],
+
     ],
 
     /*
@@ -64,11 +77,17 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+    
+        'clientes' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Clientes::class,
+        ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admins::class, // Substitua pelo modelo de administrador correto
+        ],
+
     ],
 
     /*

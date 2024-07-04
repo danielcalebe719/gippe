@@ -8,17 +8,17 @@
   <meta content="" name="keywords">
   <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
   <!-- Favicons -->
-  <link href="assets/img/logo.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="{{ asset('assets/img/logo.png') }}" rel="icon">
+  <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
   <!-- Vendor CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+rtOIQ4GX/D7UvOsAP37+C2z8zKL4ZpV96HuP+wnRL0Kw1h" crossorigin="anonymous"></script>
   <!-- Popper.js -->
@@ -26,10 +26,16 @@
   <!-- Bootstrap JavaScript -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"></script>
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 </head>
-<body>
 
+<body>
+@if(Auth::guard('cliente')->check())
+    <p>Bem-vindo, {{ Auth::guard('cliente')->user()->email }}!</p>
+    
+@else
+    <p>Bem-vindo, visitante!</p>
+@endif  
   <!-- ======= Top Bar ======= -->
   <section id="topbar" class="d-flex align-items-center">
     <div class="container d-flex justify-content-center justify-content-md-between">
@@ -49,7 +55,7 @@
   <!-- ======= Header ======= -->
   <header id="header" class="d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
-      <a href="home.html"><img src="assets/img/logo.png" alt="" style="max-width: 50%;"><span></span></a>
+      <a href="{{url('/website')}}"><img src="{{asset('assets/img/logo.png')}}" alt="" style="max-width: 50%;"><span></span></a>
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto active" href="home.html">Home</a></li>
@@ -166,7 +172,7 @@
                 <label for="nome">Nome completo</label>
               </div>
               <div class="col-sm-8">
-                <input type="text" id="nome" name="nome" class="form-control" value="Nome do Cliente" readonly>
+                <input type="text" id="nome" name="nome" class="form-control" value="{{ Auth::guard('cliente')->user()->nome }}" readonly>
               </div>
               <div class="col-sm-1">
                 <a href="#" class="btn btn-link edit-btn" data-target="nome"><i class="bi bi-pencil"></i></a>
@@ -441,15 +447,16 @@
 </script>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+<script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
+<script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/waypoints/noframework.waypoints.js') }}"></script>
+<script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
+<script src="{{ asset('assets/js/main.js') }}"></script>
+
   
   <script>
     var loggedIn = true; // Alterar para false para simular usuário não logado

@@ -37,33 +37,7 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  var loggedIn = true;
 
-  window.addEventListener('DOMContentLoaded', (event) => {
-    if (loggedIn) {
-      loggedInner = true;
-    } else {
-      loggedInner = false;
-    }
-
-    // Função para alternar a exibição dos botões de perfil e notificações com base no status de login
-    function toggleButtons() {
-      if (loggedInner) {
-        $("#register-btn, #login-btn").hide();
-        $("#profile-btn, #notification-btn").show();
-      } else {
-        $("#register-btn, #login-btn").show();
-        $("#profile-btn, #notification-btn").hide();
-      }
-    }
-
-    // Chamar a função assim que a página for carregada
-    $(document).ready(function() {
-      toggleButtons();
-    });
-  });
-</script>
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
@@ -73,12 +47,11 @@
 </head>
 
 <body>
-
-  <!-- ======= Top Bar ======= -->
-  <section id="topbar" class="d-flex align-items-center">
+<!-- ======= Top Bar ======= -->
+<section id="topbar" class="d-flex align-items-center">
     <div class="container d-flex justify-content-center justify-content-md-between">
       <div class="contact-info d-flex align-items-center">
-        <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">buffetdivinosabor@gmail.com</a></i>
+        <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:buffetdivinosabor@gmail.com">buffetdivinosabor@gmail.com</a></i>
         <i class="bi bi-phone d-flex align-items-center ms-4"><span>+31 95589 55488</span></i>
       </div>
       <div class="social-links d-none d-md-flex align-items-center">
@@ -90,88 +63,82 @@
     </div>
   </section>
 
-  
+  <!-- ======= Header ======= -->
   <header id="header" class="d-flex align-items-center">
-  <div class="container d-flex align-items-center justify-content-between">
-    <a href="home.php"><img src="assets/img/logo.png" alt="" style="max-width: 50%;"><span></span></a>
-    <nav id="navbar" class="navbar">
-      <ul>
-        <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-        <li><a class="nav-link scrollto" href="#cardapio">Cardápio</a></li>
-        <li><a class="nav-link scrollto" href="#about">Sobre nós</a></li>
-        <li><a class="nav-link scrollto" href="#portfolio">Galeria de fotos</a></li>
-        <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
-        <li><a class="nav-link scrollto" href="#contact">Fale Conoco</a></li>
-        <li>
-          <a href="cadastro.php"><button id="register-btn" class="nav-link btn"><i class="bi bi-person-plus"></i> Cadastrar-se</button></a>
-        </li>
-        <li>
-          <a href="login.php"><button id="login-btn" class="nav-link btn">Fazer Login</button></a>
-        </li>
-        <li id="notification-btn" style="display: none;">
-          <a href="#" data-bs-toggle="modal" data-bs-target="#notificationsModal">
-            <button class="nav-link btn"><i class="bi bi-bell"></i> Notificações</button>
-          </a>
-        </li>
-        
-        <li id="profile-btn" style="display: none;">
-             <div style="height: 14px;"></div>
-          <form action="perfil.php" method="get">
-            <input type="hidden" name="idClientes" value="" >
-          <a href="perfil.php"><button type='submit' class="nav-link btn"><i class="bi bi-person"></i> Perfil</button></a>
-          </form>
-        </li>
-      </ul>
-      <i class="bi bi-list mobile-nav-toggle"></i>
-    </nav>
-  </div>
+    <div class="container d-flex align-items-center justify-content-between">
+        <a href="{{ url('/website') }}"><img src="assets/img/logo.png" alt="" style="max-width: 50%;"><span></span></a>
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a class="nav-link scrollto active" href="{{ url('/website') }}">Home</a></li>
+                <li><a class="nav-link scrollto" href="#cardapio">Cardápio</a></li>
+                <li><a class="nav-link scrollto" href="#about">Sobre nós</a></li>
+                <li><a class="nav-link scrollto" href="#portfolio">Galeria de fotos</a></li>
+                <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
+                <li><a class="nav-link scrollto" href="#contact">Fale Conosco</a></li>
+
+                @guest('cliente')
+                <!-- Mostrar se não estiver logado -->
+                <li>
+                    <a href="{{ url('website/cadastro') }}"><button id="register-btn" class="nav-link btn"><i class="bi bi-person-plus"></i> Cadastrar-se</button></a>
+                </li>
+                <li>
+                    <a href="{{ url('website/login') }}"><button id="login-btn" class="nav-link btn">Fazer Login</button></a>
+                </li>
+                @else
+                <!-- Mostrar se estiver logado -->
+                <li id="notification-btn">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#notificationsModal">
+                        <button class="nav-link btn"><i class="bi bi-bell"></i> Notificações</button>
+                    </a>
+                </li>
+                <li id="profile-btn">
+                    <a href="{{ url('website/perfil') }}"><button class="nav-link btn"><i class="bi bi-person"></i> Perfil</button></a>
+                </li>
+                @endguest
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+    </div>
 </header>
 
-<!-- Notifications Modal -->
-<div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="notificationsModalLabel">Notificações</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Notificação 1 -->
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5 class="card-title">Mensagem de notificação 1</h5>
-            <p class="card-text">2024-06-27 10:00</p>
-          </div>
+
+
+
+  <!-- Notifications Modal -->
+  <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="notificationsModalLabel">Notificações</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        
-        <!-- Notificação 2 -->
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5 class="card-title">Mensagem de notificação 2</h5>
-            <p class="card-text">2024-06-26 14:30</p>
+        <div class="modal-body">
+          <!-- Exemplo estático de notificações -->
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">Mensagem de exemplo 1</h5>
+              <p class="card-text">2024-06-26</p>
+            </div>
           </div>
-        </div>
-        
-        <!-- Notificação 3 -->
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5 class="card-title">Mensagem de notificação 3</h5>
-            <p class="card-text">2024-06-25 09:15</p>
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">Mensagem de exemplo 2</h5>
+              <p class="card-text">2024-06-25</p>
+            </div>
           </div>
+          <p>Nenhuma notificação encontrada.</p>
         </div>
-        
-        <!-- Caso não haja notificações -->
-        <!-- <p>Nenhuma notificação encontrada.</p> -->
-        
-        <!-- Caso o usuário não esteja logado -->
-        <!-- <p>Usuário não logado.</p> -->
       </div>
     </div>
   </div>
-</div>
+  @if(Auth::guard('cliente')->check())
+    <p>Bem-vindo, {{ Auth::guard('cliente')->user()->email }}!</p>
+  <a href="{{url('website/logout')}}">Logout</a>
+@else
+    <p>Bem-vindo, visitante!</p>
+@endif
 
 
-  
 
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center">
@@ -179,7 +146,7 @@
       <h1 style="color: white;">Bem vindo ao <span style="color: #FF944E;"">Buffet Divino Sabor</span></h1>
       <h2 style="color: white;"">Produzindo eventos com o melhor cardápio desde 2014.</h2>
       <div class="d-flex">
-        <a href="cadastro2.php" class="btn-get-started scrollto">Faça seu pedido</a>
+        <a href="{{url('website/cadastro2')}}" class="btn-get-started scrollto">Faça seu pedido</a>
         
         <a href="https://youtu.be/y6120QOlsfU?si=0Z_6ErtD0vy7wDzB" class="glightbox btn-watch-video"><i class="bi bi-play-circle" style="color: #FA856E;"></i><span style=" color: white; ">Clique e veja um pouco mais sobre nós</span></a>
       </div>
@@ -401,78 +368,20 @@
         </div>
 
         <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-<<<<<<< HEAD
-    <!-- Imagem 1 -->
-    <div class='col-lg-3 portfolio-item'>
-        <div class='resolve portfolio-item-overlay'>
-            <a href='data:image/jpeg;base64,[base64_image_data]' data-lightbox='portfolio' title='Evento 1'>
-                <img class='img-fluid gallery-image' src='GaleriaImagens/imagem1.jpg' />
-            </a>
-            <div class='portfolio-info'>
-                <h4>Evento 1</h4>
-                <p>Descrição 1</p>
-            </div>
-=======
-            
-                <div class='col-lg-3 portfolio-item ' data-index=''>
-                <div class='resolve portfolio-item-overlay'>
-                <a href='data:image/jpeg;base64' data-lightbox='portfolio' title=''>
-                <img class='img-fluid gallery-image' src='GaleriaImagens/' />"
-                </a>
-                <div class='portfolio-info'>
-               <h4>  </h4>
-                <p></p>
+            @foreach($imagens as $imagem)
+                <div class="col-lg-3 portfolio-item filter-{{ strtolower($imagem->evento) }}">
+                    <div class="resolve portfolio-item-overlay">
+                        <a href="{{ asset('storage/GaleriaImagens/' . $imagem->nome_imagem) }}" data-lightbox="portfolio" title="{{ $imagem->evento }}">
+                            <img class="img-fluid gallery-image" src="{{ asset('storage/GaleriaImagens/' . $imagem->imagemCaminho) }}" >
+                        </a>
+                        <div class="portfolio-info">
+                            <h4>{{ $imagem->evento }}</h4>
+                            <p>{{ $imagem->descricao }}</p>
+                        </div>
+                    </div>
                 </div>
-                </div>
-                </div>
-
-                
-            
-            
->>>>>>> 009280e92a49b9808c7847fd750a61f041082efa
+            @endforeach
         </div>
-    </div>
-
-    <!-- Imagem 2 -->
-    <div class='col-lg-3 portfolio-item'>
-        <div class='resolve portfolio-item-overlay'>
-            <a href='data:image/jpeg;base64,[base64_image_data]' data-lightbox='portfolio' title='Evento 2'>
-                <img class='img-fluid gallery-image' src='GaleriaImagens/imagem2.jpg' />
-            </a>
-            <div class='portfolio-info'>
-                <h4>Evento 2</h4>
-                <p>Descrição 2</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Imagem 3 -->
-    <div class='col-lg-3 portfolio-item'>
-        <div class='resolve portfolio-item-overlay'>
-            <a href='data:image/jpeg;base64,[base64_image_data]' data-lightbox='portfolio' title='Evento 3'>
-                <img class='img-fluid gallery-image' src='GaleriaImagens/imagem3.jpg' />
-            </a>
-            <div class='portfolio-info'>
-                <h4>Evento 3</h4>
-                <p>Descrição 3</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Imagem 4 -->
-    <div class='col-lg-3 portfolio-item hidden'>
-        <div class='resolve portfolio-item-overlay'>
-            <a href='data:image/jpeg;base64,[base64_image_data]' data-lightbox='portfolio' title='Evento 4'>
-                <img class='img-fluid gallery-image' src='GaleriaImagens/imagem4.jpg' />
-            </a>
-            <div class='portfolio-info'>
-                <h4>Evento 4</h4>
-                <p>Descrição 4</p>
-            </div>
-        </div>
-    </div>
-</div>
-
 
         <div class="row">
             <div class="col-lg-12 d-flex justify-content-center">
@@ -481,6 +390,8 @@
         </div>
     </div>
 </section>
+
+
 
 <script src="path/to/aos.js"></script>
 <script src="path/to/lightbox.js"></script>
@@ -673,30 +584,7 @@
 
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
 
-
-
-
-
-
-loggedInner = true;
-    // Função para alternar a exibição dos botões de perfil e notificações com base no status de login
-    function toggleButtons() {
-      if (loggedInner) {
-        $("#register-btn, #login-btn").hide();
-        $("#profile-btn, #notification-btn").show();
-      } else {
-        $("#register-btn, #login-btn").show();
-        $("#profile-btn, #notification-btn").hide();
-      }
-    }
-  
-    // Chamar a função assim que a página for carregada
-    $(document).ready(function() {
-      toggleButtons();
-    });
-  </script>
   
   
   <script src="assets/js/main.js"></script>

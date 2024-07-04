@@ -11,23 +11,24 @@
   <meta name="keywords" content="" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <link rel="shortcut icon" href="images/favicon.png" type="">
+  <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
 
-  <title> Feane </title>
+  <title>Feane</title>
 
-  <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap_pedidos.css" />
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap_pedidos.css') }}" />
 
-  <!--owl slider stylesheet -->
-  <link rel="stylesheet" type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-  <!-- nice select  -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css"
-    integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ=="
-    crossorigin="anonymous" />
-  <link href="assets/css/style_pedidos.css" rel="stylesheet" />
+  <!-- Owl Carousel stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+  <!-- Nice Select CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
+
+  <!-- Custom Styles -->
+  <link href="{{ asset('assets/css/style_pedidos.css') }}" rel="stylesheet" />
 
 </head>
+
 
 <body>
   <!-- food section -->

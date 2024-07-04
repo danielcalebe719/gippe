@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class Clientes extends Model
+use Illuminate\Foundation\Auth\User as Authenticatable;
+class Clientes extends Authenticatable
 {
     use HasFactory;
 
@@ -18,7 +18,7 @@ class Clientes extends Model
         'data_de_nascimento', 
         'status', 
         'email', 
-        'senha',
+        'password',
         'dataCadastro',
         'dataAtualizacao',
         'dataRemocao',
@@ -29,10 +29,9 @@ class Clientes extends Model
 
 
     public function pedidos(){
-        return $this->hasMany(Pedido::class,'idClientes','id');
+        return $this->hasMany(Pedidos::class,'idClientes','id');
     }
 
 
 }
-
 

@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link href="{{ asset('assets/img/logo/logo.png') }}" rel="icon">
     
-    <title>@yield('title', 'Default Title')</title>
+    <title>@yield('title', ' Painel ')</title>
     <link href="{{ asset('assets/vendor_adm/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/vendor_adm/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/css_adm/ruang-admin.min.css') }}" rel="stylesheet">
@@ -121,7 +121,7 @@
                 </a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="{{url('adm/colaboradores')}}">
+                <a class="nav-link" href="{{url('adm/admins')}}">
                     <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/fornecedores.png') }}" alt="">
                     <span class="text-gray-1000">Colaboradores</span>
                 </a>
@@ -163,7 +163,14 @@
                     <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <h5 class="text-gray-1000">Olá, Nome da Pessoa!</h5>
+
+                    @if(Auth::guard('admin')->check())
+
+                    <h5 class="text-gray-1000">Olá,  {{ Auth::guard('admin')->user()->nome }}!</h5>
+                    @endif
+    
+
+                  
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -190,7 +197,9 @@
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
              
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="index.html">
+
+
+                                <a class="dropdown-item" href="{{url('adm/logout')}}">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Sair
                                 </a>
