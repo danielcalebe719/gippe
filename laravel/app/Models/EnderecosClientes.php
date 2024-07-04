@@ -8,23 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class EnderecosClientes extends Model
 {
     use HasFactory;
-<<<<<<< HEAD
-=======
-   
-    protected $table = 'enderecos_clientes'; // Nome da tabela no banco de dados
-    protected $primaryKey = 'id'; // Nome da chave primária
-    protected $fillable = [   
-        'tipo', 
-        'cep', 
-        'cidade'.
-        'bairro', 
-        'rua', 
-        'numero', 
-        'complemento',
-        'idClientes'
-        // Adicione outros campos aqui
-    ];
->>>>>>> b8e57919c74e1ee132d9858b21fd27e26288399a
 
     protected $table = 'enderecos_clientes';
 
