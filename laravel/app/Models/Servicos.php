@@ -15,7 +15,7 @@ class Servicos extends Model
     protected $fillable = [   
         'nomeServico', 
         'total_servicos', 
-        'dataCadastro'.
+        'dataCadastro',
         'dataAtualizacao', 
         'dataRemocao', 
         'imgCaminho', 
@@ -25,12 +25,8 @@ class Servicos extends Model
     ];
     public $timestamps = false;
 
-
-    public function pedidosServicos()
+    public function pedidos_servicos()
     {
-        return $this->hasMany(PedidosServicos::class,'idServicos','id');
+        return $this->hasMany(PedidosServicos::class, 'idServicos', 'id');
     }
-
 }
-
-

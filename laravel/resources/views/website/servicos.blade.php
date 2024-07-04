@@ -72,17 +72,29 @@
 
 
             <!-- Loop para exibir apenas os 4 primeiros serviços -->
+
+
+
+                
+                
+                
 @foreach ($servicos as $servico)
 <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
     <div class="box">
-        <h3>{{ $servico->nome }}</h3>
-        <h4><sup>R$</sup>{{ $servico->preco }}</h4>
+        <h3>{{ $servico->nomeServico }}</h3>
+        <h4><sup>R$</sup>{{ $servico->total_servicos }}</h4>
         <ul>
-            <li>Barmans: {{ $servico->pedidos_servicos->barmans }}</li>
-            <li>Garçons: {{ $servico->pedidos_servicos->garcons }}</li>
-            <li>Cozinheiros: {{ $servico->pedidos_servicos->cozinheiros }}</li>
-            <li>Para festas de até {{ $servico->capacidade }} pessoas</li>
-            <li>Duração de {{ $servico->duracao }} horas</li>
+            @foreach ($servico->pedidos_servicos as $pedido)
+                @if ($pedido->funcionarioTipo == 'Barman')
+                    <li>Barmans: {{ $pedido->quantidade }}</li>
+                @elseif ($pedido->funcionarioTipo == 'Garcom')
+                    <li>Garçons: {{ $pedido->quantidade }}</li>
+                @elseif ($pedido->funcionarioTipo == 'Cozinheiro')
+                    <li>Cozinheiros: {{ $pedido->quantidade }}</li>
+                @endif
+            @endforeach
+            <li>Para festas de até {{ $servico->quantidadePessoas }} pessoas</li>
+            <li>Duração de {{ $servico->duracaoHoras }} horas</li>
         </ul>
         <div class="btn-wrap">
             <a href="pedidos.html?idServico={{ $servico->id }}" class="btn-buy">Selecionar Serviço</a>
@@ -90,44 +102,45 @@
     </div>
 </div>
 @endforeach
-
-
-               
+                </div>
+            </div>
             <br>
 
             <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-3 col-md-6 mt-4 mt-md-0 justify-content-center" data-aos="fade-up" data-aos-delay="200" id="firstBox">
-                        <div class="box featured">
-                            <h3>Personalizado</h3>
-                            <h4><sup>R$</sup>?</h4>
-                            <div>Aqui você escolhe o serviço de acordo com sua festa</div>
-                            <div class="btn-wrap">
-                                <button id="custombutton" style="border: none; background-color: transparent;">
-                                    <a class="btn-buy">Personalize</a>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-8 mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="200" id="secondBox" style="display:none;">
-                        <div class="box featured">
-                            <h4>Personalize os Serviços:</h4>
-                            <form method="post" action="servicosProcessar.html">
-                                <p>Barmans: <input type="number" name="barmans" min="0" max="999" class="inpt" id="barmans"></p>
-                                <p>Garçons: <input type="number" name="garcons" min="0" max="999" class="inpt" id="garcons"></p>
-                                <p>Cozinheiros: <input type="number" name="cozinheiros" min="0" max="999" class="inpt" id="cozinheiros"></p>
-                                <p>Quantidade de Pessoas: <input type="number" name="quantidadePessoas" min="0" max="999" class="inpt" id="quantidadePessoas"></p>
-                                <p>Duração da Festa (Horas): <input type="number" name="duracaoHoras" min="1" max="24" class="inpt" id="duracaoHoras"></p>
-                                <p id="preco">Preço: R$0,00</p>
-                                <div class="btn-wrap">
-                                    <button type="submit" class="btn-buy">Selecionar Serviço</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-3 col-md-6 mt-4 mt-md-0 justify-content-center" data-aos="fade-up" data-aos-delay="200" id="firstBox">
+            <div class="box featured">
+                <h3>Personalizado</h3>
+                <h4><sup>R$</sup>?</h4>
+                <div>Aqui você escolhe o serviço de acordo com sua festa</div>
+                <div class="btn-wrap">
+                    <button id="custombutton" style="border: none; background-color: transparent;">
+                        <a class="btn-buy">Personalize</a>
+                    </button>
                 </div>
             </div>
+        </div>
+
+        <div class="col-md-8 mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="200" id="secondBox" style="display:none;">
+            <div class="box featured">
+                <h4>Personalize os Serviços:</h4>
+                <form method="post" action="{{ route('processar.servico.personalizado') }}">
+                    @csrf
+                    <p>Barmans: <input type="number" name="tipo[barmans]" min="0" max="999" class="inpt" id="barmans"></p>
+                    <p>Garçons: <input type="number" name="tipo[garcons]" min="0" max="999" class="inpt" id="garcons"></p>
+                    <p>Cozinheiros: <input type="number" name="tipo[cozinheiros]" min="0" max="999" class="inpt" id="cozinheiros"></p>
+                    <p>Quantidade de Pessoas: <input type="number" name="quantidadePessoas" min="0" max="999" class="inpt" id="quantidadePessoas"></p>
+                    <p>Duração da Festa (Horas): <input type="number" name="duracaoHoras" min="1" max="24" class="inpt" id="duracaoHoras"></p>
+                    <p id="preco">Preço: R$0,00</p>
+                    <div class="btn-wrap">
+                        <button type="submit" class="btn-buy">Selecionar Serviço</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
         </div>
     </section>
 

@@ -172,6 +172,7 @@ use App\Http\Controllers\Website\WebsiteClienteController;
 use App\Http\Controllers\Website\LoginClienteController;
 use App\Http\Controllers\Website\CadastrarClienteController;
 use App\Http\Controllers\Website\WebsiteIndexController;
+use App\Http\Controllers\Website\WebsiteServicoController;
 
 // Rotas acessíveis sem autenticação
 Route::get('/', function () {
@@ -199,10 +200,15 @@ Route::prefix('website')->group(function () {
         return view('website.agendamento');
     })->middleware('auth:cliente')->name('website.agendamento');
 
-    Route::get('/servicos', function () {
-        return view('website.servicos');
-    })->middleware('auth:cliente')->name('website.servicos');
 
+    Route::get('/servicos', [WebsiteServicoController::class, 'index'])
+        ->middleware('auth:cliente')
+        ->name('website.servicos');
+
+        
+        Route::post('/servicos/processar-servico', [WebsiteServicoController::class, 'salvar_personalizado'])->name('processar.servico.personalizado');
+
+    
     Route::get('/produtos', function () {
         return view('website.produtos');
     })->middleware('auth:cliente')->name('website.produtos');
