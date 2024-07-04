@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Adm;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Clientes;
-use App\Models\EnderecosClientes;
-use App\Models\NotificacoesClientes;
+use App\Models\Agendamentos;
 use App\Models\Pedidos;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,17 +13,17 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 
-class ClienteController extends Controller
+class AgendamentoController extends Controller
 {
     public function index()
     {
-        $clientes = Clientes::all();
+        $agendamento = Agendamentos::all();
         return view('adm.clientes', compact('clientes'));
     }
 
-    public function show($idClientes)
+    public function show($idAgendamento)
     {
-        $cliente = Clientes::find($idClientes);
+        $cliente = Agendamentos::find($idAgendamento);
         
         if ($cliente) {
 
@@ -53,7 +51,7 @@ class ClienteController extends Controller
     
         try {
             // Busca ou cria um novo cliente
-            $cliente = $request->idCliente ? Clientes::findOrFail($request->idCliente) : new Clientes();
+            $cliente = $request->idAgendamento ? Agendamentos::findOrFail($request->idCliente) : new Agendamentos();
     
             // Preenche os outros campos do cliente
             $cliente->nome = $request->input('nome');
@@ -113,10 +111,10 @@ class ClienteController extends Controller
     {
         try {
 
-            $notificacoesclientes = NotificacoesClientes::where('idClientes',$idCliente)->delete();
-            $enderecosclientes = EnderecosClientes::where('idClientes',$idCliente)->delete();
-            $pedido = Pedidos::where('idClientes',$idCliente)->delete();
-            $cliente = Clientes::findOrFail($idCliente);
+            $notificacoesclientes = NotificacoesClientes::where('idAgendamentos',$idCliente)->delete();
+            $enderecosclientes = EnderecosClientes::where('idAgendamentos',$idCliente)->delete();
+            $pedido = Pedidos::where('idAgendamentos',$idCliente)->delete();
+            $cliente = Agendamentos::findOrFail($idCliente);
            
             
             // Excluir a imagem associada, se existir

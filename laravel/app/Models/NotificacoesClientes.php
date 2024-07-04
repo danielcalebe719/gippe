@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class NotificacoesClientes extends Model
 {
     use HasFactory;
-   
+   protected $table = 'notificacoes_clientes';
+   protected $primaryKey = 'id';
+   protected $fillable = [
+    'idPedidos',
+    'idClientes',
+    'idNotificacoes'
+   ];
 
     public $timestamps = false;
 }
