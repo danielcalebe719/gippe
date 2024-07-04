@@ -5,6 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Clientes;
+use App\Models\Feedbacks;
+use App\Models\NotificacoesClientes;
+use App\Models\NotificacoesColaboradores;
+use App\Models\PedidosAndamento;
+use App\Models\PedidosProdutos;
+use App\Models\PedidosServicos;
 
 class Pedidos extends Model
 {
@@ -28,11 +34,37 @@ class Pedidos extends Model
 
     public function cliente()
     {
-        return $this->hasOne(Clientes::class,'idClientes','idClientes');
+        return $this->hasOne(Clientes::class,'idClientes','id');
     }
 
-    
+    public function feedback()
+    {
+        return $this->hasOne(Feedbacks::class,'idPedidos','id');
+    }
 
+    public function notificacoesClientes()
+    {
+        return $this->hasMany(NotificacoesClientes::class,'idPedidos','id');
+    }
 
+    public function notificacoesColaboradores()
+    {
+        return $this->hasMany(NotificacoesColaboradores::class,'idPedidos','id');
+    }
+
+    public function pedidosAndamento()
+    {
+        return $this->hasMany(PedidosAndamento::class,'idPedidos','id');
+    }
+
+    public function pedidosProdutos()
+    {
+        return $this->hasMany(PedidosProdutos::class,'idPedidos','id');
+    }
+
+    public function pedidosServicos()
+    {
+        return $this->hasOne(PedidosServicos::class,'idPedidos','id');
+    }
 
 }

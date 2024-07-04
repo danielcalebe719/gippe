@@ -9,6 +9,19 @@ class EnderecosClientes extends Model
 {
     use HasFactory;
    
+    protected $table = 'enderecos_clientes'; // Nome da tabela no banco de dados
+    protected $primaryKey = 'id'; // Nome da chave primária
+    protected $fillable = [   
+        'tipo', 
+        'cep', 
+        'cidade'.
+        'bairro', 
+        'rua', 
+        'numero', 
+        'complemento',
+        'idClientes'
+        // Adicione outros campos aqui
+    ];
 
     public $timestamps = false;
 }

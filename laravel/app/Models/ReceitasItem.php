@@ -5,32 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Clientes extends Model
+class ReceitasItem extends Model
 {
     use HasFactory;
 
-    protected $table = 'clientes'; // Nome da tabela no banco de dados
-    protected $primaryKey = 'idClientes'; // Nome da chave primária
+    protected $table = 'receitas_item'; // Nome da tabela no banco de dados
+    protected $primaryKey = 'id'; // Nome da chave primária
     protected $fillable = [   
-        'nome', 
-        'cpf', 
-        'telefone'.
-        'data_de_nascimento', 
-        'status', 
-        'email', 
-        'senha',
-        'dataCadastro',
-        'dataAtualizacao',
-        'dataRemocao',
-        'imgCaminho'
+        'idProdutos', 
+        'idMateriasPrimas', 
+        'quantidade'.
+        'subtotal'
         // Adicione outros campos aqui
     ];
     public $timestamps = false;
 
 
-    public function pedidos(){
-        return $this->hasMany(Pedido::class,'idClientes','id');
-    }
+    
 
 
 }

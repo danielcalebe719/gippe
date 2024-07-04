@@ -4,34 +4,44 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\MovimentacoesProdutos;
+use App\Models\PedidosProdutos;
+use App\Models\ReceitasItem;
 
-class Clientes extends Model
+class Produtos extends Model
 {
     use HasFactory;
 
-    protected $table = 'clientes'; // Nome da tabela no banco de dados
-    protected $primaryKey = 'idClientes'; // Nome da chave primária
+    protected $table = 'produtos'; // Nome da tabela no banco de dados
+    protected $primaryKey = 'id'; // Nome da chave primária
     protected $fillable = [   
         'nome', 
-        'cpf', 
-        'telefone'.
-        'data_de_nascimento', 
+        'descricao', 
+        'tipo'.
+        'quantidade', 
         'status', 
-        'email', 
-        'senha',
+        'preco_unitario', 
         'dataCadastro',
         'dataAtualizacao',
         'dataRemocao',
-        'imgCaminho'
+        'caminhoImagem'
         // Adicione outros campos aqui
     ];
     public $timestamps = false;
 
-
-    public function pedidos(){
-        return $this->hasMany(Pedido::class,'idClientes','id');
+    public function movimentacoesProdutos(){
+        return $this->hasOne(MovimentacoesProdutos::class,'idProdutos','id');
     }
 
+    public function pedidosProdutos()
+    {
+        return $this->hasMany(PedidosProdutos::class,'idProdutos','id');
+    }
+
+    public function receitasItem()
+    {
+        return $this->hasMany(ReceitasItem::class,'idProdutos','id');
+    }
 
 }
 
