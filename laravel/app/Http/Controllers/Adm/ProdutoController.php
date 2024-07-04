@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Adm;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Clientes;
-use App\Models\EnderecosClientes;
-use App\Models\NotificacoesClientes;
-use App\Models\Pedidos;
+use App\Models\Produtos;
+use App\Models\MovimentacoesProdutos;
+use App\Models\PedidosProdutos;
+use App\Models\ReceitasItem;
 use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Carbon;
@@ -15,24 +15,24 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 
-class ClienteController extends Controller
+class ProdutoController extends Controller
 {
     public function index()
     {
-        $clientes = Clientes::all();
-        return view('adm.clientes', compact('clientes'));
+        $produtos = Produtos::all();
+        return view('adm.produtos', compact('produtos'));
     }
 
-    public function show($idClientes)
+    public function show($idProdutos)
     {
-        $cliente = Clientes::find($idClientes);
+        $produto = Clientes::find($idProdutos);
         
-        if ($cliente) {
+        if ($produto) {
 
             
-            return response()->json($cliente);
+            return response()->json($produto);
         } else {
-            return response()->json(['error' => 'Cliente não encontrado'], 404);
+            return response()->json(['error' => 'Produto não encontrado'], 404);
         }
     }
     
@@ -53,38 +53,43 @@ class ClienteController extends Controller
     
         try {
             // Busca ou cria um novo cliente
-            $cliente = $request->idCliente ? Clientes::findOrFail($request->idCliente) : new Clientes();
+            $produto = $request->idProduto ? Produto::findOrFail($request->idProduto) : new Produtos();
     
             // Preenche os outros campos do cliente
-            $cliente->nome = $request->input('nome');
-            $cliente->cpf = $request->input('cpf');
-            $cliente->dataNascimento = $request->input('dataNascimento');
-            $cliente->status = $request->input('status');
-            $cliente->email = $request->input('email');
-            $cliente->telefone = $request->input('telefone');
+            $produto->nome = $request->input('nome');
+            $produto->descricao = $request->input('descricao');
+            $produto->tipo = $request->input('tipo');
+            $produto->quantidade = $request->input('quantidade');
+            $produto->status = $request->input('status');
+            $produto->precoUnitario = $request->input('precoUnitario');
+            $produto->caminhoImagem = $request->input('caminhoImagem');
+
+            if(!$request->idPedido){
+                $pedido->dataPedido = now();
+            }
     
             // Verifica se foi fornecida uma nova senha
             if ($request->filled('senha')) {
-                $cliente->senha = Hash::make($request->input('senha'));
+                $produto->senha = Hash::make($request->input('senha'));
             }
     
             // Trata o upload da imagem, se fornecida
-            if ($request->hasFile('imgCaminho')) {
+            if ($request->hasFile('caminhoImagem')) {
                 // Deleta a imagem antiga, se existir
-                if ($cliente->imgCaminho && Storage::exists('public/GaleriaImagens/' . $cliente->imgCaminho)) {
-                    Storage::delete('public/GaleriaImagens/' . $cliente->imgCaminho);
+                if ($produto->caminhoImagem && Storage::exists('public/GaleriaImagens/' . $produto->caminhoImagem)) {
+                    Storage::delete('public/GaleriaImagens/' . $produto->caminhoImagem);
                 }
                 
                 // Armazena a nova imagem
-                $path = $request->file('imgCaminho')->store('public/GaleriaImagens');
-                $cliente->imgCaminho = basename($path);
+                $path = $request->file('caminhoImagem')->store('public/GaleriaImagens');
+                $produto->caminhoImagem = basename($path);
             }
     
             // Atualiza o timestamp de atualização
-            $cliente->dataAtualizacao = now();  
+            $produto->dataAtualizacao = now();  
     
-            // Salva o cliente
-            $cliente->save();
+            // Salva o produto
+            $produto->save();
             
             return redirect()->back()->with('success', 'Cliente adicionado/atualizado com sucesso!');
             
@@ -109,23 +114,23 @@ class ClienteController extends Controller
 
 
     
-    public function remover($idCliente)
+    public function remover($idProduto)
     {
         try {
 
-            $notificacoesclientes = NotificacoesClientes::where('idClientes',$idCliente)->delete();
-            $enderecosclientes = EnderecosClientes::where('idClientes',$idCliente)->delete();
-            $pedido = Pedidos::where('idClientes',$idCliente)->delete();
-            $cliente = Clientes::findOrFail($idCliente);
+            $movimentacoesProdutos = MovimentacoesProdutos::where('idProdutos',$idProduto)->delete();
+            $pedidosProdutos = PedidosProdutos::where('idProdutos',$idProduto)->delete();
+            $receitasItem = ReceitasItem::where('idProdutos',$idProduto)->delete();
+            $produto = Produtos::findOrFail($idProduto);
            
             
             // Excluir a imagem associada, se existir
-            if ($cliente->imgCaminho) {
-                Storage::delete('public/GaleriaImagens/' . $cliente->imgCaminho);
+            if ($produto->caminhoImagem) {
+                Storage::delete('public/GaleriaImagens/' . $produto->caminhoImagem);
             }
 
 
-            $cliente->delete();
+            $produto->delete();
 
             return response()->json(['message' => 'Cliente excluído com sucesso']);
         } catch (\Exception $e) {

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Adm\ClienteController;
 use App\Http\Controllers\Adm\PedidoController;
+use App\Http\Controllers\Adm\NotificacaoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -132,6 +133,11 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
         Route::get('/show/{idPedidos}', [PedidoController::class, 'show'])->name('pedidos.show');
         Route::post('/guardar', [PedidoController::class, 'guardar'])->name('pedidos.guardar');
         Route::get('/remover/{idPedidos}', [PedidoController::class, 'remover'])->name('pedidos.remover');
+    });
+    // Rotas específicas para pedidos dentro do grupo 'adm/pedidos'
+    Route::prefix('notificacoes')->group(function () {
+        Route::get('/', [NotificacaoController::class, 'index'])->name('notificacoes.index');
+        Route::get('/show/{idNotificacoes}', [NotificacaoController::class, 'show'])->name('notificacoes.show');
     });
 });
 Route::get('adm/logout', [LoginAdminController::class, 'deslogar'])->name('logout');

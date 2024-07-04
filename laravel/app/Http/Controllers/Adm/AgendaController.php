@@ -102,7 +102,7 @@ class AgendamentoController extends Controller
            
 
 
-            $cliente->delete();
+            $agendamento->delete();
 
             return response()->json(['message' => 'Agendamento excluído com sucesso']);
         } catch (\Exception $e) {

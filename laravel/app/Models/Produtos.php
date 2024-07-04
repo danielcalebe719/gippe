@@ -20,7 +20,7 @@ class Produtos extends Model
         'tipo'.
         'quantidade', 
         'status', 
-        'preco_unitario', 
+        'precoUnitario', 
         'dataCadastro',
         'dataAtualizacao',
         'dataRemocao',
