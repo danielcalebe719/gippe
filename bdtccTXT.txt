@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 03-Jul-2024 às 19:09
--- Versão do servidor: 10.4.24-MariaDB
--- versão do PHP: 8.1.5
+-- Tempo de geração: 04-Jul-2024 às 16:13
+-- Versão do servidor: 10.4.32-MariaDB
+-- versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -14,6 +14,30 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `bdtcc`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `admins`
+--
+
+CREATE TABLE `admins` (
+  `id` int(10) NOT NULL,
+  `email` varchar(200) DEFAULT NULL,
+  `password` varchar(1024) DEFAULT NULL,
+  `nome` varchar(255) NOT NULL,
+  `last_login` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `admins`
+--
+
+INSERT INTO `admins` (`id`, `email`, `password`, `nome`, `last_login`) VALUES
+(1, 'super@super', NULL, 'super@super', NULL),
+(2, 'user@user', NULL, 'user@user', NULL),
+(3, 'se@se', '$2y$12$7V/iAPBTrEhDkjPrXY0mbOK5Iti7rEPiwLiXmPvbmpGv6ihP5MXqa', 'ss', '2024-07-04'),
+(4, 'pablo@gmail.com', '$2y$12$cTBt4CwLcJw9UhJT4EqV5.AfrGRPGkS.fur1Dmv2YoYp73gLmKWQi', 'pablo', '2024-07-04');
 
 -- --------------------------------------------------------
 
@@ -29,7 +53,7 @@ CREATE TABLE `admpermissoes` (
   `dataAtualizacao` date DEFAULT NULL,
   `dataRemocao` date DEFAULT NULL,
   `idFuncionario` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -46,7 +70,7 @@ CREATE TABLE `agendamento` (
   `horaFim` time DEFAULT NULL,
   `observacao` varchar(255) DEFAULT NULL,
   `dataCadastro` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -61,39 +85,35 @@ CREATE TABLE `clientes` (
   `dataNascimento` date DEFAULT NULL,
   `status` enum('ativo','inativo') DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `senha` text DEFAULT NULL,
+  `password` text DEFAULT NULL,
   `dataCadastro` date DEFAULT current_timestamp(),
   `dataAtualizacao` date DEFAULT current_timestamp(),
   `dataRemocao` date DEFAULT NULL,
   `imgCaminho` varchar(200) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `telefone` varchar(15) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `telefone` varchar(15) DEFAULT NULL,
+  `last_login` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `clientes`
 --
 
-INSERT INTO `clientes` (`idClientes`, `nome`, `cpf`, `dataNascimento`, `status`, `email`, `senha`, `dataCadastro`, `dataAtualizacao`, `dataRemocao`, `imgCaminho`, `created_at`, `updated_at`, `telefone`) VALUES
-(1, 'danaaaaabbccccc', '15332185600', NULL, 'inativo', 'wqeqe@gmail', '$2y$12$SyPZDZqrXf35DgI2TkbKZOmk/JZUbeu2b5XVEQmu2w13T7zXwG1B6', '2024-07-03', '2024-07-03', NULL, 'b73VJ84UetqSucylh9vQM8d6l9mue6GSH2fZlV1d.jpg', '2024-07-04 18:25:59', '2024-07-02 18:26:03', '319954523212'),
-(27, 'Daniel Calebeddd', '2147483647', '2007-09-30', NULL, 'caloko1029@gmail.com', '$2y$10$59LZOS7n2YzjmkfSje7UWOx/4z/qAoM0fPGBhaUv4x18WqQDxQfj2', '2024-06-19', '2024-06-19', NULL, 'Screenshot_5-removebg-preview.png', NULL, NULL, ''),
-(30, 'Daniel', '2147483647', '0000-00-00', NULL, 'ui', '$2y$10$vemWIh70..Vw5ygVBJp4U.NdDz3yAtj6NB52EjN0p5U8z4npDE8MS', '2024-06-20', '2024-06-20', NULL, 'user_ummd3POvEDfFyeFvVdOMG3OOrwE2_targets_target_qGJRWYc.png', NULL, NULL, ''),
-(31, 'Kauã Wander', '11115230505', '1890-01-01', NULL, 'hitler_1945@gmail.com', '$2y$10$3KUcfRA1J3rVj6UgIvDCleK59INbIi5PYwUtNHEWeV6zVq7pAoIqm', '2024-06-20', '2024-06-20', NULL, 'Screenshot_5-removebg-preview.png', NULL, NULL, ''),
-(41, 'House', '12345678922', '2004-03-02', 'ativo', 'house@ss', NULL, '2024-07-02', '2024-07-02', NULL, 'aqui.png', NULL, NULL, '9922001192'),
-(42, 'kays', '12345678988', NULL, 'ativo', 'kays@kays', '$2y$12$TcVVVXvqA48rRM1gIcPWzO/3CMCzCG5Be.lRJ/wFUMUJ27EaoK9gi', '2024-07-02', '2024-07-02', NULL, 'ltIv6H7IkaQLwBmOA7ZXBoQNnFvr9Bsl4yIeMCh7.jpg', NULL, NULL, '8877665532');
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `colaboradores`
---
-
-CREATE TABLE `colaboradores` (
-  `id` int(10) NOT NULL,
-  `email` varchar(200) DEFAULT NULL,
-  `senha` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `clientes` (`idClientes`, `nome`, `cpf`, `dataNascimento`, `status`, `email`, `password`, `dataCadastro`, `dataAtualizacao`, `dataRemocao`, `imgCaminho`, `created_at`, `updated_at`, `telefone`, `last_login`) VALUES
+(1, 'danada', '15332185600', NULL, 'inativo', 'wqeqe@gmail', '$2y$12$SyPZDZqrXf35DgI2TkbKZOmk/JZUbeu2b5XVEQmu2w13T7zXwG1B6', '2024-07-03', '2024-07-03', NULL, 'b73VJ84UetqSucylh9vQM8d6l9mue6GSH2fZlV1d.jpg', '2024-07-04 18:25:59', '2024-07-02 18:26:03', '319954523212', NULL),
+(27, 'Daniel Calebeddd', '2147483647', '2007-09-30', NULL, 'caloko1029@gmail.com', '$2y$10$59LZOS7n2YzjmkfSje7UWOx/4z/qAoM0fPGBhaUv4x18WqQDxQfj2', '2024-06-19', '2024-06-19', NULL, 'Screenshot_5-removebg-preview.png', NULL, NULL, '', NULL),
+(30, 'Daniel', '2147483647', '0000-00-00', NULL, 'ui', '$2y$10$vemWIh70..Vw5ygVBJp4U.NdDz3yAtj6NB52EjN0p5U8z4npDE8MS', '2024-06-20', '2024-06-20', NULL, 'user_ummd3POvEDfFyeFvVdOMG3OOrwE2_targets_target_qGJRWYc.png', NULL, NULL, '', NULL),
+(31, 'Kauã Wander', '11115230505', '1890-01-01', NULL, 'hitler_1945@gmail.com', '$2y$10$3KUcfRA1J3rVj6UgIvDCleK59INbIi5PYwUtNHEWeV6zVq7pAoIqm', '2024-06-20', '2024-06-20', NULL, 'Screenshot_5-removebg-preview.png', NULL, NULL, '', NULL),
+(41, 'House', '12345678922', '2004-03-02', 'ativo', 'house@ss', NULL, '2024-07-02', '2024-07-02', NULL, 'aqui.png', NULL, NULL, '9922001192', NULL),
+(42, 'kays', '12345678988', NULL, 'ativo', 'kays@kays', '$2y$12$TcVVVXvqA48rRM1gIcPWzO/3CMCzCG5Be.lRJ/wFUMUJ27EaoK9gi', '2024-07-02', '2024-07-02', NULL, 'ltIv6H7IkaQLwBmOA7ZXBoQNnFvr9Bsl4yIeMCh7.jpg', NULL, NULL, '8877665532', NULL),
+(45, 's', '22211122211', '2222-02-11', 'ativo', 'dsadsada@ss', '$2y$12$YKkCd9fP/Gn8Zoacqa9SE.uqRd6baNvxs8FMieQuMVswVMomAok02', '2024-07-03', '2024-07-03', NULL, NULL, NULL, NULL, '3123213', NULL),
+(46, 's', '12312312322', '0222-02-22', 'ativo', 'sdasdsad@s', '$2y$12$CRD1huq9cRfNf4dhPhUhNerz7XmtBPrCWK7GSKZ5UXdD6Zt.qMgOW', '2024-07-03', '2024-07-03', NULL, NULL, NULL, NULL, '12123213', NULL),
+(47, 'roberto', NULL, NULL, NULL, 'roberto@roa', '$2y$12$KNbyLU6ePjvMl6qAB1bMNeIBkJdxp83c9o1lYJaSTF8uTHZESLL2C', '2024-07-04', '2024-07-04', NULL, NULL, NULL, NULL, NULL, '2024-07-04'),
+(48, NULL, NULL, NULL, NULL, 'dani@dani', '$2y$12$u.apiJMBpj1h2Fsu7anhIu1/tcNH2izBZ9YZRBF.6egFIrpZeghvq', '2024-07-04', '2024-07-04', NULL, NULL, NULL, NULL, NULL, '2024-07-04'),
+(51, 'raiz@raiz', '12345612355', '2005-05-05', 'ativo', 'raiz@raiz', '$2y$12$Ty4XHkOZ/4bFD2.ENlGrneWOn7Id9LJRpZg6X5CZRWvd2sLagZ0Y.', '2024-07-04', '2024-07-04', NULL, NULL, NULL, NULL, '555225522552', '2024-07-04'),
+(52, 'pedro', '55855488544', '2255-05-12', 'ativo', 'pedro@pedro', '$2y$12$wbCgQgUfY9tdIsWUl/zOTeAf7aFdnH6F/Mrj9DlPpr9ZAaTDGoyRy', '2024-07-04', '2024-07-04', NULL, NULL, NULL, NULL, '55885455455', '2024-07-04'),
+(53, 'umdia', '11111111111', '4599-05-31', 'ativo', 'umdia@umdia', '$2y$12$v3Ibd1EcBpe7cR8/CWliduq6YA5gJa8b3K4oEKQ6PaZ1p6xYMc5oS', '2024-07-04', '2024-07-04', NULL, NULL, NULL, NULL, '3195455656', '2024-07-04');
 
 -- --------------------------------------------------------
 
@@ -111,7 +131,7 @@ CREATE TABLE `enderecos_clientes` (
   `numero` int(10) DEFAULT NULL,
   `complemento` varchar(255) DEFAULT NULL,
   `idClientes` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `enderecos_clientes`
@@ -131,7 +151,7 @@ CREATE TABLE `esqueci_senha` (
   `idClientes` int(10) DEFAULT NULL,
   `token` int(10) DEFAULT NULL,
   `dataEmissao` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -145,7 +165,7 @@ CREATE TABLE `feedbacks` (
   `avaliacao` enum('1','2','3','4','5') DEFAULT NULL,
   `data_mensagem` date DEFAULT NULL,
   `idPedidos` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -157,7 +177,7 @@ CREATE TABLE `formas_pagamento` (
   `id` int(10) NOT NULL,
   `nome` varchar(255) DEFAULT NULL,
   `classe` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -182,7 +202,7 @@ CREATE TABLE `fornecedor` (
   `dataCadastro` date DEFAULT NULL,
   `dataAtualizacao` date DEFAULT NULL,
   `dataRemocao` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -198,7 +218,7 @@ CREATE TABLE `galeria_imagens` (
   `tamanho_imagem` varchar(25) NOT NULL,
   `tipo_imagem` varchar(25) NOT NULL,
   `imagemCaminho` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Extraindo dados da tabela `galeria_imagens`
@@ -206,7 +226,7 @@ CREATE TABLE `galeria_imagens` (
 
 INSERT INTO `galeria_imagens` (`id`, `evento`, `descricao`, `nome_imagem`, `tamanho_imagem`, `tipo_imagem`, `imagemCaminho`) VALUES
 (23, '', 'outros', '1', '73076', 'image/png', 'azevedo.webp'),
-(24, 'casamento', 'casamento', 'PrcgZGx.jpg', '3486448', '', 'azevedo.webp');
+(24, 'casamento', 'casamento', 'PrcgZGx.jpg', '3486448', '', 'scrum-foundation-professional-certification-sfpc.png');
 
 -- --------------------------------------------------------
 
@@ -220,7 +240,7 @@ CREATE TABLE `gastos` (
   `valor` decimal(10,2) DEFAULT NULL,
   `dataCadastro` date DEFAULT NULL,
   `dataAtualizacao` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -239,7 +259,7 @@ CREATE TABLE `materias_primas_estoque` (
   `dataRemocao` date DEFAULT NULL,
   `imgCaminho` varchar(200) DEFAULT NULL,
   `idFornecedor` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -254,7 +274,7 @@ CREATE TABLE `mensagens` (
   `assunto` varchar(100) NOT NULL,
   `mensagem` text NOT NULL,
   `data_envio` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `mensagens`
@@ -308,7 +328,7 @@ INSERT INTO `mensagens` (`id`, `nome`, `endereco`, `assunto`, `mensagem`, `data_
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -338,7 +358,7 @@ CREATE TABLE `movimentacoes_materias_primas` (
   `dataCadastro` date DEFAULT NULL,
   `dataAtualizacao` date DEFAULT NULL,
   `dataRemocao` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -354,7 +374,7 @@ CREATE TABLE `movimentacoes_produtos` (
   `dataCadastro` date DEFAULT NULL,
   `dataAtualizacao` date DEFAULT NULL,
   `dataRemocao` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -367,7 +387,7 @@ CREATE TABLE `notificacoes` (
   `mensagem` varchar(500) DEFAULT NULL,
   `dataEnvio` date DEFAULT NULL,
   `titulo` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `notificacoes`
@@ -392,7 +412,7 @@ CREATE TABLE `notificacoes_clientes` (
   `idPedidos` int(10) DEFAULT NULL,
   `idClientes` int(10) DEFAULT NULL,
   `idNotificacoes` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `notificacoes_clientes`
@@ -412,7 +432,7 @@ CREATE TABLE `notificacoes_colaboradores` (
   `idPedidos` int(10) DEFAULT NULL,
   `idFuncionario` int(10) DEFAULT NULL,
   `idNotificacoes` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -421,8 +441,8 @@ CREATE TABLE `notificacoes_colaboradores` (
 --
 
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -440,14 +460,14 @@ CREATE TABLE `pedidos` (
   `totalPedido` decimal(10,2) DEFAULT NULL,
   `dataPedido` date DEFAULT NULL,
   `dataEntrega` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `pedidos`
 --
 
 INSERT INTO `pedidos` (`id`, `idClientes`, `observacao`, `status`, `totalPedido`, `dataPedido`, `dataEntrega`) VALUES
-(1, 27, 'calcnsaodsadsa', 'ativo', '0.00', '2024-06-08', '2024-06-22');
+(1, 27, 'calcnsaodsadsa', 'ativo', 0.00, '2024-06-08', '2024-06-22');
 
 -- --------------------------------------------------------
 
@@ -460,7 +480,7 @@ CREATE TABLE `pedidos_andamentos` (
   `idPedidos` int(10) DEFAULT NULL,
   `data` date DEFAULT NULL,
   `status` enum('pendente','aceito','cancelado','entregue') DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -474,7 +494,7 @@ CREATE TABLE `pedidos_produtos` (
   `idProdutos` int(10) DEFAULT NULL,
   `quantidade` int(10) DEFAULT NULL,
   `subtotal` decimal(10,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -489,64 +509,64 @@ CREATE TABLE `pedidos_servicos` (
   `funcionarioTipo` enum('Garcom','Cozinheiro','Barman') DEFAULT NULL,
   `quantidade` int(10) DEFAULT NULL,
   `subtotal` decimal(10,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `pedidos_servicos`
 --
 
 INSERT INTO `pedidos_servicos` (`id`, `idServicos`, `idPedidos`, `funcionarioTipo`, `quantidade`, `subtotal`) VALUES
-(25, 1, NULL, 'Garcom', 1, '150.00'),
-(26, 1, NULL, 'Cozinheiro', 2, '300.00'),
-(27, 1, NULL, 'Barman', 3, '450.00'),
-(28, 2, NULL, 'Garcom', 2, '300.00'),
-(29, 2, NULL, 'Cozinheiro', 3, '450.00'),
-(30, 2, NULL, 'Barman', 4, '600.00'),
-(31, 3, NULL, 'Garcom', 3, '450.00'),
-(32, 3, NULL, 'Cozinheiro', 4, '600.00'),
-(33, 3, NULL, 'Barman', 5, '750.00'),
-(34, 4, NULL, 'Garcom', 0, '0.00'),
-(35, 4, NULL, 'Cozinheiro', 0, '0.00'),
-(36, 4, NULL, 'Barman', 0, '0.00'),
-(37, 6, NULL, 'Barman', 15, '2250.00'),
-(38, 6, NULL, 'Garcom', 15, '2250.00'),
-(39, 6, NULL, 'Cozinheiro', 15, '2250.00'),
-(40, 7, NULL, 'Barman', 22, '3300.00'),
-(41, 7, NULL, 'Garcom', 22, '3300.00'),
-(42, 7, NULL, 'Cozinheiro', 22, '3300.00'),
-(43, 8, NULL, 'Barman', 22, '3300.00'),
-(44, 8, NULL, 'Garcom', 22, '3300.00'),
-(45, 8, NULL, 'Cozinheiro', 22, '3300.00'),
-(46, 9, NULL, 'Barman', 2, '300.00'),
-(47, 9, NULL, 'Garcom', 2, '300.00'),
-(48, 9, NULL, 'Cozinheiro', 2, '300.00'),
-(49, 10, NULL, 'Barman', 2, '300.00'),
-(50, 10, NULL, 'Garcom', 2, '300.00'),
-(51, 10, NULL, 'Cozinheiro', 2, '300.00'),
-(52, 11, NULL, 'Barman', 2, '300.00'),
-(53, 11, NULL, 'Garcom', 2, '300.00'),
-(54, 11, NULL, 'Cozinheiro', 2, '300.00'),
-(55, 13, NULL, 'Barman', 2, '300.00'),
-(56, 13, NULL, 'Garcom', 2, '300.00'),
-(57, 13, NULL, 'Cozinheiro', 2, '300.00'),
-(58, 14, NULL, 'Barman', 2, '300.00'),
-(59, 14, NULL, 'Garcom', 21, '3150.00'),
-(60, 14, NULL, 'Cozinheiro', 2, '300.00'),
-(61, 15, NULL, 'Barman', 2, '300.00'),
-(62, 15, NULL, 'Garcom', 2, '300.00'),
-(63, 15, NULL, 'Cozinheiro', 2, '300.00'),
-(64, 16, NULL, 'Barman', 2, '300.00'),
-(65, 16, NULL, 'Garcom', 2, '300.00'),
-(66, 16, NULL, 'Cozinheiro', 2, '300.00'),
-(67, 17, NULL, 'Barman', 2, '300.00'),
-(68, 17, NULL, 'Garcom', 2, '300.00'),
-(69, 17, NULL, 'Cozinheiro', 2, '300.00'),
-(70, 18, NULL, 'Barman', 2, '300.00'),
-(71, 18, NULL, 'Garcom', 2, '300.00'),
-(72, 18, NULL, 'Cozinheiro', 2, '300.00'),
-(73, 19, NULL, 'Barman', 2, '300.00'),
-(74, 19, NULL, 'Garcom', 2, '300.00'),
-(75, 19, NULL, 'Cozinheiro', 2, '300.00');
+(25, 1, NULL, 'Garcom', 1, 150.00),
+(26, 1, NULL, 'Cozinheiro', 2, 300.00),
+(27, 1, NULL, 'Barman', 3, 450.00),
+(28, 2, NULL, 'Garcom', 2, 300.00),
+(29, 2, NULL, 'Cozinheiro', 3, 450.00),
+(30, 2, NULL, 'Barman', 4, 600.00),
+(31, 3, NULL, 'Garcom', 3, 450.00),
+(32, 3, NULL, 'Cozinheiro', 4, 600.00),
+(33, 3, NULL, 'Barman', 5, 750.00),
+(34, 4, NULL, 'Garcom', 0, 0.00),
+(35, 4, NULL, 'Cozinheiro', 0, 0.00),
+(36, 4, NULL, 'Barman', 0, 0.00),
+(37, 6, NULL, 'Barman', 15, 2250.00),
+(38, 6, NULL, 'Garcom', 15, 2250.00),
+(39, 6, NULL, 'Cozinheiro', 15, 2250.00),
+(40, 7, NULL, 'Barman', 22, 3300.00),
+(41, 7, NULL, 'Garcom', 22, 3300.00),
+(42, 7, NULL, 'Cozinheiro', 22, 3300.00),
+(43, 8, NULL, 'Barman', 22, 3300.00),
+(44, 8, NULL, 'Garcom', 22, 3300.00),
+(45, 8, NULL, 'Cozinheiro', 22, 3300.00),
+(46, 9, NULL, 'Barman', 2, 300.00),
+(47, 9, NULL, 'Garcom', 2, 300.00),
+(48, 9, NULL, 'Cozinheiro', 2, 300.00),
+(49, 10, NULL, 'Barman', 2, 300.00),
+(50, 10, NULL, 'Garcom', 2, 300.00),
+(51, 10, NULL, 'Cozinheiro', 2, 300.00),
+(52, 11, NULL, 'Barman', 2, 300.00),
+(53, 11, NULL, 'Garcom', 2, 300.00),
+(54, 11, NULL, 'Cozinheiro', 2, 300.00),
+(55, 13, NULL, 'Barman', 2, 300.00),
+(56, 13, NULL, 'Garcom', 2, 300.00),
+(57, 13, NULL, 'Cozinheiro', 2, 300.00),
+(58, 14, NULL, 'Barman', 2, 300.00),
+(59, 14, NULL, 'Garcom', 21, 3150.00),
+(60, 14, NULL, 'Cozinheiro', 2, 300.00),
+(61, 15, NULL, 'Barman', 2, 300.00),
+(62, 15, NULL, 'Garcom', 2, 300.00),
+(63, 15, NULL, 'Cozinheiro', 2, 300.00),
+(64, 16, NULL, 'Barman', 2, 300.00),
+(65, 16, NULL, 'Garcom', 2, 300.00),
+(66, 16, NULL, 'Cozinheiro', 2, 300.00),
+(67, 17, NULL, 'Barman', 2, 300.00),
+(68, 17, NULL, 'Garcom', 2, 300.00),
+(69, 17, NULL, 'Cozinheiro', 2, 300.00),
+(70, 18, NULL, 'Barman', 2, 300.00),
+(71, 18, NULL, 'Garcom', 2, 300.00),
+(72, 18, NULL, 'Cozinheiro', 2, 300.00),
+(73, 19, NULL, 'Barman', 2, 300.00),
+(74, 19, NULL, 'Garcom', 2, 300.00),
+(75, 19, NULL, 'Cozinheiro', 2, 300.00);
 
 --
 -- Acionadores `pedidos_servicos`
@@ -576,11 +596,11 @@ DELIMITER ;
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_type` varchar(255) NOT NULL,
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `abilities` text DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -605,7 +625,7 @@ CREATE TABLE `produtos` (
   `dataAtualizacao` date DEFAULT NULL,
   `dataRemocao` date DEFAULT NULL,
   `caminhoImagem` varchar(200) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -619,7 +639,7 @@ CREATE TABLE `receitas_item` (
   `idMateriasPrimas` int(10) DEFAULT NULL,
   `quantidade` int(10) DEFAULT NULL,
   `subtotal` decimal(10,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -631,7 +651,7 @@ CREATE TABLE `relatorios` (
   `idRelatorio` int(10) NOT NULL,
   `parametros` text DEFAULT NULL,
   `dataEmissao` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -649,31 +669,31 @@ CREATE TABLE `servicos` (
   `imgCaminho` varchar(200) DEFAULT NULL,
   `duracaoHoras` int(11) DEFAULT NULL,
   `quantidadePessoas` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `servicos`
 --
 
 INSERT INTO `servicos` (`idServicos`, `nomeServico`, `total_servicos`, `dataCadastro`, `dataAtualizacao`, `dataRemocao`, `imgCaminho`, `duracaoHoras`, `quantidadePessoas`) VALUES
-(1, 'festa pequena', '15000.00', '2024-06-09', '2024-06-09', NULL, NULL, 4, 30),
-(2, 'festa media', '1350.00', NULL, NULL, NULL, NULL, 7, 50),
-(3, 'festa grande', '1800.00', NULL, NULL, NULL, NULL, 11, 100),
-(4, 'apenas entrega', '0.00', NULL, NULL, NULL, NULL, NULL, 0),
-(6, 'personalizado', '6750.00', '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
-(7, 'personalizado', '9900.00', '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
-(8, 'personalizado', '9900.00', '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
-(9, 'personalizado', '900.00', '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
-(10, 'personalizado', '900.00', '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
-(11, 'personalizado', '900.00', '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(1, 'festa pequena', 15000.00, '2024-06-09', '2024-06-09', NULL, NULL, 4, 30),
+(2, 'festa media', 1350.00, NULL, NULL, NULL, NULL, 7, 50),
+(3, 'festa grande', 1800.00, NULL, NULL, NULL, NULL, 11, 100),
+(4, 'apenas entrega', 0.00, NULL, NULL, NULL, NULL, NULL, 0),
+(6, 'personalizado', 6750.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(7, 'personalizado', 9900.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(8, 'personalizado', 9900.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(9, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(10, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(11, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
 (12, 'personalizado', NULL, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
-(13, 'personalizado', '900.00', '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
-(14, 'personalizado', '3750.00', '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
-(15, 'personalizado', '900.00', '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
-(16, 'personalizado', '900.00', '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
-(17, 'personalizado', '900.00', '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
-(18, 'personalizado', '900.00', '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
-(19, 'personalizado', '900.00', '2024-06-09', '2024-06-09', NULL, NULL, 2, 14);
+(13, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(14, 'personalizado', 3750.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(15, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
+(16, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
+(17, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
+(18, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
+(19, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, 2, 14);
 
 -- --------------------------------------------------------
 
@@ -683,11 +703,11 @@ INSERT INTO `servicos` (`idServicos`, `nomeServico`, `total_servicos`, `dataCada
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -695,6 +715,12 @@ CREATE TABLE `users` (
 --
 -- Índices para tabelas despejadas
 --
+
+--
+-- Índices para tabela `admins`
+--
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices para tabela `admpermissoes`
@@ -715,12 +741,6 @@ ALTER TABLE `agendamento`
 --
 ALTER TABLE `clientes`
   ADD PRIMARY KEY (`idClientes`);
-
---
--- Índices para tabela `colaboradores`
---
-ALTER TABLE `colaboradores`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices para tabela `enderecos_clientes`
@@ -906,10 +926,16 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT de tabela `admins`
+--
+ALTER TABLE `admins`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT de tabela `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `idClientes` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `idClientes` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT de tabela `galeria_imagens`
@@ -1003,7 +1029,7 @@ ALTER TABLE `users`
 -- Limitadores para a tabela `admpermissoes`
 --
 ALTER TABLE `admpermissoes`
-  ADD CONSTRAINT `admpermissoes_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `colaboradores` (`id`);
+  ADD CONSTRAINT `admpermissoes_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `admins` (`id`);
 
 --
 -- Limitadores para a tabela `agendamento`
@@ -1060,7 +1086,7 @@ ALTER TABLE `notificacoes_clientes`
 --
 ALTER TABLE `notificacoes_colaboradores`
   ADD CONSTRAINT `notificacoes_colaboradores_ibfk_1` FOREIGN KEY (`idPedidos`) REFERENCES `pedidos` (`id`),
-  ADD CONSTRAINT `notificacoes_colaboradores_ibfk_2` FOREIGN KEY (`idFuncionario`) REFERENCES `colaboradores` (`id`),
+  ADD CONSTRAINT `notificacoes_colaboradores_ibfk_2` FOREIGN KEY (`idFuncionario`) REFERENCES `admins` (`id`),
   ADD CONSTRAINT `notificacoes_colaboradores_ibfk_3` FOREIGN KEY (`idNotificacoes`) REFERENCES `notificacoes` (`idNotificacoes`);
 
 --
