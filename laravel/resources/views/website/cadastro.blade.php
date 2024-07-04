@@ -27,7 +27,7 @@
         @endif
 
 
-        <form id="cadastroForm"  method="POST" action="{{ url('/website/cadastrar') }}">
+        <form id="cadastroForm"  method="POST" action="{{ url('/website/cadastro') }}">
         @csrf
             <div class="input-group">
                 <label for="email">Email</label>
