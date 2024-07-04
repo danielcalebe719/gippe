@@ -8,20 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class EnderecosClientes extends Model
 {
     use HasFactory;
-   
-    protected $table = 'enderecos_clientes'; // Nome da tabela no banco de dados
-    protected $primaryKey = 'id'; // Nome da chave primária
-    protected $fillable = [   
-        'tipo', 
-        'cep', 
-        'cidade'.
-        'bairro', 
-        'rua', 
-        'numero', 
-        'complemento',
-        'idClientes'
-        // Adicione outros campos aqui
-    ];
 
+    protected $table = 'enderecos_clientes';
+
+    protected $fillable = [
+        'tipo', // Add 'tipo' here to allow mass assignment
+        'cep',
+        'cidade',
+        'bairro',
+        'rua',
+        'numero',
+        'complemento',
+        'idClientes',
+    ];
     public $timestamps = false;
+
+    public function cliente()
+    {
+        return $this->belongsTo(Clientes::class, 'idClientes');
+    }
 }

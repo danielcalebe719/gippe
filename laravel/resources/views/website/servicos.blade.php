@@ -69,71 +69,30 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="box">
-                        <h3>Serviço 1</h3>
-                        <h4><sup>R$</sup>1500</h4>
-                        <ul>
-                            <li>Barmans: 2</li>
-                            <li>Garçons: 4</li>
-                            <li>Cozinheiros: 2</li>
-                            <li>Para festas de até 50 pessoas</li>
-                            <li>Duração de 5 horas</li>
-                        </ul>
-                        <div class="btn-wrap">
-                            <a href="pedidos.html?idServico=1" class="btn-buy">Selecionar Serviço</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="box">
-                        <h3>Serviço 2</h3>
-                        <h4><sup>R$</sup>2500</h4>
-                        <ul>
-                            <li>Barmans: 3</li>
-                            <li>Garçons: 6</li>
-                            <li>Cozinheiros: 3</li>
-                            <li>Para festas de até 100 pessoas</li>
-                            <li>Duração de 6 horas</li>
-                        </ul>
-                        <div class="btn-wrap">
-                            <a href="pedidos.html?idServico=2" class="btn-buy">Selecionar Serviço</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                    <div class="box">
-                        <h3>Serviço 3</h3>
-                        <h4><sup>R$</sup>3500</h4>
-                        <ul>
-                            <li>Barmans: 4</li>
-                            <li>Garçons: 8</li>
-                            <li>Cozinheiros: 4</li>
-                            <li>Para festas de até 150 pessoas</li>
-                            <li>Duração de 8 horas</li>
-                        </ul>
-                        <div class="btn-wrap">
-                            <a href="pedidos.html?idServico=3" class="btn-buy">Selecionar Serviço</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
-                    <div class="box">
-                        <h3>Serviço 4</h3>
-                        <h4><sup>R$</sup>4500</h4>
-                        <ul>
-                            <li>Barmans: 5</li>
-                            <li>Garçons: 10</li>
-                            <li>Cozinheiros: 5</li>
-                            <li>Para festas de até 200 pessoas</li>
-                            <li>Duração de 10 horas</li>
-                        </ul>
-                        <div class="btn-wrap">
-                            <a href="pedidos.html?idServico=4" class="btn-buy">Selecionar Serviço</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+
+            <!-- Loop para exibir apenas os 4 primeiros serviços -->
+@foreach ($servicos as $servico)
+<div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+    <div class="box">
+        <h3>{{ $servico->nome }}</h3>
+        <h4><sup>R$</sup>{{ $servico->preco }}</h4>
+        <ul>
+            <li>Barmans: {{ $servico->pedidos_servicos->barmans }}</li>
+            <li>Garçons: {{ $servico->pedidos_servicos->garcons }}</li>
+            <li>Cozinheiros: {{ $servico->pedidos_servicos->cozinheiros }}</li>
+            <li>Para festas de até {{ $servico->capacidade }} pessoas</li>
+            <li>Duração de {{ $servico->duracao }} horas</li>
+        </ul>
+        <div class="btn-wrap">
+            <a href="pedidos.html?idServico={{ $servico->id }}" class="btn-buy">Selecionar Serviço</a>
+        </div>
+    </div>
+</div>
+@endforeach
+
+
+               
             <br>
 
             <div class="container">
