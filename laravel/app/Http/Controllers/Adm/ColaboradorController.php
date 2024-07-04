@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Adm;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Clientes;
-use App\Models\EnderecosClientes;
-use App\Models\NotificacoesClientes;
-use App\Models\Pedidos;
+use App\Models\Admins;
+
 use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Carbon;
@@ -15,17 +13,17 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 
-class ClienteController extends Controller
+class ColaboradorController extends Controller
 {
     public function index()
     {
-        $clientes = Clientes::all();
+        $clientes = Colaboradores::all();
         return view('adm.clientes', compact('clientes'));
     }
 
     public function show($idClientes)
     {
-        $cliente = Clientes::find($idClientes);
+        $cliente = Colaboradores::find($idClientes);
         
         if ($cliente) {
 
@@ -53,7 +51,7 @@ class ClienteController extends Controller
     
         try {
             // Busca ou cria um novo cliente
-            $cliente = $request->idCliente ? Clientes::findOrFail($request->idCliente) : new Clientes();
+            $cliente = $request->idCliente ? Colaboradores::findOrFail($request->idCliente) : new Colaboradores();
     
             // Preenche os outros campos do cliente
             $cliente->nome = $request->input('nome');

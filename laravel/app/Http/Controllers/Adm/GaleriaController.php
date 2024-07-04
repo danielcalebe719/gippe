@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Adm;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Clientes;
+use App\Models\GaleriaImagens;
 use App\Models\EnderecosClientes;
 use App\Models\NotificacoesClientes;
 use App\Models\Pedidos;
@@ -15,24 +15,24 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 
-class ClienteController extends Controller
+class GaleriaImagensController extends Controller
 {
     public function index()
     {
-        $clientes = Clientes::all();
-        return view('adm.clientes', compact('clientes'));
+        $galeriaImagem = GaleriaImagens::all();
+        return view('adm.galeriaImagens', compact('galeriaImagens'));
     }
 
-    public function show($idClientes)
+    public function show($idGaleriasImagens)
     {
-        $cliente = Clientes::find($idClientes);
+        $galeriaImagem = GaleriaImagens::find($idGaleriasImagens);
         
-        if ($cliente) {
+        if ($galeriaImagem) {
 
             
-            return response()->json($cliente);
+            return response()->json($galeriaImagem);
         } else {
-            return response()->json(['error' => 'Cliente não encontrado'], 404);
+            return response()->json(['error' => 'Imagem não encontrada'], 404);
         }
     }
     
@@ -53,38 +53,38 @@ class ClienteController extends Controller
     
         try {
             // Busca ou cria um novo cliente
-            $cliente = $request->idCliente ? Clientes::findOrFail($request->idCliente) : new Clientes();
+            $galeriaImagem = $request->idGaleriaImagem ? Clientes::findOrFail($request->idGaleriaImagem) : new Clientes();
     
             // Preenche os outros campos do cliente
-            $cliente->nome = $request->input('nome');
-            $cliente->cpf = $request->input('cpf');
-            $cliente->dataNascimento = $request->input('dataNascimento');
-            $cliente->status = $request->input('status');
-            $cliente->email = $request->input('email');
-            $cliente->telefone = $request->input('telefone');
+            $galeriaImagem->evento = $request->input('evento');
+            $galeriaImagem->descricao = $request->input('descricao');
+            $galeriaImagem->nomeImagem = $request->input('nomeImagem');
+            $galeriaImagem->tamanhoImagem = $request->input('tamanhoImagem');
+            $galeriaImagem->tipoImagem = $request->input('tipoImagem');
+            $galeriaImagem->imagemCaminho = $request->input('imagemCaminho');
     
             // Verifica se foi fornecida uma nova senha
             if ($request->filled('senha')) {
-                $cliente->senha = Hash::make($request->input('senha'));
+                $galeriaImagem->senha = Hash::make($request->input('senha'));
             }
     
             // Trata o upload da imagem, se fornecida
             if ($request->hasFile('imgCaminho')) {
                 // Deleta a imagem antiga, se existir
-                if ($cliente->imgCaminho && Storage::exists('public/GaleriaImagens/' . $cliente->imgCaminho)) {
-                    Storage::delete('public/GaleriaImagens/' . $cliente->imgCaminho);
+                if ($galeriaImagem->imgCaminho && Storage::exists('public/GaleriaImagens/' . $galeriaImagem->imgCaminho)) {
+                    Storage::delete('public/GaleriaImagens/' . $galeriaImagem->imgCaminho);
                 }
                 
                 // Armazena a nova imagem
                 $path = $request->file('imgCaminho')->store('public/GaleriaImagens');
-                $cliente->imgCaminho = basename($path);
+                $galeriaImagem->imgCaminho = basename($path);
             }
     
             // Atualiza o timestamp de atualização
-            $cliente->dataAtualizacao = now();  
+            $galeriaImagem->dataAtualizacao = now();  
     
             // Salva o cliente
-            $cliente->save();
+            $galeriaImagem->save();
             
             return redirect()->back()->with('success', 'Cliente adicionado/atualizado com sucesso!');
             
@@ -116,16 +116,16 @@ class ClienteController extends Controller
             $notificacoesclientes = NotificacoesClientes::where('idClientes',$idCliente)->delete();
             $enderecosclientes = EnderecosClientes::where('idClientes',$idCliente)->delete();
             $pedido = Pedidos::where('idClientes',$idCliente)->delete();
-            $cliente = Clientes::findOrFail($idCliente);
+            $galeriaImagem = Clientes::findOrFail($idCliente);
            
             
             // Excluir a imagem associada, se existir
-            if ($cliente->imgCaminho) {
-                Storage::delete('public/GaleriaImagens/' . $cliente->imgCaminho);
+            if ($galeriaImagem->imgCaminho) {
+                Storage::delete('public/GaleriaImagens/' . $galeriaImagem->imgCaminho);
             }
 
 
-            $cliente->delete();
+            $galeriaImagem->delete();
 
             return response()->json(['message' => 'Cliente excluído com sucesso']);
         } catch (\Exception $e) {

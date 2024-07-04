@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Clientes;
+use App\Models\Agendamentos;
 use App\Models\Feedbacks;
 use App\Models\NotificacoesClientes;
 use App\Models\NotificacoesColaboradores;
@@ -65,6 +66,10 @@ class Pedidos extends Model
     public function pedidosServicos()
     {
         return $this->hasOne(PedidosServicos::class,'idPedidos','id');
+    }
+    public function agendamentos()
+    {
+        return $this->hasOne(Agendamentos::class,'idPedidos','id');
     }
 
 }

@@ -18,19 +18,19 @@ class AgendamentoController extends Controller
     public function index()
     {
         $agendamento = Agendamentos::all();
-        return view('adm.clientes', compact('clientes'));
+        return view('adm.agendamentos', compact('agendamentos'));
     }
 
     public function show($idAgendamento)
     {
-        $cliente = Agendamentos::find($idAgendamento);
+        $agendamento = Agendamentos::find($idAgendamento);
         
-        if ($cliente) {
+        if ($agendamento) {
 
             
-            return response()->json($cliente);
+            return response()->json($agendamento);
         } else {
-            return response()->json(['error' => 'Cliente não encontrado'], 404);
+            return response()->json(['error' => 'Agendamento não encontrado'], 404);
         }
     }
     
@@ -51,45 +51,29 @@ class AgendamentoController extends Controller
     
         try {
             // Busca ou cria um novo cliente
-            $cliente = $request->idAgendamento ? Agendamentos::findOrFail($request->idCliente) : new Agendamentos();
+            $agendamento = $request->idAgendamento ? Agendamentos::findOrFail($request->idAgendamento) : new Agendamentos();
     
-            // Preenche os outros campos do cliente
-            $cliente->nome = $request->input('nome');
-            $cliente->cpf = $request->input('cpf');
-            $cliente->dataNascimento = $request->input('dataNascimento');
-            $cliente->status = $request->input('status');
-            $cliente->email = $request->input('email');
-            $cliente->telefone = $request->input('telefone');
+            // Preenche os outros campos do agendamento
+            $agendamento->idPedidos = $request->input('idPedidos');
+            $agendamento->dataInicio = $request->input('dataInicio');
+            $agendamento->dataFim = $request->input('dataFim');
+            $agendamento->horaInicio = $request->input('horaInicio');
+            $agendamento->horaFim = $request->input('horaFim');
+        
     
-            // Verifica se foi fornecida uma nova senha
-            if ($request->filled('senha')) {
-                $cliente->senha = Hash::make($request->input('senha'));
-            }
+            
     
-            // Trata o upload da imagem, se fornecida
-            if ($request->hasFile('imgCaminho')) {
-                // Deleta a imagem antiga, se existir
-                if ($cliente->imgCaminho && Storage::exists('public/GaleriaImagens/' . $cliente->imgCaminho)) {
-                    Storage::delete('public/GaleriaImagens/' . $cliente->imgCaminho);
-                }
-                
-                // Armazena a nova imagem
-                $path = $request->file('imgCaminho')->store('public/GaleriaImagens');
-                $cliente->imgCaminho = basename($path);
-            }
-    
-            // Atualiza o timestamp de atualização
-            $cliente->dataAtualizacao = now();  
+             
     
             // Salva o cliente
             $cliente->save();
             
-            return redirect()->back()->with('success', 'Cliente adicionado/atualizado com sucesso!');
+            return redirect()->back()->with('success', 'Agendamento adicionado/atualizado com sucesso!');
             
         } catch (\Exception $e) {
             // Loga o erro para fins de debug
-            Log::error('Erro ao atualizar o cliente: ' . $e->getMessage());
-            return response()->json(['error' => 'Erro ao atualizar o cliente: ' . $e->getMessage()], 500);
+            Log::error('Erro ao atualizar o agendamento: ' . $e->getMessage());
+            return response()->json(['error' => 'Erro ao atualizar o agendamento: ' . $e->getMessage()], 500);
         }
     }
     
@@ -107,27 +91,22 @@ class AgendamentoController extends Controller
 
 
     
-    public function remover($idCliente)
+    public function remover($idAgendamento)
     {
         try {
 
-            $notificacoesclientes = NotificacoesClientes::where('idAgendamentos',$idCliente)->delete();
-            $enderecosclientes = EnderecosClientes::where('idAgendamentos',$idCliente)->delete();
-            $pedido = Pedidos::where('idAgendamentos',$idCliente)->delete();
-            $cliente = Agendamentos::findOrFail($idCliente);
+            
+            $agendamento = Agendamentos::findOrFail($idAgendamento);
            
             
-            // Excluir a imagem associada, se existir
-            if ($cliente->imgCaminho) {
-                Storage::delete('public/GaleriaImagens/' . $cliente->imgCaminho);
-            }
+           
 
 
             $cliente->delete();
 
-            return response()->json(['message' => 'Cliente excluído com sucesso']);
+            return response()->json(['message' => 'Agendamento excluído com sucesso']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro ao excluir o cliente: ' . $e->getMessage()], 500);
+            return response()->json(['error' => 'Erro ao excluir o agendamento: ' . $e->getMessage()], 500);
         }       
     }
 }
