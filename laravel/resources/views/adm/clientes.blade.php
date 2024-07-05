@@ -36,7 +36,7 @@
                             <tbody>
                                 @foreach($clientes as $cliente)
                                 <tr>
-                                    <td>{{ $cliente->idClientes }}</td>
+                                    <td>{{ $cliente->id }}</td>
                                     <td>{{ $cliente->nome }}</td>
                                     <td>{{ $cliente->cpf }}</td>
                                     <td>{{ $cliente->dataNascimento }}</td>
@@ -47,20 +47,20 @@
                                     <td>
                                         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                                             <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">
-                                                <button class="btn btn-primary btn-sm" onclick="carregarDadosParaEdicao('{{ $cliente->idClientes }}')" data-toggle="modal" data-target="#modalEditarCliente">
+                                                <button class="btn btn-primary btn-sm" onclick="carregarDadosParaEdicao('{{ $cliente->id }}')" data-toggle="modal" data-target="#modalEditarCliente">
                                                     Editar
                                                 </button>
                                             </div>
 
                                             <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">
-                                                <button type="button" class="btn btn-danger btn-sm" onclick="abrirModalExclusao('{{ $cliente->idClientes }}')">
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="abrirModalExclusao('{{ $cliente->id }}')">
                                                     Excluir
                                                 </button>
                                             </div>
 
 
                                             <div class="btn-group" role="group" aria-label="Ações do Cliente">
-                                                <button class="btn btn-info btn-sm" onclick="mostrarDetalhes('{{ $cliente->idClientes }}')" data-toggle="modal" data-target="#modalDetalhesCliente">
+                                                <button class="btn btn-info btn-sm" onclick="mostrarDetalhes('{{ $cliente->id }}')" data-toggle="modal" data-target="#modalDetalhesCliente">
                                                     Detalhes
                                                 </button>
                                             </div>
@@ -417,7 +417,7 @@
                     })
                     .then(data => {
                         // Preencha os campos do modal com os dados do cliente, ou valores padrão
-                        document.getElementById('detalhesId').value = data.idClientes || '';
+                        document.getElementById('detalhesId').value = data.id || '';
                         document.getElementById('detalhesNome').value = data.nome || '';
                         document.getElementById('detalhesCPF').value = data.cpf || '';
                         document.getElementById('detalhesDataNascimento').value = formatarDataEdit(data.dataNascimento) || '';

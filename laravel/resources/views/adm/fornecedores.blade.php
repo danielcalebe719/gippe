@@ -35,24 +35,43 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <!-- Aqui vai o conteúdo da tabela vindo do banco de dados -->
-                                            <!-- Exemplo estático para ilustrar -->
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Casa da carne</td>
-                                                <td>12345678900</td>
-                                                <td>31 12345678900</td>
-                                                <td>Ativo</td>
-                                                <td>joao.silva@example.com</td>
-                                                <td>1321321</td>
-                                                <td>
-                                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarFornecedor">Editar</button>
-                                                    <button class="btn btn-danger btn-sm" onclick="excluirFornecedor(1)">Excluir</button>
-                                                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalDetalhesFornecedor">Detalhes</button>
-                                               
-                                                </td>
-                                            </tr>
-                                            <!-- Fim do exemplo -->
+                                        @foreach($fornecedores as $fornecedor)
+                                <tr>
+                                    <td>{{ $fornecedor->id }}</td>
+                                    <td>{{ $fornecedor->nome }}</td>
+                                    <td>{{ $fornecedor->cnpj }}</td>
+                                    <td>{{ $fornecedor->telefone1 }}</td>
+                                    <td>{{ $fornecedor->status }}</td>
+                                    <td>{{ $fornecedor->email }}</td>
+                                    <td>{{ $fornecedor->cep }}</td>
+
+
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">
+                                                <button class="btn btn-primary btn-sm" onclick="carregarDadosParaEdicao('{{ $fornecedor->id }}')" data-toggle="modal" data-target="#modalEditarCliente">
+                                                    Editar
+                                                </button>
+                                            </div>
+
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="abrirModalExclusao('{{ $fornecedor->id }}')">
+                                                    Excluir
+                                                </button>
+                                            </div>
+
+
+                                            <div class="btn-group" role="group" aria-label="Ações do Cliente">
+                                                <button class="btn btn-info btn-sm" onclick="mostrarDetalhes('{{ $fornecedor->id }}')" data-toggle="modal" data-target="#modalDetalhesCliente">
+                                                    Detalhes
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+
+
+                                </tr>
+                                @endforeach
                                         </tbody>
                                     </table>
                                 </div>

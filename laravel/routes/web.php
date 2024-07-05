@@ -5,6 +5,10 @@ use App\Http\Controllers\Adm\ClienteController;
 use App\Http\Controllers\Adm\PedidoController;
 use App\Http\Controllers\Adm\NotificacaoController;
 use App\Http\Controllers\Adm\AgendamentoController;
+use App\Http\Controllers\Adm\ProdutoController;
+use App\Http\Controllers\Adm\MateriaPrimaController;
+use App\Http\Controllers\Adm\ServicoController;
+use App\Http\Controllers\Adm\FornecedorController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -144,6 +148,22 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
     Route::prefix('agendamentos')->group(function () {
         Route::get('/', [AgendamentoController::class, 'index'])->name('agendamentos.index');
         Route::get('/show/{idAgendamentos}', [AgendamentoController::class, 'show'])->name('agendamentos.show');
+    });
+    Route::prefix('produtos')->group(function () {
+        Route::get('/', [ProdutoController::class, 'index'])->name('produtos.index');
+        Route::get('/show/{idProdutos}', [ProdutoController::class, 'show'])->name('produtos.show');
+    });
+    Route::prefix('MateriaPrimaEstoque')->group(function () {
+        Route::get('/', [MateriaPrimaController::class, 'index'])->name('materiasPrimas.index');
+        Route::get('/show/{idMateriasPrimas}', [MateriaPrimaController::class, 'show'])->name('materiasPrimas.show');
+    });
+    Route::prefix('servicos')->group(function () {
+        Route::get('/', [ServicoController::class, 'index'])->name('servicos.index');
+        Route::get('/show/{idServicos}', [ServicoController::class, 'show'])->name('servicos.show');
+    });
+    Route::prefix('fornecedores')->group(function () {
+        Route::get('/', [FornecedorController::class, 'index'])->name('fornecedores.index');
+        Route::get('/show/{idFornecedores}', [FornecedorController::class, 'show'])->name('fornecedores.show');
     });
 });
 Route::get('adm/logout', [LoginAdminController::class, 'deslogar'])->name('logout');

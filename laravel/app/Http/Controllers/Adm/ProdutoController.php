@@ -25,7 +25,7 @@ class ProdutoController extends Controller
 
     public function show($idProdutos)
     {
-        $produto = Clientes::find($idProdutos);
+        $produto = Produtos::find($idProdutos);
         
         if ($produto) {
 
@@ -53,7 +53,7 @@ class ProdutoController extends Controller
     
         try {
             // Busca ou cria um novo cliente
-            $produto = $request->idProduto ? Produto::findOrFail($request->idProduto) : new Produtos();
+            $produto = $request->idProduto ? Produtos::findOrFail($request->idProduto) : new Produtos();
     
             // Preenche os outros campos do cliente
             $produto->nome = $request->input('nome');
@@ -65,13 +65,10 @@ class ProdutoController extends Controller
             $produto->caminhoImagem = $request->input('caminhoImagem');
 
             if(!$request->idPedido){
-                $pedido->dataPedido = now();
+                $produto->dataCadastro = now();
             }
     
-            // Verifica se foi fornecida uma nova senha
-            if ($request->filled('senha')) {
-                $produto->senha = Hash::make($request->input('senha'));
-            }
+            
     
             // Trata o upload da imagem, se fornecida
             if ($request->hasFile('caminhoImagem')) {

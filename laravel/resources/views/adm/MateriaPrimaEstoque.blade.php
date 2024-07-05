@@ -33,24 +33,42 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <!-- Aqui vai o conteúdo da tabela vindo do banco de dados -->
-                                            <!-- Exemplo estático para ilustrar -->
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Farinha</td>
-                                                <td>2</td>
-                                                <td>15</td>
-                                                <td>Não Perecivel</td>
-                                                <td>R$9,99</td>
-                    
-                                                <td>
-                                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarMatériaPrima">Editar</button>
-                                                    <button class="btn btn-danger btn-sm" onclick="excluirMatériaPrima(1)">Excluir</button>
-                                                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalDetalhesMatériaPrima">Detalhes</button>
-                                               
-                                                </td>
-                                            </tr>
-                                            <!-- Fim do exemplo -->
+                                        @foreach($materiasPrimas as $materiaPrima)
+                                <tr>
+                                    <td>{{ $materiaPrima->id }}</td>
+                                    <td>{{ $materiaPrima->nome }}</td>
+                                    <td>{{ $materiaPrima->idFornecedor }}</td>
+                                    <td>{{ $materiaPrima->classificacao }}</td>
+                                    <td>{{ $materiaPrima->quantidade }}</td>
+                                    <td>{{ $materiaPrima->precoUnitario }}</td>
+
+
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">
+                                                <button class="btn btn-primary btn-sm" onclick="carregarDadosParaEdicao('{{ $materiaPrima->id }}')" data-toggle="modal" data-target="#modalEditarCliente">
+                                                    Editar
+                                                </button>
+                                            </div>
+
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="abrirModalExclusao('{{ $materiaPrima->id }}')">
+                                                    Excluir
+                                                </button>
+                                            </div>
+
+
+                                            <div class="btn-group" role="group" aria-label="Ações do Cliente">
+                                                <button class="btn btn-info btn-sm" onclick="mostrarDetalhes('{{ $materiaPrima->id }}')" data-toggle="modal" data-target="#modalDetalhesCliente">
+                                                    Detalhes
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+
+
+                                </tr>
+                                @endforeach
                                         </tbody>
                                     </table>
                                 </div>

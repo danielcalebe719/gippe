@@ -34,24 +34,42 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <!-- Aqui vai o conteúdo da tabela vindo do banco de dados -->
-                                            <!-- Exemplo estático para ilustrar -->
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Coxinha</td>
-                                                <td>Salgado</td>
-                                                <td>Ativo</td>
-                                                <td>15</td>
-                                                <td>R$1.49</td>
-                                               
-                                                <td>
-                                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarProduto">Editar</button>
-                                                    <button class="btn btn-danger btn-sm" onclick="excluirProduto(1)">Excluir</button>
-                                                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalDetalhesProduto">Detalhes</button>
-                                               
-                                                </td>
-                                            </tr>
-                                            <!-- Fim do exemplo -->
+                                        @foreach($produtos as $produto)
+                                <tr>
+                                    <td>{{ $produto->id }}</td>
+                                    <td>{{ $produto->nome }}</td>
+                                    <td>{{ $produto->tipo }}</td>
+                                    <td>{{ $produto->status }}</td>
+                                    <td>{{ $produto->quantidade }}</td>
+                                    <td>{{ $produto->percoUnitario }}</td>
+
+
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">
+                                                <button class="btn btn-primary btn-sm" onclick="carregarDadosParaEdicao('{{ $produto->id }}')" data-toggle="modal" data-target="#modalEditarCliente">
+                                                    Editar
+                                                </button>
+                                            </div>
+
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="abrirModalExclusao('{{ $produto->id }}')">
+                                                    Excluir
+                                                </button>
+                                            </div>
+
+
+                                            <div class="btn-group" role="group" aria-label="Ações do Cliente">
+                                                <button class="btn btn-info btn-sm" onclick="mostrarDetalhes('{{ $produto->id }}')" data-toggle="modal" data-target="#modalDetalhesCliente">
+                                                    Detalhes
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+
+
+                                </tr>
+                                @endforeach
                                         </tbody>
                                     </table>
                                 </div>

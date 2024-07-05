@@ -30,20 +30,40 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <!-- Aqui vai o conteúdo da tabela vindo do banco de dados -->
-                                            <!-- Exemplo estático para ilustrar -->
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Festa pequena</td>
-                                                <td>R$222</td>
-                                                <td>
-                                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarServico">Editar</button>
-                                                    <button class="btn btn-danger btn-sm" onclick="excluirServico(1)">Excluir</button>
-                                                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalDetalhesServico">Detalhes</button>
-                                               
-                                                </td>
-                                            </tr>
-                                            <!-- Fim do exemplo -->
+                                        @foreach($servicos as $servico)
+                                <tr>
+                                    <td>{{ $servico->id }}</td>
+                                    <td>{{ $servico->nomeServico }}</td>
+                                    <td>{{ $servico->totalServicos }}</td>
+                                    
+
+
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">
+                                                <button class="btn btn-primary btn-sm" onclick="carregarDadosParaEdicao('{{ $servico->id }}')" data-toggle="modal" data-target="#modalEditarCliente">
+                                                    Editar
+                                                </button>
+                                            </div>
+
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="abrirModalExclusao('{{ $servico->id }}')">
+                                                    Excluir
+                                                </button>
+                                            </div>
+
+
+                                            <div class="btn-group" role="group" aria-label="Ações do Cliente">
+                                                <button class="btn btn-info btn-sm" onclick="mostrarDetalhes('{{ $servico->id }}')" data-toggle="modal" data-target="#modalDetalhesCliente">
+                                                    Detalhes
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+
+
+                                </tr>
+                                @endforeach
                                         </tbody>
                                     </table>
                                 </div>

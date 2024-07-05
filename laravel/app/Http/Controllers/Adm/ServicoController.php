@@ -8,6 +8,8 @@ use App\Models\Clientes;
 use App\Models\EnderecosClientes;
 use App\Models\NotificacoesClientes;
 use App\Models\Pedidos;
+use App\Models\Servicos;
+use App\Models\PedidosServicos;
 use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Carbon;
@@ -15,22 +17,22 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 
-class ClienteController extends Controller
+class ServicoController extends Controller
 {
     public function index()
     {
-        $clientes = Clientes::all();
-        return view('adm.clientes', compact('clientes'));
+        $servicos = Servicos::all();
+        return view('adm.servicos', compact('servicos'));
     }
 
-    public function show($idClientes)
+    public function show($idServicos)
     {
-        $cliente = Clientes::find($idClientes);
+        $servico = Clientes::find($idServicos);
         
-        if ($cliente) {
+        if ($servico) {
 
             
-            return response()->json($cliente);
+            return response()->json($servico);
         } else {
             return response()->json(['error' => 'Cliente não encontrado'], 404);
         }
@@ -53,38 +55,39 @@ class ClienteController extends Controller
     
         try {
             // Busca ou cria um novo cliente
-            $cliente = $request->idCliente ? Clientes::findOrFail($request->idCliente) : new Clientes();
+            $servico = $request->idServico ? Servicos::findOrFail($request->idServico) : new Servicos();
     
             // Preenche os outros campos do cliente
-            $cliente->nome = $request->input('nome');
-            $cliente->cpf = $request->input('cpf');
-            $cliente->dataNascimento = $request->input('dataNascimento');
-            $cliente->status = $request->input('status');
-            $cliente->email = $request->input('email');
-            $cliente->telefone = $request->input('telefone');
-    
-            // Verifica se foi fornecida uma nova senha
-            if ($request->filled('senha')) {
-                $cliente->senha = Hash::make($request->input('senha'));
+            $servico->nomeServico = $request->input('nome');
+            $servico->totalServicos = $request->input('totalServicos');
+            $servico->imgCaminho = $request->input('imgCaminho');
+            $servico->duracaoHoras = $request->input('duracaoHoras');
+            $servico->quantidadePessoas = $request->input('quantidadePessoas');
+            $servico->imgCaminho = $request->input('imgCaminho');
+
+            if(!$request->idServico){
+                $servico->dataCadastro = now();
             }
+    
+            
     
             // Trata o upload da imagem, se fornecida
             if ($request->hasFile('imgCaminho')) {
                 // Deleta a imagem antiga, se existir
-                if ($cliente->imgCaminho && Storage::exists('public/GaleriaImagens/' . $cliente->imgCaminho)) {
-                    Storage::delete('public/GaleriaImagens/' . $cliente->imgCaminho);
+                if ($servico->imgCaminho && Storage::exists('public/GaleriaImagens/' . $servico->imgCaminho)) {
+                    Storage::delete('public/GaleriaImagens/' . $servico->imgCaminho);
                 }
                 
                 // Armazena a nova imagem
                 $path = $request->file('imgCaminho')->store('public/GaleriaImagens');
-                $cliente->imgCaminho = basename($path);
+                $servico->imgCaminho = basename($path);
             }
     
             // Atualiza o timestamp de atualização
-            $cliente->dataAtualizacao = now();  
+            $servico->dataAtualizacao = now();  
     
             // Salva o cliente
-            $cliente->save();
+            $servico->save();
             
             return redirect()->back()->with('success', 'Cliente adicionado/atualizado com sucesso!');
             
@@ -109,23 +112,21 @@ class ClienteController extends Controller
 
 
     
-    public function remover($idCliente)
+    public function remover($idServico)
     {
         try {
 
-            $notificacoesclientes = NotificacoesClientes::where('idClientes',$idCliente)->delete();
-            $enderecosclientes = EnderecosClientes::where('idClientes',$idCliente)->delete();
-            $pedido = Pedidos::where('idClientes',$idCliente)->delete();
-            $cliente = Clientes::findOrFail($idCliente);
+            $pedidosservicos = PedidosServicos::where('idServicos',$idServico)->delete();
+            $servico = Clientes::findOrFail($idServico);
            
             
             // Excluir a imagem associada, se existir
-            if ($cliente->imgCaminho) {
-                Storage::delete('public/GaleriaImagens/' . $cliente->imgCaminho);
+            if ($servico->imgCaminho) {
+                Storage::delete('public/GaleriaImagens/' . $servico->imgCaminho);
             }
 
 
-            $cliente->delete();
+            $servico->delete();
 
             return response()->json(['message' => 'Cliente excluído com sucesso']);
         } catch (\Exception $e) {
