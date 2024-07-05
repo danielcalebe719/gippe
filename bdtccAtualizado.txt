@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 05/07/2024 às 13:39
+-- Tempo de geração: 05/07/2024 às 20:14
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.1.29
 
@@ -36,16 +36,17 @@ CREATE TABLE `admins` (
 INSERT INTO `admins` (`id`, `email`, `password`, `nome`, `last_login`) VALUES
 (1, 'super@super', NULL, 'super@super', NULL),
 (2, 'user@user', NULL, 'user@user', NULL),
-(3, 'se@se', '$2y$12$7V/iAPBTrEhDkjPrXY0mbOK5Iti7rEPiwLiXmPvbmpGv6ihP5MXqa', 'ss', '2024-07-04'),
-(4, 'pablo@gmail.com', '$2y$12$cTBt4CwLcJw9UhJT4EqV5.AfrGRPGkS.fur1Dmv2YoYp73gLmKWQi', 'pablo', '2024-07-04');
+(3, 'se@se', '$2y$12$7V/iAPBTrEhDkjPrXY0mbOK5Iti7rEPiwLiXmPvbmpGv6ihP5MXqa', 'ss', '2024-07-05'),
+(4, 'pablo@gmail.com', '$2y$12$cTBt4CwLcJw9UhJT4EqV5.AfrGRPGkS.fur1Dmv2YoYp73gLmKWQi', 'pablo', '2024-07-04'),
+(5, 'admin', 'admin', 'admin', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `admpermissoes`
+-- Estrutura para tabela `adm_permissoes`
 --
 
-CREATE TABLE `admpermissoes` (
+CREATE TABLE `adm_permissoes` (
   `id` int(2) NOT NULL,
   `cargo` varchar(255) DEFAULT NULL,
   `permissoes` text DEFAULT NULL,
@@ -58,10 +59,10 @@ CREATE TABLE `admpermissoes` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `agendamento`
+-- Estrutura para tabela `agendamentos`
 --
 
-CREATE TABLE `agendamento` (
+CREATE TABLE `agendamentos` (
   `id` int(10) NOT NULL,
   `idPedidos` int(10) DEFAULT NULL,
   `dataInicio` date DEFAULT NULL,
@@ -198,11 +199,20 @@ CREATE TABLE `fornecedores` (
   `rua` varchar(255) DEFAULT NULL,
   `numero` int(10) DEFAULT NULL,
   `complemento` varchar(255) DEFAULT NULL,
-  `status` tinyint(1) DEFAULT NULL,
+  `status` enum('ativo','inativo') DEFAULT NULL,
   `dataCadastro` date DEFAULT NULL,
   `dataAtualizacao` date DEFAULT NULL,
-  `dataRemocao` date DEFAULT NULL
+  `dataRemocao` date DEFAULT NULL,
+  `cnpj` int(14) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `fornecedores`
+--
+
+INSERT INTO `fornecedores` (`id`, `nome`, `telefone1`, `telefone2`, `telefone3`, `email`, `cep`, `estado`, `cidade`, `rua`, `numero`, `complemento`, `status`, `dataCadastro`, `dataAtualizacao`, `dataRemocao`, `cnpj`) VALUES
+(1, 'FARINHA FORNECEDOR', 123456789, NULL, NULL, 'A@A', 31530250, 'A', 'A', 'A', 2, 'A', 'ativo', '2024-07-05', '2024-07-05', NULL, NULL),
+(2, 'a', 12, NULL, NULL, 'a@a', 12, 'a', 'a', 'a', 2, '2', 'inativo', '2024-07-05', '2024-07-05', NULL, 12);
 
 -- --------------------------------------------------------
 
@@ -260,6 +270,14 @@ CREATE TABLE `materias_primas_estoque` (
   `imgCaminho` varchar(200) DEFAULT NULL,
   `idFornecedor` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `materias_primas_estoque`
+--
+
+INSERT INTO `materias_primas_estoque` (`id`, `nome`, `classificacao`, `quantidade`, `precoUnitario`, `dataCadastro`, `dataAtualizacao`, `dataRemocao`, `imgCaminho`, `idFornecedor`) VALUES
+(1, 'FARINHA', 'nao perecivel', 60, 1.00, '2024-07-05', '2024-07-05', NULL, NULL, 1),
+(2, 'ovo', 'nao perecivel', 100, 12.00, '2024-07-05', '2024-07-05', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -456,18 +474,22 @@ CREATE TABLE `pedidos` (
   `id` int(10) NOT NULL,
   `idClientes` int(10) DEFAULT NULL,
   `observacao` varchar(500) DEFAULT NULL,
-  `status` enum('ativo','inativo','em falta') DEFAULT NULL,
+  `status` enum('Pendente','Aceito','Cancelado','Entregue') DEFAULT NULL,
   `totalPedido` decimal(10,2) DEFAULT NULL,
   `dataPedido` date DEFAULT NULL,
-  `dataEntrega` date DEFAULT NULL
+  `dataEntrega` date DEFAULT NULL,
+  `dataAtualizacao` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `pedidos`
 --
 
-INSERT INTO `pedidos` (`id`, `idClientes`, `observacao`, `status`, `totalPedido`, `dataPedido`, `dataEntrega`) VALUES
-(1, 27, 'calcnsaodsadsa', 'ativo', 0.00, '2024-06-08', '2024-06-22');
+INSERT INTO `pedidos` (`id`, `idClientes`, `observacao`, `status`, `totalPedido`, `dataPedido`, `dataEntrega`, `dataAtualizacao`) VALUES
+(1, 27, 'calcnsaodsadsa', '', 0.00, '2024-06-08', '2024-06-22', NULL),
+(3, 1, 'asda', 'Pendente', 123.00, '2024-07-05', '2024-07-12', '2024-07-05 12:06:39'),
+(4, 1, 'nadinha', 'Pendente', 200.00, '2024-07-05', '2024-07-12', '2024-07-05 12:08:51'),
+(5, 1, 'sadsadsadsa', 'Aceito', 123.00, '2024-07-05', '2024-07-13', '2024-07-05 12:09:10');
 
 -- --------------------------------------------------------
 
@@ -619,13 +641,20 @@ CREATE TABLE `produtos` (
   `descricao` varchar(500) DEFAULT NULL,
   `tipo` enum('salgado','bebida','doce') DEFAULT NULL,
   `quantidade` int(10) DEFAULT NULL,
-  `status` enum('pendente','aceito','cancelado','entregue') DEFAULT NULL,
+  `status` enum('ativo','inativo','em falta') DEFAULT NULL,
   `precoUnitario` decimal(10,2) DEFAULT NULL,
   `dataCadastro` date DEFAULT NULL,
   `dataAtualizacao` date DEFAULT NULL,
   `dataRemocao` date DEFAULT NULL,
   `caminhoImagem` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `produtos`
+--
+
+INSERT INTO `produtos` (`id`, `nome`, `descricao`, `tipo`, `quantidade`, `status`, `precoUnitario`, `dataCadastro`, `dataAtualizacao`, `dataRemocao`, `caminhoImagem`) VALUES
+(8, 'Coca Cola', 'Refrigerante', 'bebida', 50, 'inativo', 2.00, '2024-07-05', '2024-07-05', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -661,7 +690,7 @@ CREATE TABLE `relatorios` (
 
 CREATE TABLE `servicos` (
   `id` int(10) NOT NULL,
-  `nomeServico` enum('festa pequena','festa media','festa grande','apenas entrega','personalizado') DEFAULT NULL,
+  `nome` enum('festa pequena','festa media','festa grande','apenas entrega','personalizado') DEFAULT NULL,
   `totalServicos` decimal(10,2) DEFAULT NULL,
   `dataCadastro` date DEFAULT current_timestamp(),
   `dataAtualizacao` date DEFAULT current_timestamp(),
@@ -675,7 +704,7 @@ CREATE TABLE `servicos` (
 -- Despejando dados para a tabela `servicos`
 --
 
-INSERT INTO `servicos` (`id`, `nomeServico`, `totalServicos`, `dataCadastro`, `dataAtualizacao`, `dataRemocao`, `imgCaminho`, `duracaoHoras`, `quantidadePessoas`) VALUES
+INSERT INTO `servicos` (`id`, `nome`, `totalServicos`, `dataCadastro`, `dataAtualizacao`, `dataRemocao`, `imgCaminho`, `duracaoHoras`, `quantidadePessoas`) VALUES
 (1, 'festa pequena', 15000.00, '2024-06-09', '2024-06-09', NULL, NULL, 4, 30),
 (2, 'festa media', 1350.00, NULL, NULL, NULL, NULL, 7, 50),
 (3, 'festa grande', 1800.00, NULL, NULL, NULL, NULL, 11, 100),
@@ -693,7 +722,8 @@ INSERT INTO `servicos` (`id`, `nomeServico`, `totalServicos`, `dataCadastro`, `d
 (16, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
 (17, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
 (18, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
-(19, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, 2, 14);
+(19, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, 2, 14),
+(20, 'apenas entrega', 100.00, '2024-07-05', '2024-07-05', NULL, NULL, 2, 4);
 
 -- --------------------------------------------------------
 
@@ -723,16 +753,16 @@ ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `admpermissoes`
+-- Índices de tabela `adm_permissoes`
 --
-ALTER TABLE `admpermissoes`
+ALTER TABLE `adm_permissoes`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idFuncionario` (`idFuncionario`);
 
 --
--- Índices de tabela `agendamento`
+-- Índices de tabela `agendamentos`
 --
-ALTER TABLE `agendamento`
+ALTER TABLE `agendamentos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idPedidos` (`idPedidos`);
 
@@ -929,18 +959,18 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de tabela `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT de tabela `admpermissoes`
+-- AUTO_INCREMENT de tabela `adm_permissoes`
 --
-ALTER TABLE `admpermissoes`
+ALTER TABLE `adm_permissoes`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de tabela `agendamento`
+-- AUTO_INCREMENT de tabela `agendamentos`
 --
-ALTER TABLE `agendamento`
+ALTER TABLE `agendamentos`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
@@ -977,7 +1007,7 @@ ALTER TABLE `formas_pagamento`
 -- AUTO_INCREMENT de tabela `fornecedores`
 --
 ALTER TABLE `fornecedores`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `galeria_imagens`
@@ -995,7 +1025,7 @@ ALTER TABLE `gastos`
 -- AUTO_INCREMENT de tabela `materias_primas_estoque`
 --
 ALTER TABLE `materias_primas_estoque`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `mensagens`
@@ -1043,7 +1073,7 @@ ALTER TABLE `notificacoes_colaboradores`
 -- AUTO_INCREMENT de tabela `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `pedidos_andamentos`
@@ -1073,7 +1103,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `receitas_item`
@@ -1091,7 +1121,7 @@ ALTER TABLE `relatorios`
 -- AUTO_INCREMENT de tabela `servicos`
 --
 ALTER TABLE `servicos`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de tabela `users`
@@ -1104,16 +1134,16 @@ ALTER TABLE `users`
 --
 
 --
--- Restrições para tabelas `admpermissoes`
+-- Restrições para tabelas `adm_permissoes`
 --
-ALTER TABLE `admpermissoes`
-  ADD CONSTRAINT `admpermissoes_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `admins` (`id`);
+ALTER TABLE `adm_permissoes`
+  ADD CONSTRAINT `adm_permissoes_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `admins` (`id`);
 
 --
--- Restrições para tabelas `agendamento`
+-- Restrições para tabelas `agendamentos`
 --
-ALTER TABLE `agendamento`
-  ADD CONSTRAINT `agendamento_ibfk_1` FOREIGN KEY (`idPedidos`) REFERENCES `pedidos` (`id`);
+ALTER TABLE `agendamentos`
+  ADD CONSTRAINT `agendamentos_ibfk_1` FOREIGN KEY (`idPedidos`) REFERENCES `pedidos` (`id`);
 
 --
 -- Restrições para tabelas `enderecos_clientes`
