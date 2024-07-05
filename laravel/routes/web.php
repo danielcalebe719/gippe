@@ -143,27 +143,39 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
     Route::prefix('notificacoes')->group(function () {
         Route::get('/', [NotificacaoController::class, 'index'])->name('notificacoes.index');
         Route::get('/show/{idNotificacoes}', [NotificacaoController::class, 'show'])->name('notificacoes.show');
+        Route::post('/guardar', [NotificacaoController::class, 'guardar'])->name('notificacoes.guardar');
+        Route::get('/remover/{idNotificacoes}', [NotificacaoController::class, 'remover'])->name('notificacoes.remover');
     });
     // Rotas específicas para pedidos dentro do grupo 'adm/pedidos'
     Route::prefix('agendamentos')->group(function () {
         Route::get('/', [AgendamentoController::class, 'index'])->name('agendamentos.index');
         Route::get('/show/{idAgendamentos}', [AgendamentoController::class, 'show'])->name('agendamentos.show');
+        Route::post('/guardar', [AgendamentoController::class, 'guardar'])->name('agendamentos.guardar');
+        Route::get('/remover/{idAgendamentos}', [AgendamentoController::class, 'remover'])->name('agendamentos.remover');
     });
     Route::prefix('produtos')->group(function () {
         Route::get('/', [ProdutoController::class, 'index'])->name('produtos.index');
         Route::get('/show/{idProdutos}', [ProdutoController::class, 'show'])->name('produtos.show');
+        Route::post('/guardar', [ProdutoController::class, 'guardar'])->name('produtos.guardar');
+        Route::get('/remover/{idProdutos}', [ProdutoController::class, 'remover'])->name('produtos.remover');
     });
     Route::prefix('MateriaPrimaEstoque')->group(function () {
         Route::get('/', [MateriaPrimaController::class, 'index'])->name('materiasPrimas.index');
         Route::get('/show/{idMateriasPrimas}', [MateriaPrimaController::class, 'show'])->name('materiasPrimas.show');
+        Route::post('/guardar', [MateriaPrimaController::class, 'guardar'])->name('materiasPrimas.guardar');
+        Route::get('/remover/{idMateriasPrimas}', [MateriaPrimaController::class, 'remover'])->name('materiasPrimas.remover');
     });
     Route::prefix('servicos')->group(function () {
         Route::get('/', [ServicoController::class, 'index'])->name('servicos.index');
         Route::get('/show/{idServicos}', [ServicoController::class, 'show'])->name('servicos.show');
+        Route::post('/guardar', [ServicoController::class, 'guardar'])->name('servicos.guardar');
+        Route::get('/remover/{idServicos}', [ServicoController::class, 'remover'])->name('servicos.remover');
     });
     Route::prefix('fornecedores')->group(function () {
         Route::get('/', [FornecedorController::class, 'index'])->name('fornecedores.index');
         Route::get('/show/{idFornecedores}', [FornecedorController::class, 'show'])->name('fornecedores.show');
+        Route::post('/guardar', [FornecedorController::class, 'guardar'])->name('fornecedores.guardar');
+        Route::get('/remover/{idFornecedores}', [FornecedorController::class, 'remover'])->name('fornecedores.remover');
     });
 });
 Route::get('adm/logout', [LoginAdminController::class, 'deslogar'])->name('logout');

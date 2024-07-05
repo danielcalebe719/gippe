@@ -87,18 +87,20 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="formAdicionarMatériaPrima">
+                                    <form id="formAdicionarMatériaPrima" method="POST" action="/adm/MateriaPrimaEstoque/guardar"
+                        enctype="multipart/form-data">
+                        @csrf
                                         <div class="form-group">
                                             <label for="nome">Nome</label>
                                             <input type="text" class="form-control" id="nome" name="nome" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="FornecedorID">Fornecedor ID</label>
-                                            <input type="text" class="form-control" id="FornecedorID" name="FornecedorID" required>
+                                            <input type="text" class="form-control" id="idFornecedor" name="idFornecedor" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="Classificacao">Classificação</label>
-                                            <select name="Classificacao" id="Classificacao">
+                                            <select name="classificacao" id="classificacao">
                                               <option value="Perecivel"> Perecível</option>
                                               <option value="NaoPerecivel"> Não Perecível</option>
                                             </select>
@@ -130,18 +132,21 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="formEditarMatériaPrima">
+                                    <form id="formEditarMatériaPrima" method="POST" action="/adm/MateriaPrimaEstoque/guardar"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" id="editarIdMateriaPrima" name="idMateriaPrima" value="">
                                         <div class="form-group">
                                             <label for="editNome">Nome</label>
-                                            <input type="text" class="form-control" id="editNome" name="nome" required>
+                                            <input type="text" class="form-control" id="editarNome" name="nome" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="editFornecedor ID">Fornecedor ID</label>
-                                            <input type="text" class="form-control" id="editFornecedorID" name="FornecedorID" required>
+                                            <input type="text" class="form-control" id="editarIdFornecedor" name="idFornecedor" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="editClassificacao">Classificação</label>
-                                            <select name="Classificacao" id="editClassificacao">
+                                            <label for="editarClassificacao">Classificação</label>
+                                            <select name="classificacao" id="editarClassificacao">
                                               <option value="Perecivel"> Perecível</option>
                                               <option value="NaoPerecivel"> Não Perecível</option>
                                             </select>
@@ -149,11 +154,11 @@
 
                                         <div class="form-group">
                                           <label for="editQuantidade">Quantidade</label>
-                                          <input type="number" class="form-control" id="editQuantidade" name="quantidade" required>
+                                          <input type="number" class="form-control" id="editarQuantidade" name="quantidade" required>
                                       </div>
                                         <div class="form-group">
                                             <label for="editPreçoUnitario">Preço Unitário</label>
-                                            <input type="text" class="form-control" id="editPrecoUnitario" name="precoUnitario" required>
+                                            <input type="text" class="form-control" id="editarPrecoUnitario" name="precoUnitario" required>
                                         </div>
                                         <button type="submit" class="btn btn-primary">Salvar</button>
                                     </form>
