@@ -143,13 +143,13 @@
       <div class="card mb-4">
         <div class="card-body">
           <h3>Endereço</h3>
-          <p><strong>Tipo:</strong> Residencial</p>
-          <p><strong>CEP:</strong> 12345-678</p>
-          <p><strong>Cidade:</strong> Lisboa</p>
-          <p><strong>Bairro:</strong> Bairro Alto</p>
-          <p><strong>Rua:</strong> Rua da Alegria</p>
-          <p><strong>Número:</strong> 123</p>
-          <p><strong>Complemento:</strong> Apto 45</p>
+          <p><strong>Tipo:</strong> {{$enderecos_clientes->tipo}}</p>
+          <p><strong>CEP:</strong> {{$enderecos_clientes->cep}}</p>
+          <p><strong>Cidade:</strong> {{$enderecos_clientes->cidade}}</p>
+          <p><strong>Bairro:</strong> {{$enderecos_clientes->bairro}}</p>
+          <p><strong>Rua:</strong> {{$enderecos_clientes->rua}}</p>
+          <p><strong>Número:</strong> {{$enderecos_clientes->numero}}</p>
+          <p><strong>Complemento:</strong> {{$enderecos_clientes->complemento}}</p>
           <!-- Botão "Editar Endereço" -->
           <button id="editarEnderecoBtn" type="button" class="btn btn-link edit-endereco-btn">
             <i class="bi bi-pencil"></i> Editar Endereço
@@ -172,7 +172,7 @@
                 <label for="nome">Nome completo</label>
               </div>
               <div class="col-sm-8">
-                <input type="text" id="nome" name="nome" class="form-control" value="{{ Auth::guard('cliente')->user()->nome }}" readonly>
+                <input type="text" id="nome" name="nome" class="form-control" value="{{$clientes->nome}}" readonly>
               </div>
               <div class="col-sm-1">
                 <a href="#" class="btn btn-link edit-btn" data-target="nome"><i class="bi bi-pencil"></i></a>
@@ -185,7 +185,7 @@
                 <label for="email">Email</label>
               </div>
               <div class="col-sm-8">
-                <input type="email" id="email" name="email" class="form-control" value="cliente@example.com" readonly>
+                <input type="email" id="email" name="email" class="form-control" value="{{$clientes->email}}" readonly>
               </div>
               <div class="col-sm-1">
                 <a href="#" class="btn btn-link edit-btn" data-target="email"><i class="bi bi-pencil"></i></a>
@@ -198,7 +198,7 @@
                 <label for="senha">Senha</label>
               </div>
               <div class="col-sm-8">
-                <input type="password" id="senha" name="senha" class="form-control" value="********" readonly>
+                <input type="password" id="senha" name="senha" class="form-control" value="{{$clientes->senha}}" readonly>
               </div>
               <div class="col-sm-1">
                 <a href="#" class="btn btn-link edit-btn" data-target="senha"><i class="bi bi-pencil"></i></a>
@@ -211,7 +211,7 @@
                 <label for="cpf">CPF</label>
               </div>
               <div class="col-sm-8">
-                <input type="text" id="cpf" name="cpf" class="form-control" value="12345678901" readonly maxlength="11">
+                <input type="text" id="cpf" name="cpf" class="form-control" value="{{$clientes->cpf}}" readonly maxlength="11">
               </div>
               <div class="col-sm-1">
                 <a href="#" class="btn btn-link edit-btn" data-target="cpf"><i class="bi bi-pencil"></i></a>
@@ -224,7 +224,7 @@
                 <label for="data_nascimento">Data de nascimento</label>
               </div>
               <div class="col-sm-8">
-                <input type="date" id="data_nascimento" name="data_nascimento" class="form-control" value="1990-01-01" readonly>
+                <input type="date" id="data_nascimento" name="data_nascimento" class="form-control" value="{{$clientes->dataNascimento}}" readonly>
               </div>
               <div class="col-sm-1">
                 <a href="#" class="btn btn-link edit-btn" data-target="data_nascimento"><i class="bi bi-pencil"></i></a>
@@ -247,28 +247,45 @@
     <table class="table">
       <thead class="thead-dark">
         <tr>
-          <th scope="col">ID Pedido</th>
+          <th scope="col">Código do Pedido</th>
           <th scope="col">Status</th>
           <th scope="col">Data de Entrega</th>
-          <th scope="col">Endereço</th>
+          <!--<th scope="col">Endereço</th>-->
           <th scope="col">Total</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody> 
+        
+      @if ($pedidos->count() > 0)
+    @foreach ($pedidos as $pedido)
         <tr>
-          <td>1</td>
-          <td>Entregue</td>
-          <td>2023-06-15</td>
-          <td>Rua da Alegria - 123 - Apto 45 - Bairro Alto - Lisboa - 12345-678 - Tipo: Residencial</td>
-          <td>€50,00</td>
+            <td><a href="">{{ $pedido->codigo }}</a> </td>
+            <td>
+                @if ($pedido->status == 'nao_finalizado')
+                    Não Finalizado
+                @elseif ($pedido->status == 'pendente')
+                    Pendente
+                @elseif ($pedido->status == 'aceito')
+                    Aceito
+                @elseif ($pedido->status == 'recusado')
+                    Recusado
+                @elseif ($pedido->status == 'cancelado')
+                    Cancelado
+                @else
+                     Desconhecido
+                @endif
+            </td>
+            <td>{{ $pedido->dataEntrega }}</td>
+            <!--<td>{{ $enderecos_clientes->rua }} - Bairro: {{ $enderecos_clientes->bairro }} - {{ $enderecos_clientes->cidade }} - {{ $enderecos_clientes->cep }} </td>-->
+            <td>{{ 'R$' . number_format($pedido->totalPedido, 2, ',', '.') }}</td>
         </tr>
-        <tr>
-          <td>2</td>
-          <td>Pendente</td>
-          <td>2023-06-20</td>
-          <td>Rua da Alegria - 123 - Apto 45 - Bairro Alto - Lisboa - 12345-678 - Tipo: Residencial</td>
-          <td>€30,00</td>
-        </tr>
+    @endforeach
+@else
+    <tr>
+        <td colspan="5">Nenhum pedido encontrado.</td>
+    </tr>
+@endif
+
       </tbody>
     </table>
   </div>
@@ -285,45 +302,54 @@
                     <h5 class="modal-title" id="enderecoModalLabel">Editar Endereço</h5>
                 </div>
                 <div class="modal-body">
-                    <form id="enderecoForm" method="post">
-                        <input type="hidden" name="acao" value="editarEndereco">
-                        <input type="hidden" name="idClientes" value="1">
-                        <div class="form-group">
-                            <label for="tipo">Tipo</label>
-                            <select name="tipo" id="tipo" class="form-control">
-                                <option value="comercial">Comercial</option>
-                                <option value="residencial" selected>Residencial</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="cep">CEP</label>
-                            <input type="text" id="cep" name="cep" class="form-control" value="12345-678">
-                        </div>
-                        <div class="form-group">
-                            <label for="cidade">Cidade</label>
-                            <input type="text" id="cidade" name="cidade" class="form-control cep-cidade" value="Lisboa">
-                        </div>
-                        <div class="form-group">
-                            <label for="bairro">Bairro</label>
-                            <input type="text" id="bairro" name="bairro" class="form-control cep-bairro" value="Bairro Alto">
-                        </div>
-                        <div class="form-group">
-                            <label for="rua">Rua</label>
-                            <input type="text" id="rua" name="rua" class="form-control cep-logradouro" value="Rua da Alegria">
-                        </div>
-                        <div class="form-group">
-                            <label for="numero">Número</label>
-                            <input type="text" id="numero" name="numero" class="form-control" value="123">
-                        </div>
-                        <div class="form-group">
-                            <label for="complemento">Complemento</label>
-                            <input type="text" id="complemento" name="complemento" class="form-control" value="Apto 45">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                            <button type="submit" class="btn btn-primary" id="saveEnderecoBtn">Salvar mudanças</button>
-                        </div>
-                    </form>
+                <form id="enderecoForm" method="post">
+    <input type="hidden" name="acao" value="editarEndereco">
+    <input type="hidden" name="idClientes" value="{{ $enderecos_clientes->idClientes }}">
+    
+    <div class="form-group">
+        <label for="tipo">Tipo</label>
+        <select name="tipo" id="tipo" class="form-control">
+            <option value="comercial" {{ $enderecos_clientes->tipo == 'comercial' ? 'selected' : '' }}>Comercial</option>
+            <option value="residencial" {{ $enderecos_clientes->tipo == 'residencial' ? 'selected' : '' }}>Residencial</option>
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="cep">CEP</label>
+        <input type="text" id="cep" name="cep" class="form-control" value="{{ $enderecos_clientes->cep }}">
+    </div>
+    
+    <div class="form-group">
+        <label for="cidade">Cidade</label>
+        <input type="text" id="cidade" name="cidade" class="form-control cep-cidade" value="{{ $enderecos_clientes->cidade }}">
+    </div>
+    
+    <div class="form-group">
+        <label for="bairro">Bairro</label>
+        <input type="text" id="bairro" name="bairro" class="form-control cep-bairro" value="{{ $enderecos_clientes->bairro }}">
+    </div>
+    
+    <div class="form-group">
+        <label for="rua">Rua</label>
+        <input type="text" id="rua" name="rua" class="form-control cep-logradouro" value="{{ $enderecos_clientes->rua }}">
+    </div>
+    
+    <div class="form-group">
+        <label for="numero">Número</label>
+        <input type="text" id="numero" name="numero" class="form-control" value="{{ $enderecos_clientes->numero }}">
+    </div>
+    
+    <div class="form-group">
+        <label for="complemento">Complemento</label>
+        <input type="text" id="complemento" name="complemento" class="form-control" value="{{ $enderecos_clientes->complemento }}">
+    </div>
+    
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn btn-primary" id="saveEnderecoBtn">Salvar mudanças</button>
+    </div>
+</form>
+
                 </div>
             </div>
         </div>

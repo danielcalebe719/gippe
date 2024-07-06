@@ -1,6 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap");
+@font-face {
+  font-family: Poppins;
+  src: url(/assets/vendor/bootstrap-icons/fonts/Poppins-Regular.ttf);
+}
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: Poppins;
   color: #0c0c0c;
   background-color: #ffffff;
   overflow-x: hidden;
@@ -350,3 +353,8 @@ a:focus {
   .shopping-cart .def-number-input.number-input button.plus:after {
   background-color: #4285f4;
   }
+  .navbar a button {
+    color: white;
+    padding: 5px;
+    background-color: #FA856E;
+}

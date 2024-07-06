@@ -224,7 +224,9 @@ use App\Http\Controllers\Website\LoginClienteController;
 use App\Http\Controllers\Website\CadastrarClienteController;
 use App\Http\Controllers\Website\WebsiteIndexController;
 use App\Http\Controllers\Website\WebsiteServicoController;
-
+use App\Http\Controllers\Website\WebsiteProdutoController;
+use App\Http\Controllers\Website\WebsiteAgendamentoController;
+use App\Http\Controllers\Website\WebsitePerfilController;
 // Rotas acessíveis sem autenticação
 Route::get('/', function () {
 
@@ -243,13 +245,19 @@ Route::post('website/cadastro', [CadastrarClienteController::class, 'cadastrar']
 Route::prefix('website')->group(function () {
     Route::get('/', [WebsiteIndexController::class, 'index'])->name('website.index');
 
-    Route::get('/perfil', function () {
-        return view('website.perfil');
-    })->middleware('auth:cliente')->name('website.perfil');
+    Route::get('/perfil', [WebsitePerfilController::class, 'index'])
+    ->middleware('auth:cliente')
+    ->name('website.perfil');
 
-    Route::get('/agendamento', function () {
-        return view('website.agendamento');
-    })->middleware('auth:cliente')->name('website.agendamento');
+
+    Route::get('/agendamento/{codigo}', [WebsiteAgendamentoController::class, 'index'])
+    ->middleware('auth:cliente')
+    ->name('website.agendamento');
+
+    Route::post('/agendamento', [WebsiteAgendamentoController::class, 'salvar'])
+    ->middleware('auth:cliente')
+    ->name('website.agendamento.salvar');
+
 
 
     Route::get('/servicos', [WebsiteServicoController::class, 'index'])
@@ -258,16 +266,26 @@ Route::prefix('website')->group(function () {
 
         
         Route::post('/servicos/processar-servico', [WebsiteServicoController::class, 'salvar_personalizado'])->name('processar.servico.personalizado');
-
+        Route::post('/servicos/processar-servico/padrao', [WebsiteServicoController::class, 'salvar_padrao'])->name('processar.servico.padrao');
     
-    Route::get('/produtos', function () {
-        return view('website.produtos');
-    })->middleware('auth:cliente')->name('website.produtos');
+        
 
-    Route::get('/cadastro2', function () {
-        return view('website.cadastro2');
-    })->middleware('auth:cliente')->name('website.cadastro2');
+        Route::get('/produtos/{codigo}', [WebsiteProdutoController::class, 'index'])
+        ->middleware('auth:cliente')
+        ->name('website.produtos');
+   
 
+            Route::post('/adicionar-ao-pedido' , [WebsiteProdutoController::class, 'adicionarAoPedido'])
+            ->middleware('auth:cliente')
+            ->name('pedido.adicionar');
+
+// Em routes/web.php
+
+Route::get('/carregar-mais-produtos' , [WebsiteProdutoController::class, 'carregarMaisProdutos'])
+->middleware('auth:cliente');
+
+
+    Route::get('/cadastro2/', [CadastrarClienteController::class, 'carregar_dados'])->middleware('auth:cliente')->name('website.cadastro2');
     Route::post('/cadastroCompletar', [CadastrarClienteController::class, 'guardar_cadastro_completo'])->name('cadastro.cadastroCompletar');
 });
 
