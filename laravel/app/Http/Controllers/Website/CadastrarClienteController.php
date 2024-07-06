@@ -9,9 +9,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Auth;
 class CadastrarClienteController extends Controller
 {
+    
     public function MostrarFormularioCadastro()
     {
         return view('website.cadastro');
@@ -44,7 +45,31 @@ class CadastrarClienteController extends Controller
         ]);
     }
 
+    protected function carregar_dados(Request $request)
+    {
+        // Obtém o ID do cliente a partir da sessão
+        $idCliente = Auth::guard('cliente')->user()->id;
+
+        // Verifica se o ID do cliente foi encontrado
+        if ($idCliente) {
+            // Busca o cliente e os endereços associados
+            $cliente = Clientes::find($idCliente);
+            $enderecosClientes = EnderecosClientes::where('idClientes', $idCliente)->get();
+
+            // Verifica se o cliente foi encontrado
+            if ($cliente) {
+                return view('website.cadastro2', compact('cliente', 'enderecosClientes'));
+            } else {
+                // Redireciona se o cliente não for encontrado
+                return redirect()->back()->with('error', 'Cliente não encontrado.');
+            }
+        } else {
+            // Redireciona se o ID do cliente não for encontrado na sessão
+            return redirect()->back()->with('error', 'ID do cliente não encontrado na sessão.');
+        }
+    }
     
+
     public function guardar_cadastro_completo(Request $request)
     {
         $validatedData = $request->validate([
@@ -91,7 +116,7 @@ class CadastrarClienteController extends Controller
             }
     
             // Verifica se já existe um endereço associado ao cliente
-            $endereco = EnderecosClientes::where('idClientes', $cliente->idClientes)->first();
+            $endereco = EnderecosClientes::where('idClientes', $cliente->id)->first();
     
             if ($endereco) {
                 // Atualiza o endereço existente
@@ -114,7 +139,7 @@ class CadastrarClienteController extends Controller
                     'rua' => $validatedData['rua'],
                     'numero' => $validatedData['numero'],
                     'complemento' => $validatedData['complemento'],
-                    'idClientes' => $cliente->idClientes,
+                    'idClientes' => $cliente->id,
                 ]);
             }
     

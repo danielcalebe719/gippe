@@ -14,8 +14,8 @@ class PedidosProdutos extends Model
     protected $fillable = [   
         'idPedidos', 
         'idProdutos', 
-        'quantidade'.
-        'subtotal'
+        'quantidade',
+        'subtotal',
         // Adicione outros campos aqui
     ];
     public $timestamps = false;

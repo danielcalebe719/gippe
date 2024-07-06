@@ -12,15 +12,21 @@ use App\Models\NotificacoesColaboradores;
 use App\Models\PedidosAndamento;
 use App\Models\PedidosProdutos;
 use App\Models\PedidosServicos;
+use Illuminate\Support\Str;
 
 class Pedidos extends Model
 {
     use HasFactory;
 
-    protected $table = 'pedidos'; // Nome da tabela no banco de dados
+    //protected $table = 'pedidos'; // Nome da tabela no banco de dados
     protected $primaryKey = 'id'; // Nome da chave primária
-    protected $fillable = [   
+
+   
+
+    protected $fillable = [
+        'idServicos',    
         'idClientes', 
+        'codigo',
         'observacao', 
         'status',   
         'totalPedido', 
@@ -30,6 +36,7 @@ class Pedidos extends Model
         
         // Adicione outros campos aqui
     ];
+  
     public $timestamps = false;
 
 

@@ -113,24 +113,33 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <!-- Exemplo estático de notificações -->
-          <div class="card mb-3">
+        @if ($notificacoes->isNotEmpty())
+    @foreach ($notificacoes as $notificacao)
+        <div class="card mb-3">
             <div class="card-body">
-              <h5 class="card-title">Mensagem de exemplo 1</h5>
-              <p class="card-text">2024-06-26</p>
+                <h5 class="card-title">{{ $notificacao->mensagem }} 
+                   <!-- @foreach ($notificacoes_clientes as $notificacao_cliente)
+                        @if ($notificacao_cliente->idPedidos)
+                            <a href="">{{ $notificacao_cliente->idPedidos }}</a>
+                        @endif
+                    @endforeach-->
+                </h5>
+                <p class="card-text">{{ $notificacao->dataEnvio }}</p>
             </div>
-          </div>
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">Mensagem de exemplo 2</h5>
-              <p class="card-text">2024-06-25</p>
-            </div>
-          </div>
-          <p>Nenhuma notificação encontrada.</p>
+        </div>
+    @endforeach
+@else
+    <p>Nenhuma notificação encontrada.</p>
+@endif
+
+
+
+
         </div>
       </div>
     </div>
   </div>
+  
   @if(Auth::guard('cliente')->check())
     <p>Bem-vindo, {{ Auth::guard('cliente')->user()->email }}!</p>
   <a href="{{url('website/logout')}}">Logout</a>
@@ -146,7 +155,7 @@
       <h1 style="color: white;">Bem vindo ao <span style="color: #FF944E;"">Buffet Divino Sabor</span></h1>
       <h2 style="color: white;"">Produzindo eventos com o melhor cardápio desde 2014.</h2>
       <div class="d-flex">
-        <a href="{{url('website/cadastro2')}}" class="btn-get-started scrollto">Faça seu pedido</a>
+        <a href="{{url('website/cadastro2/')}}" class="btn-get-started scrollto">Faça seu pedido</a>
         
         <a href="https://youtu.be/y6120QOlsfU?si=0Z_6ErtD0vy7wDzB" class="glightbox btn-watch-video"><i class="bi bi-play-circle" style="color: #FA856E;"></i><span style=" color: white; ">Clique e veja um pouco mais sobre nós</span></a>
       </div>
