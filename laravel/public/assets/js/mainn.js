@@ -2,27 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   AOS.init();
 
-  const loadMoreBtn = document.getElementById('load-more-btn');
-  let visibleImages = 15;
 
-  const allImages = document.querySelectorAll('.portfolio-item');
-
-  // Reveal initial set of images
-  for (let i = 0; i < visibleImages && i < allImages.length; i++) {
-    allImages[i].classList.add('visible');
-  }
-
-  loadMoreBtn.addEventListener('click', function() {
-    for (let i = visibleImages; i < visibleImages + 10 && i < allImages.length; i++) {
-      allImages[i].classList.add('visible');
-    }
-
-    visibleImages += 10;
-
-    if (visibleImages >= allImages.length) {
-      loadMoreBtn.style.display = 'none';
-    }
-  });
 
   const galleryImages = document.querySelectorAll('.portfolio-item.visible .gallery-image');
   galleryImages.forEach(image => {
@@ -48,20 +28,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-window.addEventListener('DOMContentLoaded', (event) => {
-  const portfolioItems = document.querySelectorAll('.portfolio-item');
+/*window.addEventListener('DOMContentLoaded', (event) => {
+  const portfolioItems = document.querySelectorAll('.styu');
 
   portfolioItems.forEach(item => {
-      const image = item.querySelector('img');
-      const info = item.querySelector('.portfolio-info');
+      const image = item.querySelector('.bbs');
+      const info = item.querySelector('.portfolio-info-details');
 
       // Obtém a largura da imagem
       const imageWidth = image.offsetWidth;
+      console.log(imageWidth)
 
       // Define a largura do .portfolio-info igual à largura da imagem
       info.style.width = imageWidth + 'px';
   });
-});
+});*/
 document.addEventListener('DOMContentLoaded', () => {
   const items = document.querySelectorAll('.portfolio-item');
   const loadMoreBtn = document.getElementById('load-more-btn');

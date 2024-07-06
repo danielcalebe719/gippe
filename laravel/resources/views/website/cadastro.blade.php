@@ -11,7 +11,19 @@
 
   
 </head>
+<style>.alert {
+    
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
 
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}       </style>
 <body>
 
 
@@ -26,14 +38,21 @@
         </div>
 
         @if ($errors->any())
-            <div>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+    <div>
+        <ul>
+
+            @foreach ($errors->all() as $error)
+
+            <div class="alert alert-danger">
+            <p>@lang($error)</p>
+    </div>
+                
+            @endforeach
+        </ul>
+        
+    </div>
+@endif
+
 
         <form id="cadastroForm" method="POST" action="{{ url('/website/cadastro') }}">
             @csrf

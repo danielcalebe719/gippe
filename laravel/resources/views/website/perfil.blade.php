@@ -21,22 +21,29 @@
   <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
   <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
   <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+rtOIQ4GX/D7UvOsAP37+C2z8zKL4ZpV96HuP+wnRL0Kw1h" crossorigin="anonymous"></script>
   <!-- Popper.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js" integrity="sha384-oN46R3tlTtTw9stDShs/JFcEAw9xnK5L5uJSvKrY6J7zCjtx+ZI3d2ERsmr6x6y9" crossorigin="anonymous"></script>
-  <!-- Bootstrap JavaScript -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"></script>
-  <!-- Template Main CSS File -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>  <!-- Bootstrap JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>  <!-- Template Main CSS File -->
   <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+  <style>
+     .corpo {
+    background-image: url("{{ asset('assets/img/logo.png') }}");
+    background-repeat: no-repeat; /* Evita a repetição da imagem */
+    background-size: cover; /* Ajusta o tamanho da imagem para cobrir todo o elemento */
+    background-position: center; /* Centraliza a imagem no elemento */
+}
+
+  </style>
 </head>
 
 <body>
-  @if(Auth::guard('cliente')->check())
+  <!--@if(Auth::guard('cliente')->check())
   <p>Bem-vindo, {{ Auth::guard('cliente')->user()->email }}!</p>
 
   @else
   <p>Bem-vindo, visitante!</p>
-  @endif
+  @endif-->
   <!-- ======= Top Bar ======= -->
   <section id="topbar" class="d-flex align-items-center">
     <div class="container d-flex justify-content-center justify-content-md-between">
@@ -59,12 +66,12 @@
       <a href="{{url('/website')}}"><img src="{{asset('assets/img/logo.png')}}" alt="" style="max-width: 50%;"><span></span></a>
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="home.html">Home</a></li>
-          <li><a class="nav-link scrollto" href="#cardapio">Cardápio</a></li>
-          <li><a class="nav-link scrollto" href="#about">Sobre nós</a></li>
-          <li><a class="nav-link scrollto" href="#portfolio">Galeria de fotos</a></li>
-          <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
-          <li><a class="nav-link scrollto" href="#contact">Fale Conosco</a></li>
+          <li><a class="nav-link scrollto active" href="{{ url('/website') }}">Home</a></li>
+          <li><a class="nav-link scrollto" href="{{ url('/website') }}#cardapio">Cardápio</a></li>
+          <li><a class="nav-link scrollto" href="{{ url('/website') }}#about">Sobre nós</a></li>
+          <li><a class="nav-link scrollto" href="{{ url('/website') }}#portfolio">Galeria de fotos</a></li>
+          <li><a class="nav-link scrollto" href="{{ url('/website') }}#faq">FAQ</a></li>
+          <li><a class="nav-link scrollto" href="{{ url('/website') }}#contact">Fale Conosco</a></li>
           <li>
             <a href="cadastro.html"><button id="register-btn" class="nav-link btn"><i class="bi bi-person-plus"></i> Cadastrar-se</button></a>
           </li>
@@ -117,19 +124,22 @@
 
   <!-- Conteúdo do corpo -->
   <!-- Seção de perfil do cliente -->
-  <section style="background-color: #eee;">
+  <section style="background-color: #eee;" >
     <div class="container py-5">
       <!-- Detalhes do cliente -->
       <div class="row">
         <div class="col-lg-4">
-        <div class="card mb-4">
-    <div class="card-body text-center">
-        @if ($clientes->imgCaminho)
-            <img src="{{ asset('storage/ImagensClientes/' . $clientes->imgCaminho) }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
-        @else
-        
-        @endif
-        <h5 class="my-3">{{ $clientes->nome }}</h5>
+          
+          <div class="card mb-4">
+          <div class="card-body text-center">
+    @if ($clientes->imgCaminho)
+    <img src="{{ asset('storage/ImagensClientes/' . $clientes->imgCaminho) }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+    @else
+    <img src="caminho/do/seu/placeholder" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;"> <!-- Se não houver imagem, exibe um placeholder ou ícone padrão -->
+    @endif
+    <h5 class="my-3">{{ $clientes->nome }}</h5>
+    
+    <div id="editarImagemForm" style="display: none;">
         <form action="{{ route('website.salvar.imagem.perfil') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
@@ -138,9 +148,31 @@
             </div>
             <input type="hidden" name="idClientes" value="{{ $clientes->id }}">
             <input type="submit" value="Salvar" class="btn btn-success">
-        </form>
+        </form><br>
     </div>
+<div class="d d-flex justify-content-center">
+    <div id="editarImagemLink">
+        <a href="#" id="editarImagemBtn" class="btn btn-primary">
+            <i class="bi bi-pencil"></i> Editar Imagem
+        </a>
+    </div>
+    </form>
+    <a href="{{ url('website/logout') }}" class="btn btn-danger">
+        Fazer Logout <i class="bi bi-box-arrow-right"></i>
+    </a>
 </div>
+
+</div>
+
+<script>
+    document.getElementById('editarImagemBtn').addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('editarImagemForm').style.display = 'block';
+        document.getElementById('editarImagemLink').style.display = 'none';
+    });
+</script>
+
+          </div>
 
 
           <!-- Endereço -->
@@ -175,102 +207,102 @@
           <!-- Informações detalhadas do cliente -->
           <div class="card mb-4">
             <div class="card-body">
-            <form action="{{ route('website.perfil.salvar') }}" method="post" id="perfilForm">
-    @csrf
-    <input type="hidden" name="acao" value="editaPerfil">
+              <form action="{{ route('website.perfil.salvar') }}" method="post" id="perfilForm">
+                @csrf
+                <input type="hidden" name="acao" value="editaPerfil">
 
-    <!-- Nome -->
-    <div class="row">
-        <div class="col-sm-3">
-            <label for="nome">Nome completo</label>
-        </div>
-        <div class="col-sm-8">
-            <input type="text" id="nome" name="nome" class="form-control" value="{{ $clientes->nome }}" readonly>
-        </div>
-        <div class="col-sm-1">
-            <a href="#" class="btn btn-link edit-btn" data-target="nome"><i class="bi bi-pencil"></i></a>
-        </div>
-    </div>
-    <hr>
+                <!-- Nome -->
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="nome">Nome completo</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <input type="text" id="nome" name="nome" class="form-control" value="{{ $clientes->nome }}" readonly>
+                  </div>
+                  <div class="col-sm-1">
+                    <a href="#" class="btn btn-link edit-btn" data-target="nome"><i class="bi bi-pencil"></i></a>
+                  </div>
+                </div>
+                <hr>
 
-    <!-- Email -->
-    <div class="row">
-        <div class="col-sm-3">
-            <label for="email">Email</label>
-        </div>
-        <div class="col-sm-8">
-            <input type="email" id="email" name="email" class="form-control" value="{{ $clientes->email }}" readonly>
-        </div>
-        <div class="col-sm-1">
-            <a href="#" class="btn btn-link edit-btn" data-target="email"><i class="bi bi-pencil"></i></a>
-        </div>
-    </div>
-    <hr>
+                <!-- Email -->
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="email">Email</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <input type="email" id="email" name="email" class="form-control" value="{{ $clientes->email }}" readonly>
+                  </div>
+                  <div class="col-sm-1">
+                    <a href="#" class="btn btn-link edit-btn" data-target="email"><i class="bi bi-pencil"></i></a>
+                  </div>
+                </div>
+                <hr>
 
-    <!-- Senha -->
-    <div class="row">
-        <div class="col-sm-3">
-            <label for="senha">Senha</label>
-        </div>
-        <div class="col-sm-8">
-            <input type="password" id="senha" name="senha" class="form-control" value="" readonly placeholder="*****">
-            <input type="hidden" id="senha_original" name="senha_original" value="{{ $clientes->password }}" >
-        </div>
-        <div class="col-sm-1">
-            <a href="#" class="btn btn-link edit-btn" data-target="senha"><i class="bi bi-pencil"></i></a>
-        </div>
-    </div>
-    <hr>
+                <!-- Senha -->
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="senha">Senha</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <input type="password" id="senha" name="senha" class="form-control" value="" readonly placeholder="*****">
+                    <input type="hidden" id="senha_original" name="senha_original" value="{{ $clientes->password }}">
+                  </div>
+                  <div class="col-sm-1">
+                    <a href="#" class="btn btn-link edit-btn" data-target="senha"><i class="bi bi-pencil"></i></a>
+                  </div>
+                </div>
+                <hr>
 
-    <!-- Telefone -->
-    <div class="row">
-        <div class="col-sm-3">
-            <label for="telefone">Telefone</label>
-        </div>
-        <div class="col-sm-8">
-            <input type="text" id="telefone" name="telefone" class="form-control" value="{{ $clientes->telefone }}" readonly>
-        </div>
-        <div class="col-sm-1">
-            <a href="#" class="btn btn-link edit-btn" data-target="telefone"><i class="bi bi-pencil"></i></a>
-        </div>
-    </div>
-    <hr>
+                <!-- Telefone -->
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="telefone">Telefone</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <input type="text" id="telefone" name="telefone" class="form-control" value="{{ $clientes->telefone }}" readonly>
+                  </div>
+                  <div class="col-sm-1">
+                    <a href="#" class="btn btn-link edit-btn" data-target="telefone"><i class="bi bi-pencil"></i></a>
+                  </div>
+                </div>
+                <hr>
 
-    <!-- CPF -->
-    <div class="row">
-        <div class="col-sm-3">
-            <label for="cpf">CPF</label>
-        </div>
-        <div class="col-sm-8">
-            <input type="text" id="cpf" name="cpf" class="form-control" value="{{ $clientes->cpf }}" readonly maxlength="11">
-        </div>
-        <div class="col-sm-1">
-            <a href="#" class="btn btn-link edit-btn" data-target="cpf"><i class="bi bi-pencil"></i></a>
-        </div>
-    </div>
-    <hr>
+                <!-- CPF -->
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="cpf">CPF</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <input type="text" id="cpf" name="cpf" class="form-control" value="{{ $clientes->cpf }}" readonly maxlength="11">
+                  </div>
+                  <div class="col-sm-1">
+                    <a href="#" class="btn btn-link edit-btn" data-target="cpf"><i class="bi bi-pencil"></i></a>
+                  </div>
+                </div>
+                <hr>
 
-    <!-- Data de nascimento -->
-    <div class="row">
-        <div class="col-sm-3">
-            <label for="data_nascimento">Data de nascimento</label>
-        </div>
-        <div class="col-sm-8">
-            <input type="date" id="data_nascimento" name="data_nascimento" class="form-control" value="{{ $clientes->dataNascimento }}" readonly>
-        </div>
-        <div class="col-sm-1">
-            <a href="#" class="btn btn-link edit-btn" data-target="data_nascimento"><i class="bi bi-pencil"></i></a>
-        </div>
-    </div>
-    <hr>
+                <!-- Data de nascimento -->
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="data_nascimento">Data de nascimento</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <input type="date" id="data_nascimento" name="data_nascimento" class="form-control" value="{{ $clientes->dataNascimento }}" readonly>
+                  </div>
+                  <div class="col-sm-1">
+                    <a href="#" class="btn btn-link edit-btn" data-target="data_nascimento"><i class="bi bi-pencil"></i></a>
+                  </div>
+                </div>
+                <hr>
 
-    <!-- Botão para salvar alterações -->
-    <div class="row">
-        <div class="col-sm-12">
-            <button type="submit" class="btn btn-primary" id="saveChangesBtn" style="display: none;">Salvar Alterações</button>
-        </div>
-    </div>
-</form>
+                <!-- Botão para salvar alterações -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <button type="submit" class="btn btn-primary" id="saveChangesBtn" style="display: none;">Salvar Alterações</button>
+                  </div>
+                </div>
+              </form>
 
             </div>
           </div>
@@ -310,7 +342,7 @@
                       @endif
                     </td>
                     <td>{{ $pedido->dataEntrega }}</td>
-                 
+
                     <td>{{ 'R$' . number_format($pedido->totalPedido, 2, ',', '.') }}</td>
                   </tr>
                   @endforeach
@@ -329,11 +361,12 @@
     </div>
     </div>
   </section>
-  <div class="modal fade" id="enderecoModal" tabindex="-1" role="dialog" aria-labelledby="enderecoModalLabel" aria-hidden="true">
+  <div class="modal fade" id="enderecoModal" tabindex="-1" role="dialog" aria-labelledby="enderecoModalLabel" aria-hidden="true" >
     <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header bg-primary text-light">
-          <h5 class="modal-title" id="enderecoModalLabel">Editar Endereço</h5>
+      <div class="modal-content" style= " border: 1px solid #FA856E;
+  box-shadow: 0 0 10px rgba(250, 133, 110, 0.5);">
+        <div class="modal-header text-light" style="background-color: #FA856E;">
+          <h3 class="modal-title" id="enderecoModalLabel">Editar Endereço</h3>
         </div>
         <div class="modal-body">
           <form id="enderecoForm" method="post" action="{{route('website.perfil.salvar.endereco')}}">
@@ -393,17 +426,17 @@
 </body>
 <script>
   // Evento de clique para abrir o modal e carregar os detalhes do pedido via AJAX
-  document.getElementById("btnAbrirModal").addEventListener("click", function() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("modalBody").innerHTML = this.responseText;
-        $('#modalDetalhesPedido').modal('show'); // Abre o modal
-      }
-    };
-    xhttp.open("GET", "detalhes_pedido.html", true);
-    xhttp.send();
-  });
+  //document.getElementById("btnAbrirModal").addEventListener("click", function() {
+  //  var xhttp = new XMLHttpRequest();
+  //  xhttp.onreadystatechange = function() {
+  //    if (this.readyState == 4 && this.status == 200) {
+  //      document.getElementById("modalBody").innerHTML = this.responseText;
+   //     $('#modalDetalhesPedido').modal('show'); // Abre o modal
+   //   }
+  //  };
+  //  xhttp.open("GET", "detalhes_pedido.html", true);
+  //  xhttp.send();
+ // });
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -443,9 +476,8 @@
     const cep = formData.get('cep');
   });
 </script>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"></script>
-<script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script>
   document.getElementById("editarEnderecoBtn").addEventListener("click", function() {
     document.getElementById("enderecoModal").classList.add("show");
     document.getElementById("enderecoModal").style.display = "block";
@@ -518,7 +550,6 @@
 <script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/waypoints/noframework.waypoints.js') }}"></script>
-<script src="{{ asset('assets/js/main.js') }}"></script>
 
 
 <script>

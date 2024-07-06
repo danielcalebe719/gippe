@@ -10,7 +10,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
+
 class CadastrarClienteController extends Controller
+
 {
     
     public function MostrarFormularioCadastro()
@@ -29,8 +32,10 @@ class CadastrarClienteController extends Controller
 
     protected function validator(array $data)
     {
+        // Define o locale como 'pt-BR' antes de chamar o validator
+        App::setLocale('pt-BR');
+
         return Validator::make($data, [
-          
             'email' => ['required', 'string', 'email', 'max:255', 'unique:admins'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
