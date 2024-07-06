@@ -13,7 +13,7 @@ class Mensagens extends Model
     protected $primaryKey = 'id'; // Nome da chave primária
     protected $fillable = [   
         'nome', 
-        'endereco', 
+        'email', 
         'assunto'.
         'mensagem', 
         'dataEnvio'

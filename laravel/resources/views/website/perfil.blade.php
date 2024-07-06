@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -30,12 +31,12 @@
 </head>
 
 <body>
-@if(Auth::guard('cliente')->check())
-    <p>Bem-vindo, {{ Auth::guard('cliente')->user()->email }}!</p>
-    
-@else
-    <p>Bem-vindo, visitante!</p>
-@endif  
+  @if(Auth::guard('cliente')->check())
+  <p>Bem-vindo, {{ Auth::guard('cliente')->user()->email }}!</p>
+
+  @else
+  <p>Bem-vindo, visitante!</p>
+  @endif
   <!-- ======= Top Bar ======= -->
   <section id="topbar" class="d-flex align-items-center">
     <div class="container d-flex justify-content-center justify-content-md-between">
@@ -112,7 +113,7 @@
     </div>
   </div>
 
- 
+
 
   <!-- Conteúdo do corpo -->
   <!-- Seção de perfil do cliente -->
@@ -121,253 +122,288 @@
       <!-- Detalhes do cliente -->
       <div class="row">
         <div class="col-lg-4">
-          <!-- Imagem do cliente -->
-          <div class="card mb-4">
-            <div class="card-body text-center">
-              <img src="assets/img/sample-avatar.jpg" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
-              <h5 class="my-3">Nome do Cliente</h5>
-                        <form action="uploadimgPerfil.php" method="post" enctype="multipart/form-data">
-     <div class="mb-3">
-        <label for="formFileSm" class="form-label">Defina uma imagem de perfil</label>
-        <input type="file" class="form-control form-control-sm"id="imagem" name="imagem">
-      </div>
-            
-            <input type="hidden" name="idClientes" value="1">
-            <input type="hidden" name="acao" value="imgInsercao">
-            <input type="submit" value="Salvar" class="btn btn-success">
-          </form>
-        </div>
-      </div>
-
-      <!-- Endereço -->
-      <div class="card mb-4">
-        <div class="card-body">
-          <h3>Endereço</h3>
-          <p><strong>Tipo:</strong> {{$enderecos_clientes->tipo}}</p>
-          <p><strong>CEP:</strong> {{$enderecos_clientes->cep}}</p>
-          <p><strong>Cidade:</strong> {{$enderecos_clientes->cidade}}</p>
-          <p><strong>Bairro:</strong> {{$enderecos_clientes->bairro}}</p>
-          <p><strong>Rua:</strong> {{$enderecos_clientes->rua}}</p>
-          <p><strong>Número:</strong> {{$enderecos_clientes->numero}}</p>
-          <p><strong>Complemento:</strong> {{$enderecos_clientes->complemento}}</p>
-          <!-- Botão "Editar Endereço" -->
-          <button id="editarEnderecoBtn" type="button" class="btn btn-link edit-endereco-btn">
-            <i class="bi bi-pencil"></i> Editar Endereço
-          </button>
-        </div>
-      </div>
-
-    </div>
-    <!-- Modal para editar endereço -->
-
-    <div class="col-lg-8">
-      <!-- Informações detalhadas do cliente -->
-      <div class="card mb-4">
-        <div class="card-body">
-          <form action="" method="post">
-            <input type="hidden" name="acao" value='editaPerfil'>
-            <!-- Nome -->
-            <div class="row">
-              <div class="col-sm-3">
-                <label for="nome">Nome completo</label>
-              </div>
-              <div class="col-sm-8">
-                <input type="text" id="nome" name="nome" class="form-control" value="{{$clientes->nome}}" readonly>
-              </div>
-              <div class="col-sm-1">
-                <a href="#" class="btn btn-link edit-btn" data-target="nome"><i class="bi bi-pencil"></i></a>
-              </div>
-            </div>
-            <hr>
-            <!-- Email -->
-            <div class="row">
-              <div class="col-sm-3">
-                <label for="email">Email</label>
-              </div>
-              <div class="col-sm-8">
-                <input type="email" id="email" name="email" class="form-control" value="{{$clientes->email}}" readonly>
-              </div>
-              <div class="col-sm-1">
-                <a href="#" class="btn btn-link edit-btn" data-target="email"><i class="bi bi-pencil"></i></a>
-              </div>
-            </div>
-            <hr>
-            <!-- Senha -->
-            <div class="row">
-              <div class="col-sm-3">
-                <label for="senha">Senha</label>
-              </div>
-              <div class="col-sm-8">
-                <input type="password" id="senha" name="senha" class="form-control" value="{{$clientes->senha}}" readonly>
-              </div>
-              <div class="col-sm-1">
-                <a href="#" class="btn btn-link edit-btn" data-target="senha"><i class="bi bi-pencil"></i></a>
-              </div>
-            </div>
-            <hr>
-            <!-- CPF -->
-            <div class="row">
-              <div class="col-sm-3">
-                <label for="cpf">CPF</label>
-              </div>
-              <div class="col-sm-8">
-                <input type="text" id="cpf" name="cpf" class="form-control" value="{{$clientes->cpf}}" readonly maxlength="11">
-              </div>
-              <div class="col-sm-1">
-                <a href="#" class="btn btn-link edit-btn" data-target="cpf"><i class="bi bi-pencil"></i></a>
-              </div>
-            </div>
-            <hr>
-            <!-- Data de nascimento -->
-            <div class="row">
-              <div class="col-sm-3">
-                <label for="data_nascimento">Data de nascimento</label>
-              </div>
-              <div class="col-sm-8">
-                <input type="date" id="data_nascimento" name="data_nascimento" class="form-control" value="{{$clientes->dataNascimento}}" readonly>
-              </div>
-              <div class="col-sm-1">
-                <a href="#" class="btn btn-link edit-btn" data-target="data_nascimento"><i class="bi bi-pencil"></i></a>
-              </div>
-            </div>
-            <hr>
-            <!-- Botão para salvar alterações -->
-            <div class="row">
-              <div class="col-sm-12">
-                <button type="submit" class="btn btn-primary" id="saveChangesBtn">Salvar Alterações</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-     <!-- Pedidos do cliente -->
-<div class="card mb-4">
-  <div class="card-body">
-    <h3>Pedidos</h3>
-    <table class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Código do Pedido</th>
-          <th scope="col">Status</th>
-          <th scope="col">Data de Entrega</th>
-          <!--<th scope="col">Endereço</th>-->
-          <th scope="col">Total</th>
-        </tr>
-      </thead>
-      <tbody> 
+        <div class="card mb-4">
+    <div class="card-body text-center">
+        @if ($clientes->imgCaminho)
+            <img src="{{ asset('storage/ImagensClientes/' . $clientes->imgCaminho) }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+        @else
         
-      @if ($pedidos->count() > 0)
-    @foreach ($pedidos as $pedido)
-        <tr>
-            <td><a href="">{{ $pedido->codigo }}</a> </td>
-            <td>
-                @if ($pedido->status == 'nao_finalizado')
-                    Não Finalizado
-                @elseif ($pedido->status == 'pendente')
-                    Pendente
-                @elseif ($pedido->status == 'aceito')
-                    Aceito
-                @elseif ($pedido->status == 'recusado')
-                    Recusado
-                @elseif ($pedido->status == 'cancelado')
-                    Cancelado
-                @else
-                     Desconhecido
-                @endif
-            </td>
-            <td>{{ $pedido->dataEntrega }}</td>
-            <!--<td>{{ $enderecos_clientes->rua }} - Bairro: {{ $enderecos_clientes->bairro }} - {{ $enderecos_clientes->cidade }} - {{ $enderecos_clientes->cep }} </td>-->
-            <td>{{ 'R$' . number_format($pedido->totalPedido, 2, ',', '.') }}</td>
-        </tr>
-    @endforeach
-@else
-    <tr>
-        <td colspan="5">Nenhum pedido encontrado.</td>
-    </tr>
-@endif
+        @endif
+        <h5 class="my-3">{{ $clientes->nome }}</h5>
+        <form action="{{ route('website.salvar.imagem.perfil') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <div class="mb-3">
+                <label for="imagem" class="form-label">Defina uma imagem de perfil</label>
+                <input type="file" class="form-control form-control-sm" id="imagem" name="imagem">
+            </div>
+            <input type="hidden" name="idClientes" value="{{ $clientes->id }}">
+            <input type="submit" value="Salvar" class="btn btn-success">
+        </form>
+    </div>
+</div>
 
-      </tbody>
-    </table>
-  </div>
-</div>
-      </div>
+
+          <!-- Endereço -->
+          @if ($enderecos_clientes)
+          <div class="card mb-4">
+            <div class="card-body">
+              <h3>Endereço</h3>
+              <p><strong>Tipo:</strong> {{$enderecos_clientes->tipo}}</p>
+              <p><strong>CEP:</strong> {{$enderecos_clientes->cep}}</p>
+              <p><strong>Cidade:</strong> {{$enderecos_clientes->cidade}}</p>
+              <p><strong>Bairro:</strong> {{$enderecos_clientes->bairro}}</p>
+              <p><strong>Rua:</strong> {{$enderecos_clientes->rua}}</p>
+              <p><strong>Número:</strong> {{$enderecos_clientes->numero}}</p>
+              <p><strong>Complemento:</strong> {{$enderecos_clientes->complemento}}</p>
+              <!-- Botão "Editar Endereço" -->
+              <button id="editarEnderecoBtn" type="button" class="btn btn-link edit-endereco-btn">
+                <i class="bi bi-pencil"></i> Editar Endereço
+              </button>
+            </div>
+          </div>
+          @else
+          <div class="alert alert-warning" role="alert">
+            Nenhum endereço encontrado.
+          </div>
+          @endif
+
+
+        </div>
+        <!-- Modal para editar endereço -->
+
+        <div class="col-lg-8">
+          <!-- Informações detalhadas do cliente -->
+          <div class="card mb-4">
+            <div class="card-body">
+            <form action="{{ route('website.perfil.salvar') }}" method="post" id="perfilForm">
+    @csrf
+    <input type="hidden" name="acao" value="editaPerfil">
+
+    <!-- Nome -->
+    <div class="row">
+        <div class="col-sm-3">
+            <label for="nome">Nome completo</label>
+        </div>
+        <div class="col-sm-8">
+            <input type="text" id="nome" name="nome" class="form-control" value="{{ $clientes->nome }}" readonly>
+        </div>
+        <div class="col-sm-1">
+            <a href="#" class="btn btn-link edit-btn" data-target="nome"><i class="bi bi-pencil"></i></a>
+        </div>
     </div>
-  </div>
-</div>
- </section>
-  <div class="modal fade" id="enderecoModal" tabindex="-1" role="dialog" aria-labelledby="enderecoModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-light">
-                    <h5 class="modal-title" id="enderecoModalLabel">Editar Endereço</h5>
-                </div>
-                <div class="modal-body">
-                <form id="enderecoForm" method="post">
-    <input type="hidden" name="acao" value="editarEndereco">
-    <input type="hidden" name="idClientes" value="{{ $enderecos_clientes->idClientes }}">
-    
-    <div class="form-group">
-        <label for="tipo">Tipo</label>
-        <select name="tipo" id="tipo" class="form-control">
-            <option value="comercial" {{ $enderecos_clientes->tipo == 'comercial' ? 'selected' : '' }}>Comercial</option>
-            <option value="residencial" {{ $enderecos_clientes->tipo == 'residencial' ? 'selected' : '' }}>Residencial</option>
-        </select>
+    <hr>
+
+    <!-- Email -->
+    <div class="row">
+        <div class="col-sm-3">
+            <label for="email">Email</label>
+        </div>
+        <div class="col-sm-8">
+            <input type="email" id="email" name="email" class="form-control" value="{{ $clientes->email }}" readonly>
+        </div>
+        <div class="col-sm-1">
+            <a href="#" class="btn btn-link edit-btn" data-target="email"><i class="bi bi-pencil"></i></a>
+        </div>
     </div>
-    
-    <div class="form-group">
-        <label for="cep">CEP</label>
-        <input type="text" id="cep" name="cep" class="form-control" value="{{ $enderecos_clientes->cep }}">
+    <hr>
+
+    <!-- Senha -->
+    <div class="row">
+        <div class="col-sm-3">
+            <label for="senha">Senha</label>
+        </div>
+        <div class="col-sm-8">
+            <input type="password" id="senha" name="senha" class="form-control" value="" readonly placeholder="*****">
+            <input type="hidden" id="senha_original" name="senha_original" value="{{ $clientes->password }}" >
+        </div>
+        <div class="col-sm-1">
+            <a href="#" class="btn btn-link edit-btn" data-target="senha"><i class="bi bi-pencil"></i></a>
+        </div>
     </div>
-    
-    <div class="form-group">
-        <label for="cidade">Cidade</label>
-        <input type="text" id="cidade" name="cidade" class="form-control cep-cidade" value="{{ $enderecos_clientes->cidade }}">
+    <hr>
+
+    <!-- Telefone -->
+    <div class="row">
+        <div class="col-sm-3">
+            <label for="telefone">Telefone</label>
+        </div>
+        <div class="col-sm-8">
+            <input type="text" id="telefone" name="telefone" class="form-control" value="{{ $clientes->telefone }}" readonly>
+        </div>
+        <div class="col-sm-1">
+            <a href="#" class="btn btn-link edit-btn" data-target="telefone"><i class="bi bi-pencil"></i></a>
+        </div>
     </div>
-    
-    <div class="form-group">
-        <label for="bairro">Bairro</label>
-        <input type="text" id="bairro" name="bairro" class="form-control cep-bairro" value="{{ $enderecos_clientes->bairro }}">
+    <hr>
+
+    <!-- CPF -->
+    <div class="row">
+        <div class="col-sm-3">
+            <label for="cpf">CPF</label>
+        </div>
+        <div class="col-sm-8">
+            <input type="text" id="cpf" name="cpf" class="form-control" value="{{ $clientes->cpf }}" readonly maxlength="11">
+        </div>
+        <div class="col-sm-1">
+            <a href="#" class="btn btn-link edit-btn" data-target="cpf"><i class="bi bi-pencil"></i></a>
+        </div>
     </div>
-    
-    <div class="form-group">
-        <label for="rua">Rua</label>
-        <input type="text" id="rua" name="rua" class="form-control cep-logradouro" value="{{ $enderecos_clientes->rua }}">
+    <hr>
+
+    <!-- Data de nascimento -->
+    <div class="row">
+        <div class="col-sm-3">
+            <label for="data_nascimento">Data de nascimento</label>
+        </div>
+        <div class="col-sm-8">
+            <input type="date" id="data_nascimento" name="data_nascimento" class="form-control" value="{{ $clientes->dataNascimento }}" readonly>
+        </div>
+        <div class="col-sm-1">
+            <a href="#" class="btn btn-link edit-btn" data-target="data_nascimento"><i class="bi bi-pencil"></i></a>
+        </div>
     </div>
-    
-    <div class="form-group">
-        <label for="numero">Número</label>
-        <input type="text" id="numero" name="numero" class="form-control" value="{{ $enderecos_clientes->numero }}">
-    </div>
-    
-    <div class="form-group">
-        <label for="complemento">Complemento</label>
-        <input type="text" id="complemento" name="complemento" class="form-control" value="{{ $enderecos_clientes->complemento }}">
-    </div>
-    
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-        <button type="submit" class="btn btn-primary" id="saveEnderecoBtn">Salvar mudanças</button>
+    <hr>
+
+    <!-- Botão para salvar alterações -->
+    <div class="row">
+        <div class="col-sm-12">
+            <button type="submit" class="btn btn-primary" id="saveChangesBtn" style="display: none;">Salvar Alterações</button>
+        </div>
     </div>
 </form>
 
-                </div>
             </div>
+          </div>
+          <!-- Pedidos do cliente -->
+          <div class="card mb-4">
+            <div class="card-body">
+              <h3>Pedidos</h3>
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Código do Pedido</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Data de Entrega</th>
+                    <!--<th scope="col">Endereço</th>-->
+                    <th scope="col">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  @if ($pedidos->count() > 0)
+                  @foreach ($pedidos as $pedido)
+                  <tr>
+                    <td><a href="">{{ $pedido->codigo }}</a> </td>
+                    <td>
+                      @if ($pedido->status == 'nao_finalizado')
+                      Não Finalizado
+                      @elseif ($pedido->status == 'pendente')
+                      Pendente
+                      @elseif ($pedido->status == 'aceito')
+                      Aceito
+                      @elseif ($pedido->status == 'recusado')
+                      Recusado
+                      @elseif ($pedido->status == 'cancelado')
+                      Cancelado
+                      @else
+                      Desconhecido
+                      @endif
+                    </td>
+                    <td>{{ $pedido->dataEntrega }}</td>
+                 
+                    <td>{{ 'R$' . number_format($pedido->totalPedido, 2, ',', '.') }}</td>
+                  </tr>
+                  @endforeach
+                  @else
+                  <tr>
+                    <td colspan="5">Nenhum pedido encontrado.</td>
+                  </tr>
+                  @endif
+
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+    </div>
+  </section>
+  <div class="modal fade" id="enderecoModal" tabindex="-1" role="dialog" aria-labelledby="enderecoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-light">
+          <h5 class="modal-title" id="enderecoModalLabel">Editar Endereço</h5>
+        </div>
+        <div class="modal-body">
+          <form id="enderecoForm" method="post" action="{{route('website.perfil.salvar.endereco')}}">
+            @csrf
+            <input type="hidden" name="acao" value="{{ isset($enderecos_clientes) ? 'editarEndereco' : 'adicionarEndereco' }}">
+            <input type="hidden" name="idClientes" value="{{ $enderecos_clientes->idClientes ?? '' }}">
+
+            <div class="form-group">
+              <label for="tipo">Tipo</label>
+              <select name="tipo" id="tipo" class="form-control">
+                <option value="comercial" {{ isset($enderecos_clientes) && $enderecos_clientes->tipo == 'comercial' ? 'selected' : '' }}>Comercial</option>
+                <option value="residencial" {{ isset($enderecos_clientes) && $enderecos_clientes->tipo == 'residencial' ? 'selected' : '' }}>Residencial</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="cep">CEP</label>
+              <input type="text" id="cep" name="cep" class="form-control" value="{{ isset($enderecos_clientes) ? $enderecos_clientes->cep : '' }}">
+            </div>
+
+            <div class="form-group">
+              <label for="cidade">Cidade</label>
+              <input type="text" id="cidade" name="cidade" class="form-control cep-cidade" value="{{ isset($enderecos_clientes) ? $enderecos_clientes->cidade : '' }}">
+            </div>
+
+            <div class="form-group">
+              <label for="bairro">Bairro</label>
+              <input type="text" id="bairro" name="bairro" class="form-control cep-bairro" value="{{ isset($enderecos_clientes) ? $enderecos_clientes->bairro : '' }}">
+            </div>
+
+            <div class="form-group">
+              <label for="rua">Rua</label>
+              <input type="text" id="rua" name="rua" class="form-control cep-logradouro" value="{{ isset($enderecos_clientes) ? $enderecos_clientes->rua : '' }}">
+            </div>
+
+            <div class="form-group">
+              <label for="numero">Número</label>
+              <input type="text" id="numero" name="numero" class="form-control" value="{{ isset($enderecos_clientes) ? $enderecos_clientes->numero : '' }}">
+            </div>
+
+            <div class="form-group">
+              <label for="complemento">Complemento</label>
+              <input type="text" id="complemento" name="complemento" class="form-control" value="{{ isset($enderecos_clientes) ? $enderecos_clientes->complemento : '' }}">
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+              <button type="submit" class="btn btn-primary" id="saveEnderecoBtn">Salvar mudanças</button>
+            </div>
+          </form>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 <script>
-    // Evento de clique para abrir o modal e carregar os detalhes do pedido via AJAX
-    document.getElementById("btnAbrirModal").addEventListener("click", function() {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("modalBody").innerHTML = this.responseText;
-                $('#modalDetalhesPedido').modal('show'); // Abre o modal
-            }
-        };
-        xhttp.open("GET", "detalhes_pedido.html", true);
-        xhttp.send();
-    });
+  // Evento de clique para abrir o modal e carregar os detalhes do pedido via AJAX
+  document.getElementById("btnAbrirModal").addEventListener("click", function() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("modalBody").innerHTML = this.responseText;
+        $('#modalDetalhesPedido').modal('show'); // Abre o modal
+      }
+    };
+    xhttp.open("GET", "detalhes_pedido.html", true);
+    xhttp.send();
+  });
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -377,7 +413,9 @@
 
 
     editButtons.forEach(function(btn) {
+
       btn.addEventListener('click', function(event) {
+        document.getElementById('saveChangesBtn').style.display = 'block';
         event.preventDefault();
         const targetId = this.getAttribute('data-target');
         const targetInput = document.getElementById(targetId);
@@ -424,7 +462,7 @@
     });
   });
 
-  $(document).ready(function () {
+  $(document).ready(function() {
     // Função para limpar o formulário de CEP
     function limpaFormularioCEP() {
       $(".cep-logradouro").val("");
@@ -438,13 +476,13 @@
       var cep = $(this).val().replace(/\D/g, ''); // Remove qualquer caractere não numérico do CEP
       if (cep !== "") {
         var validacep = /^[0-9]{8}$/; // Expressão regular para validar o formato do CEP
-        if(validacep.test(cep)) {
+        if (validacep.test(cep)) {
           // Preenche os campos com "..." enquanto a busca está sendo realizada
           $(".cep-logradouro").val("...");
           $(".cep-bairro").val("...");
           $(".cep-cidade").val("...");
           $(".cep-estado").val("...");
-          
+
           // Faz a requisição para a API ViaCEP
           $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function(dados) {
             if (!("erro" in dados)) {
@@ -472,42 +510,36 @@
   });
 </script>
 
-  <!-- Vendor JS Files -->
-  <script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+<!-- Vendor JS Files -->
+<script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
 <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
 <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/waypoints/noframework.waypoints.js') }}"></script>
-<script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
 
-  
-  <script>
-    var loggedIn = true; // Alterar para false para simular usuário não logado
-    
-    window.addEventListener('DOMContentLoaded', (event) => {
-      function toggleButtons() {
-        if (loggedIn) {
-          $("#register-btn, #login-btn").hide();
-          $("#profile-btn, #notification-btn").show();
-        } else {
-          $("#register-btn, #login-btn").show();
-          $("#profile-btn, #notification-btn").hide();
-        }
+
+<script>
+  var loggedIn = true; // Alterar para false para simular usuário não logado
+
+  window.addEventListener('DOMContentLoaded', (event) => {
+    function toggleButtons() {
+      if (loggedIn) {
+        $("#register-btn, #login-btn").hide();
+        $("#profile-btn, #notification-btn").show();
+      } else {
+        $("#register-btn, #login-btn").show();
+        $("#profile-btn, #notification-btn").hide();
       }
+    }
 
-      $(document).ready(function() {
-        toggleButtons();
-      });
+    $(document).ready(function() {
+      toggleButtons();
     });
-  </script>
+  });
+</script>
 </body>
+
 </html>
-
-
-
-
-
-

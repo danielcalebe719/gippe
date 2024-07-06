@@ -257,11 +257,24 @@ Route::post('website/cadastro', [CadastrarClienteController::class, 'cadastrar']
 // Rotas do prefixo 'website'
 Route::prefix('website')->group(function () {
     Route::get('/', [WebsiteIndexController::class, 'index'])->name('website.index');
+    Route::post('/mensagem', [WebsiteIndexController::class, 'mensagem_guardar'])->name('website.mensagem');
 
     Route::get('/perfil', [WebsitePerfilController::class, 'index'])
     ->middleware('auth:cliente')
     ->name('website.perfil');
+    Route::post('/perfil/salvar', [WebsitePerfilController::class, 'salvar_dados_pessoais'])
+    ->middleware('auth:cliente')
+    ->name('website.perfil.salvar');
 
+    Route::post('/perfil/salvar-endereco', [WebsitePerfilController::class, 'salvar_endereco_cliente'])
+    ->middleware('auth:cliente')
+    ->name('website.perfil.salvar.endereco');
+    
+    Route::post('/perfil/salvar-imagem', [WebsitePerfilController::class, 'salvar_imagem_perfil'])
+    ->middleware('auth:cliente')
+    ->name('website.salvar.imagem.perfil');
+    
+   
 
     Route::get('/agendamento/{codigo}', [WebsiteAgendamentoController::class, 'index'])
     ->middleware('auth:cliente')

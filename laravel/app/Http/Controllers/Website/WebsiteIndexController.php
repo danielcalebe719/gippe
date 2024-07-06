@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\GaleriaImagens; // Importe o modelo GaleriaImagem
 use App\Models\Notificacoes;
 use App\Models\NotificacoesClientes;
+use App\Models\Mensagens;
 use Illuminate\Support\Facades\Auth;
 
 class WebsiteIndexController extends Controller
@@ -28,4 +29,34 @@ class WebsiteIndexController extends Controller
     return view('website.index', compact('imagens', 'notificacoes', 'notificacoes_clientes'));
 }
 
+public function mensagem_guardar(Request $request)
+{
+    // Validação dos dados recebidos
+    $request->validate([
+        'nome' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'assunto' => 'required|string|max:255',
+        'mensagem' => 'required|string',
+    ]);
+
+    // Cria uma nova instância do modelo Mensagens
+    $mensagem = new Mensagens();
+    $mensagem->nome = $request->input('nome');
+    $mensagem->email = $request->input('email');
+    $mensagem->assunto = $request->input('assunto');
+    $mensagem->mensagem = $request->input('mensagem');
+
+    // Tenta salvar a mensagem no banco de dados
+    try {
+        $mensagem->save();
+        // Retornar uma resposta de sucesso
+        return redirect()->route('website.index')->with('success', 'Mensagem enviada com sucesso!');
+    } catch (\Exception $e) {
+        // Trate qualquer exceção aqui (por exemplo, log ou mensagem de erro)
+        return redirect()->route('website.index')->with('error', 'Erro ao salvar a mensagem. Por favor, tente novamente.');
+
+    }
 }
+
+}
+

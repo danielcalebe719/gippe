@@ -40,8 +40,8 @@ public function salvar(Request $request)
     $agendamento->save();   
 
    
-    // Redireciona o usuário para a página inicial (website.index)
-    return redirect()->route('website.index');
+    return redirect()->route('website.index')->with('success', 'Pedido realizado com sucesso! Aguarde nossa revisão e fique atento às notificações no email, telefone e no menu da plataforma.');
+
 }
 
 

@@ -30,19 +30,19 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
 </head>
   <!-- Vendor CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="{{asset('assets/vendor/aos/aos.css')}}" rel="stylesheet">
+  <link href="{{asset('assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{asset('assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+  <link href="{{asset('assets/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
+  <link href="{{asset('assets/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
+  <link href="{{asset('assets/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js')}}"></script>
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
 
   <style>
-    
+
   </style>
 </head>
 
@@ -139,13 +139,20 @@
       </div>
     </div>
   </div>
-  
+  <!--@if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
   @if(Auth::guard('cliente')->check())
     <p>Bem-vindo, {{ Auth::guard('cliente')->user()->email }}!</p>
   <a href="{{url('website/logout')}}">Logout</a>
 @else
     <p>Bem-vindo, visitante!</p>
-@endif
+@endif->
 
 
 
@@ -354,7 +361,6 @@
 </section><!-- End Testimonials Section -->
 
 
-
 <section id="portfolio" class="portfolio">
     <div class="container" data-aos="fade-up">
         <div class="section-title">
@@ -378,8 +384,8 @@
 
         <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
             @foreach($imagens as $imagem)
-                <div class="col-lg-3 portfolio-item filter-{{ strtolower($imagem->evento) }}">
-                    <div class="resolve portfolio-item-overlay">
+                <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item filter-{{ strtolower($imagem->evento) }}">
+                    <div class="portfolio-item-overlay">
                         <a href="{{ asset('storage/GaleriaImagens/' . $imagem->nome_imagem) }}" data-lightbox="portfolio" title="{{ $imagem->evento }}">
                             <img class="img-fluid gallery-image" src="{{ asset('storage/GaleriaImagens/' . $imagem->imagemCaminho) }}" >
                         </a>
@@ -399,6 +405,7 @@
         </div>
     </div>
 </section>
+
 
 
 
@@ -495,32 +502,31 @@
         </div>
 
         <div class="row" data-aos="fade-up" data-aos-delay="100">
-          <div class="col-lg-6">
-            <div class="info-box mb-4">
-              <i class="bx bx-map"></i>
-              <h3>Nosso endereço</h3>
-              <p>Avenida A, Bairro B, Belo Horizonte</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6">
-            <div class="info-box  mb-4">
-              <i class="bx bx-envelope"></i>
-              <h3>Nosso email</h3>
-              <p>buffetdivinosabor@gmail.com
-              </p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6">
-            <div class="info-box  mb-4">
-              <i class="bx bx-phone-call"></i>
-              <h3>Nosso Telefone</h3>
-              <p>+31 95589 55488</p>
-            </div>
-          </div>
-
+    <div class="col-lg-6 ">
+        <div class="info-box mb-4 p-3">
+            <i class="bx bx-map"></i>
+            <h3 class="mt-3">Nosso endereço</h3>
+            <p class="mb-0">Avenida A, Bairro B, Belo Horizonte</p>
         </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+        <div class="info-box mb-4 p-3">
+            <i class="bx bx-envelope"></i>
+            <h3 class="mt-3">Nosso email</h3>
+            <p class="mb-0">buffetdivinosabor@gmail.com</p>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+        <div class="info-box mb-4 p-4"> <!-- Ajustado para p-4 para mais padding -->
+            <i class="bx bx-phone-call"></i>
+            <h3 class="mt-3">Nosso Telefone</h3>
+            <p class="mb-0">+31 95589 55488</p>
+        </div>
+    </div>  
+</div>
+
 
         <div class="row" data-aos="fade-up" data-aos-delay="100">
 
@@ -530,30 +536,66 @@
           </div>
 
           <div class="col-lg-6">
-            <form action="processa_mensagens.php" method="post" role="form" class="php-email-form">
-              <div class="row">
-                <div class="col form-group">
-                  <input type="text" name="nome" class="form-control" id="name" placeholder="Seu nome" required>
-                </div>
-                <div class="col form-group">
-                  <input type="email" class="form-control" name="endereco" id="email" placeholder="Seu Email" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" name="assunto" id="subject" placeholder="Assunto" required>
-              </div>
-              <div class="form-group">
-                <textarea class="form-control" name="mensagem" rows="5" placeholder="Mensagem" required></textarea>
-              </div>
-              <div class="my-3">
-                <div class="loading">Carregando</div>
-                <div class="sent-message">Sua mensagem foi enviada</div>
-                
-              </div>
-              <div class="error-message"></div>
-              <div class="text-center"><button type="submit"> Enviar Mensagem</button></div>
-            </form>
-          </div>
+    <form action="{{ route('website.mensagem') }}" method="post" class="php-email-form">
+        @csrf
+        <div class="row">
+            <div class="col form-group">
+                <input type="text" name="nome" class="form-control" id="name" placeholder="Seu nome" required>
+            </div>
+            <div class="col form-group">
+                <input type="email" class="form-control" name="email" id="email" placeholder="Seu Email" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="assunto" id="subject" placeholder="Assunto" required>
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" name="mensagem" rows="5" placeholder="Mensagem" required></textarea>
+        </div>
+        <div class="my-3">
+            <div class="loading">Carregando</div>
+            <div id="mensagem-sucesso" style="display: none; color: green;">Mensagem enviada com sucesso!</div>
+        </div>
+        <div class="error-message"></div>
+        <div class="text-center"><button type="submit">Enviar Mensagem</button></div>
+    </form>
+</div>
+
+<script>
+    // Script para mostrar a mensagem de sucesso após o envio do formulário
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('.php-email-form');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); 
+
+          
+            const loading = document.querySelector('.loading');
+            loading.style.display = 'block';
+
+         
+           
+            setTimeout(function () {
+                loading.style.display = 'none';
+                const mensagemSucesso = document.getElementById('mensagem-sucesso');
+                mensagemSucesso.style.display = 'block';
+            }, 2000); // Exibe a mensagem após 2 segundos (tempo fictício)
+
+  
+        });
+    });
+</script>
+
+
+
+<script>
+        $(document).ready(function() {
+            // Esconde a mensagem após 5 segundos
+            setTimeout(function() {
+                $('.alert').alert('close');
+            }, 5000);
+        });
+    </script>
 
         </div>
 
