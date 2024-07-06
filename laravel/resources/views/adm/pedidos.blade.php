@@ -177,9 +177,12 @@
                         enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <input type="hidden" name="acao" id="acao" value="adicionar">
                             <label for="Cliente ID">Cliente ID</label>
                             <input type="text" class="form-control" id="idCliente" name="idCliente" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Cliente ID">Serviço ID</label>
+                            <input type="text" class="form-control" id="idServico" name="idServico" required>
                         </div>
                         <div class="form-group">
                             <label for="observacao">Observação</label>
@@ -188,8 +191,10 @@
                         <div class="form-group">
                             <label for="status">Status</label>
                             <select class="form-control" id="status" name="status" required>
+                                <option value="nao_finalizado">Não finalizado</option>
                                 <option value="pendente">Pendente</option>
                                 <option value="aceito">Aceito</option>
+                                <option value="recusado">Recusado</option>
                                 <option value="cancelado">Cancelado</option>
                                 <option value="entregue">Entregue</option>
                             </select>
@@ -356,10 +361,12 @@
                         <div class="form-group">
                             <label for="editStatus">Status</label>
                             <select class="form-control" id="EditarStatus" name="status" required>
-                                <option value="Pendente">Pendente</option>
-                                <option value="Aceito">Aceito</option>
-                                <option value="Cancelado">Cancelado</option>
-                                <option value="Entregue">Entregue</option>
+                                <option value="nao_finalizado">Não finalizado</option>
+                                <option value="pendente">Pendente</option>
+                                <option value="aceito">Aceito</option>
+                                <option value="recusado">Recusado</option>
+                                <option value="cancelado">Cancelado</option>
+                                <option value="entregue">Entregue</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -421,6 +428,12 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label for="DetalhesObservacao" class="col-sm-3 col-form-label">Código:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="DetalhesCodigo" value="" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label for="DetalhesDataPedido" class="col-sm-3 col-form-label">Data de Pedido:</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="DetalhesDataPedido" value="" readonly>
@@ -468,8 +481,9 @@
                 // Preencha os campos do modal com os dados do cliente, ou valores padrão
                 document.getElementById('DetalhesIdPedidos').value = data.id || '';
                 document.getElementById('DetalhesObservacao').value = data.observacao || '';
+                document.getElementById('DetalhesCodigo').value = data.codigo || '';
                 document.getElementById('DetalhesDataPedido').value = data.dataPedido ? formatarData(data.dataPedido) : '';
-
+                
 
 
 

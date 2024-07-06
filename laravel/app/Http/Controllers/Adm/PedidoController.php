@@ -67,6 +67,7 @@ class PedidoController extends Controller
     
             // Preenche os outros campos do cliente
             $pedido->idClientes = $request->input('idCliente');
+            $pedido->idServicos = $request->input('idServico');
             $pedido->observacao = $request->input('observacao');
             $pedido->status = $request->input('status');
             $pedido->totalPedido = $request->input('totalPedido');
