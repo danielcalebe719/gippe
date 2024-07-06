@@ -100,7 +100,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="Classificacao">Classificação</label>
-                                            <select name="classificacao" id="classificacao">
+                                            <select name="classificacao" class="form-control" id="classificacao">
                                               <option value="perecivel"> Perecível</option>
                                               <option value="nao perecivel"> Não Perecível</option>
                                             </select>
@@ -146,7 +146,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="editarClassificacao">Classificação</label>
-                                            <select name="classificacao" id="editarClassificacao">
+                                            <select name="classificacao" class="form-control" id="editarClassificacao">
                                               <option value="perecivel"> Perecível</option>
                                               <option value="nao perecivel"> Não Perecível</option>
                                             </select>

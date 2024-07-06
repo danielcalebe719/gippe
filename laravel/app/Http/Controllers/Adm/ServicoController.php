@@ -116,8 +116,8 @@ class ServicoController extends Controller
     {
         try {
 
-            $pedidosservicos = PedidosServicos::where('idServicos',$idServico)->delete();
-            $servico = Clientes::findOrFail($idServico);
+            //$pedidosservicos = PedidosServicos::where('idServicos',$idServico)->delete();
+            $servico = Servicos::findOrFail($idServico);
            
             
             // Excluir a imagem associada, se existir

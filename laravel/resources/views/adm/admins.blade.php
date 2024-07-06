@@ -26,26 +26,46 @@
                                                 <th>ID</th>
                                                 <th>Nome</th>
                                                 <th>Email</th>
-                                                <th>Senha</th>
+                                                <th>Ultima vez logado</th>
                                                 <th>Ações</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <!-- Aqui vai o conteúdo da tabela vindo do banco de dados -->
-                                            <!-- Exemplo estático para ilustrar -->
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Joao</td>
-                                                <td>Joao@222</td>
-                                                <td>****</td>
-                                                <td>
-                                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarColaborador">Editar</button>
-                                                    <button class="btn btn-danger btn-sm" onclick="excluirColaborador(1)">Excluir</button>
-                                                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalDetalhesColaborador">Detalhes</button>
-                                               
-                                                </td>
-                                            </tr>
-                                            <!-- Fim do exemplo -->
+                                        @foreach($admins as $admin)
+                                <tr>
+                                    <td>{{ $admin->id }}</td>
+                                    <td>{{ $admin->nome }}</td>
+                                    <td>{{ $admin->email }}</td>
+                                    <td>{{ $admin->last_login }}</td>
+                                    
+
+
+                                    <td>
+                                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">
+                                                <button class="btn btn-primary btn-sm" onclick="carregarDadosParaEdicao('{{ $admin->id }}')" data-toggle="modal" data-target="#modalEditarCliente">
+                                                    Editar
+                                                </button>
+                                            </div>
+
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="abrirModalExclusao('{{ $admin->id }}')">
+                                                    Excluir
+                                                </button>
+                                            </div>
+
+
+                                            <div class="btn-group" role="group" aria-label="Ações do Cliente">
+                                                <button class="btn btn-info btn-sm" onclick="mostrarDetalhes('{{ $admin->id }}')" data-toggle="modal" data-target="#modalDetalhesCliente">
+                                                    Detalhes
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+
+
+                                </tr>
+                                @endforeach
                                         </tbody>
                                     </table>
                                 </div>

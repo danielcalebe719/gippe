@@ -67,7 +67,10 @@ class ClienteController extends Controller
             if ($request->filled('senha')) {
                 $cliente->password = Hash::make($request->input('senha'));
             }
-    
+            
+            if(!$request->idCliente){
+                $cliente->dataCadastro = now();
+            }
             // Trata o upload da imagem, se fornecida
             if ($request->hasFile('imgCaminho')) {
                 // Deleta a imagem antiga, se existir

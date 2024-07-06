@@ -17,6 +17,7 @@
                     <div class="card mb-4">
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                             <h6 class="m-0 font-weight-bold text-primary">Notificações para Funcionários</h6>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#modalAdicionarNotificacaoCliente">Adicionar Notificação</button>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">

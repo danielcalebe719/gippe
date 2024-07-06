@@ -91,12 +91,12 @@ class ReceitaItemController extends Controller
 
 
     
-    public function remover($idReceitaItem)
+    public function remover($idReceitasItem)
     {
         try {
 
             
-            $receitaItem = ReceitasItens::findOrFail($idReceitaItem);
+            $receitaItem = ReceitasItens::findOrFail($idReceitasItem);
            
             
             
