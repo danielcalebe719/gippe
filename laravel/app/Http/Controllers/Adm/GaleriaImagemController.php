@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 
-class GaleriaImagensController extends Controller
+class GaleriaImagemController extends Controller
 {
     public function index()
     {
-        $galeriaImagem = GaleriaImagens::all();
+        $galeriaImagens = GaleriaImagens::all();
         return view('adm.galeriaImagens', compact('galeriaImagens'));
     }
 
@@ -53,7 +53,7 @@ class GaleriaImagensController extends Controller
     
         try {
             // Busca ou cria um novo cliente
-            $galeriaImagem = $request->idGaleriaImagem ? Clientes::findOrFail($request->idGaleriaImagem) : new Clientes();
+            $galeriaImagem = $request->idGaleriaImagem ? GaleriaImagens::findOrFail($request->idGaleriaImagem) : new GaleriaImagens();
     
             // Preenche os outros campos do cliente
             $galeriaImagem->evento = $request->input('evento');
@@ -63,25 +63,21 @@ class GaleriaImagensController extends Controller
             $galeriaImagem->tipoImagem = $request->input('tipoImagem');
             $galeriaImagem->imagemCaminho = $request->input('imagemCaminho');
     
-            // Verifica se foi fornecida uma nova senha
-            if ($request->filled('senha')) {
-                $galeriaImagem->senha = Hash::make($request->input('senha'));
-            }
+            
     
             // Trata o upload da imagem, se fornecida
-            if ($request->hasFile('imgCaminho')) {
+            if ($request->hasFile('imagemCaminho')) {
                 // Deleta a imagem antiga, se existir
-                if ($galeriaImagem->imgCaminho && Storage::exists('public/GaleriaImagens/' . $galeriaImagem->imgCaminho)) {
-                    Storage::delete('public/GaleriaImagens/' . $galeriaImagem->imgCaminho);
+                if ($galeriaImagem->imagemCaminho && Storage::exists('public/GaleriaImagens/' . $galeriaImagem->imagemCaminho)) {
+                    Storage::delete('public/GaleriaImagens/' . $galeriaImagem->imagemCaminho);
                 }
                 
                 // Armazena a nova imagem
-                $path = $request->file('imgCaminho')->store('public/GaleriaImagens');
-                $galeriaImagem->imgCaminho = basename($path);
+                $path = $request->file('imagemCaminho')->store('public/GaleriaImagens');
+                $galeriaImagem->imagemCaminho = basename($path);
             }
     
-            // Atualiza o timestamp de atualização
-            $galeriaImagem->dataAtualizacao = now();  
+             
     
             // Salva o cliente
             $galeriaImagem->save();
@@ -109,19 +105,17 @@ class GaleriaImagensController extends Controller
 
 
     
-    public function remover($idCliente)
+    public function remover($idGaleriaImagem)
     {
         try {
 
-            $notificacoesclientes = NotificacoesClientes::where('idClientes',$idCliente)->delete();
-            $enderecosclientes = EnderecosClientes::where('idClientes',$idCliente)->delete();
-            $pedido = Pedidos::where('idClientes',$idCliente)->delete();
-            $galeriaImagem = Clientes::findOrFail($idCliente);
+            
+            $galeriaImagem = GaleriaImagens::findOrFail($idGaleriaImagem);
            
             
             // Excluir a imagem associada, se existir
-            if ($galeriaImagem->imgCaminho) {
-                Storage::delete('public/GaleriaImagens/' . $galeriaImagem->imgCaminho);
+            if ($galeriaImagem->imagemCaminho) {
+                Storage::delete('public/GaleriaImagens/' . $galeriaImagem->imagemCaminho);
             }
 
 

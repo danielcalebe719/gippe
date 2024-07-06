@@ -19,7 +19,6 @@ class Clientes extends Authenticatable
     protected $fillable = [   
         'nome', 
         'cpf', 
-        'telefone'.
         'data_de_nascimento', 
         'status', 
         'email', 
@@ -27,7 +26,9 @@ class Clientes extends Authenticatable
         'dataCadastro',
         'dataAtualizacao',
         'dataRemocao',
-        'imgCaminho'
+        'imgCaminho',
+        'telefone',
+        'last_login'
         // Adicione outros campos aqui
     ];
     public $timestamps = false;

@@ -54,7 +54,7 @@
                                                 </button>
                                             </div>
 
-                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Pedido">
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">
                                                 <button type="button" class="btn btn-danger btn-sm"
                                                     onclick="abrirModalExclusao('{{ $agendamento->id }}')">
                                                     Excluir
@@ -114,6 +114,10 @@
                             <label for="HoraFim">Hora Fim</label>
                             <input type="time" class="form-control" id="horaFim" name="horaFim" required>
                         </div>
+                        <div class="form-group">
+                            <label for="HoraFim">Observação:</label>
+                            <input type="text" class="form-control" id="observacao" name="observacao" required>
+                        </div>
 
                         <button type="submit" class="btn btn-primary">Salvar</button>
                     </form>
@@ -121,6 +125,77 @@
             </div>
         </div>
     </div>
+ <!-- Modal Confirmar Exclusão -->
+ <div class="modal fade" id="modalConfirmarExclusao" tabindex="-1" role="dialog"
+        aria-labelledby="modalConfirmarExclusaoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalConfirmarExclusaoLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza de que deseja excluir este pedido?</p>
+                    <input type="hidden" id="excluirIdAgendamento">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmarExclusao">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    // Função para abrir o modal de confirmação de exclusão
+    function abrirModalExclusao(idAgendamento) {
+        document.getElementById('excluirIdAgendamento').value = idAgendamento;
+        $('#modalConfirmarExclusao').modal('show');
+    }
+
+    // Função para confirmar a exclusão
+    document.getElementById('confirmarExclusao').addEventListener('click', function () {
+        var idAgendamento = document.getElementById('excluirIdAgendamento').value;
+
+        // Enviar requisição AJAX para excluir o cliente
+        fetch(`/adm/agendamentos/remover/${idAgendamento}`, {
+            method: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao excluir o produto');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Fechar o modal de confirmação de exclusão
+                $('#modalConfirmarExclusao').modal('hide');
+
+                // Remover a linha do cliente na tabela, se existir
+                let agendamentoRow = document.getElementById(`agendamentoRow${idAgendamento}`);
+                if (agendamentoRow) {
+                    agendamentoRow.remove();
+                } else {
+                    console.warn(`Elemento agendamentoRow${idAgendamento} não encontrado para remoção.`);
+                }
+
+                // Exibir mensagem de sucesso
+                location.replace(location.href)
+
+            })
+            .catch(error => {
+                console.log(error)
+                console.error('Erro ao excluir o produto:', error);
+                alert('Erro ao excluir o produto');
+            });
+    });
+
+
+</script>
 
     <!-- Modal Editar Agendamento -->
     <div class="modal fade" id="modalEditarAgendamento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

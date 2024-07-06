@@ -10,6 +10,7 @@ use App\Http\Controllers\Adm\MateriaPrimaController;
 use App\Http\Controllers\Adm\ServicoController;
 use App\Http\Controllers\Adm\FornecedorController;
 use App\Http\Controllers\Adm\ReceitaItemController;
+use App\Http\Controllers\Adm\GaleriaImagemController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -183,6 +184,18 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
         Route::get('/show/{idReceitasItens}', [ReceitaItemController::class, 'show'])->name('receitasItens.show');
         Route::post('/guardar', [ReceitaItemController::class, 'guardar'])->name('receitasItens.guardar');
         Route::get('/remover/{idReceitasItens}', [ReceitaItemController::class, 'remover'])->name('receitasItens.remover');
+    });
+    Route::prefix('admins')->group(function () {
+        Route::get('/', [AdminController::class, 'index1'])->name('admins.index1');
+        Route::get('/show/{idAdmins}', [AdminController::class, 'show'])->name('admins.show');
+        // Route::post('/guardar', [AdminController::class, 'guardar'])->name('admins.guardar');
+        // Route::get('/remover/{idAdmins}', [AdminController::class, 'remover'])->name('admins.remover');
+    });
+    Route::prefix('galeriaImagens')->group(function () {
+        Route::get('/', [GaleriaImagemController::class, 'index'])->name('galeriaImagens.index');
+        Route::get('/show/{idGaleriaImagens}', [GaleriaImagemController::class, 'show'])->name('galeriaImagens.show');
+        Route::post('/guardar', [GaleriaImagemController::class, 'guardar'])->name('galeriaImagens.guardar');
+        Route::get('/remover/{idGaleriaImagens}', [GaleriaImagemController::class, 'remover'])->name('galeriaImagens.remover');
     });
 });
 Route::get('adm/logout', [LoginAdminController::class, 'deslogar'])->name('logout');

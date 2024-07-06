@@ -19,6 +19,6 @@ class GaleriaImagens extends Model
         'tipoImagem',
         'imagemCaminho'
     ];
-
+    public $timestamps = false;
     // Outros métodos, como relacionamentos ou scopes, podem ser adicionados aqui
 }

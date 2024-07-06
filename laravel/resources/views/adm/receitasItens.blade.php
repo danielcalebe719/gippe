@@ -28,7 +28,7 @@
                                 <th>Produto ID</th>
                                 <th>Materia Prima ID</th>
                                 <th>Quantidade</th>
-                                <th>Valor </th>
+                                <th>Subtotal</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
@@ -97,11 +97,11 @@
                     @csrf
                         <div class="form-group">
                             <label for="ProdutoID">Produto ID</label>
-                            <input type="text" class="form-control" id="idProduto" name="idProduto" required>
+                            <input type="text" class="form-control" id="idProdutos" name="idProdutos" required>
                         </div>
                         <div class="form-group">
                             <label for="MateriaPrimaID">Materia Prima ID</label>
-                            <input type="text" class="form-control" id="idMateriaPrima" name="idMateriaPrima" required>
+                            <input type="text" class="form-control" id="idMateriasPrimas" name="idMateriasPrimas" required>
                         </div>
                         <div class="form-group">
                             <label for="quantidade">Quantidade</label>
@@ -119,6 +119,79 @@
         </div>
     </div>
 
+    
+     <!-- Modal Confirmar Exclusão -->
+     <div class="modal fade" id="modalConfirmarExclusao" tabindex="-1" role="dialog"
+        aria-labelledby="modalConfirmarExclusaoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalConfirmarExclusaoLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza de que deseja excluir este pedido?</p>
+                    <input type="hidden" id="excluirIdReceitaItem">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmarExclusao">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    // Função para abrir o modal de confirmação de exclusão
+    function abrirModalExclusao(idReceitaItem) {
+        document.getElementById('excluirIdReceitaItem').value = idReceitaItem;
+        $('#modalConfirmarExclusao').modal('show');
+    }
+
+    // Função para confirmar a exclusão
+    document.getElementById('confirmarExclusao').addEventListener('click', function () {
+        var idReceitaItem = document.getElementById('excluirIdReceitaItem').value;
+
+        // Enviar requisição AJAX para excluir o cliente
+        fetch(`/adm/receitasItens/remover/${idReceitaItem}`, {
+            method: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao excluir o produto');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Fechar o modal de confirmação de exclusão
+                $('#modalConfirmarExclusao').modal('hide');
+
+                // Remover a linha do cliente na tabela, se existir
+                let receitaItemRow = document.getElementById(`receitaItemRow${idReceitaItem}`);
+                if (receitaItemRow) {
+                    receitaItemRow.remove();
+                } else {
+                    console.warn(`Elemento agendamentoRow${idReceitaItem} não encontrado para remoção.`);
+                }
+
+                // Exibir mensagem de sucesso
+                location.replace(location.href)
+
+            })
+            .catch(error => {
+                console.log(error)
+                console.error('Erro ao excluir o produto:', error);
+                alert('Erro ao excluir o produto');
+            });
+    });
+
+
+</script>
+
     <!-- Modal Editar ReceitaItem -->
     <div class="modal fade" id="modalEditarReceitaItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -131,25 +204,27 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="formEditarReceitaItem">
+                    <form id="formEditarReceitaItem" method="POST" action="/adm/receitasItens/guardar" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" id="editarIdReceitaItem" name="idReceitaItem" value="">
                         <div class="form-group">
                             <label for="editProdutoID">Produto ID</label>
-                            <input type="text" class="form-control" id="editProdutoID" name="ProdutoID" required>
+                            <input type="text" class="form-control" id="editarIdProdutos" name="idProdutos" required readonly>
                         </div>
                         <div class="form-group">
                             <label for="editMateriaPrimaID">Materia Prima ID</label>
-                            <input type="text" class="form-control" id="editMateriaPrimaID" name="MateriaPrimaID"
-                                required>
+                            <input type="text" class="form-control" id="editarIdMateriasPrimas" name="idMateriasPrimas"
+                                required readonly>
                         </div>
                         <div class="form-group">
                             <label for="editQuantidade">Quantidade</label>
-                            <input type="number" class="form-control" id="editQuantidade" name="quantidade" required>
+                            <input type="number" class="form-control" id="editarQuantidade" name="quantidade" required>
                         </div>
 
 
                         <div class="form-group">
-                            <label for="editValor">Valor</label>
-                            <input type="text" class="form-control" id="editValor" name="valor" required>
+                            <label for="editValor">Subtotal</label>
+                            <input type="text" class="form-control" id="editarSubtotal" name="subtotal" required>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Salvar</button>
@@ -161,6 +236,34 @@
 
 </div>
 </div>
+
+<script>
+    function carregarDadosParaEdicao(idReceitaItem) {
+        fetch(`/adm/receitasItens/show/${idReceitaItem}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar os detalhes do agendamento');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('API Response:', data);
+                // Preencher os campos do formulário com os dados do cliente
+                document.getElementById('editarIdReceitaItem').value = data.id;
+                document.getElementById('editarIdProdutos').value = data.idProdutos;
+                document.getElementById('editarIdMateriasPrimas').value = data.idMateriasPrimas;
+                document.getElementById('editarQuantidade').value = data.quantidade;
+                document.getElementById('editarSubtotal').value = data.subtotal;
+                
+
+                // Abrir o modal de edição do cliente
+                $('#modalEditarReceitaItem').modal('show');
+            })
+            .catch(error => {
+                console.error('Erro ao carregar os detalhes do produto:', error);
+            });
+    }
+</script>
 <footer class="sticky-footer bg-white">
     <div class="container my-auto">
 
@@ -191,13 +294,13 @@
                 <div class="form-group row">
                     <label for="detalhesProdutoID" class="col-sm-3 col-form-label">Produto ID:</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="detalhesProdutoID" readonly>
+                        <input type="text" class="form-control" id="detalhesIdProduto" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="detalhesMateriaPrimaID" class="col-sm-3 col-form-label">Materia Prima ID:</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="detalhesMateriaPrimaID" readonly>
+                        <input type="text" class="form-control" id="detalhesIdMateriaPrima" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -207,9 +310,9 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="detalhesValor" class="col-sm-3 col-form-label">Valor:</label>
+                    <label for="detalhesValor" class="col-sm-3 col-form-label">Subtotal:</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="detalhesValor" readonly>
+                        <input type="text" class="form-control" id="detalhesSubtotal" readonly>
                     </div>
                 </div>
 
@@ -217,7 +320,45 @@
         </div>
     </div>
 </div>
+<script>
+    function mostrarDetalhes(idReceitaItem) {
+        fetch(`/adm/receitasItens/show/${idReceitaItem}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar os detalhes do agendamento');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Preencha os campos do modal com os dados do cliente, ou valores padrão
+                document.getElementById('detalhesIdProduto').value = data.idProdutos || '';
+                document.getElementById('detalhesIdMateriaPrima').value = data.idMateriasPrimas || '';
+                document.getElementById('detalhesQuantidade').value = data.quantidade || '';
+                document.getElementById('detalhesSubtotal').value = data.subtotal || '';
+                
+                
 
+
+                // Abra o modal de detalhes do pedido
+                $('#modalDetalhesReceitaItem').modal('show');
+            })
+            .catch(error => {
+                console.error('Erro ao carregar os detalhes do produto:', error);
+            });
+    }
+
+    function formatarData(data) {
+        // Formato de exibição de data desejado
+        let options = {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        };
+        return new Date(data).toLocaleDateString('pt-BR', options);
+    }
+
+
+</script>
 
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

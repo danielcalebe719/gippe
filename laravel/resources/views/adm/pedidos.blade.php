@@ -348,6 +348,12 @@
                                 required readonly>
                         </div>
                         <div class="form-group">
+
+                            <label for="editClienteID">Serviço ID</label>
+                            <input type="text" class="form-control" id="EditarIdServico" name="idServico" value=""
+                                required readonly>
+                        </div>
+                        <div class="form-group">
                             <label for="editobservacao">Observação</label>
                             <input type="text" class="form-control" id="EditarObservacao" name="observacao" value=""
                                 required>
@@ -414,10 +420,16 @@
             <div id="pedidoContent" class="modal-body">
 
                 <div class="form-group row">
-                    <input type="hidden" name="acao" id="acao" value="editar">
                     <label for="DetalhesIdPedido" class="col-sm-3 col-form-label">Pedido ID:</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="DetalhesIdPedidos" name="idPedidos" value=""
+                            readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="DetalhesIdPedido" class="col-sm-3 col-form-label">Serviço ID:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="DetalhesIdServicos" name="idServicos" value=""
                             readonly>
                     </div>
                 </div>
@@ -480,6 +492,7 @@
             .then(data => {
                 // Preencha os campos do modal com os dados do cliente, ou valores padrão
                 document.getElementById('DetalhesIdPedidos').value = data.id || '';
+                document.getElementById('DetalhesIdServicos').value = data.idServicos || '';
                 document.getElementById('DetalhesObservacao').value = data.observacao || '';
                 document.getElementById('DetalhesCodigo').value = data.codigo || '';
                 document.getElementById('DetalhesDataPedido').value = data.dataPedido ? formatarData(data.dataPedido) : '';
@@ -522,6 +535,7 @@
                 // Preencher os campos do formulário com os dados do cliente
                 document.getElementById('EditarIdPedido').value = data.id;
                 document.getElementById('EditarIdCliente').value = data.idClientes;
+                document.getElementById('EditarIdServico').value = data.idServicos;
                 document.getElementById('EditarObservacao').value = data.observacao;
                 document.getElementById('EditarDataEntrega').value = data.dataEntrega;
                 document.getElementById('EditarStatus').value = data.status;

@@ -97,7 +97,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="NomeServiço">Nome Serviço</label>
-                            <select name="nome" id="nome">
+                            <select name="nome" class="form-control" id="nome">
                                 <option value="festa pequena">Festa Pequena</option>
                                 <option value="festa media">Festa Média</option>
                                 <option value="festa grande">Festa Grande</option>
@@ -147,7 +147,7 @@
                         <input type="hidden" id="editarIdServico" name="idServico" value="">
                         <div class="form-group">
                             <label for="editarnome">Nome Serviço</label>
-                            <select name="nome" id="editarNome">
+                            <select name="nome" class="form-control" id="editarNome">
                             <option value="festa pequena">Festa Pequena</option>
                                 <option value="festa media">Festa Média</option>
                                 <option value="festa grande">Festa Grande</option>
@@ -340,8 +340,8 @@
             .then(data => {
                 // Preencha os campos do modal com os dados do cliente, ou valores padrão
                 document.getElementById('detalhesNome').value = data.nome || '';
-                document.getElementById('detalhesDataCadastro').value = data.dataCadastro ? formatarData(data.dataCadastro) : '';
-                document.getElementById('detalhesDataAtualizacao').value = data.dataAtualizacao ? formatarData(data.dataAtualizacao) : '';
+                document.getElementById('detalhesDataCadastro').value = data.dataCadastro ;
+                document.getElementById('detalhesDataAtualizacao').value = data.dataAtualizacao ;
                 document.getElementById('detalhesImgCaminho').value = data.imgCaminho || '';
 
 
