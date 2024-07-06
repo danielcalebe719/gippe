@@ -17,7 +17,7 @@
                             <div class="card mb-4">
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">Matéria Primas</h6>
-                                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalAdicionarMatériaPrima">Adicionar Matéria Prima</button>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalAdicionarMateriaPrima">Adicionar Matéria Prima</button>
                                 </div>
                                 <div class="table-responsive p-3">
                                     <table class="table align-items-center table-flush table-hover" id="dataTableHover">
@@ -77,7 +77,7 @@
                     </div>
 
                     <!-- Modal Adicionar Matéria Prima -->
-                    <div class="modal fade" id="modalAdicionarMatériaPrima" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="modalAdicionarMateriaPrima" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -87,20 +87,22 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="formAdicionarMatériaPrima">
+                                    <form id="formAdicionarMatériaPrima" method="POST" action="/adm/MateriaPrimaEstoque/guardar"
+                        enctype="multipart/form-data">
+                        @csrf
                                         <div class="form-group">
                                             <label for="nome">Nome</label>
                                             <input type="text" class="form-control" id="nome" name="nome" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="FornecedorID">Fornecedor ID</label>
-                                            <input type="text" class="form-control" id="FornecedorID" name="FornecedorID" required>
+                                            <input type="text" class="form-control" id="idFornecedor" name="idFornecedor" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="Classificacao">Classificação</label>
-                                            <select name="Classificacao" id="Classificacao">
-                                              <option value="Perecivel"> Perecível</option>
-                                              <option value="NaoPerecivel"> Não Perecível</option>
+                                            <select name="classificacao" id="classificacao">
+                                              <option value="perecivel"> Perecível</option>
+                                              <option value="nao perecivel"> Não Perecível</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -120,7 +122,7 @@
                     </div>
 
                     <!-- Modal Editar Matéria Prima -->
-                    <div class="modal fade" id="modalEditarMatériaPrima" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="modalEditarMateriaPrima" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -130,30 +132,33 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="formEditarMatériaPrima">
+                                    <form id="formEditarMatériaPrima" method="POST" action="/adm/MateriaPrimaEstoque/guardar"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" id="editarIdMateriaPrima" name="idMateriaPrima" value="">
                                         <div class="form-group">
                                             <label for="editNome">Nome</label>
-                                            <input type="text" class="form-control" id="editNome" name="nome" required>
+                                            <input type="text" class="form-control" id="editarNome" name="nome" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="editFornecedor ID">Fornecedor ID</label>
-                                            <input type="text" class="form-control" id="editFornecedorID" name="FornecedorID" required>
+                                            <input type="text" class="form-control" id="editarIdFornecedor" name="idFornecedor" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="editClassificacao">Classificação</label>
-                                            <select name="Classificacao" id="editClassificacao">
-                                              <option value="Perecivel"> Perecível</option>
-                                              <option value="NaoPerecivel"> Não Perecível</option>
+                                            <label for="editarClassificacao">Classificação</label>
+                                            <select name="classificacao" id="editarClassificacao">
+                                              <option value="perecivel"> Perecível</option>
+                                              <option value="nao perecivel"> Não Perecível</option>
                                             </select>
                                         </div>
 
                                         <div class="form-group">
                                           <label for="editQuantidade">Quantidade</label>
-                                          <input type="number" class="form-control" id="editQuantidade" name="quantidade" required>
+                                          <input type="number" class="form-control" id="editarQuantidade" name="quantidade" required>
                                       </div>
                                         <div class="form-group">
                                             <label for="editPreçoUnitario">Preço Unitário</label>
-                                            <input type="text" class="form-control" id="editPrecoUnitario" name="precoUnitario" required>
+                                            <input type="text" class="form-control" id="editarPrecoUnitario" name="precoUnitario" required>
                                         </div>
                                         <button type="submit" class="btn btn-primary">Salvar</button>
                                     </form>
@@ -179,8 +184,31 @@
         </div>
     </div>
 
+    <!-- Modal Confirmar Exclusão -->
+    <div class="modal fade" id="modalConfirmarExclusao" tabindex="-1" role="dialog"
+        aria-labelledby="modalConfirmarExclusaoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalConfirmarExclusaoLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza de que deseja excluir este pedido?</p>
+                    <input type="hidden" id="excluirIdMateriaPrima">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmarExclusao">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Detalhes Matéria Prima -->
-<div class="modal fade" id="modalDetalhesMatériaPrima" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalDetalhesMateriaPrima" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
           <div class="modal-header">
@@ -223,16 +251,143 @@
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <script>
       
-    $(document).ready(function () {
-        // Abrir o modal de detalhes ao clicar no botão
-        $('#dataTableHover').on('click', '.btn-detalhes', function () {
-            $('#modalDetalhesMatériaPrima').modal('show');
-        });
-    });
+   
 
 
         $(document).ready(function () {
             $('#dataTableHover').DataTable(); // Initialize the DataTable
         });
     </script>
+
+<script>
+
+$(document).ready(function () {
+    // Abrir o modal de detalhes ao clicar no botão
+    $('#dataTableHover').on('click', '.btn-detalhes', function () {
+        $('#modalDetalhesMateriaPrima').modal('show');
+    });
+});
+
+
+$(document).ready(function () {
+    $('#dataTableHover').DataTable(); // Initialize the DataTable
+});
+</script>
+
+<script>
+// Função para abrir o modal de confirmação de exclusão
+function abrirModalExclusao(idMateriaPrima) {
+    document.getElementById('excluirIdMateriaPrima').value = idMateriaPrima;
+    $('#modalConfirmarExclusao').modal('show');
+}
+
+// Função para confirmar a exclusão
+document.getElementById('confirmarExclusao').addEventListener('click', function () {
+    var idMateriaPrima = document.getElementById('excluirIdMateriaPrima').value;
+
+    // Enviar requisição AJAX para excluir o cliente
+    fetch(`/adm/MateriaPrimaEstoque/remover/${idMateriaPrima}`, {
+        method: 'GET',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao excluir o produto');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Fechar o modal de confirmação de exclusão
+            $('#modalConfirmarExclusao').modal('hide');
+
+            // Remover a linha do cliente na tabela, se existir
+            let materiaPrimaRow = document.getElementById(`materiaPrimaRow${idMateriaPrima}`);
+            if (materiaPrimaRow) {
+                materiaPrimaRow.remove();
+            } else {
+                console.warn(`Elemento materiaPrimaRow${idMateriaPrima} não encontrado para remoção.`);
+            }
+
+            // Exibir mensagem de sucesso
+            location.replace(location.href)
+
+        })
+        .catch(error => {
+            console.log(error)
+            console.error('Erro ao excluir o produto:', error);
+            alert('Erro ao excluir o produto');
+        });
+});
+
+
+</script>
+<script>
+function mostrarDetalhes(idMateriaPrima) {
+    fetch(`/adm/MateriaPrimaEstoque/show/${idMateriaPrima}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao carregar os detalhes do produto');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Preencha os campos do modal com os dados do cliente, ou valores padrão
+            document.getElementById('detalhesNome').value = data.nome || '';
+            document.getElementById('detalhesDataCadastro').value = data.dataCadastro ? formatarData(data.dataCadastro) : '';
+            document.getElementById('detalhesDataAtualizacao').value = data.dataAtualizacao ? formatarData(data.dataAtualizacao) : '';
+            
+
+
+            // Abra o modal de detalhes do pedido
+            $('#modalDetalhesMateriaPrima').modal('show');
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os detalhes do produto:', error);
+        });
+}
+
+function formatarData(data) {
+    // Formato de exibição de data desejado
+    let options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    };
+    return new Date(data).toLocaleDateString('pt-BR', options);
+}
+
+
+</script>
+
+<script>
+function carregarDadosParaEdicao(idMateriaPrima) {
+    fetch(`/adm/MateriaPrimaEstoque/show/${idMateriaPrima}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao carregar os detalhes do produto');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('API Response:', data);
+            // Preencher os campos do formulário com os dados do cliente
+            document.getElementById('editarIdMateriaPrima').value = data.id;
+            document.getElementById('editarIdFornecedor').value = data.idFornecedor;
+            document.getElementById('editarNome').value = data.nome;
+            document.getElementById('editarClassificacao').value = data.classificacao;
+            document.getElementById('editarQuantidade').value = data.quantidade;
+            document.getElementById('editarPrecoUnitario').value = data.precoUnitario;
+            // document.getElementById('editarImgCaminho').value = data.imgCaminho;
+            
+
+            // Abrir o modal de edição do cliente
+            $('#modalEditarMateriaPrima').modal('show');
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os detalhes do produto:', error);
+        });
+}
+</script>
 @endsection

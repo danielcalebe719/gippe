@@ -64,7 +64,7 @@ class ProdutoController extends Controller
             $produto->precoUnitario = $request->input('precoUnitario');
             $produto->caminhoImagem = $request->input('caminhoImagem');
 
-            if(!$request->idPedido){
+            if(!$request->idProduto){
                 $produto->dataCadastro = now();
             }
     
@@ -115,9 +115,9 @@ class ProdutoController extends Controller
     {
         try {
 
-            $movimentacoesProdutos = MovimentacoesProdutos::where('idProdutos',$idProduto)->delete();
-            $pedidosProdutos = PedidosProdutos::where('idProdutos',$idProduto)->delete();
-            $receitasItem = ReceitasItem::where('idProdutos',$idProduto)->delete();
+            // $movimentacoesProdutos = MovimentacoesProdutos::where('idProdutos',$idProduto)->delete();
+            // $pedidosProdutos = PedidosProdutos::where('idProdutos',$idProduto)->delete();
+            // $receitasItem = ReceitasItem::where('idProdutos',$idProduto)->delete();
             $produto = Produtos::findOrFail($idProduto);
            
             

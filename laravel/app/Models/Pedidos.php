@@ -42,7 +42,7 @@ class Pedidos extends Model
 
     public function cliente()
     {
-        return $this->hasOne(Clientes::class,'id','id');
+        return $this->hasOne(Clientes::class,'id','idClientes');
     }
 
     public function feedback()

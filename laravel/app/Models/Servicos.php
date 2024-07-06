@@ -13,8 +13,8 @@ class Servicos extends Model
     protected $table = 'servicos'; // Nome da tabela no banco de dados
     protected $primaryKey = 'id'; // Nome da chave primária
     protected $fillable = [   
-        'nomeServico', 
-        'total_servicos', 
+        'nome', 
+        'totalServicos', 
         'dataCadastro',
         'dataAtualizacao', 
         'dataRemocao', 

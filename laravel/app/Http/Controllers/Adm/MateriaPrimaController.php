@@ -113,18 +113,17 @@ class MateriaPrimaController extends Controller
     {
         try {
 
-            $movimentacoesmateriasprimas = MovimentacoesMateriasPrimas::where('idMateriaPrima',$idMateriaPrima)->delete();
-            $receitasitem = ReceitasItem::where('idMateriaPrima',$idMateriaPrima)->delete();
-            $cliente = MateriasPrimasEstoque::findOrFail($idMateriaPrima);
+            
+            $materiaPrima = MateriasPrimasEstoque::findOrFail($idMateriaPrima);
            
             
             // Excluir a imagem associada, se existir
-            if ($cliente->imgCaminho) {
-                Storage::delete('public/GaleriaImagens/' . $cliente->imgCaminho);
+            if ($materiaPrima->imgCaminho) {
+                Storage::delete('public/GaleriaImagens/' . $materiaPrima->imgCaminho);
             }
 
 
-            $cliente->delete();
+            $materiaPrima->delete();
 
             return response()->json(['message' => 'Cliente excluído com sucesso']);
         } catch (\Exception $e) {

@@ -47,8 +47,8 @@ class FornecedorController extends Controller
             // Preenche os outros campos do fornecedor
             $fornecedor->nome = $request->input('nome');
             $fornecedor->telefone1 = $request->input('telefone1');
-            $fornecedor->telefone1 = $request->input('telefone2');
-            $fornecedor->telefone1 = $request->input('telefone3');
+            $fornecedor->telefone2 = $request->input('telefone2');
+            $fornecedor->telefone3 = $request->input('telefone3');
             $fornecedor->email = $request->input('email');
             $fornecedor->cep = $request->input('cep');
             $fornecedor->estado = $request->input('estado');
@@ -99,7 +99,7 @@ class FornecedorController extends Controller
     {
         try {
 
-            $materiasPrimasEstoque = MateriasPrimasEstoque::where('idFornecedor',$idFornecedor)->delete();
+            // $materiasPrimasEstoque = MateriasPrimasEstoque::where('idFornecedor',$idFornecedor)->delete();
             $fornecedor = Fornecedores::findOrFail($idFornecedor);
            
             

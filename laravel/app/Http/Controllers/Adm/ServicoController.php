@@ -27,7 +27,7 @@ class ServicoController extends Controller
 
     public function show($idServicos)
     {
-        $servico = Clientes::find($idServicos);
+        $servico = Servicos::find($idServicos);
         
         if ($servico) {
 
@@ -58,7 +58,7 @@ class ServicoController extends Controller
             $servico = $request->idServico ? Servicos::findOrFail($request->idServico) : new Servicos();
     
             // Preenche os outros campos do cliente
-            $servico->nomeServico = $request->input('nome');
+            $servico->nome = $request->input('nome');
             $servico->totalServicos = $request->input('totalServicos');
             $servico->imgCaminho = $request->input('imgCaminho');
             $servico->duracaoHoras = $request->input('duracaoHoras');
