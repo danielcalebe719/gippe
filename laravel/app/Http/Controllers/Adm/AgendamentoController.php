@@ -59,14 +59,15 @@ class AgendamentoController extends Controller
             $agendamento->dataFim = $request->input('dataFim');
             $agendamento->horaInicio = $request->input('horaInicio');
             $agendamento->horaFim = $request->input('horaFim');
-        
+            $agendamento->observacao = $request->input('observacao');
+            $agendamento->dataAtualizacao = now(); 
             if(!$request->idAgendamento){
                 $agendamento->dataCadastro = now();
             }
             
-    
+            
              
-    
+            
             // Salva o cliente
             $agendamento->save();
             

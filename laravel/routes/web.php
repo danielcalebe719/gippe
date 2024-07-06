@@ -9,6 +9,7 @@ use App\Http\Controllers\Adm\ProdutoController;
 use App\Http\Controllers\Adm\MateriaPrimaController;
 use App\Http\Controllers\Adm\ServicoController;
 use App\Http\Controllers\Adm\FornecedorController;
+use App\Http\Controllers\Adm\ReceitaItemController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -176,6 +177,12 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
         Route::get('/show/{idFornecedores}', [FornecedorController::class, 'show'])->name('fornecedores.show');
         Route::post('/guardar', [FornecedorController::class, 'guardar'])->name('fornecedores.guardar');
         Route::get('/remover/{idFornecedores}', [FornecedorController::class, 'remover'])->name('fornecedores.remover');
+    });
+    Route::prefix('receitasItens')->group(function () {
+        Route::get('/', [ReceitaItemController::class, 'index'])->name('receitasItens.index');
+        Route::get('/show/{idReceitasItens}', [ReceitaItemController::class, 'show'])->name('receitasItens.show');
+        Route::post('/guardar', [ReceitaItemController::class, 'guardar'])->name('receitasItens.guardar');
+        Route::get('/remover/{idReceitasItens}', [ReceitaItemController::class, 'remover'])->name('receitasItens.remover');
     });
 });
 Route::get('adm/logout', [LoginAdminController::class, 'deslogar'])->name('logout');
