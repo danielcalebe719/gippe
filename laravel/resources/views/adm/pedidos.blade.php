@@ -75,6 +75,12 @@
                                                 </button>
                                             </div>
 
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Pedido">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pedidoModal" data-id="{{ $pedido->id }}">
+                                                Ver Produtos
+                                            </button>
+                                            </div>
+
 
                                             <div class="btn-group" role="group" aria-label="Ações do Pedido">
                                                 <button class="btn btn-info btn-sm"
@@ -144,6 +150,14 @@
                                                 </button>
                                             </div>
 
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Pedido">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pedidoModal" data-id="{{ $pedido->id }}">
+                                                Ver Produtos
+                                            </button>
+                                            </div>
+
+                                            
+
 
                                             <div class="btn-group" role="group" aria-label="Ações do Pedido">
                                                 <button class="btn btn-info btn-sm"
@@ -159,6 +173,78 @@
 
                         </tbody>
                     </table>
+
+                    <!-- Modal -->
+    <div class="modal fade" id="pedidoModal" tabindex="-1" role="dialog" aria-labelledby="pedidoModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pedidoModalLabel">Produtos do Pedido</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table >
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Descrição</th>
+                                <th>Preço Unitário</th>
+                                <th>Quantidade</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pedidoProdutosBody">
+                            <!-- Conteúdo será preenchido via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+    $('#pedidoModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Botão que acionou o modal
+        var pedidoId = button.data('id'); // Extrair informação dos atributos data-*
+
+        var modal = $(this);
+        var modalTitle = modal.find('.modal-title');
+        var modalBody = modal.find('#pedidoProdutosBody');
+
+        // Limpar o conteúdo do modal
+        modalTitle.text('Produtos do Pedido #' + pedidoId);
+        modalBody.empty();
+
+        // Fazer a requisição AJAX para obter os produtos do pedido
+        $.ajax({
+            url: '/pedidos/' + pedidoId,
+            method: 'GET',
+            success: function (data) {
+                data.pedidos_produtos.forEach(function (pedidoProduto) {
+                    var produto = pedidoProduto.produto;
+                    var row = `
+                        <tr>
+                            <td>${produto.nome}</td>
+                            <td>${produto.descricao}</td>
+                            <td>${produto.precoUnitario}</td>
+                            <td>${pedidoProduto.quantidade}</td>
+                            <td>${pedidoProduto.subtotal}</td>
+                        </tr>
+                    `;
+                    modalBody.append(row);
+                });
+            }
+        });
+    });
+</script>
+
 
 
 

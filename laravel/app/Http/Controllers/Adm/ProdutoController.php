@@ -9,7 +9,7 @@ use App\Models\MovimentacoesProdutos;
 use App\Models\PedidosProdutos;
 use App\Models\ReceitasItem;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -39,18 +39,7 @@ class ProdutoController extends Controller
     
     public function guardar(Request $request)
     {
-        // Validação dos dados
-        /*$request->validate([
-            'nome' => 'nullable|string|max:255',
-            'cpf' => 'nullable|string|max:14|unique:clientes,cpf,' . $request->idCliente . ',idClientes',
-            'dataNascimento' => 'nullable|date',
-            'status' => 'nullable|string|in:ativo,inativo',
-            'email' => 'nullable|email|max:255|unique:clientes,email,' . $request->idCliente . ',idClientes',
-            'senha' => 'nullable|string|min:6',
-            'telefone' => 'nullable|string|max:20',
-            // 'imgCaminho' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);*/   
-    
+
         try {
             // Busca ou cria um novo cliente
             $produto = $request->idProduto ? Produtos::findOrFail($request->idProduto) : new Produtos();
@@ -69,18 +58,22 @@ class ProdutoController extends Controller
             }
     
             
+   // Trata o upload da imagem, se fornecida
+if ($request->hasFile('caminhoImagem')) {
+    // Deleta a imagem antiga, se existir
+    if ($produto->caminhoImagem && Storage::exists('public/GaleriaImagens/' . $produto->caminhoImagem)) {
+        Storage::delete('public/GaleriaImagens/' . $produto->caminhoImagem);
+    }
     
-            // Trata o upload da imagem, se fornecida
-            if ($request->hasFile('caminhoImagem')) {
-                // Deleta a imagem antiga, se existir
-                if ($produto->caminhoImagem && Storage::exists('public/GaleriaImagens/' . $produto->caminhoImagem)) {
-                    Storage::delete('public/GaleriaImagens/' . $produto->caminhoImagem);
-                }
-                
-                // Armazena a nova imagem
-                $path = $request->file('caminhoImagem')->store('public/GaleriaImagens');
-                $produto->caminhoImagem = basename($path);
-            }
+    // Define o nome do arquivo usando o nome do produto e mantém a extensão original
+    $nomeArquivo = $produto->nome . '_' . time() . '.' . $request->file('caminhoImagem')->getClientOriginalExtension();
+    $path = $request->file('caminhoImagem')->storeAs('public/GaleriaImagens', $nomeArquivo);
+    
+    // Atualiza o campo caminhoImagem com o nome do arquivo
+    $produto->caminhoImagem = $nomeArquivo;
+}
+
+
     
             // Atualiza o timestamp de atualização
             $produto->dataAtualizacao = now();  
