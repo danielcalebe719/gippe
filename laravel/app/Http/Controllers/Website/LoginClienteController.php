@@ -14,25 +14,25 @@ class LoginClienteController extends Controller
     {
         return view('website.login');
     }
-
     public function logar(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
+    
         if (Auth::guard('cliente')->attempt(['email' => $request->email, 'password' => $request->password])) {
             $cliente = Auth::guard('cliente')->user();
             $cliente->last_login = now();
             $cliente->save();
-
-            return redirect()->intended('/website');
+    
+            return response()->json(['success' => true, 'redirect' => '/website']);
         }
-
-        Session::flash('mensagem', 'Nome de usuário ou senha inválidos!');
-        return redirect()->back()->withInput();
+    
+        return response()->json(['success' => false, 'message' => 'Nome de usuário ou senha inválidos!']);
     }
+    
+    
 
     public function deslogar(Request $request)
     {
