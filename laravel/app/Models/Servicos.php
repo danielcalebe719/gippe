@@ -18,7 +18,7 @@ class Servicos extends Model
         'dataCadastro',
         'dataAtualizacao', 
         'dataRemocao', 
-        'imgCaminho', 
+        'caminhoImagem', 
         'duracaoHoras',
         'quantidadePessoas'
         // Adicione outros campos aqui

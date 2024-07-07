@@ -44,7 +44,7 @@
                                     <td>{{ $galeriaImagem->nomeImagem }}</td>
                                     <td>{{ $galeriaImagem->tamanhoImagem }}</td>
 
-                                    <td>{{ $galeriaImagem->imagemCaminho }}</td>
+                                    <td>{{ $galeriaImagem->caminhoImagem }}</td>
 
 
                                     <td>
@@ -120,8 +120,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="imgCaminho">Imagem Caminho</label>
-                            <input type="file" class="form-control-file" id="imagemCaminho" name="imagemCaminho">
+                            <label for="imgPerfil">Imagem de Perfil</label>
+                            <input type="file" class="form-control-file" id="caminhoImagem" name="caminhoImagem">
                         </div>
                         <button type="submit" class="btn btn-primary">Salvar</button>
                     </form>
@@ -153,7 +153,7 @@
 
 
                         <div class="form-group">
-                            <label for="EditTipoEvento">Status</label>
+                            <label for="EditTipoEvento">Tipo de evento</label>
                             <select class="form-control" id="editarEvento" name="evento" required>
                                 <option value="casamento">Casamento</option>
                                 <option value="15anos">15 anos</option>
@@ -169,7 +169,7 @@
 
                         <div class="form-group">
                             <label for="EditimgCaminho">Imagem Caminho</label>
-                            <input type="file" class="form-control-file" id="EditarImagemCaminho" name="imagemCaminho">
+                            <input type="file" class="form-control-file" id="EditarCaminhoImagem" name="caminhoImagem">
                         </div>
 
                         <button class="btn btn-info btn-sm" data-toggle="modal"
@@ -292,7 +292,7 @@
                 document.getElementById('editarNomeImagem').value = data.nomeImagem;
                 document.getElementById('editarEvento').value = data.evento;
                 document.getElementById('editarDescricao').value = data.descricao;
-                document.getElementById('editarImagemCaminho').value = data.imagemCaminho;
+                document.getElementById('editarCaminhoImagem').value = data.caminhoImagem;
 
 
 
@@ -340,7 +340,7 @@
                 <div class="form-group row">
                     <label for="detalhesImagemCaminho" class="col-sm-3 col-form-label">Imagem:</label>
                     <div class="col-sm-9">
-                        <img src="" alt="Imagem" id="detalhesImagemCaminho" style="max-width: 100%;">
+                        <img src="" alt="Imagem" id="detalhesCaminhoImagem" style="max-width: 100%;">
                     </div>
                 </div>
             </div>
@@ -361,7 +361,9 @@
                 document.getElementById('detalhesNomeImagem').value = data.nomeImagem || '';
                 document.getElementById('detalhesEvento').value = data.evento || '';
                 document.getElementById('detalhesDescricao').value = data.descricao || '';
-                document.getElementById('detalhesImagemCaminho').value = data.imagemCaminho || '';
+                 // Atualize o src da imagem
+            const imgPath = data.caminhoImagem ? `/storage/GaleriaImagens/eventoImagens/${data.caminhoImagem}` : 'default-image-path.jpg';
+            document.getElementById('detalhesCaminhoImagem').src = imgPath;
 
 
 

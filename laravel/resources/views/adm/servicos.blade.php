@@ -120,7 +120,7 @@
                         </div>
                         <div class="form-group">
                             <label for="imgPerfil">Imagem de Perfil</label>
-                            <input type="file" class="form-control-file" id="imgCaminho" name="imgCaminho">
+                            <input type="file" class="form-control-file" id="caminhoImagem" name="caminhoImagem">
                         </div>
                         <button type="submit" class="btn btn-primary">Salvar</button>
                     </form>
@@ -173,7 +173,7 @@
                         </div>
                         <div class="form-group">
                             <label for="editImgPerfil">Imagem de Perfil</label>
-                            <input type="file" class="form-control-file" id="editarImgCaminho" name="imgCaminho">
+                            <input type="file" class="form-control-file" id="editarCaminhoImagem" name="caminhoImagem">
                         </div>
                         <button type="submit" class="btn btn-primary">Salvar</button>
                     </form>
@@ -233,7 +233,7 @@
                 <div class="form-group row">
                     <label for="detalhesImgPerfil" class="col-sm-3 col-form-label">Imagem de Perfil:</label>
                     <div class="col-sm-9">
-                        <img src="" alt="Imagem de Perfil" id="detalhesImgCaminho" style="max-width: 100%;">
+                        <img src="" alt="Imagem de Perfil" id="detalhesCaminhoImagem" style="max-width: 100%;">
                     </div>
                 </div>
             </div>
@@ -342,7 +342,9 @@
                 document.getElementById('detalhesNome').value = data.nome || '';
                 document.getElementById('detalhesDataCadastro').value = data.dataCadastro ;
                 document.getElementById('detalhesDataAtualizacao').value = data.dataAtualizacao ;
-                document.getElementById('detalhesImgCaminho').value = data.imgCaminho || '';
+                 // Atualize o src da imagem
+            const imgPath = data.caminhoImagem ? `/storage/GaleriaImagens/servicos/${data.caminhoImagem}` : 'default-image-path.jpg';
+            document.getElementById('detalhesCaminhoImagem').src = imgPath;
 
 
                 // Abra o modal de detalhes do pedido
@@ -383,7 +385,7 @@
                 document.getElementById('editarTotalServicos').value = data.totalServicos;
                 document.getElementById('editarDuracaoHoras').value = data.duracaoHoras;
                 document.getElementById('editarQuantidadePessoas').value = data.quantidadePessoas;              
-                document.getElementById('editarImgCaminho').value = data.imgCaminho;
+                document.getElementById('editarCaminhoImagem').value = data.caminhoImagem;
 
                 // Abrir o modal de edição do cliente
                 $('#modalEditarServico').modal('show');

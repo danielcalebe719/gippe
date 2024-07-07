@@ -120,7 +120,7 @@ if ($request->hasFile('caminhoImagem')) {
             
             // Excluir a imagem associada, se existir
             if ($produto->caminhoImagem) {
-                Storage::delete('public/GaleriaImagens/' . $produto->caminhoImagem);
+                Storage::delete('public/GaleriaImagens/produtos' . $produto->caminhoImagem);
             }
 
 

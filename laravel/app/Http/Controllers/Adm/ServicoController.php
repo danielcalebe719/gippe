@@ -60,10 +60,10 @@ class ServicoController extends Controller
             // Preenche os outros campos do cliente
             $servico->nome = $request->input('nome');
             $servico->totalServicos = $request->input('totalServicos');
-            $servico->imgCaminho = $request->input('imgCaminho');
+            $servico->caminhoImagem = $request->input('caminhoImagem');
             $servico->duracaoHoras = $request->input('duracaoHoras');
             $servico->quantidadePessoas = $request->input('quantidadePessoas');
-            $servico->imgCaminho = $request->input('imgCaminho');
+            
 
             if(!$request->idServico){
                 $servico->dataCadastro = now();
@@ -71,17 +71,24 @@ class ServicoController extends Controller
     
             
     
-            // Trata o upload da imagem, se fornecida
-            if ($request->hasFile('imgCaminho')) {
-                // Deleta a imagem antiga, se existir
-                if ($servico->imgCaminho && Storage::exists('public/GaleriaImagens/' . $servico->imgCaminho)) {
-                    Storage::delete('public/GaleriaImagens/' . $servico->imgCaminho);
-                }
-                
-                // Armazena a nova imagem
-                $path = $request->file('imgCaminho')->store('public/GaleriaImagens');
-                $servico->imgCaminho = basename($path);
-            }
+           // Trata o upload da imagem, se fornecida
+if ($request->hasFile('caminhoImagem')) {
+    
+    
+    // Define o nome do arquivo usando o nome do produto e mantém a extensão original
+    $nomeArquivo = $servico->nome . '.' . $request->file('caminhoImagem')->getClientOriginalExtension();
+    $path = $request->file('caminhoImagem')->storeAs('public/GaleriaImagens/servicos', $nomeArquivo);
+    // Deleta a imagem antiga, se existir
+    if ($servico->caminhoImagem && Storage::exists('public/GaleriaImagens/servicos/' . $servico->caminhoImagem)) {
+        Storage::delete('public/GaleriaImagens/servicos/' . $servico->caminhoImagem);
+    }
+    // Atualiza o campo caminhoImagem com o nome do novo arquivo
+    $servico->caminhoImagem = $nomeArquivo;
+} else {
+    // Mantém o nome do arquivo existente se não houver uma nova imagem enviada
+    $nomeArquivo = $servico->caminhoImagem;
+}
+
     
             // Atualiza o timestamp de atualização
             $servico->dataAtualizacao = now();  
@@ -122,7 +129,7 @@ class ServicoController extends Controller
             
             // Excluir a imagem associada, se existir
             if ($servico->imgCaminho) {
-                Storage::delete('public/GaleriaImagens/' . $servico->imgCaminho);
+                Storage::delete('public/GaleriaImagens/servicos' . $servico->imgCaminho);
             }
 
 
