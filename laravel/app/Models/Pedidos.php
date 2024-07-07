@@ -45,6 +45,10 @@ class Pedidos extends Model
         return $this->hasOne(Clientes::class,'id','idClientes');
     }
 
+    public function servico(){
+        return $this->hasOne(Servicos::class,'id','idServicos');
+    }
+
     public function feedback()
     {
         return $this->hasOne(Feedbacks::class,'idPedidos','id');

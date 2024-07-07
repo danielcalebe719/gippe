@@ -40,6 +40,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
+                                <th>Serviço</th>
                                 <th>STATUS</th>
                                 <th>Total Pedido</th>
                                 <th>Data Entrega</th>
@@ -52,6 +53,7 @@
                                 <tr>
                                     <td>{{ $pedido->id }}</td>
                                     <td>{{ $pedido->cliente->nome }}</td>
+                                    <td>{{  $pedido->servico->nome ?? 'Nome do serviço não disponível' }}</td>
                                     <td>{{ $pedido->status }}</td>
                                     <td>{{ $pedido->totalPedido }}</td>
                                     <td>{{ $pedido->dataEntrega }}</td>
@@ -107,6 +109,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
+                                <th>Servico</th>
                                 <th>STATUS</th>
                                 <th>Total Pedido</th>
                                 <th>Data Entrega</th>
@@ -119,6 +122,7 @@
                                 <tr>
                                     <td>{{ $pedido->id }}</td>
                                     <td>{{ $pedido->cliente->nome }}</td>
+                                    <td>{{ $pedido->servico->nome ?? 'Nome do serviço não disponível' }}</td>
                                     <td>{{ $pedido->status }}</td>
                                     <td>{{ $pedido->totalPedido }}</td>
                                     <td>{{ $pedido->dataEntrega }}</td>

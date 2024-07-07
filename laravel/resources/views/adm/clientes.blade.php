@@ -30,7 +30,7 @@
                                 <th>Data de nascimento</th>
                                 <th>STATUS</th>
                                 <th>Email</th>
-
+                               
                                 <th>Ações</th>
                             </tr>
                         </thead>
@@ -43,6 +43,7 @@
                                     <td>{{ $cliente->dataNascimento }}</td>
                                     <td>{{ $cliente->status }}</td>
                                     <td>{{ $cliente->email }}</td>
+                                    
 
 
                                     <td>
@@ -62,6 +63,12 @@
                                                 </button>
                                             </div>
 
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">
+                                                <!-- Botão para abrir o modal -->
+                                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEnderecos{{ $cliente->id }}">
+                                                    Ver Endereços
+                                                </button>
+                                            </div>
 
                                             <div class="btn-group" role="group" aria-label="Ações do Cliente">
                                                 <button class="btn btn-info btn-sm"
@@ -75,10 +82,33 @@
 
 
                                 </tr>
-                            @endforeach
-                            <!-- Fim do exemplo -->
-                        </tbody>
-                    </table>
+                            <!-- Modal -->
+                <div class="modal fade" id="modalEnderecos{{ $cliente->id }}" tabindex="-1" role="dialog" aria-labelledby="modalEnderecosLabel{{ $cliente->id }}" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalEnderecosLabel{{ $cliente->id }}">Endereços de {{ $cliente->nome }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <ul>
+                                    @foreach($cliente->enderecos as $endereco)
+                                        <li>{{ $endereco->rua }}, {{ $endereco->numero }} - {{ $endereco->bairro }}, {{ $endereco->cidade }} - {{ $endereco->cep }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </tbody>
+    </table>
+
                 </div>
             </div>
         </div>

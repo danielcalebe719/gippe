@@ -27,4 +27,9 @@ class EnderecosClientes extends Model
     {
         return $this->belongsTo(Clientes::class, 'idClientes');
     }
+
+    // public function cliente()
+    // {
+    //     return $this->hasOne(Clientes::class,'id','idClientes');
+    // }
 }
