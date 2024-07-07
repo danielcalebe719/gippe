@@ -29,19 +29,25 @@ class Produtos extends Model
     ];
     public $timestamps = false;
 
+    // Relacionamento com PedidosProdutos
+    public function pedidosProdutos()
+    {
+        return $this->hasMany(PedidosProdutos::class, 'idProdutos', 'id');
+    }
+
     public function movimentacoesProdutos(){
         return $this->hasOne(MovimentacoesProdutos::class,'idProdutos','id');
     }
 
-    public function pedidosProdutos()
-    {
-        return $this->hasMany(PedidosProdutos::class,'idProdutos','id');
-    }
+    // public function pedidosProdutos()
+    // {
+    //     return $this->hasMany(PedidosProdutos::class,'idProdutos','id');
+    // }
 
-    public function receitasItem()
-    {
-        return $this->hasMany(ReceitasItem::class,'idProdutos','id');
-    }
+    // public function receitasItem()
+    // {
+    //     return $this->hasMany(ReceitasItem::class,'idProdutos','id');
+    // }
 
 }
 

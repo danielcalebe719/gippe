@@ -130,6 +130,7 @@
                             <input type="text" class="form-control" id="precoUnitario" name="precoUnitario"
                                 required>
                         </div>
+                       
                         <div class="form-group">
                             <label for="imgPerfil">Imagem de Perfil</label>
                             <input type="file" class="form-control-file" id="caminhoImagem" name="caminhoImagem">
@@ -214,6 +215,7 @@
                             <input type="number" class="form-control" id="editarPrecoUnitario" name="precoUnitario"
                                 required>
                         </div>
+                        
                         <div class="form-group">
                             <label for="editImgPerfil">Imagem de Perfil</label>
                             <input type="file" class="form-control-file" id="editarCaminhoImagem" name="caminhoImagem">
@@ -280,12 +282,15 @@
                         <input type="text" class="form-control" id="detalhesDataAtualizacao" readonly>
                     </div>
                 </div>
-            
-                <div class="form-group row">
+                <div class="form-group">
+                            <label for="detalhesImgPerfil">Imagem do Produto:</label>
+                            <img id="detalhesImgPerfil" class="form-control-file" src="" alt="Imagem do Produto" style="max-width: 100%; height: auto;">
+                        </div>
+                <!-- <div class="form-group row">
                     <label for="detalhesImgPerfil" class="col-sm-3 col-form-label">Imagem de Perfil:</label>
                     <div class="col-sm-9">
                         <img src="" alt="Imagem de Perfil" id="detalhesImgPerfil" style="max-width: 100%;">
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -372,7 +377,9 @@
                 document.getElementById('detalhesDescrição').value = data.descricao || '';
                 document.getElementById('detalhesDataCadastro').value = data.dataCadastro ? formatarData(data.dataCadastro) : '';
                 document.getElementById('detalhesDataAtualizacao').value = data.dataAtualizacao ? formatarData(data.dataAtualizacao) : '';
-                document.getElementById('detalhesImgPerfil').value = data.caminhoImagem || '';
+                // Atualize o src da imagem
+            const imgPath = data.caminhoImagem ? `/storage/GaleriaImagens/${data.caminhoImagem}` : 'default-image-path.jpg';
+            document.getElementById('detalhesImgPerfil').src = imgPath;
 
 
                 // Abra o modal de detalhes do pedido

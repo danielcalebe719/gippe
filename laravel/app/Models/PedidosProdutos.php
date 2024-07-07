@@ -21,7 +21,17 @@ class PedidosProdutos extends Model
     public $timestamps = false;
 
 
-    
+    // Relacionamento com Produtos
+    public function produto()
+    {
+        return $this->belongsTo(Produtos::class, 'idProdutos', 'id');
+    }
+
+    // Relacionamento com Pedidos
+    public function pedido()
+    {
+        return $this->belongsTo(Pedidos::class, 'idPedidos', 'id');
+    }
 
 
 }

@@ -38,8 +38,9 @@ class Clientes extends Authenticatable
         return $this->hasMany(Pedidos::class,'idClientes','id');
     }
 
-    public function enderecosClientes(){
-        return $this->hasMany(EnderecosClientes::class,'idClientes','id');
+    public function enderecos()
+    {
+        return $this->hasMany(EnderecosClientes::class, 'idClientes');
     }
 
     public function esqueciSenha(){

@@ -19,7 +19,7 @@ class ClienteController extends Controller
 {
     public function index()
     {
-        $clientes = Clientes::all();
+        $clientes = Clientes::with('enderecos')->get();
         return view('adm.clientes', compact('clientes'));
     }
 

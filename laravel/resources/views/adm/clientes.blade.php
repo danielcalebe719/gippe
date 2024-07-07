@@ -30,7 +30,7 @@
                                 <th>Data de nascimento</th>
                                 <th>STATUS</th>
                                 <th>Email</th>
-
+                               
                                 <th>Ações</th>
                             </tr>
                         </thead>
@@ -43,6 +43,7 @@
                                     <td>{{ $cliente->dataNascimento }}</td>
                                     <td>{{ $cliente->status }}</td>
                                     <td>{{ $cliente->email }}</td>
+                                    
 
 
                                     <td>
@@ -62,6 +63,12 @@
                                                 </button>
                                             </div>
 
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">
+                                                <!-- Botão para abrir o modal -->
+                                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEnderecos{{ $cliente->id }}">
+                                                    Ver Endereços
+                                                </button>
+                                            </div>
 
                                             <div class="btn-group" role="group" aria-label="Ações do Cliente">
                                                 <button class="btn btn-info btn-sm"
@@ -75,10 +82,33 @@
 
 
                                 </tr>
-                            @endforeach
-                            <!-- Fim do exemplo -->
-                        </tbody>
-                    </table>
+                            <!-- Modal -->
+                <div class="modal fade" id="modalEnderecos{{ $cliente->id }}" tabindex="-1" role="dialog" aria-labelledby="modalEnderecosLabel{{ $cliente->id }}" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalEnderecosLabel{{ $cliente->id }}">Endereços de {{ $cliente->nome }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <ul>
+                                    @foreach($cliente->enderecos as $endereco)
+                                        <li>{{ $endereco->rua }}, {{ $endereco->numero }} - {{ $endereco->bairro }}, {{ $endereco->cidade }} - {{ $endereco->cep }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </tbody>
+    </table>
+
                 </div>
             </div>
         </div>
@@ -97,6 +127,65 @@
                 </div>
                 <div class="modal-body">
                     <form id="formAdicionarCliente" action="/adm/clientes/guardar" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <input type="text" class="form-control" id="nome" name="nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cpf">CPF</label>
+                            <input type="text" class="form-control" id="cpf" name="cpf" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dataNascimento">Data de Nascimento</label>
+                            <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select class="form-control" id="status" name="status" required>
+                                <option value="ativo">Ativo</option>
+                                <option value="inativo">Inativo</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefone">Telefone</label>
+                            <input type="telefone" class="form-control" id="telefone" name="telefone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="senha">Senha</label>
+                            <input type="password" class="form-control" id="senha" name="senha" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="imgPerfil">Imagem de Perfil</label>
+                            <input type="file" class="form-control-file" id="imgPerfil" name="imgPerfil">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Adicionar Endereço -->
+    <div class="modal fade" id="modalAdicionarEndereco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Adicionar Endereço</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formAdicionarEndereco" action="/adm/clientes/guardar" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
