@@ -73,22 +73,33 @@
           @guest('cliente')
           <!-- Mostrar se não estiver logado -->
           <li>
-            <a href="{{ url('website/cadastro') }}"><button id="register-btn" class="nav-link btn"><i class="bi bi-person-plus"></i> Cadastrar-se</button></a>
+            <a href="{{ url('website/cadastro') }}">
+              <button id="register-btn" class="nav-link btn"><i class="bi bi-person-plus"></i> Cadastrar-se</button>
+            </a>
           </li>
           <li>
-            <a href="{{ url('website/login') }}"><button id="login-btn" class="nav-link btn">Fazer Login</button></a>
+            <a href="{{ url('website/login') }}">
+              <button id="login-btn" class="nav-link btn">Fazer Login</button>
+            </a>
           </li>
           @else
           <!-- Mostrar se estiver logado -->
           <li id="notification-btn">
             <a href="#" data-bs-toggle="modal" data-bs-target="#notificationsModal">
-              <button class="nav-link btn"><i class="bi bi-bell"></i> Notificações</button>
+              <button class="nav-link btn"><i class="bi bi-bell"></i> Notificações
+                @if($quantidadeNotificacoes > 0)
+                <span class="badge bg-danger">{{ $quantidadeNotificacoes }}</span>
+                @endif
+              </button>
             </a>
           </li>
           <li id="profile-btn">
-            <a href="{{ url('website/perfil') }}"><button class="nav-link btn"><i class="bi bi-person"></i> Perfil</button></a>
+            <a href="{{ url('website/perfil') }}">
+              <button class="nav-link btn"><i class="bi bi-person"></i> Perfil</button>
+            </a>
           </li>
           @endguest
+
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
@@ -96,9 +107,6 @@
   </header>
 
 
-
-
-  <!-- Notifications Modal -->
   <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
@@ -111,28 +119,41 @@
           @foreach ($notificacoes as $notificacao)
           <div class="card mb-3">
             <div class="card-body">
-              <h5 class="card-title">{{ $notificacao->mensagem }}
-                <!-- @foreach ($notificacoes_clientes as $notificacao_cliente)
-                        @if ($notificacao_cliente->idPedidos)
-                            <a href="">{{ $notificacao_cliente->idPedidos }}</a>
-                        @endif
-                    @endforeach-->
-              </h5>
+              <h5 class="card-title">{{ $notificacao->mensagem }}</h5>
               <p class="card-text">{{ $notificacao->dataEnvio }}</p>
+              <!-- Verificar se a notificação não foi lida -->
+              @if ($notificacao->lido == false)
+              <form class="form-marcar-lida" data-notificacao-id="{{ $notificacao->id }}" action="{{ route('notificacoes.marcarLida', $notificacao->id) }}" method="POST">
+                @csrf
+                <button type="button" class="btn btn-primary btn-marcar-lida">
+                  <i class="bi bi-check"></i> Marcar como lida
+                </button>
+              </form>
+              @else
+              <button type="button" class="btn btn-secondary disabled">
+                <i class="bi bi-check"></i> Lida
+              </button>
+              @endif
             </div>
           </div>
           @endforeach
           @else
           <p>Nenhuma notificação encontrada.</p>
           @endif
-
-
-
-
         </div>
       </div>
     </div>
   </div>
+
+
+
+
+
+
+
+
+
+
   <!--@if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
@@ -354,48 +375,48 @@
                   </div>
     </section><!-- End Testimonials Section -->
 
-<!-- Conteúdo da página -->
-<section id="portfolio" class="portfolio">
-    <div class="container" data-aos="fade-up">
+    <!-- Conteúdo da página -->
+    <section id="portfolio" class="portfolio">
+      <div class="container" data-aos="fade-up">
         <div class="section-title">
-            <h2 style="color: #FA856E;">Galeria de Fotos</h2>
-            <h3>Dê uma olhada na nossa <span style="color: #FA856E;">Galeria de Fotos</span></h3>
-            <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
+          <h2 style="color: #FA856E;">Galeria de Fotos</h2>
+          <h3>Dê uma olhada na nossa <span style="color: #FA856E;">Galeria de Fotos</span></h3>
+          <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
         </div>
 
         <div class="row" data-aos="fade-up" data-aos-delay="100">
-            <div class="col-lg-12 d-flex justify-content-center">
-                <ul id="portfolio-flters">
-                    <li data-filter="*" class="filter-active">Todas</li>
-                    <li data-filter=".filter-casamento">Casamentos</li>
-                    <li data-filter=".filter-15anos">15 Anos</li>
-                    <li data-filter=".filter-formatura">Formaturas</li>
-                    <li data-filter=".filter-infantil">Infantil</li>
-                    <li data-filter=".filter-outros">Outros</li>
-                </ul>
-            </div>
+          <div class="col-lg-12 d-flex justify-content-center">
+            <ul id="portfolio-flters">
+              <li data-filter="*" class="filter-active">Todas</li>
+              <li data-filter=".filter-casamento">Casamentos</li>
+              <li data-filter=".filter-15anos">15 Anos</li>
+              <li data-filter=".filter-formatura">Formaturas</li>
+              <li data-filter=".filter-infantil">Infantil</li>
+              <li data-filter=".filter-outros">Outros</li>
+            </ul>
+          </div>
         </div>
 
         <div id="portfolio-container" class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-            @foreach($imagens->take(15) as $imagem)
-            <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item filter-{{ strtolower($imagem->evento) }}">
-                <div class="portfolio-item-overlay">
-                    <a href="{{ asset('storage/GaleriaImagens/' . $imagem->imagemCaminho) }}" data-lightbox="portfolio" title="{{ $imagem->evento }}">
-                        <img class="img-fluid gallery-image" src="{{ asset('storage/GaleriaImagens/' . $imagem->imagemCaminho) }}">
-                    </a>
-                    <div class="portfolio-info-details">
-                        <h4>{{ $imagem->evento }}</h4>
-                        <p>{{ $imagem->descricao }}</p>
-                    </div>
-                </div>
+          @foreach($imagens->take(15) as $imagem)
+          <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item filter-{{ strtolower($imagem->evento) }}"  style="padding: 0%; margin:1%;">
+            <div class="portfolio-item-overlay" >
+              <a href="{{ asset('storage/GaleriaImagens/' . $imagem->imagemCaminho) }}" data-lightbox="portfolio" title="{{ $imagem->evento }}">
+                <img class="img-fluid gallery-image" src="{{ asset('storage/GaleriaImagens/' . $imagem->imagemCaminho) }}">
+              </a>
+              <div class="portfolio-info-details">
+                <h4>{{ $imagem->evento }}</h4>
+                <p>{{ $imagem->descricao }}</p>
+              </div>
             </div>
-            @endforeach
+          </div>
+          @endforeach
         </div>
-    </div>
-</section>
+      </div>
+    </section>
 
-<!-- Lightbox JS -->
-<script src="{{ asset('js/lightbox.js') }}"></script>
+    <!-- Lightbox JS -->
+    <script src="{{ asset('js/lightbox.js') }}"></script>
 
 
 
@@ -631,6 +652,33 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 
 
+  <script>
+    $(document).ready(function() {
+      $('.btn-marcar-lida').click(function() {
+        var form = $(this).closest('form');
+        var formData = form.serialize();
+
+        $.ajax({
+          url: form.attr('action'),
+          type: 'POST',
+          data: formData,
+          success: function(response) {
+            console.log(response); // Verifica a resposta do servidor
+            // Atualizar a interface conforme necessário
+            console.log('Notificação marcada como lida com sucesso.');
+            form.find('.btn-marcar-lida').attr('disabled', true).addClass('disabled'); // Desativa o botão depois de marcado como lida
+            form.find('.btn-marcar-lida').removeClass('btn-primary').addClass('btn-secondary disabled').html('<i class="bi bi-check"></i> Lida'); // Altera o botão para refletir que a notificação está lida
+          },
+          error: function(xhr) {
+            console.error('Erro ao marcar a notificação como lida.');
+            console.log(xhr.responseText); // Exibe o erro no console para depuração
+          }
+        });
+
+        return false; // Evita o comportamento padrão de envio do formulário
+      });
+    });
+  </script>
 </body>
 
 </html>

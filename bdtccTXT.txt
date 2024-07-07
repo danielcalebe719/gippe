@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 06/07/2024 às 21:08
+-- Tempo de geração: 07-Jul-2024 às 18:51
 -- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.2.20
+-- versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `admins`
+-- Estrutura da tabela `admins`
 --
 
 CREATE TABLE `admins` (
@@ -30,27 +30,1283 @@ CREATE TABLE `admins` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `admins`
+-- Extraindo dados da tabela `admins`
 --
 
 INSERT INTO `admins` (`id`, `email`, `password`, `nome`, `last_login`) VALUES
 (1, 'super@super', NULL, 'super@super', NULL),
 (2, 'user@user', NULL, 'user@user', NULL),
-(3, 'se@se', '$2y$12$7V/iAPBTrEhDkjPrXY0mbOK5Iti7rEPiwLiXmPvbmpGv6ihP5MXqa', 'ss', '2024-07-06'),
+(3, 'se@se', '$2y$12$7V/iAPBTrEhDkjPrXY0mbOK5Iti7rEPiwLiXmPvbmpGv6ihP5MXqa', 'ss', '2024-07-07'),
 (4, 'pablo@gmail.com', '$2y$12$cTBt4CwLcJw9UhJT4EqV5.AfrGRPGkS.fur1Dmv2YoYp73gLmKWQi', 'pablo', '2024-07-04');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `admpermissoes`
+--
+
+CREATE TABLE `admpermissoes` (
+  `id` int(2) NOT NULL,
+  `cargo` varchar(255) DEFAULT NULL,
+  `permissoes` text DEFAULT NULL,
+  `dataCadastro` date DEFAULT NULL,
+  `dataAtualizacao` date DEFAULT NULL,
+  `dataRemocao` date DEFAULT NULL,
+  `idFuncionario` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `agendamentos`
+--
+
+CREATE TABLE `agendamentos` (
+  `id` int(10) NOT NULL,
+  `idPedidos` int(10) DEFAULT NULL,
+  `dataInicio` date DEFAULT NULL,
+  `dataFim` date DEFAULT NULL,
+  `horaInicio` time DEFAULT NULL,
+  `horaFim` time DEFAULT NULL,
+  `observacao` varchar(255) DEFAULT NULL,
+  `dataCadastro` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `agendamentos`
+--
+
+INSERT INTO `agendamentos` (`id`, `idPedidos`, `dataInicio`, `dataFim`, `horaInicio`, `horaFim`, `observacao`, `dataCadastro`) VALUES
+(1, 57, '2024-07-05', '2024-07-05', '21:55:00', NULL, 'Oioioi', NULL),
+(2, 57, '2024-07-05', '2024-07-05', '21:55:00', '02:06:00', 'Oioioi', NULL),
+(3, 57, '2024-07-05', '2024-07-05', '21:55:00', '02:06:00', 'Oioioi', NULL),
+(4, 57, '2024-07-05', '2024-07-05', '21:55:00', '02:06:00', 'Oioioi', NULL),
+(5, 57, '2024-07-05', '2024-07-05', '21:55:00', '02:06:00', 'Oioioi', NULL),
+(6, 58, '2024-07-02', '2024-07-02', '15:00:00', '12:00:00', 'sss', NULL),
+(7, 61, '2024-07-06', '2024-07-06', '17:00:00', '23:00:00', 'Ola tudo bem? gostaria de atarasda', NULL),
+(8, 62, '2024-07-05', '2024-07-06', '22:50:00', '11:22:00', 'Poise', NULL),
+(9, 63, '2024-07-03', '2024-07-04', '22:22:00', '11:22:00', 'sadadsa', NULL),
+(10, 64, '2024-07-02', '2024-07-03', '18:34:00', '18:35:00', 'Osdadaossdsadd', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `clientes`
+--
+
+CREATE TABLE `clientes` (
+  `id` int(10) NOT NULL,
+  `nome` varchar(255) DEFAULT NULL,
+  `cpf` varchar(11) DEFAULT NULL,
+  `dataNascimento` date DEFAULT NULL,
+  `status` enum('ativo','inativo') DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `password` text DEFAULT NULL,
+  `dataCadastro` date DEFAULT current_timestamp(),
+  `dataAtualizacao` date DEFAULT current_timestamp(),
+  `dataRemocao` date DEFAULT NULL,
+  `imgCaminho` varchar(200) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `telefone` varchar(15) DEFAULT NULL,
+  `last_login` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `clientes`
+--
+
+INSERT INTO `clientes` (`id`, `nome`, `cpf`, `dataNascimento`, `status`, `email`, `password`, `dataCadastro`, `dataAtualizacao`, `dataRemocao`, `imgCaminho`, `created_at`, `updated_at`, `telefone`, `last_login`) VALUES
+(1, 'danada', '15332185600', NULL, 'inativo', 'wqeqe@gmail', '$2y$12$SyPZDZqrXf35DgI2TkbKZOmk/JZUbeu2b5XVEQmu2w13T7zXwG1B6', '2024-07-03', '2024-07-03', NULL, '1720239782_coxinha.jpg', '2024-07-04 18:25:59', '2024-07-02 18:26:03', '319954523212', NULL),
+(27, 'Daniel Calebeddd', '2147483647', '2007-09-30', NULL, 'caloko1029@gmail.com', '$2y$10$59LZOS7n2YzjmkfSje7UWOx/4z/qAoM0fPGBhaUv4x18WqQDxQfj2', '2024-06-19', '2024-06-19', NULL, 'Screenshot_5-removebg-preview.png', NULL, NULL, '', NULL),
+(30, 'Daniel', '2147483647', '0000-00-00', NULL, 'ui', '$2y$10$vemWIh70..Vw5ygVBJp4U.NdDz3yAtj6NB52EjN0p5U8z4npDE8MS', '2024-06-20', '2024-06-20', NULL, 'user_ummd3POvEDfFyeFvVdOMG3OOrwE2_targets_target_qGJRWYc.png', NULL, NULL, '', NULL),
+(31, 'Kauã Wander', '11115230505', '1890-01-01', NULL, 'hitler_1945@gmail.com', '$2y$10$3KUcfRA1J3rVj6UgIvDCleK59INbIi5PYwUtNHEWeV6zVq7pAoIqm', '2024-06-20', '2024-06-20', NULL, 'Screenshot_5-removebg-preview.png', NULL, NULL, '', NULL),
+(41, 'House', '12345678922', '2004-03-02', 'ativo', 'house@ss', NULL, '2024-07-02', '2024-07-02', NULL, 'aqui.png', NULL, NULL, '9922001192', NULL),
+(42, 'kays', '12345678988', NULL, 'ativo', 'kays@kays', '$2y$12$TcVVVXvqA48rRM1gIcPWzO/3CMCzCG5Be.lRJ/wFUMUJ27EaoK9gi', '2024-07-02', '2024-07-02', NULL, 'ltIv6H7IkaQLwBmOA7ZXBoQNnFvr9Bsl4yIeMCh7.jpg', NULL, NULL, '8877665532', NULL),
+(45, 's', '22211122211', '2222-02-11', 'ativo', 'dsadsada@ss', '$2y$12$YKkCd9fP/Gn8Zoacqa9SE.uqRd6baNvxs8FMieQuMVswVMomAok02', '2024-07-03', '2024-07-03', NULL, NULL, NULL, NULL, '3123213', NULL),
+(46, 's', '12312312322', '0222-02-22', 'ativo', 'sdasdsad@s', '$2y$12$CRD1huq9cRfNf4dhPhUhNerz7XmtBPrCWK7GSKZ5UXdD6Zt.qMgOW', '2024-07-03', '2024-07-03', NULL, NULL, NULL, NULL, '12123213', NULL),
+(47, 'roberto', NULL, NULL, NULL, 'roberto@roa', '$2y$12$KNbyLU6ePjvMl6qAB1bMNeIBkJdxp83c9o1lYJaSTF8uTHZESLL2C', '2024-07-04', '2024-07-04', NULL, NULL, NULL, NULL, NULL, '2024-07-04'),
+(48, NULL, NULL, NULL, NULL, 'dani@dani', '$2y$12$u.apiJMBpj1h2Fsu7anhIu1/tcNH2izBZ9YZRBF.6egFIrpZeghvq', '2024-07-04', '2024-07-04', NULL, NULL, NULL, NULL, NULL, '2024-07-04'),
+(51, 'raiz@raiz', '12345612355', '2005-05-05', 'ativo', 'raiz@raiz', '$2y$12$Ty4XHkOZ/4bFD2.ENlGrneWOn7Id9LJRpZg6X5CZRWvd2sLagZ0Y.', '2024-07-04', '2024-07-04', NULL, NULL, NULL, NULL, '555225522552', '2024-07-04'),
+(52, 'pedrina', '22211122211', '2255-05-12', 'ativo', 'pedro@pedro', '$2y$12$d.ZUn2TncWatlx/p/.7Dbetkfu3OZT5JL.JlWmNhCHahXucPBHT7q', '2024-07-04', '2024-07-04', NULL, NULL, NULL, NULL, '55885455455', '2024-07-06'),
+(53, 'umdia', '11111111111', '4599-05-31', 'ativo', 'umdia@umdia', '$2y$12$v3Ibd1EcBpe7cR8/CWliduq6YA5gJa8b3K4oEKQ6PaZ1p6xYMc5oS', '2024-07-04', '2024-07-04', NULL, NULL, NULL, NULL, '3195455656', '2024-07-04'),
+(54, 'Pedro', '15332185600', NULL, NULL, NULL, NULL, '2024-07-05', '2024-07-05', NULL, NULL, NULL, NULL, NULL, NULL),
+(55, NULL, NULL, NULL, NULL, 'rod@rod', '$2y$12$AAzv56xwBfU9KmpGCrReJ.nfA.KmKUe8SarmU9oNE9WOzOdVrKlPi', '2024-07-05', '2024-07-05', NULL, NULL, NULL, NULL, NULL, '2024-07-05'),
+(56, NULL, NULL, NULL, NULL, 'dani@dani', '$2y$12$juOQZTkiBEb.c34fCjDn8uXgc3fMEzVcz79syaB.RPReu05tzOu46', '2024-07-05', '2024-07-05', NULL, NULL, NULL, NULL, NULL, NULL),
+(57, 'daniel', '15332185611', '2007-09-30', NULL, 'peeta@peeta', 'id', '2024-07-05', '2024-07-05', NULL, '1720240964_scrum-foundation-professional-certification-sfpc.png', NULL, NULL, '31995453589', '2024-07-06'),
+(58, 'ssa', '22131231321', '2001-01-01', NULL, 'hebert@s', '$2y$12$Ud1gAM8dFclZZRq1O/.gSu3E6IhpQTYxS0H64jfWsCQiTVO40eXK.', '2024-07-06', '2024-07-06', NULL, '1720298884_46502141_2554621897885736_7212542157880557568_n.jpg', NULL, NULL, '3182392822', '2024-07-07'),
+(59, NULL, NULL, NULL, NULL, 'cal@cal', '$2y$12$/5aj4BPwNYc4wwVQ7/4gQejk3oTsIEpwQDW/Ldk0xebc6fNnIa5he', '2024-07-06', '2024-07-06', NULL, NULL, NULL, NULL, NULL, '2024-07-06');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `enderecos_clientes`
+--
+
+CREATE TABLE `enderecos_clientes` (
+  `id` int(10) NOT NULL,
+  `tipo` enum('residencial','comercial') DEFAULT NULL,
+  `cep` int(8) DEFAULT NULL,
+  `cidade` varchar(255) DEFAULT NULL,
+  `bairro` varchar(255) DEFAULT NULL,
+  `rua` varchar(255) DEFAULT NULL,
+  `numero` int(10) DEFAULT NULL,
+  `complemento` varchar(255) DEFAULT NULL,
+  `idClientes` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `enderecos_clientes`
+--
+
+INSERT INTO `enderecos_clientes` (`id`, `tipo`, `cep`, `cidade`, `bairro`, `rua`, `numero`, `complemento`, `idClientes`) VALUES
+(1, 'residencial', 1, '1', '1', '1', 1, '1', 31),
+(4, 'comercial', 3122321, 'sdada', 'dasd', 'adasd', 952, 'dsdas', 57),
+(5, 'residencial', 31655470, 'Belo Horizonte', 'Mantiqueira', 'Rua Edith Gomes Martins', 11, '22', 58);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `esqueci_senha`
+--
+
+CREATE TABLE `esqueci_senha` (
+  `id` int(10) NOT NULL,
+  `idClientes` int(10) DEFAULT NULL,
+  `token` int(10) DEFAULT NULL,
+  `dataEmissao` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `feedbacks`
+--
+
+CREATE TABLE `feedbacks` (
+  `id` int(10) NOT NULL,
+  `mensagem` varchar(255) DEFAULT NULL,
+  `avaliacao` enum('1','2','3','4','5') DEFAULT NULL,
+  `dataMensagem` date DEFAULT NULL,
+  `idPedidos` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `formas_pagamento`
+--
+
+CREATE TABLE `formas_pagamento` (
+  `id` int(10) NOT NULL,
+  `nome` varchar(255) DEFAULT NULL,
+  `classe` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `fornecedores`
+--
+
+CREATE TABLE `fornecedores` (
+  `id` int(10) NOT NULL,
+  `nome` varchar(255) DEFAULT NULL,
+  `telefone1` varchar(11) DEFAULT NULL,
+  `telefone2` varchar(11) DEFAULT NULL,
+  `telefone3` varchar(11) DEFAULT NULL,
+  `email` varchar(200) DEFAULT NULL,
+  `cep` int(8) DEFAULT NULL,
+  `estado` varchar(50) DEFAULT NULL,
+  `cidade` varchar(255) DEFAULT NULL,
+  `rua` varchar(255) DEFAULT NULL,
+  `numero` int(10) DEFAULT NULL,
+  `complemento` varchar(255) DEFAULT NULL,
+  `status` enum('ativo','inativo') DEFAULT NULL,
+  `dataCadastro` date DEFAULT NULL,
+  `dataAtualizacao` date DEFAULT NULL,
+  `dataRemocao` date DEFAULT NULL,
+  `cnpj` int(14) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `fornecedores`
+--
+
+INSERT INTO `fornecedores` (`id`, `nome`, `telefone1`, `telefone2`, `telefone3`, `email`, `cep`, `estado`, `cidade`, `rua`, `numero`, `complemento`, `status`, `dataCadastro`, `dataAtualizacao`, `dataRemocao`, `cnpj`) VALUES
+(1, 'Coca Cola', '995453589', '3216573521', '352615316', 'cocaINA@gmail.com', 3162312, 'MG', 'Nova Lima', 'dsaohdos', 22, 'sjaidj', 'ativo', '2024-07-05', '2024-07-05', NULL, 263163521);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `galeria_imagens`
+--
+
+CREATE TABLE `galeria_imagens` (
+  `id` int(10) NOT NULL,
+  `evento` enum('outros','casamento','15anos','formatura','infantil') DEFAULT 'outros',
+  `descricao` varchar(255) NOT NULL,
+  `nomeImagem` varchar(25) NOT NULL,
+  `tamanhoImagem` varchar(25) NOT NULL,
+  `tipoImagem` varchar(25) NOT NULL,
+  `imagemCaminho` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Extraindo dados da tabela `galeria_imagens`
+--
+
+INSERT INTO `galeria_imagens` (`id`, `evento`, `descricao`, `nomeImagem`, `tamanhoImagem`, `tipoImagem`, `imagemCaminho`) VALUES
+(23, '', 'outros', '1', '73076', 'image/png', 'azevedo.webp'),
+(24, 'casamento', 'casamento', 'PrcgZGx.jpg', '3486448', '', 'scrum-foundation-professional-certification-sfpc.png'),
+(25, 'casamento', 'top', 'ss.webp', '', '', 'ss.webp'),
+(26, 'casamento', 'top', 'ss.webp', '', '', 'ss.webp'),
+(27, 'casamento', 'top', 'ss.webp', '', '', 'ss.webp'),
+(28, 'casamento', 'top', 'ss.webp', '', '', 'ss.webp'),
+(29, 'casamento', 'top', 'ss.webp', '', '', 'ss.webp'),
+(30, 'casamento', 'top', 'ss.webp', '', '', 'ss.webp'),
+(31, 'casamento', 'top', 'ss.webp', '', '', 'ss.webp'),
+(32, 'casamento', 'top', 'ss.webp', '', '', 'ss.webp'),
+(33, 'casamento', 'top', 'ss.webp', '', '', 'ss.webp'),
+(34, 'casamento', 'top', 'ss.webp', '', '', 'ss.webp'),
+(35, '15anos', '15 anos de Rafaela ', '15.webp', '1', '', '15.webp'),
+(36, '15anos', '15 anos de Rafaela ', '15.webp', '1', '', '15.webp'),
+(37, '15anos', '15 anos de Rafaela ', '15.webp', '1', '', '15.webp'),
+(38, '15anos', '15 anos de Rafaela ', '15.webp', '1', '', '15.webp'),
+(39, '15anos', '15 anos de Rafaela ', '15.webp', '1', '', '15.webp'),
+(40, '15anos', '15 anos de Rafaela ', '15.webp', '1', '', '15.webp'),
+(41, '15anos', '15 anos de Rafaela ', '15.webp', '1', '', '15.webp'),
+(42, '15anos', '15 anos de Rafaela ', '15.webp', '1', '', '15.webp'),
+(43, '15anos', '15 anos de Rafaela ', '15.webp', '1', '', '15.webp'),
+(44, '15anos', '15 anos de Rafaela ', '15.webp', '1', '', '15.webp'),
+(45, '15anos', '15 anos de Rafaela ', '15.webp', '1', '', '15.webp'),
+(46, '15anos', '15 anos de Rafaela ', '15.webp', '1', '', '15.webp'),
+(47, '15anos', '15 anos de Rafaela ', '15.webp', '1', '', '15.webp'),
+(48, '15anos', '15 anos de Rafaela ', '15.webp', '1', '', '15.webp');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `gastos`
+--
+
+CREATE TABLE `gastos` (
+  `id` int(10) NOT NULL,
+  `motivo` varchar(255) DEFAULT NULL,
+  `valor` decimal(10,2) DEFAULT NULL,
+  `dataCadastro` date DEFAULT NULL,
+  `dataAtualizacao` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `materias_primas_estoque`
+--
+
+CREATE TABLE `materias_primas_estoque` (
+  `id` int(10) NOT NULL,
+  `nome` varchar(255) DEFAULT NULL,
+  `classificacao` enum('perecivel','nao perecivel') DEFAULT NULL,
+  `quantidade` int(10) DEFAULT NULL,
+  `precoUnitario` decimal(10,2) DEFAULT NULL,
+  `dataCadastro` date DEFAULT NULL,
+  `dataAtualizacao` date DEFAULT NULL,
+  `dataRemocao` date DEFAULT NULL,
+  `imgCaminho` varchar(200) DEFAULT NULL,
+  `idFornecedor` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `mensagens`
+--
+
+CREATE TABLE `mensagens` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `assunto` varchar(100) NOT NULL,
+  `mensagem` text NOT NULL,
+  `dataEnvio` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `mensagens`
+--
+
+INSERT INTO `mensagens` (`id`, `nome`, `email`, `assunto`, `mensagem`, `dataEnvio`) VALUES
+(1, '', '', '', 'dasdafdsafsd', '2024-05-25 19:32:18'),
+(2, 'daniel', 'caloko1029@gmail.com', 'assuunto', 'DSDSADSDADSADSAFGIYFGIA', '2024-05-25 19:35:18'),
+(3, 'daniel', 'caloko1029@gmail.com', 'assuunto', 'DSDSADSDADSADSAFGIYFGIA', '2024-05-25 19:36:56'),
+(4, 'daniel', 'caloko1029@gmail.com', 'assuunto', 'DSDSADSDADSADSAFGIYFGIA', '2024-05-25 19:36:57'),
+(5, 'daniel', 'caloko1029@gmail.com', 'assuunto', 'DSDSADSDADSADSAFGIYFGIA', '2024-05-25 19:36:57'),
+(6, 'daniel', 'caloko1029@gmail.com', 'assuunto', 'DSDSADSDADSADSAFGIYFGIA', '2024-05-25 19:36:57'),
+(7, 'adsdas', 'caloko1029@gmail.coma', 'aa', 'aa', '2024-05-25 19:42:58'),
+(8, 'Daniel Calebe Alves Ferreira', 'caloko1029@gmail.com', 'vduvida', 'duvida viado', '2024-05-26 15:11:28'),
+(9, 'daniel', 'caloko1029@gmail.com', 'dsahjdsadugasd', 'djgasjldgaiuhdAOH', '2024-05-29 15:06:56'),
+(10, 'Daniel Calebe', 'caloko1026@gmail.com', 'dsadsad', 'sadsadsabbbbbbbbbbbbbbbbbbbbbbbbbbbbbb', '2024-06-08 21:36:11'),
+(11, 'Daniel Calebe', 'caloko1026@gmail.com', 'dsadsad', 'sadsadsabbbbbbbbbbbbbbbbbbbbbbbbbbbbbb', '2024-06-08 21:39:25'),
+(12, 'Daniel Calebe', 'caloko1026@gmail.com', 'dsadsad', 'sadsadsabbbbbbbbbbbbbbbbbbbbbbbbbbbbbb', '2024-06-08 21:39:25'),
+(13, 'Gapd method', 'caloko1026@gmail.com', 'astutto', 'Astutto', '2024-06-08 22:54:57'),
+(14, 'a', 'a@sa', 'a', 'a', '2024-06-09 15:00:33'),
+(15, 'a', 'a@aa', 'a', 'a', '2024-06-09 15:04:09'),
+(16, 'a', 'a@as', 'a', 'a', '2024-06-09 15:05:13'),
+(17, 'a', 'a@as', 'a', 'a', '2024-06-09 15:06:34'),
+(18, 'MIQUEIAS ALVES GOMES FERREIRA', 'd@dasd', 'dasda', 'asdsaa', '2024-06-09 15:08:21'),
+(19, 's', 'dsa@d', 'sadsa', 'dsa', '2024-06-09 15:10:16'),
+(20, 's', 'dsa@d', 'sadsa', 'dsa', '2024-06-09 15:11:00'),
+(21, 'Daniel Calebe', 'caloko1026@gmail.com', 'astutto', 'adsad', '2024-06-09 15:12:01'),
+(22, 'dsadaa', 'dasdsa@dsad', 'dsadsa', 'dsa', '2024-06-09 15:14:04'),
+(23, 'dsadsa', 'sasd@sadda', 'dasdsasad', 'dasdad', '2024-06-09 15:14:28'),
+(24, 'dsdsa', 'sadsa@dsa', 'dsad', 'sadd', '2024-06-09 15:16:10'),
+(25, 'dsad', 'dsads@DSA', 'dsadsa', 'dasdsad', '2024-06-09 15:16:44'),
+(26, 'asd', 'dsad@dsa', 'adsad', 'dsa', '2024-06-09 15:16:56'),
+(27, 'dadsa', 'dsa@sdad', 'dasdsa', 'sada', '2024-06-09 15:17:44'),
+(28, 'asds', 'dsad@dsa', 'dsadsa', 'dasd', '2024-06-09 15:18:27'),
+(29, '32132', '1313@3', 'dsadda', 'dasd', '2024-06-09 15:19:58'),
+(30, 'MIQUEIAS ALVES GOMES FERREIRA', 'miqueiasferreira7931@gmail.com', 'Ldasdsan', 'ladsaodosad', '2024-06-09 15:20:44'),
+(31, 'dsadsad', 'sad@dasds', 'ddsadsa', 'dsad', '2024-06-09 15:23:46'),
+(32, 'dsadsad', 'sad@dasds', 'ddsadsa', 'dsad', '2024-06-09 15:23:48'),
+(33, 'dsadsad', 'sad@dasds', 'ddsadsa', 'dsad', '2024-06-09 15:23:49'),
+(34, 'dsadsad', 'sad@dasds', 'ddsadsa', 'dsad', '2024-06-09 15:23:49'),
+(35, 'Daniel Calebe', 'caloko1026@gmail.com', 's', 's', '2024-06-09 15:27:07'),
+(36, 'dsadsa', 'dsads@sad', 'addads', 'dsad', '2024-06-09 15:27:29'),
+(37, 'd', 'a@ddsds', '2', 'dsa', '2024-06-09 15:28:47'),
+(38, 'fafa', 'dasd@dsad', 'asdda', 'asdsau\\r\\n', '2024-06-19 16:34:35'),
+(39, 'kaio@kaio', 'kaio@kaio', 'kaio@kaio', 'v', '2024-07-06 03:14:03'),
+(40, 'kaio@kaio', 'kaio@kaio', 'kaio@kaio', 'kaio@kaio', '2024-07-06 03:15:14'),
+(41, 'kaio@kaio', 'kaio@kaio', 'kaio@kaio', 'kaio@kaio', '2024-07-06 03:16:15'),
+(42, 'sis', 'vsis2sis@sis', 'sis', 'sis', '2024-07-06 03:17:24'),
+(43, 's', 's@s', 's', 's', '2024-07-06 03:18:37'),
+(44, 's', 's@s', 's', 's', '2024-07-06 03:18:41'),
+(45, 'b', 'b@b', 'b', 'b', '2024-07-06 03:19:42'),
+(46, 'f', 'f@f', 'f', 'f', '2024-07-06 03:20:09'),
+(47, 'd', 'd@d', 'd', 'd', '2024-07-06 03:20:46'),
+(48, 'd', 'd@d', 'd', 'd', '2024-07-06 03:20:46'),
+(49, 's', 's@s', 's', 's@s', '2024-07-06 03:21:42'),
+(50, 's', 's@s', 's', 's', '2024-07-06 03:22:24'),
+(51, 'b', 'b@B', 'b', 'b@b', '2024-07-06 03:23:22'),
+(52, 'g@G', 'g@G', 'g@G', 'g@G', '2024-07-06 03:23:47'),
+(53, '2@2', '2@2', '2@2', '2@2', '2024-07-06 03:24:56'),
+(54, 'Basica.Q', 'Basica.Q@ss', 'Basica.Q', 'Basica.Q', '2024-07-07 13:49:08'),
+(55, 'Luis', 'luis@gmail.com', 'Quero saber como funciona o serviço para PCD', 'Olá.. meu filho tatrara', '2024-07-07 16:49:43');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Extraindo dados da tabela `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2014_10_12_000000_create_users_table', 1),
+(2, '2014_10_12_100000_create_password_reset_tokens_table', 1),
+(3, '2019_08_19_000000_create_failed_jobs_table', 1),
+(4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
+(5, '2024_07_01_185808_add_timestamps_to_clientes_table', 2),
+(6, '2024_07_02_162518_add_timestamps_to_clientes_table', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `movimentacoes_materias_primas`
+--
+
+CREATE TABLE `movimentacoes_materias_primas` (
+  `id` int(10) NOT NULL,
+  `idMateriaPrima` int(10) DEFAULT NULL,
+  `tipo` enum('entrada','saida','retorno') DEFAULT NULL,
+  `quantidade` int(10) DEFAULT NULL,
+  `dataCadastro` date DEFAULT NULL,
+  `dataAtualizacao` date DEFAULT NULL,
+  `dataRemocao` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `movimentacoes_produtos`
+--
+
+CREATE TABLE `movimentacoes_produtos` (
+  `id` int(10) NOT NULL,
+  `tipo` enum('entrada','saida','retorno') DEFAULT NULL,
+  `idProdutos` int(10) DEFAULT NULL,
+  `quantidade` int(10) DEFAULT NULL,
+  `dataCadastro` date DEFAULT NULL,
+  `dataAtualizacao` date DEFAULT NULL,
+  `dataRemocao` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `notificacoes`
+--
+
+CREATE TABLE `notificacoes` (
+  `id` int(10) NOT NULL,
+  `mensagem` varchar(500) DEFAULT NULL,
+  `dataEnvio` date DEFAULT NULL,
+  `titulo` varchar(255) NOT NULL,
+  `lido` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `notificacoes`
+--
+
+INSERT INTO `notificacoes` (`id`, `mensagem`, `dataEnvio`, `titulo`, `lido`) VALUES
+(1, 'Oi, o seu pedido deve ser pago até o dia...', '2024-06-08', 'PEDIDO', 1),
+(2, 'Oi, o seu pedido deve ser pago até o dia...dkjsdhsahdlsadhadsadsad', '2024-06-08', 'PEDIDO', 1),
+(3, 'Olá z, quero que vc isso isso e aquilo', '2024-06-09', 'QUERIDO Z', 0),
+(4, 'Olá z, quero que vc isso isso e aquilo', '2024-06-09', 'QUERIDO Z', 0),
+(5, 'o fafa é fota', '2024-06-10', 'fafa viado', 1),
+(6, 'o fafa é fota', '2024-06-10', 'fafa viado', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `notificacoes_clientes`
+--
+
+CREATE TABLE `notificacoes_clientes` (
+  `id` int(10) NOT NULL,
+  `idPedidos` int(10) DEFAULT NULL,
+  `idClientes` int(10) DEFAULT NULL,
+  `idNotificacoes` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `notificacoes_clientes`
+--
+
+INSERT INTO `notificacoes_clientes` (`id`, `idPedidos`, `idClientes`, `idNotificacoes`) VALUES
+(1, 3, 58, 1),
+(6, NULL, 58, 5),
+(7, NULL, 58, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `notificacoes_colaboradores`
+--
+
+CREATE TABLE `notificacoes_colaboradores` (
+  `id` int(11) NOT NULL,
+  `idPedidos` int(10) DEFAULT NULL,
+  `idFuncionario` int(10) DEFAULT NULL,
+  `idNotificacoes` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `password_reset_tokens`
+--
+
+CREATE TABLE `password_reset_tokens` (
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `pedidos`
+--
+
+CREATE TABLE `pedidos` (
+  `id` int(10) NOT NULL,
+  `idClientes` int(10) DEFAULT NULL,
+  `observacao` varchar(500) DEFAULT NULL,
+  `status` enum('nao_finalizado','pendente','aceito','recusado','cancelado') DEFAULT NULL,
+  `totalPedido` decimal(10,2) DEFAULT NULL,
+  `dataPedido` date DEFAULT NULL,
+  `dataEntrega` date DEFAULT NULL,
+  `idServicos` int(10) NOT NULL,
+  `codigo` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `pedidos`
+--
+
+INSERT INTO `pedidos` (`id`, `idClientes`, `observacao`, `status`, `totalPedido`, `dataPedido`, `dataEntrega`, `idServicos`, `codigo`) VALUES
+(3, 52, NULL, NULL, NULL, NULL, '2024-07-09', 36, ''),
+(4, 52, NULL, NULL, NULL, NULL, NULL, 37, ''),
+(5, 52, NULL, NULL, NULL, NULL, NULL, 38, ''),
+(6, 52, NULL, NULL, NULL, NULL, NULL, 39, ''),
+(7, 52, NULL, NULL, NULL, NULL, NULL, 40, ''),
+(8, 52, NULL, NULL, NULL, NULL, NULL, 41, ''),
+(9, 52, NULL, NULL, NULL, NULL, NULL, 2, ''),
+(10, 52, NULL, NULL, NULL, NULL, NULL, 2, ''),
+(11, 52, NULL, NULL, NULL, NULL, NULL, 2, ''),
+(12, 52, NULL, NULL, NULL, '2024-07-05', NULL, 2, ''),
+(13, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 2, ''),
+(14, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 42, ''),
+(15, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 2, ''),
+(16, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 2, ''),
+(17, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 2, ''),
+(18, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 2, ''),
+(19, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 2, ''),
+(20, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 2, ''),
+(21, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 1, ''),
+(22, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 1, ''),
+(23, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 1, ''),
+(24, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 2, ''),
+(25, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 1, ''),
+(26, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 4, 'PEJUJKJjhM'),
+(27, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 1, 'PEiGZ3qS86'),
+(28, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 44, 'PELlVS1573'),
+(29, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 4, 'PEJfLnZV47'),
+(30, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 2, 'PENb0T7b26'),
+(31, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 3, 'PEKuEcP013'),
+(32, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 4, 'PEydOHX618'),
+(33, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 4, 'PEtylGaS36'),
+(34, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 2, 'PEbmbSUO95'),
+(35, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 2, 'PEG33xcM19'),
+(36, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 1, 'PEIDEwms12'),
+(37, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 1, 'PE3NbUe110'),
+(38, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 2, 'PEtQzeXf98'),
+(39, 52, NULL, 'nao_finalizado', 60.00, '2024-07-05', NULL, 2, 'PEybUOhO49'),
+(45, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 2, 'PEAVYUTQ14'),
+(46, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 1, 'PEVgGnl275'),
+(47, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 2, 'PEak9dEe41'),
+(48, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 2, 'PEro3tC563'),
+(49, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 1, 'PEPjRlXt86'),
+(50, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 2, 'PETy4PDB50'),
+(51, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 1, 'PE4MayYk37'),
+(52, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 1, 'PE4Tcfm272'),
+(53, 52, NULL, 'nao_finalizado', 86.97, '2024-07-05', NULL, 1, 'PE16ZK9C11'),
+(54, 52, NULL, 'nao_finalizado', 1360.00, '2024-07-05', NULL, 2, 'PEpYdAW888'),
+(55, 52, NULL, 'nao_finalizado', 2340.00, '2024-07-05', NULL, 2, 'PEw0a79B12'),
+(56, 52, NULL, 'nao_finalizado', 1350.00, '2024-07-05', NULL, 2, 'PEqDIv3j33'),
+(57, 52, NULL, 'nao_finalizado', 1395.00, '2024-07-05', NULL, 2, 'PETCr5TW93'),
+(58, 52, NULL, 'nao_finalizado', 15045.00, '2024-07-05', NULL, 1, 'PEZ35CIo81'),
+(59, 52, NULL, 'nao_finalizado', NULL, '2024-07-05', NULL, 45, 'PEHjdIBE47'),
+(60, 52, NULL, 'nao_finalizado', 900.00, '2024-07-05', NULL, 47, 'PEDnPFrH27'),
+(61, 52, 'Ola tudo bem? gostaria de atarasda', 'nao_finalizado', 495.00, '2024-07-05', NULL, 48, 'PEQPv7iN68'),
+(62, 52, 'Poise', 'pendente', 1354.00, '2024-07-05', '2024-07-05', 2, 'PEPcfEth80'),
+(63, 58, 'sadadsa', 'pendente', 1361.97, '2024-07-06', '2024-07-03', 2, 'PEoQt0aS46'),
+(64, 58, 'Osdadaossdsadd', 'pendente', 795.00, '2024-07-06', '2024-07-02', 49, 'PERCSrli99'),
+(65, 58, NULL, 'nao_finalizado', 2205.00, '2024-07-06', NULL, 2, 'PEezebcK48'),
+(66, 58, NULL, 'nao_finalizado', 1350.00, '2024-07-07', NULL, 2, 'PEwRwnls78'),
+(67, 58, NULL, 'nao_finalizado', 1350.00, '2024-07-07', NULL, 2, 'PEXfGjJp37'),
+(68, 58, NULL, 'nao_finalizado', 1350.00, '2024-07-07', NULL, 2, 'PE8bJsOn54'),
+(69, 58, NULL, 'nao_finalizado', 6750.00, '2024-07-07', NULL, 50, 'PEDH9qfD45'),
+(70, 58, NULL, 'nao_finalizado', 1350.00, '2024-07-07', NULL, 2, 'PEoJAyL479');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `pedidos_andamentos`
+--
+
+CREATE TABLE `pedidos_andamentos` (
+  `id` int(10) NOT NULL,
+  `idPedidos` int(10) DEFAULT NULL,
+  `data` date DEFAULT NULL,
+  `status` enum('pendente','aceito','cancelado','entregue') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `pedidos_produtos`
+--
+
+CREATE TABLE `pedidos_produtos` (
+  `id` int(10) NOT NULL,
+  `idPedidos` int(10) DEFAULT NULL,
+  `idProdutos` int(10) DEFAULT NULL,
+  `quantidade` int(10) DEFAULT NULL,
+  `subtotal` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `pedidos_produtos`
+--
+
+INSERT INTO `pedidos_produtos` (`id`, `idPedidos`, `idProdutos`, `quantidade`, `subtotal`) VALUES
+(2, NULL, NULL, NULL, NULL),
+(3, NULL, 5, NULL, NULL),
+(5, 18, 5, NULL, NULL),
+(6, NULL, 5, NULL, NULL),
+(7, NULL, 6, NULL, NULL),
+(8, NULL, 5, NULL, NULL),
+(9, 25, 6, NULL, NULL),
+(10, NULL, 6, NULL, NULL),
+(11, 33, 6, NULL, NULL),
+(12, 33, 6, NULL, NULL),
+(13, 33, 6, 1, 1.99),
+(14, 33, 1, 20, 40.00),
+(15, 33, 2, 5, 9.95),
+(16, 33, 3, 15, 29.85),
+(17, 33, 6, 2, 3.98),
+(18, 33, 5, 1, 1.99),
+(19, 33, 5, 1, 1.99),
+(20, 33, 3, 1, 1.99),
+(21, 33, 4, 1, 1.99),
+(22, 33, 5, 1, 1.99),
+(23, 33, 3, 1, 1.99),
+(24, 33, 4, 1, 1.99),
+(25, 33, 5, 1, 1.99),
+(26, 33, 3, 1, 1.99),
+(27, 33, 4, 1, 1.99),
+(28, 33, 5, 1, 1.99),
+(29, 33, 3, 1, 1.99),
+(30, 33, 4, 1, 1.99),
+(31, 37, 5, 2, 3.98),
+(32, 37, 4, 1, 1.99),
+(34, 39, 14, 1, 15.00),
+(35, 39, 13, 1, 15.00),
+(36, 39, 13, 1, 15.00),
+(37, 39, 14, 1, 15.00),
+(38, 53, 1, 1, 2.00),
+(39, 53, 4, 1, 1.99),
+(40, 53, 10, 1, 15.00),
+(41, 53, 13, 1, 15.00),
+(42, 53, 1, 1, 2.00),
+(43, 53, 4, 1, 1.99),
+(44, 53, 10, 1, 15.00),
+(45, 53, 13, 1, 15.00),
+(46, 53, 1, 1, 2.00),
+(47, 53, 4, 1, 1.99),
+(48, 53, 10, 1, 15.00),
+(49, 54, 1, 5, 10.00),
+(50, 55, 14, 66, 990.00),
+(51, 57, 13, 1, 15.00),
+(52, 57, 14, 1, 15.00),
+(53, 58, 13, 1, 15.00),
+(54, 58, 10, 1, 15.00),
+(55, 61, 13, 1, 15.00),
+(56, 61, 14, 1, 15.00),
+(57, 62, 1, 2, 4.00),
+(58, 63, 1, 1, 2.00),
+(59, 63, 2, 1, 1.99),
+(60, 63, 3, 1, 1.99),
+(61, 64, 12, 1, 15.00),
+(62, 64, 13, 1, 15.00),
+(63, 65, 18, 1, 15.00),
+(64, 65, 11, 3, 45.00),
+(65, 65, 18, 2, 30.00),
+(66, 65, 11, 3, 45.00),
+(67, 65, 14, 2, 30.00),
+(68, 65, 18, 1, 15.00),
+(69, 13, 14, 2, 30.00);
+
+--
+-- Acionadores `pedidos_produtos`
+--
+DELIMITER $$
+CREATE TRIGGER `atualizar_total_pedido` AFTER INSERT ON `pedidos_produtos` FOR EACH ROW BEGIN
+    DECLARE total DECIMAL(10,2);
+    
+    -- Calcula o total dos pedidos_produtos para o pedido atual
+    SELECT SUM(subtotal) INTO total
+    FROM pedidos_produtos
+    WHERE idPedidos = NEW.idPedidos;
+    
+    -- Atualiza o totalPedido na tabela pedidos
+    UPDATE pedidos
+    SET totalPedido = totalPedido+total
+    WHERE id = NEW.idPedidos;
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `pedidos_servicos`
+--
+
+CREATE TABLE `pedidos_servicos` (
+  `id` int(10) NOT NULL,
+  `idServicos` int(10) DEFAULT NULL,
+  `idPedidos` int(10) DEFAULT NULL,
+  `funcionarioTipo` varchar(255) DEFAULT NULL,
+  `quantidade` int(10) DEFAULT NULL,
+  `subtotal` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `pedidos_servicos`
+--
+
+INSERT INTO `pedidos_servicos` (`id`, `idServicos`, `idPedidos`, `funcionarioTipo`, `quantidade`, `subtotal`) VALUES
+(25, 1, NULL, 'Garcom', 1, 150.00),
+(26, 1, NULL, 'Cozinheiro', 2, 300.00),
+(27, 1, NULL, 'Barman', 3, 450.00),
+(28, 2, NULL, 'Garcom', 2, 300.00),
+(29, 2, NULL, 'Cozinheiro', 3, 450.00),
+(30, 2, NULL, 'Barman', 4, 600.00),
+(31, 3, NULL, 'Garcom', 3, 450.00),
+(32, 3, NULL, 'Cozinheiro', 4, 600.00),
+(33, 3, NULL, 'Barman', 5, 750.00),
+(34, 4, NULL, 'Garcom', 0, 0.00),
+(35, 4, NULL, 'Cozinheiro', 0, 0.00),
+(36, 4, NULL, 'Barman', 0, 0.00),
+(37, 6, NULL, 'Barman', 15, 2250.00),
+(38, 6, NULL, 'Garcom', 15, 2250.00),
+(39, 6, NULL, 'Cozinheiro', 15, 2250.00),
+(40, 7, NULL, 'Barman', 22, 3300.00),
+(41, 7, NULL, 'Garcom', 22, 3300.00),
+(42, 7, NULL, 'Cozinheiro', 22, 3300.00),
+(43, 8, NULL, 'Barman', 22, 3300.00),
+(44, 8, NULL, 'Garcom', 22, 3300.00),
+(45, 8, NULL, 'Cozinheiro', 22, 3300.00),
+(46, 9, NULL, 'Barman', 2, 300.00),
+(47, 9, NULL, 'Garcom', 2, 300.00),
+(48, 9, NULL, 'Cozinheiro', 2, 300.00),
+(49, 10, NULL, 'Barman', 2, 300.00),
+(50, 10, NULL, 'Garcom', 2, 300.00),
+(51, 10, NULL, 'Cozinheiro', 2, 300.00),
+(52, 11, NULL, 'Barman', 2, 300.00),
+(53, 11, NULL, 'Garcom', 2, 300.00),
+(54, 11, NULL, 'Cozinheiro', 2, 300.00),
+(55, 13, NULL, 'Barman', 2, 300.00),
+(56, 13, NULL, 'Garcom', 2, 300.00),
+(57, 13, NULL, 'Cozinheiro', 2, 300.00),
+(58, 14, NULL, 'Barman', 2, 300.00),
+(59, 14, NULL, 'Garcom', 21, 3150.00),
+(60, 14, NULL, 'Cozinheiro', 2, 300.00),
+(61, 15, NULL, 'Barman', 2, 300.00),
+(62, 15, NULL, 'Garcom', 2, 300.00),
+(63, 15, NULL, 'Cozinheiro', 2, 300.00),
+(64, 16, NULL, 'Barman', 2, 300.00),
+(65, 16, NULL, 'Garcom', 2, 300.00),
+(66, 16, NULL, 'Cozinheiro', 2, 300.00),
+(67, 17, NULL, 'Barman', 2, 300.00),
+(68, 17, NULL, 'Garcom', 2, 300.00),
+(69, 17, NULL, 'Cozinheiro', 2, 300.00),
+(70, 18, NULL, 'Barman', 2, 300.00),
+(71, 18, NULL, 'Garcom', 2, 300.00),
+(72, 18, NULL, 'Cozinheiro', 2, 300.00),
+(73, 19, NULL, 'Barman', 2, 300.00),
+(74, 19, NULL, 'Garcom', 2, 300.00),
+(75, 19, NULL, 'Cozinheiro', 2, 300.00),
+(77, 39, NULL, 'barmans', 1, 150.00),
+(78, 39, NULL, 'garcons', 1, 150.00),
+(79, 39, NULL, 'cozinheiros', 1, 150.00),
+(81, 41, NULL, 'barmans', 1, 150.00),
+(82, 41, NULL, 'garcons', 1, 150.00),
+(83, 41, NULL, 'cozinheiros', 1, 150.00),
+(84, 42, NULL, 'barmans', 2, 300.00),
+(85, 42, NULL, 'garcons', 2, 300.00),
+(86, 42, NULL, 'cozinheiros', 2, 300.00),
+(87, 44, NULL, 'barmans', 1, 150.00),
+(88, 44, NULL, 'garcons', 1, 150.00),
+(89, 44, NULL, 'cozinheiros', 1, 150.00),
+(90, 45, NULL, 'barmans', 2, 300.00),
+(91, 45, NULL, 'garcons', 2, 300.00),
+(92, 45, NULL, 'cozinheiros', 2, 300.00),
+(93, 47, NULL, 'barmans', 2, 300.00),
+(94, 47, NULL, 'garcons', 2, 300.00),
+(95, 47, NULL, 'cozinheiros', 2, 300.00),
+(96, 48, NULL, 'barmans', 1, 150.00),
+(97, 48, NULL, 'garcons', 1, 150.00),
+(98, 48, NULL, 'cozinheiros', 1, 150.00),
+(99, 49, NULL, 'barmans', 2, 300.00),
+(100, 49, NULL, 'garcons', 1, 150.00),
+(101, 49, NULL, 'cozinheiros', 2, 300.00),
+(102, 50, NULL, 'barmans', 15, 2250.00),
+(103, 50, NULL, 'garcons', 15, 2250.00),
+(104, 50, NULL, 'cozinheiros', 15, 2250.00);
+
+--
+-- Acionadores `pedidos_servicos`
+--
+DELIMITER $$
+CREATE TRIGGER `calcular_total_servicos` AFTER INSERT ON `pedidos_servicos` FOR EACH ROW BEGIN
+    DECLARE total DECIMAL(10,2);
+
+    -- Calcular o total de subtotais para o serviço
+    SELECT SUM(subtotal) INTO total
+    FROM pedidos_servicos
+    WHERE idServicos = NEW.idServicos;
+
+    -- Atualizar o campo totalServicos na tabela Servicos
+    UPDATE servicos
+    SET totalServicos = total
+    WHERE id = NEW.idServicos;
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `personal_access_tokens`
+--
+
+CREATE TABLE `personal_access_tokens` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `tokenable_type` varchar(255) NOT NULL,
+  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `abilities` text DEFAULT NULL,
+  `last_used_at` timestamp NULL DEFAULT NULL,
+  `expires_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `pp_servicos`
+--
+
+CREATE TABLE `pp_servicos` (
+  `id` int(10) NOT NULL,
+  `idServicos` int(10) DEFAULT NULL,
+  `idPedidos` int(10) DEFAULT NULL,
+  `funcionarioTipo` varchar(255) DEFAULT NULL,
+  `quantidade` int(10) DEFAULT NULL,
+  `subtotal` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `pp_servicos`
+--
+
+INSERT INTO `pp_servicos` (`id`, `idServicos`, `idPedidos`, `funcionarioTipo`, `quantidade`, `subtotal`) VALUES
+(1, 81, NULL, 'barmans', 5, 2.00),
+(2, 81, NULL, 'garcons', 10, 2.00),
+(3, 81, NULL, 'cozinheiros', 15, 2.00),
+(4, 20, NULL, 'barmans', 2, 2.00),
+(5, 20, NULL, 'garcons', 2, 2.00),
+(6, 20, NULL, 'cozinheiros', 2, 2.00),
+(7, 23, NULL, 'barmans', 2, 300.00),
+(8, 23, NULL, 'garcons', 2, 300.00),
+(9, 23, NULL, 'cozinheiros', 2, 300.00),
+(10, 26, NULL, 'barmans', 1, 150.00),
+(11, 26, NULL, 'garcons', 1, 150.00),
+(12, 26, NULL, 'cozinheiros', 1, 150.00),
+(13, 27, NULL, 'barmans', 1, 150.00),
+(14, 27, NULL, 'garcons', 1, 150.00),
+(15, 27, NULL, 'cozinheiros', 1, 150.00),
+(16, 29, NULL, 'barmans', 1, 150.00),
+(17, 29, NULL, 'garcons', 1, 150.00),
+(18, 29, NULL, 'cozinheiros', 1, 150.00),
+(19, 30, NULL, 'barmans', 22, 3300.00),
+(20, 30, NULL, 'garcons', 22, 3300.00),
+(21, 30, NULL, 'cozinheiros', 22, 3300.00),
+(22, 32, NULL, 'barmans', 2, 300.00),
+(23, 32, NULL, 'garcons', 2, 300.00),
+(24, 32, NULL, 'cozinheiros', 2, 300.00),
+(25, 33, NULL, 'barmans', 1, 150.00),
+(26, 33, NULL, 'garcons', 1, 150.00),
+(27, 33, NULL, 'cozinheiros', 1, 150.00),
+(28, 34, NULL, 'barmans', 22, 3300.00),
+(29, 34, NULL, 'garcons', 22, 3300.00),
+(30, 34, NULL, 'cozinheiros', 22, 3300.00),
+(31, 35, NULL, 'barmans', 1, 150.00),
+(32, 35, NULL, 'garcons', 1, 150.00),
+(33, 35, NULL, 'cozinheiros', 1, 150.00),
+(34, 36, NULL, 'barmans', 2, 300.00),
+(35, 36, NULL, 'garcons', 2, 300.00),
+(36, 36, NULL, 'cozinheiros', 2, 300.00),
+(37, 37, NULL, 'barmans', 50, 7500.00),
+(38, 37, NULL, 'garcons', 50, 7500.00),
+(39, 37, NULL, 'cozinheiros', 50, 7500.00),
+(40, 38, NULL, 'barmans', 1, 150.00),
+(41, 38, NULL, 'garcons', 1, 150.00),
+(42, 38, NULL, 'cozinheiros', 1, 150.00);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `produtos`
+--
+
+CREATE TABLE `produtos` (
+  `id` int(10) NOT NULL,
+  `nome` varchar(255) DEFAULT NULL,
+  `descricao` varchar(500) DEFAULT NULL,
+  `tipo` enum('salgado','bebida','doce') DEFAULT NULL,
+  `quantidade` int(10) DEFAULT NULL,
+  `status` enum('ativo','inativo','em falta') DEFAULT NULL,
+  `precoUnitario` decimal(10,2) DEFAULT NULL,
+  `dataCadastro` date DEFAULT NULL,
+  `dataAtualizacao` date DEFAULT NULL,
+  `dataRemocao` date DEFAULT NULL,
+  `caminhoImagem` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `produtos`
+--
+
+INSERT INTO `produtos` (`id`, `nome`, `descricao`, `tipo`, `quantidade`, `status`, `precoUnitario`, `dataCadastro`, `dataAtualizacao`, `dataRemocao`, `caminhoImagem`) VALUES
+(1, 'coxinha', 'clássico brasileiro', 'salgado', 20, 'ativo', 2.00, '2024-07-05', '2024-07-05', NULL, 'azevedo.webp'),
+(2, 'brisadeiro', 'clássico brasileiro', 'doce', 20, 'ativo', 1.99, '2024-07-05', '2024-07-05', NULL, 'coxinha.jpg'),
+(3, 'COCAina', 'clássico brasileiro', 'bebida', 20, 'ativo', 1.99, '2024-07-05', '2024-07-05', NULL, 'coxinha.jpg'),
+(4, 'coxinha', 'clássico brasileiro', 'salgado', 20, 'ativo', 1.99, '2024-07-05', '2024-07-05', NULL, 'coxinha.jpg'),
+(5, 'coxinha', 'clássico brasileiro', 'salgado', 20, 'ativo', 1.99, '2024-07-05', '2024-07-05', NULL, 'coxinha.jpg'),
+(6, 'coxinha', 'clássico brasileiro', 'salgado', 20, 'ativo', 1.99, '2024-07-05', '2024-07-05', NULL, 'coxinha.jpg'),
+(8, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', NULL, NULL, NULL),
+(9, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', NULL, NULL, NULL),
+(10, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', NULL, NULL, NULL),
+(11, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', '2024-07-07', NULL, 'HWyAIn6yMUlfTXNhK6mN5NkZToRIqXRfQd885BKy.jpg'),
+(12, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', NULL, NULL, NULL),
+(13, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', NULL, NULL, NULL),
+(14, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', NULL, NULL, NULL),
+(15, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', NULL, NULL, NULL),
+(16, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', NULL, NULL, NULL),
+(17, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', NULL, NULL, NULL),
+(18, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `receitas_itens`
+--
+
+CREATE TABLE `receitas_itens` (
+  `id` int(10) NOT NULL,
+  `idProdutos` int(10) DEFAULT NULL,
+  `idMateriasPrimas` int(10) DEFAULT NULL,
+  `quantidade` int(10) DEFAULT NULL,
+  `subtotal` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `relatorios`
+--
+
+CREATE TABLE `relatorios` (
+  `id` int(10) NOT NULL,
+  `parametros` text DEFAULT NULL,
+  `dataEmissao` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `servicos`
+--
+
+CREATE TABLE `servicos` (
+  `id` int(10) NOT NULL,
+  `nomeServico` enum('festa pequena','festa media','festa grande','apenas entrega','personalizado') DEFAULT NULL,
+  `totalServicos` decimal(10,2) DEFAULT NULL,
+  `dataCadastro` date DEFAULT current_timestamp(),
+  `dataAtualizacao` date DEFAULT current_timestamp(),
+  `dataRemocao` date DEFAULT NULL,
+  `imgCaminho` varchar(200) DEFAULT NULL,
+  `duracaoHoras` int(11) DEFAULT NULL,
+  `quantidadePessoas` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `servicos`
+--
+
+INSERT INTO `servicos` (`id`, `nomeServico`, `totalServicos`, `dataCadastro`, `dataAtualizacao`, `dataRemocao`, `imgCaminho`, `duracaoHoras`, `quantidadePessoas`) VALUES
+(1, 'festa pequena', 15000.00, '2024-06-09', '2024-06-09', NULL, NULL, 4, 30),
+(2, 'festa media', 1350.00, NULL, NULL, NULL, NULL, 7, 50),
+(3, 'festa grande', 1800.00, NULL, NULL, NULL, NULL, 11, 100),
+(4, 'apenas entrega', 0.00, NULL, NULL, NULL, NULL, NULL, 0),
+(6, 'personalizado', 6750.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(7, 'personalizado', 9900.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(8, 'personalizado', 9900.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(9, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(10, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(11, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(12, 'personalizado', NULL, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(13, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(14, 'personalizado', 3750.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(15, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
+(16, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
+(17, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
+(18, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
+(19, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, 2, 14),
+(20, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 22, 22),
+(21, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 22, 22),
+(22, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 22, 22),
+(23, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 22, 22),
+(24, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
+(25, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
+(26, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
+(27, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
+(28, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
+(29, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
+(30, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 22, 22),
+(31, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 2, 2),
+(32, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 2, 2),
+(33, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
+(34, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 22, 22),
+(35, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
+(36, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 2, 2),
+(37, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 3, 50),
+(38, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
+(39, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
+(40, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
+(41, 'personalizado', 450.00, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
+(42, 'personalizado', 900.00, '2024-07-05', '2024-07-05', NULL, NULL, 2, 2),
+(43, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
+(44, 'personalizado', 450.00, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
+(45, 'personalizado', 900.00, '2024-07-05', '2024-07-05', NULL, NULL, 2, 2),
+(46, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 2, 2),
+(47, 'personalizado', 900.00, '2024-07-05', '2024-07-05', NULL, NULL, 2, 2),
+(48, 'personalizado', 450.00, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
+(49, 'personalizado', 750.00, '2024-07-06', '2024-07-06', NULL, NULL, 6, 33),
+(50, 'personalizado', 6750.00, '2024-07-07', '2024-07-07', NULL, NULL, 15, 15);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `users`
+--
+
+CREATE TABLE `users` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices de tabela `admins`
+-- Índices para tabela `admins`
 --
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT para tabelas despejadas
+-- Índices para tabela `admpermissoes`
+--
+ALTER TABLE `admpermissoes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idFuncionario` (`idFuncionario`);
+
+--
+-- Índices para tabela `agendamentos`
+--
+ALTER TABLE `agendamentos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idPedidos` (`idPedidos`);
+
+--
+-- Índices para tabela `clientes`
+--
+ALTER TABLE `clientes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `enderecos_clientes`
+--
+ALTER TABLE `enderecos_clientes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idClientes` (`idClientes`);
+
+--
+-- Índices para tabela `esqueci_senha`
+--
+ALTER TABLE `esqueci_senha`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idClientes` (`idClientes`);
+
+--
+-- Índices para tabela `feedbacks`
+--
+ALTER TABLE `feedbacks`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idPedidos` (`idPedidos`);
+
+--
+-- Índices para tabela `formas_pagamento`
+--
+ALTER TABLE `formas_pagamento`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `fornecedores`
+--
+ALTER TABLE `fornecedores`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `galeria_imagens`
+--
+ALTER TABLE `galeria_imagens`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `gastos`
+--
+ALTER TABLE `gastos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `materias_primas_estoque`
+--
+ALTER TABLE `materias_primas_estoque`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idFornecedor` (`idFornecedor`);
+
+--
+-- Índices para tabela `mensagens`
+--
+ALTER TABLE `mensagens`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `movimentacoes_materias_primas`
+--
+ALTER TABLE `movimentacoes_materias_primas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idMateriaPrima` (`idMateriaPrima`);
+
+--
+-- Índices para tabela `movimentacoes_produtos`
+--
+ALTER TABLE `movimentacoes_produtos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idProdutos` (`idProdutos`);
+
+--
+-- Índices para tabela `notificacoes`
+--
+ALTER TABLE `notificacoes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `notificacoes_clientes`
+--
+ALTER TABLE `notificacoes_clientes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idPedidos` (`idPedidos`),
+  ADD KEY `idClientes` (`idClientes`),
+  ADD KEY `idNotificacoes` (`idNotificacoes`);
+
+--
+-- Índices para tabela `notificacoes_colaboradores`
+--
+ALTER TABLE `notificacoes_colaboradores`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idPedidos` (`idPedidos`),
+  ADD KEY `idFuncionario` (`idFuncionario`),
+  ADD KEY `idNotificacoes` (`idNotificacoes`);
+
+--
+-- Índices para tabela `password_reset_tokens`
+--
+ALTER TABLE `password_reset_tokens`
+  ADD PRIMARY KEY (`email`);
+
+--
+-- Índices para tabela `pedidos`
+--
+ALTER TABLE `pedidos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idCliente` (`idClientes`),
+  ADD KEY `idServicos` (`idServicos`);
+
+--
+-- Índices para tabela `pedidos_andamentos`
+--
+ALTER TABLE `pedidos_andamentos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idPedidos` (`idPedidos`);
+
+--
+-- Índices para tabela `pedidos_produtos`
+--
+ALTER TABLE `pedidos_produtos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idPedidos` (`idPedidos`),
+  ADD KEY `idProdutos` (`idProdutos`);
+
+--
+-- Índices para tabela `pedidos_servicos`
+--
+ALTER TABLE `pedidos_servicos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idServicos` (`idServicos`),
+  ADD KEY `idPedidos` (`idPedidos`),
+  ADD KEY `idPedidos_2` (`idPedidos`);
+
+--
+-- Índices para tabela `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
+
+--
+-- Índices para tabela `pp_servicos`
+--
+ALTER TABLE `pp_servicos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `produtos`
+--
+ALTER TABLE `produtos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `receitas_itens`
+--
+ALTER TABLE `receitas_itens`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idProdutos` (`idProdutos`),
+  ADD KEY `idMateriaPrima` (`idMateriasPrimas`);
+
+--
+-- Índices para tabela `relatorios`
+--
+ALTER TABLE `relatorios`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `servicos`
+--
+ALTER TABLE `servicos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
+-- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
@@ -58,4 +1314,280 @@ ALTER TABLE `admins`
 --
 ALTER TABLE `admins`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de tabela `admpermissoes`
+--
+ALTER TABLE `admpermissoes`
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `agendamentos`
+--
+ALTER TABLE `agendamentos`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de tabela `clientes`
+--
+ALTER TABLE `clientes`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+
+--
+-- AUTO_INCREMENT de tabela `enderecos_clientes`
+--
+ALTER TABLE `enderecos_clientes`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de tabela `esqueci_senha`
+--
+ALTER TABLE `esqueci_senha`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `feedbacks`
+--
+ALTER TABLE `feedbacks`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `formas_pagamento`
+--
+ALTER TABLE `formas_pagamento`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `fornecedores`
+--
+ALTER TABLE `fornecedores`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de tabela `galeria_imagens`
+--
+ALTER TABLE `galeria_imagens`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+
+--
+-- AUTO_INCREMENT de tabela `gastos`
+--
+ALTER TABLE `gastos`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `materias_primas_estoque`
+--
+ALTER TABLE `materias_primas_estoque`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de tabela `mensagens`
+--
+ALTER TABLE `mensagens`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+
+--
+-- AUTO_INCREMENT de tabela `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de tabela `movimentacoes_materias_primas`
+--
+ALTER TABLE `movimentacoes_materias_primas`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `movimentacoes_produtos`
+--
+ALTER TABLE `movimentacoes_produtos`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `notificacoes`
+--
+ALTER TABLE `notificacoes`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de tabela `notificacoes_clientes`
+--
+ALTER TABLE `notificacoes_clientes`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de tabela `notificacoes_colaboradores`
+--
+ALTER TABLE `notificacoes_colaboradores`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `pedidos`
+--
+ALTER TABLE `pedidos`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+
+--
+-- AUTO_INCREMENT de tabela `pedidos_andamentos`
+--
+ALTER TABLE `pedidos_andamentos`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `pedidos_produtos`
+--
+ALTER TABLE `pedidos_produtos`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+
+--
+-- AUTO_INCREMENT de tabela `pedidos_servicos`
+--
+ALTER TABLE `pedidos_servicos`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+
+--
+-- AUTO_INCREMENT de tabela `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `pp_servicos`
+--
+ALTER TABLE `pp_servicos`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
+--
+-- AUTO_INCREMENT de tabela `produtos`
+--
+ALTER TABLE `produtos`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT de tabela `receitas_itens`
+--
+ALTER TABLE `receitas_itens`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `relatorios`
+--
+ALTER TABLE `relatorios`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `servicos`
+--
+ALTER TABLE `servicos`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+
+--
+-- AUTO_INCREMENT de tabela `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- Restrições para despejos de tabelas
+--
+
+--
+-- Limitadores para a tabela `admpermissoes`
+--
+ALTER TABLE `admpermissoes`
+  ADD CONSTRAINT `admpermissoes_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `admins` (`id`);
+
+--
+-- Limitadores para a tabela `agendamentos`
+--
+ALTER TABLE `agendamentos`
+  ADD CONSTRAINT `agendamentos_ibfk_1` FOREIGN KEY (`idPedidos`) REFERENCES `pedidos` (`id`);
+
+--
+-- Limitadores para a tabela `enderecos_clientes`
+--
+ALTER TABLE `enderecos_clientes`
+  ADD CONSTRAINT `enderecos_clientes_ibfk_1` FOREIGN KEY (`idClientes`) REFERENCES `clientes` (`id`);
+
+--
+-- Limitadores para a tabela `esqueci_senha`
+--
+ALTER TABLE `esqueci_senha`
+  ADD CONSTRAINT `esqueci_senha_ibfk_1` FOREIGN KEY (`idClientes`) REFERENCES `clientes` (`id`);
+
+--
+-- Limitadores para a tabela `feedbacks`
+--
+ALTER TABLE `feedbacks`
+  ADD CONSTRAINT `feedbacks_ibfk_1` FOREIGN KEY (`idPedidos`) REFERENCES `pedidos` (`id`);
+
+--
+-- Limitadores para a tabela `materias_primas_estoque`
+--
+ALTER TABLE `materias_primas_estoque`
+  ADD CONSTRAINT `materias_primas_estoque_ibfk_1` FOREIGN KEY (`idFornecedor`) REFERENCES `fornecedores` (`id`);
+
+--
+-- Limitadores para a tabela `movimentacoes_materias_primas`
+--
+ALTER TABLE `movimentacoes_materias_primas`
+  ADD CONSTRAINT `movimentacoes_materias_primas_ibfk_1` FOREIGN KEY (`idMateriaPrima`) REFERENCES `materias_primas_estoque` (`id`);
+
+--
+-- Limitadores para a tabela `movimentacoes_produtos`
+--
+ALTER TABLE `movimentacoes_produtos`
+  ADD CONSTRAINT `movimentacoes_produtos_ibfk_1` FOREIGN KEY (`idProdutos`) REFERENCES `produtos` (`id`);
+
+--
+-- Limitadores para a tabela `notificacoes_clientes`
+--
+ALTER TABLE `notificacoes_clientes`
+  ADD CONSTRAINT `notificacoes_clientes_ibfk_1` FOREIGN KEY (`idPedidos`) REFERENCES `pedidos` (`id`),
+  ADD CONSTRAINT `notificacoes_clientes_ibfk_2` FOREIGN KEY (`idClientes`) REFERENCES `clientes` (`id`),
+  ADD CONSTRAINT `notificacoes_clientes_ibfk_3` FOREIGN KEY (`idNotificacoes`) REFERENCES `notificacoes` (`id`);
+
+--
+-- Limitadores para a tabela `notificacoes_colaboradores`
+--
+ALTER TABLE `notificacoes_colaboradores`
+  ADD CONSTRAINT `notificacoes_colaboradores_ibfk_1` FOREIGN KEY (`idPedidos`) REFERENCES `pedidos` (`id`),
+  ADD CONSTRAINT `notificacoes_colaboradores_ibfk_2` FOREIGN KEY (`idFuncionario`) REFERENCES `admins` (`id`),
+  ADD CONSTRAINT `notificacoes_colaboradores_ibfk_3` FOREIGN KEY (`idNotificacoes`) REFERENCES `notificacoes` (`id`);
+
+--
+-- Limitadores para a tabela `pedidos`
+--
+ALTER TABLE `pedidos`
+  ADD CONSTRAINT `idServicos` FOREIGN KEY (`idServicos`) REFERENCES `servicos` (`id`),
+  ADD CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`idClientes`) REFERENCES `clientes` (`id`);
+
+--
+-- Limitadores para a tabela `pedidos_andamentos`
+--
+ALTER TABLE `pedidos_andamentos`
+  ADD CONSTRAINT `pedidos_andamentos_ibfk_1` FOREIGN KEY (`idPedidos`) REFERENCES `pedidos` (`id`);
+
+--
+-- Limitadores para a tabela `pedidos_produtos`
+--
+ALTER TABLE `pedidos_produtos`
+  ADD CONSTRAINT `pedidos_produtos_ibfk_1` FOREIGN KEY (`idPedidos`) REFERENCES `pedidos` (`id`),
+  ADD CONSTRAINT `pedidos_produtos_ibfk_2` FOREIGN KEY (`idProdutos`) REFERENCES `produtos` (`id`);
+
+--
+-- Limitadores para a tabela `pedidos_servicos`
+--
+ALTER TABLE `pedidos_servicos`
+  ADD CONSTRAINT `pedidos_servicos_ibfk_1` FOREIGN KEY (`idServicos`) REFERENCES `servicos` (`id`),
+  ADD CONSTRAINT `pedidos_servicos_ibfk_2` FOREIGN KEY (`idPedidos`) REFERENCES `pedidos` (`id`);
+
+--
+-- Limitadores para a tabela `receitas_itens`
+--
+ALTER TABLE `receitas_itens`
+  ADD CONSTRAINT `receitas_itens_ibfk_1` FOREIGN KEY (`idProdutos`) REFERENCES `produtos` (`id`),
+  ADD CONSTRAINT `receitas_itens_ibfk_2` FOREIGN KEY (`idMateriasPrimas`) REFERENCES `materias_primas_estoque` (`id`);
 COMMIT;

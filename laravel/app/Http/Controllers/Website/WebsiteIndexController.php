@@ -13,21 +13,39 @@ class WebsiteIndexController extends Controller
 {
     public function index()
     {
-        $notificacoes = collect(); // Inicializa uma coleção vazia de notificações
-        $notificacoes_clientes = collect(); // Inicializa uma coleção vazia de notificações clientes
+        $notificacoes = collect(); 
+        $notificacoes_clientes = collect(); 
+        $quantidadeNotificacoes = 0; 
     
         if (Auth::guard('cliente')->check()) {
             $idClientes = Auth::guard('cliente')->user()->id;
-            $notificacoes_clientes = NotificacoesClientes::where('idClientes', $idClientes)->get(); 
     
+            // Busca as notificações específicas do cliente logado
+            $notificacoes_clientes = NotificacoesClientes::where('idClientes', $idClientes)->get();
+            
+            // Obtém os IDs das notificações do cliente
             $notificacoes_ids = $notificacoes_clientes->pluck('idNotificacoes');
+    
+            // Busca as notificações completas baseadas nos IDs obtidos
             $notificacoes = Notificacoes::whereIn('id', $notificacoes_ids)->get();
+    
+            // Conta a quantidade de notificações não lidas
+            $quantidadeNotificacoes = $notificacoes->where('lido', false)->count();
+          //  dd($quantidadeNotificacoes);
         }
+    
+        // Debug para verificar o conteúdo da coleção $notificacoes
+       // foreach ($notificacoes as $notificacoes){
+            //dd($notificacoes->id);
+       // }
+     
     
         $imagens = GaleriaImagens::all(); // Busca todas as imagens da tabela galeria_imagens
     
-        return view('website.index', compact('imagens', 'notificacoes', 'notificacoes_clientes'));
+        return view('website.index', compact('imagens', 'notificacoes', 'notificacoes_clientes', 'quantidadeNotificacoes'));
     }
+    
+
     
 
 public function mensagem_guardar(Request $request)
@@ -59,5 +77,31 @@ public function mensagem_guardar(Request $request)
     }
 }
 
+
+
+
+
+
+public function marcarLida($id)
+{
+    try {
+        // Buscar a notificação pelo ID
+        $notificacaoCliente = Notificacoes::findOrFail($id);
+
+        // Marcar a notificação como lida
+        $notificacaoCliente->lido = true;
+        $notificacaoCliente->save();
+
+        // Redirecionar de volta à página anterior com uma mensagem de sucesso
+        return redirect()->back()->with('success', 'Notificação marcada como lida com sucesso.');
+        
+    } catch (\Exception $e) {
+        // Caso ocorra algum erro ao encontrar a notificação
+        return redirect()->back()->with('error', 'Erro ao marcar a notificação como lida: ' . $e->getMessage());
+    }
 }
+
+}
+
+
 

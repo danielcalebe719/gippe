@@ -12,6 +12,9 @@ class LoginClienteController extends Controller
 {
     public function index()
     {
+        
+
+        
         return view('website.login');
     }
     public function logar(Request $request)

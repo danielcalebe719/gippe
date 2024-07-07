@@ -193,7 +193,7 @@
           <div class="box">
             <div>
               <div class="img-box">
-                <img src="{{ asset('storage/ImagensProdutos/' . $produto->caminhoImagem) }}" alt="{{ $produto->nome }}">
+                <img src="{{ asset('storage/ImagensProdutos/' . $produto->caminhoImagem) }}" alt="{{ $produto->nome }}" >
               </div>
               <div class="detail-box">
                 <div class="options">
@@ -205,7 +205,7 @@
                     <div class="quantity mr-3">
                       <input type="number" min="1" value="1" class="form-control form-control-sm">
                     </div>
-                    <a href="#" class="btn add-to-cart" data-id="{{ $produto->id }}" data-nome="{{ $produto->nome }}" data-precoUnitario="{{ number_format($produto->precoUnitario, 2, ',', '.') }}">
+                    <a href="#" class="btn add-to-cart" data-id="{{ $produto->id }}" data-caminho-imagem="{{ asset('storage/ImagensProdutos/' . $produto->caminhoImagem) }}"  data-nome="{{ $produto->nome }}" data-precoUnitario="{{ number_format($produto->precoUnitario, 2, ',', '.') }}">
                       <i class="bi bi-cart" style="color: white;"></i>
                       <span class="preco-unitario" style="display: none;">{{ number_format($produto->precoUnitario, 2, ',', '.') }}</span>
                     </a>
@@ -220,6 +220,7 @@
       </div>
       <div class="btn-box">
         <button id="ver-mais-btn" class="btn btn-primary">Ver mais</button>
+
       </div>
     </div>
   </div>
@@ -322,6 +323,8 @@
         // Captura informações do produto
         let id = $(this).data('id');
         let nome = $(this).data('nome');
+        let caminhoImagem = $(this).data('caminho-imagem');
+        console.log(caminhoImagem)
         let precoUnitarioElement = $(this).find('.preco-unitario'); // Encontra o elemento que contém o preço unitário
         let precoUnitario = parseFloat(precoUnitarioElement.text().replace(',', '.')); // Extrai o texto e converte para float
         let quantidade = parseInt($(this).closest('.options').find('.quantity input').val());
@@ -336,8 +339,10 @@
           carrinho.push({
             id: id,
             nome: nome,
+            caminhoImagem: caminhoImagem,
             precoUnitario: precoUnitario,
             quantidade: quantidade
+            
           });
         }
 
@@ -361,7 +366,8 @@
   <div class="card-body p-4">
     <div class="row g-3 align-items-center">
       <div class="col-md-2">
-        <img src="{{ asset('storage/ImagensProdutos/' . $produto->caminhoImagem) }}" class="img-fluid rounded-3" alt="${item.nome}">
+<img src="${item.caminhoImagem}" class="img-fluid rounded-3" alt="${item.nome}">
+
       </div>
       <div class="col-md-4">
         <p class="lead fw-normal mb-2">${item.nome}</p>

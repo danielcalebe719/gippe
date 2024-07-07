@@ -245,7 +245,7 @@
                     <label for="senha">Senha</label>
                   </div>
                   <div class="col-sm-8">
-                    <input type="password" id="senha" name="senha" class="form-control" value="" readonly placeholder="*****">
+                    <input type="password" id="senha" name="senha" class="form-control" value="" readonly placeholder="*********">
                     <input type="hidden" id="senha_original" name="senha_original" value="{{ $clientes->password }}">
                   </div>
                   <div class="col-sm-1">
@@ -325,6 +325,7 @@
                   @if ($pedidos->count() > 0)
                   @foreach ($pedidos as $pedido)
                   <tr>
+              
                     <td><a href="">{{ $pedido->codigo }}</a> </td>
                     <td>
                       @if ($pedido->status == 'nao_finalizado')
