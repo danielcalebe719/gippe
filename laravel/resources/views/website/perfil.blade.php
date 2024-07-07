@@ -245,7 +245,7 @@
                     <label for="senha">Senha</label>
                   </div>
                   <div class="col-sm-8">
-                    <input type="password" id="senha" name="senha" class="form-control" value="" readonly placeholder="*****">
+                    <input type="password" id="senha" name="senha" class="form-control" value="" readonly placeholder="*********">
                     <input type="hidden" id="senha_original" name="senha_original" value="{{ $clientes->password }}">
                   </div>
                   <div class="col-sm-1">

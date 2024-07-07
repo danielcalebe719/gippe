@@ -399,8 +399,8 @@
 
         <div id="portfolio-container" class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
           @foreach($imagens->take(15) as $imagem)
-          <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item filter-{{ strtolower($imagem->evento) }}">
-            <div class="portfolio-item-overlay">
+          <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item filter-{{ strtolower($imagem->evento) }}"  style="padding: 0%; margin:1%;">
+            <div class="portfolio-item-overlay" >
               <a href="{{ asset('storage/GaleriaImagens/' . $imagem->imagemCaminho) }}" data-lightbox="portfolio" title="{{ $imagem->evento }}">
                 <img class="img-fluid gallery-image" src="{{ asset('storage/GaleriaImagens/' . $imagem->imagemCaminho) }}">
               </a>
