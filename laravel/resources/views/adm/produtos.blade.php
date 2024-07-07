@@ -378,7 +378,7 @@
                 document.getElementById('detalhesDataCadastro').value = data.dataCadastro ? formatarData(data.dataCadastro) : '';
                 document.getElementById('detalhesDataAtualizacao').value = data.dataAtualizacao ? formatarData(data.dataAtualizacao) : '';
                 // Atualize o src da imagem
-            const imgPath = data.caminhoImagem ? `/storage/GaleriaImagens/${data.caminhoImagem}` : 'default-image-path.jpg';
+            const imgPath = data.caminhoImagem ? `/storage/GaleriaImagens/produtos/${data.caminhoImagem}` : 'default-image-path.jpg';
             document.getElementById('detalhesImgPerfil').src = imgPath;
 
 

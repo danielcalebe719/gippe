@@ -21,7 +21,7 @@ class MateriasPrimasEstoque extends Model
         'dataCadastro', 
         'dataAtualizacao', 
         'dataRemocao',
-        'imgCaminho',
+        'caminhoImagem',
         'idFornecedor'
         // Adicione outros campos aqui
     ];
@@ -32,10 +32,10 @@ class MateriasPrimasEstoque extends Model
         return $this->hasOne(MovimentacoesMateriasPrimas::class,'idMateriaPrima','id');
     }
 
-    public function receitasItem()
-    {
-        return $this->hasMany(ReceitasItem::class,'idMateriasPrimas','id');
-    }
+    // public function receitasItem()
+    // {
+    //     return $this->hasMany(ReceitasItem::class,'idMateriasPrimas','id');
+    // }
 
 
 }

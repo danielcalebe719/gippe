@@ -59,7 +59,7 @@ class MateriaPrimaController extends Controller
             $materiaPrima->classificacao = $request->input('classificacao');
             $materiaPrima->quantidade = $request->input('quantidade');
             $materiaPrima->precoUnitario = $request->input('precoUnitario');
-            $materiaPrima->imgCaminho = $request->input('imgCaminho');
+            $materiaPrima->caminhoImagem = $request->input('caminhoImagem');
             $materiaPrima->idFornecedor = $request->input('idFornecedor');
 
             if(!$request->idMateriaPrima){
@@ -68,17 +68,24 @@ class MateriaPrimaController extends Controller
     
             
     
-            // Trata o upload da imagem, se fornecida
-            if ($request->hasFile('imgCaminho')) {
-                // Deleta a imagem antiga, se existir
-                if ($materiaPrima->imgCaminho && Storage::exists('public/GaleriaImagens/' . $materiaPrima->imgCaminho)) {
-                    Storage::delete('public/GaleriaImagens/' . $materiaPrima->imgCaminho);
-                }
-                
-                // Armazena a nova imagem
-                $path = $request->file('imgCaminho')->store('public/GaleriaImagens');
-                $materiaPrima->imgCaminho = basename($path);
-            }
+          // Trata o upload da imagem, se fornecida
+if ($request->hasFile('caminhoImagem')) {
+    
+    
+    // Define o nome do arquivo usando o nome do produto e mantém a extensão original
+    $nomeArquivo = $materiaPrima->nome . '.' . $request->file('caminhoImagem')->getClientOriginalExtension();
+    $path = $request->file('caminhoImagem')->storeAs('public/GaleriaImagens/materiasPrimas', $nomeArquivo);
+    // Deleta a imagem antiga, se existir
+    if ($materiaPrima->caminhoImagem && Storage::exists('public/GaleriaImagens/materiasPrimas/' . $materiaPrima->caminhoImagem)) {
+        Storage::delete('public/GaleriaImagens/materiasPrimas/' . $materiaPrima->caminhoImagem);
+    }
+    // Atualiza o campo caminhoImagem com o nome do novo arquivo
+    $materiaPrima->caminhoImagem = $nomeArquivo;
+} else {
+    // Mantém o nome do arquivo existente se não houver uma nova imagem enviada
+    $nomeArquivo = $materiaPrima->caminhoImagem;
+}
+
     
             // Atualiza o timestamp de atualização
             $materiaPrima->dataAtualizacao = now();  

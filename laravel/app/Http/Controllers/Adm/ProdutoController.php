@@ -58,20 +58,24 @@ class ProdutoController extends Controller
             }
     
             
-   // Trata o upload da imagem, se fornecida
+  // Trata o upload da imagem, se fornecida
 if ($request->hasFile('caminhoImagem')) {
-    // Deleta a imagem antiga, se existir
-    if ($produto->caminhoImagem && Storage::exists('public/GaleriaImagens/' . $produto->caminhoImagem)) {
-        Storage::delete('public/GaleriaImagens/' . $produto->caminhoImagem);
-    }
+    
     
     // Define o nome do arquivo usando o nome do produto e mantém a extensão original
-    $nomeArquivo = $produto->nome . '_' . time() . '.' . $request->file('caminhoImagem')->getClientOriginalExtension();
-    $path = $request->file('caminhoImagem')->storeAs('public/GaleriaImagens', $nomeArquivo);
-    
-    // Atualiza o campo caminhoImagem com o nome do arquivo
+    $nomeArquivo = $produto->nome . '.' . $request->file('caminhoImagem')->getClientOriginalExtension();
+    $path = $request->file('caminhoImagem')->storeAs('public/GaleriaImagens/produtos', $nomeArquivo);
+    // Deleta a imagem antiga, se existir
+    if ($produto->caminhoImagem && Storage::exists('public/GaleriaImagens/produtos/' . $produto->caminhoImagem)) {
+        Storage::delete('public/GaleriaImagens/produtos/' . $produto->caminhoImagem);
+    }
+    // Atualiza o campo caminhoImagem com o nome do novo arquivo
     $produto->caminhoImagem = $nomeArquivo;
+} else {
+    // Mantém o nome do arquivo existente se não houver uma nova imagem enviada
+    $nomeArquivo = $produto->caminhoImagem;
 }
+
 
 
     

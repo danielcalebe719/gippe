@@ -113,6 +113,10 @@
                                         <label for="precoUnitario">Preço Unitário</label>
                                         <input type="text" class="form-control" id="precoUnitario" name="precoUnitario" required>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="imgPerfil">Imagem da Matéria prima</label>
+                                        <input type="file" class="form-control-file" id="caminhoImagem" name="caminhoImagem">
+                                    </div>
                                     
                                         <button type="submit" class="btn btn-primary">Salvar</button>
                                     </form>
@@ -160,6 +164,10 @@
                                             <label for="editPreçoUnitario">Preço Unitário</label>
                                             <input type="text" class="form-control" id="editarPrecoUnitario" name="precoUnitario" required>
                                         </div>
+                                        <div class="form-group">
+                            <label for="editImgPerfil">Imagem de Perfil</label>
+                            <input type="file" class="form-control-file" id="editarCaminhoImagem" name="caminhoImagem">
+                        </div>
                                         <button type="submit" class="btn btn-primary">Salvar</button>
                                     </form>
                                 </div>
@@ -236,6 +244,10 @@
                       <input type="text" class="form-control" id="detalhesDataAtualizacao" readonly>
                   </div>
               </div>
+              <div class="form-group">
+                            <label for="detalhesImgPerfil">Imagem do Produto:</label>
+                            <img id="detalhesImgPerfil" class="form-control-file" src="" alt="Imagem do Produto" style="max-width: 100%; height: auto;">
+                        </div>
            
           </div>
       </div>
@@ -337,6 +349,9 @@ function mostrarDetalhes(idMateriaPrima) {
             document.getElementById('detalhesNome').value = data.nome || '';
             document.getElementById('detalhesDataCadastro').value = data.dataCadastro ? formatarData(data.dataCadastro) : '';
             document.getElementById('detalhesDataAtualizacao').value = data.dataAtualizacao ? formatarData(data.dataAtualizacao) : '';
+             // Atualize o src da imagem
+             const imgPath = data.caminhoImagem ? `/storage/GaleriaImagens/materiasPrimas/${data.caminhoImagem}` : 'default-image-path.jpg';
+            document.getElementById('detalhesImgPerfil').src = imgPath;
             
 
 
