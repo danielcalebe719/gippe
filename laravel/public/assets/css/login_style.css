@@ -23,7 +23,7 @@ body, html {
     -webkit-filter: blur(5px); /* Suporte para navegadores Webkit */
 }
 
-.container {
+.container{
     position: relative;
     width: 100%;
     max-width: 250px; /* Ajuste para um tamanho maior se necessário */

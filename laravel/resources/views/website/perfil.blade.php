@@ -325,6 +325,7 @@
                   @if ($pedidos->count() > 0)
                   @foreach ($pedidos as $pedido)
                   <tr>
+              
                     <td><a href="">{{ $pedido->codigo }}</a> </td>
                     <td>
                       @if ($pedido->status == 'nao_finalizado')

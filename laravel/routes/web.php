@@ -240,11 +240,15 @@ use App\Http\Controllers\Website\WebsiteServicoController;
 use App\Http\Controllers\Website\WebsiteProdutoController;
 use App\Http\Controllers\Website\WebsiteAgendamentoController;
 use App\Http\Controllers\Website\WebsitePerfilController;
+
 // Rotas acessíveis sem autenticação
 Route::get('/', function () {
 
     Route::get('/', [WebsiteIndexController::class, 'index'])->name('index');
 })->name('index');
+
+Route::post('notificacoes/marcar-lida/{id}', [WebsiteIndexController::class, 'marcarLida'])->name('notificacoes.marcarLida');
+
 
 Route::get('website/login', [LoginClienteController::class, 'index'])->name('login');
 Route::post('website/login', [LoginClienteController::class, 'logar'])->name('login.logar');
@@ -317,6 +321,9 @@ Route::get('/carregar-mais-produtos' , [WebsiteProdutoController::class, 'carreg
 
 // Rota de logout
 Route::get('website/logout', [LoginClienteController::class, 'deslogar'])->name('logout');
+
+
+
 
 
 
