@@ -52,6 +52,10 @@ use App\Http\Controllers\Adm\Auth\CadastrarAdminController;
 use App\Http\Controllers\Adm\Auth\AdminController;
 use App\Http\Controllers\Adm\Auth\LoginAdminController;
 use App\Http\Middleware\RedirectIfNotAdmin;
+Route::get('/pr', function () {
+    return view('website.produtos');
+})->name('website.produtos');
+
 
 // Rota de login sem proteção de autenticação
 Route::get('/adm/login', function () {
