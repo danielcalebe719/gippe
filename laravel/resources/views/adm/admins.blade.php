@@ -84,7 +84,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="formAdicionarColaborador" method="POST" action="{{ url('/adm/admin/cadastro') }}">
+                                    <form id="formAdicionarColaborador" method="POST" action="/adm/admins/create">
                                     @csrf
                                         <div class="form-group">
                                             <label for="nome">Nome</label>

@@ -188,7 +188,7 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
     Route::prefix('admins')->group(function () {
         Route::get('/', [AdminController::class, 'index1'])->name('admins.index1');
         Route::get('/show/{idAdmins}', [AdminController::class, 'show'])->name('admins.show');
-        // Route::post('/guardar', [AdminController::class, 'guardar'])->name('admins.guardar');
+         Route::post('/create', [CadastrarAdminController::class, 'create'])->name('admins.create');
         // Route::get('/remover/{idAdmins}', [AdminController::class, 'remover'])->name('admins.remover');
     });
     Route::prefix('galeriaImagens')->group(function () {
