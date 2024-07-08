@@ -35,6 +35,31 @@ class ClienteController extends Controller
             return response()->json(['error' => 'Cliente não encontrado'], 404);
         }
     }
+
+    public function showEnderecos($idClientes)
+    {
+        $enderecos = EnderecosClientes::where('idClientes', $idClientes)->get();
+        
+        // Verifica se encontrou algum endereço
+    if ($enderecos->isNotEmpty()) {
+        return response()->json($enderecos);
+    } else {
+        return response()->json(['error' => 'Cliente não encontrado ou sem endereços'], 404);
+    }
+    }
+
+    public function showEndereco($idEndereco)
+    {
+        $endereco = EnderecosClientes::find($idEndereco);
+        
+        if ($endereco) {
+
+            
+            return response()->json($endereco);
+        } else {
+            return response()->json(['error' => 'Cliente não encontrado'], 404);
+        }
+    }
     
     
     public function guardar(Request $request)
@@ -88,6 +113,48 @@ class ClienteController extends Controller
     
             // Salva o cliente
             $cliente->save();
+            
+            return redirect()->back()->with('success', 'Cliente adicionado/atualizado com sucesso!');
+            
+        } catch (\Exception $e) {
+            // Loga o erro para fins de debug
+            Log::error('Erro ao atualizar o cliente: ' . $e->getMessage());
+            return response()->json(['error' => 'Erro ao atualizar o cliente: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function guardarEndereco(Request $request)
+    {
+        // Validação dos dados
+        /*$request->validate([
+            'nome' => 'nullable|string|max:255',
+            'cpf' => 'nullable|string|max:14|unique:clientes,cpf,' . $request->idCliente . ',idClientes',
+            'dataNascimento' => 'nullable|date',
+            'status' => 'nullable|string|in:ativo,inativo',
+            'email' => 'nullable|email|max:255|unique:clientes,email,' . $request->idCliente . ',idClientes',
+            'senha' => 'nullable|string|min:6',
+            'telefone' => 'nullable|string|max:20',
+            // 'imgCaminho' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);*/   
+    
+        try {
+            // Busca ou cria um novo cliente
+            $endereco = $request->idEndereco ? EnderecosClientes::findOrFail($request->idEndereco) : new EnderecosClientes();
+    
+            // Preenche os outros campos do cliente
+            $endereco->tipo = $request->input('tipo');
+            $endereco->cep = $request->input('cep');
+            $endereco->cidade = $request->input('cidade');
+            $endereco->bairro = $request->input('bairro');
+            $endereco->rua = $request->input('rua');
+            $endereco->numero = $request->input('numero');
+            $endereco->complemento = $request->input('complemento');
+            $endereco->idClientes = $request->input('idClientes');
+    
+            
+    
+            // Salva o cliente
+            $endereco->save();
             
             return redirect()->back()->with('success', 'Cliente adicionado/atualizado com sucesso!');
             

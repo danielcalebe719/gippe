@@ -14,7 +14,8 @@
     <link href="{{ asset('assets/css/css_adm/ruang-admin.min.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="{{ asset('assets/vendor_adm/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>  
     <style>
         .row {
             justify-content: center;

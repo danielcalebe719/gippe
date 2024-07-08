@@ -130,7 +130,9 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
     Route::prefix('clientes')->group(function () {
         Route::get('/', [ClienteController::class, 'index'])->name('clientes.index');
         Route::get('/show/{idClientes}', [ClienteController::class, 'show'])->name('clientes.show');
+        Route::get('/showEnderecos/{idClientes}', [ClienteController::class, 'showEnderecos'])->name('clientes.showEnderecos');
         Route::post('/guardar', [ClienteController::class, 'guardar'])->name('clientes.guardar');
+        Route::post('/guardarEndereco', [ClienteController::class, 'guardarEndereco'])->name('clientes.guardarEndereco');
         Route::get('/remover/{idClientes}', [ClienteController::class, 'remover'])->name('clientes.remover');
     });
 
