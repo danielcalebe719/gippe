@@ -54,12 +54,13 @@ class CadastrarClienteController extends Controller
     {
         // Obtém o ID do cliente a partir da sessão
         $idCliente = Auth::guard('cliente')->user()->id;
-
+        
         // Verifica se o ID do cliente foi encontrado
         if ($idCliente) {
             // Busca o cliente e os endereços associados
             $cliente = Clientes::find($idCliente);
             $enderecosClientes = EnderecosClientes::where('idClientes', $idCliente)->get();
+           // dd($cliente->dataNascimento);
 
             // Verifica se o cliente foi encontrado
             if ($cliente) {
@@ -81,7 +82,7 @@ class CadastrarClienteController extends Controller
             'idClientes' => 'nullable|integer',
             'nome' => 'required|string|max:255',
             'cpf' => 'required|digits:11',
-            'dob' => 'required|date',
+            'dataNascimento' => 'required|date',
             'cep' => 'required|digits:8',
             'cidade' => 'required|string|max:255',
             'bairro' => 'required|string|max:255',
@@ -94,21 +95,23 @@ class CadastrarClienteController extends Controller
     
         // Verifica se há um ID de cliente na sessão
         $idCliente = $validatedData['idClientes'];
-    
+
         try {
             // Inicia uma transação para garantir integridade dos dados
             DB::beginTransaction();
-    
+    //dd( $request['dataNascimento']);
+
             if ($idCliente) {
                 // Busca o cliente pelo ID
                 $cliente = Clientes::findOrFail($idCliente);
     
                 // Atualiza os dados do cliente
                 $cliente->update([
+                   
                     'telefone' => $request->input('telefone'),
                     'cpf' => $validatedData['cpf'],
                     'nome' => $validatedData['nome'],
-                    'dataNascimento' => $validatedData['dob'],
+                    'dataNascimento' =>  $request['dataNascimento'],
                 ]);
             } else {
                 // Cria um novo cliente
@@ -116,7 +119,7 @@ class CadastrarClienteController extends Controller
                     'cpf' => $validatedData['cpf'],
                     'nome' => $validatedData['nome'],
                     'telefone' => $request->input('telefone'),
-                    'dataNascimento' => $validatedData['dob'],
+                      'dataNascimento' =>  $request['dataNascimento'],   
                 ]);
             }
     

@@ -1,525 +1,453 @@
-<!DOCTYPE html>
-<html>
+<html><head><base href="https://websim.ai" />
+<title>Buffet Divino Sabor: Delícias para Festas</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/tippy.js@6"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-<head>
-  <!-- Basic -->
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Mobile Metas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/x-icon">
+  :root {
+    --color-primary: #FCB774;
+    --color-primary-hover: #FAA562;
+    --color-secondary: #FA856E;
+    --color-secondary-hover: #F97058;
+    --color-background: #FFF5E6;
+    --color-text: #333333;
+    --color-footer: #4A5568;
+  }
 
-  <title>Buffet Divino Sabor - Produtos</title>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text);
+  }
 
+  .shadcn-button {
+    @apply inline-flex items-center justify-center rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background;
+    padding: 0.5rem 1.5rem;
+  }
 
+  .shadcn-button-primary {
+    background-color: var(--color-secondary);
+    color: white;
+  }
 
+  .shadcn-button-primary:hover {
+    background-color: var(--color-secondary-hover);
+  }
 
-  <!-- Template Main CSS File -->
-  <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap_pedidos.css') }}" />
+  .shadcn-button-secondary {
+    background-color: var(--color-secondary);
+    color: white;
+  }
 
-  <!-- Owl Carousel stylesheet -->
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  .shadcn-button-secondary:hover {
+    background-color: var(--color-secondary-hover);
+  }
 
-  <!-- Nice Select CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
+  .shadcn-button-outline {
+    @apply border border-input hover:bg-accent hover:text-accent-foreground;
+  }
 
-  <!-- Custom Styles -->
-  <link href="{{ asset('assets/css/style_pedidos.css') }}" rel="stylesheet" />
+  .shadcn-card {
+    @apply rounded-xl border bg-card text-card-foreground shadow-sm;
+    background-color: white;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
 
-  <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i&display=swap" rel="stylesheet">
-  <!-- jQuery -->
-  <script src="{{ asset('assets/vendor/jquery/jquery-3.6.0.min.js') }}"></script>
+  .shadcn-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
 
-  <!-- Lightbox CSS -->
-  <link href="{{ asset('assets/vendor/lightbox2/2.11.3/css/lightbox.min.css') }}" rel="stylesheet">
+  .shadcn-badge {
+    @apply inline-flex items-center border rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
 
-  <!-- AOS CSS -->
-  <link href="{{ asset('assets/vendor/aos/2.3.4/aos.css') }}" rel="stylesheet">
+  .shadcn-input {
+    @apply flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+  }
 
-  <!-- Font Awesome CSS -->
-  <link href="{{ asset('assets/vendor/font-awesome/6.0.0-beta3/css/all.min.css') }}" rel="stylesheet">
+  .shadcn-label {
+    @apply text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
+  }
 
-  <!-- Favicons -->
-  <link href="{{ asset('assets/img/logo.png') }}" rel="icon">
-  <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+  .shadcn-select {
+    @apply flex h-10 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+  }
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+.category-buttons {
+    display: flex;
+    justify-content: center; /* Centraliza os botões horizontalmente */
+    margin-bottom: 20px;
+}
 
-  <!-- Vendor CSS Files -->
-  <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      /* Exemplo de uso: define Poppins como a fonte padrão para o corpo do documento */
-    }
-  </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
+.category-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+}
 
+.category-button.active {
+    background-color: #0056b3;
+}
 
+  .category-button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+  }
+
+  .category-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(250, 133, 110, 0.5);
+  }
+
+  .category-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .category-button i {
+    margin-right: 8px;
+  }
+
+  #load-more {
+    @apply mt-8 mx-auto block;
+  }
+</style>
 </head>
-
-
 <body>
-
-  <section id="topbar" class="d-flex align-items-center">
-    <div class="container d-flex justify-content-center justify-content-md-between">
-      <div class="contact-info d-flex align-items-center">
-        <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:buffetdivinosabor@gmail.com">buffetdivinosabor@gmail.com</a></i>
-        <i class="bi bi-phone d-flex align-items-center ms-4"><span>+31 95589 55488</span></i>
-      </div>
-      <div class="social-links d-none d-md-flex align-items-center">
-        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======= Header ======= -->
-  <header id="header" class="d-flex align-items-center">
-    <div class="container d-flex align-items-center justify-content-between">
-      <a href="{{ url('/website') }}"><img src="assets/img/logo.png" alt="" style="max-width: 50%;"><span></span></a>
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a class="nav-link scrollto active" href="{{ url('/website') }}">Home</a></li>
-          <li><a class="nav-link scrollto" href="#cardapio">Cardápio</a></li>
-          <li><a class="nav-link scrollto" href="#about">Sobre nós</a></li>
-          <li><a class="nav-link scrollto" href="#portfolio">Galeria de fotos</a></li>
-          <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
-          <li><a class="nav-link scrollto" href="#contact">Fale Conosco</a></li>
-
-          @guest('cliente')
-          <!-- Mostrar se não estiver logado -->
-          <li>
-            <a href="{{ url('website/cadastro') }}"><button id="register-btn" class="nav-link btn"><i class="bi bi-person-plus"></i> Cadastrar-se</button></a>
-          </li>
-          <li>
-            <a href="{{ url('website/login') }}"><button id="login-btn" class="nav-link btn">Fazer Login</button></a>
-          </li>
-          @else
-          <!-- Mostrar se estiver logado -->
-          <li id="notification-btn">
-            <a href="#" data-bs-toggle="modal" data-bs-target="#notificationsModal" style="   text-decoration: none;">
-              <button class="nav-link btn"><i class="bi bi-bell" "></i> Notificações</button>
-                    </a>
-                </li>
-                <li id=" profile-btn">
-                  <a href="{{ url('website/perfil') }}" style="text-decoration: none;"><button class="nav-link btn"><i class="bi bi-person"></i> Perfil</button></a>
-          </li>
-          @endguest
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav>
+  <header class="py-12" style="background-color: var(--color-background);">
+    <div class="container mx-auto text-center">
+      <h1 class="text-4xl font-bold mb-2">Bem-vindo ao Buffet Divino Sabor</h1>
+      <p class="text-xl">Desfrute de nossas delícias para tornar sua festa inesquecível</p>
     </div>
   </header>
 
-
-
-
-  <!-- Notifications Modal -->
-  <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="notificationsModalLabel">Notificações</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <main class="container mx-auto my-8">
+    <div class="flex flex-wrap -mx-4">
+      <div class="w-full lg:w-3/4 px-4">
+        <div class="mb-6 category-container">
+        <ul class="filters_menu">
+  <li class="category-button active" data-filter="*"><i class="fas fa-utensils"></i> Todos</li>
+  <li class="category-button" data-filter=".salgado"><i class="fas fa-hamburger"></i> Salgados</li>
+  <li class="category-button" data-filter=".doce"><i class="fas fa-cookie"></i> Doces</li>
+  <li class="category-button" data-filter=".bebida"><i class="fas fa-glass-cheers"></i> Bebidas</li>
+  <li class="category-button" data-filter=".vegetariano"><i class="fas fa-leaf"></i> Vegetariano</li>
+</ul>
         </div>
-        <div class="modal-body">
-          <!-- Exemplo estático de notificações -->
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">Mensagem de exemplo 1</h5>
-              <p class="card-text">2024-06-26</p>
-            </div>
-          </div>
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">Mensagem de exemplo 2</h5>
-              <p class="card-text">2024-06-25</p>
-            </div>
-          </div>
-          <p>Nenhuma notificação encontrada.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- food section -->
-<section class="food_section layout_padding-bottom">
-  <div class="container">
-    <div class="heading_container heading_center">
-      <h2>Faça seu Pedido!</h2>
-    </div>
-
-    <ul class="filters_menu">
-      <li class="active" data-filter="*">Todos</li>
-      <li data-filter=".salgado">Salgados</li>
-      <li data-filter=".doce">Doces</li>
-      <li data-filter=".bebida">Bebidas</li>
-    </ul>
-
-    <div class="filters-content">
-      <div class="row grid" id="product-list">
-        <!-- Aqui serão carregados os produtos -->
-        @foreach($produtos->take(15) as $produto)
-        <div class="col-sm-6 col-lg-4 all {{ $produto->tipo }}">
-          <div class="box">
-            <div>
-              <div class="img-box">
-                <img src="{{ asset('storage/ImagensProdutos/' . $produto->caminhoImagem) }}" alt="{{ $produto->nome }}" >
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="product-list">
+          <div class="shadcn-card">
+            <img src="https://websim.ai/images/coxinha.jpg" class="w-full h-48 object-cover rounded-t-xl" alt="Coxinhas">
+            <div class="p-4">
+              <h5 class="font-semibold mb-2">Coxinhas</h5>
+              <p class="text-sm text-muted-foreground mb-4"><i class="fas fa-tag mr-1"></i>R$ 2.50</p>
+              <div class="flex items-center mb-4">
+                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-l-md" onclick="decreaseQuantity('Coxinhas')"><i class="fas fa-minus"></i></button>
+                <input type="number" id="quantity-Coxinhas" value="1" min="1" max="99" class="shadcn-input mx-0 w-16 text-center rounded-none border-l-0 border-r-0" onchange="updateQuantity('Coxinhas')">
+                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-r-md" onclick="increaseQuantity('Coxinhas')"><i class="fas fa-plus"></i></button>
               </div>
-              <div class="detail-box">
-                <div class="options">
-                  <div>
-                    <h6>{{ $produto->nome }}</h6>
-                    <p>{{ $produto->descricao }}</p>
-                  </div>
-                  <div class="d-flex align-items-center">
-                    <div class="quantity mr-3">
-                      <input type="number" min="1" value="1" class="form-control form-control-sm">
-                    </div>
-                    <a href="#" class="btn add-to-cart" data-id="{{ $produto->id }}" data-caminho-imagem="{{ asset('storage/ImagensProdutos/' . $produto->caminhoImagem) }}"  data-nome="{{ $produto->nome }}" data-precoUnitario="{{ number_format($produto->precoUnitario, 2, ',', '.') }}">
-                      <i class="bi bi-cart" style="color: white;"></i>
-                      <span class="preco-unitario" style="display: none;">{{ number_format($produto->precoUnitario, 2, ',', '.') }}</span>
-                    </a>
-                    <h6>R$ {{ number_format($produto->precoUnitario, 2, ',', '.') }}</h6>
-                  </div>
-                </div>
+              <button class="shadcn-button shadcn-button-secondary w-full rounded-md" onclick="addToCart('Coxinhas')"><i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho</button>
+            </div>
+          </div>
+        
+          <div class="shadcn-card">
+            <img src="https://websim.ai/images/bolinha-de-queijo.jpg" class="w-full h-48 object-cover rounded-t-xl" alt="Bolinhas de Queijo">
+            <div class="p-4">
+              <h5 class="font-semibold mb-2">Bolinhas de Queijo</h5>
+              <p class="text-sm text-muted-foreground mb-4"><i class="fas fa-tag mr-1"></i>R$ 2.00</p>
+              <div class="flex items-center mb-4">
+                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-l-md" onclick="decreaseQuantity('Bolinhas de Queijo')"><i class="fas fa-minus"></i></button>
+                <input type="number" id="quantity-Bolinhas de Queijo" value="1" min="1" max="99" class="shadcn-input mx-0 w-16 text-center rounded-none border-l-0 border-r-0" onchange="updateQuantity('Bolinhas de Queijo')">
+                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-r-md" onclick="increaseQuantity('Bolinhas de Queijo')"><i class="fas fa-plus"></i></button>
               </div>
+              <button class="shadcn-button shadcn-button-secondary w-full rounded-md" onclick="addToCart('Bolinhas de Queijo')"><i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho</button>
+            </div>
+          </div>
+        
+          <div class="shadcn-card">
+            <img src="https://websim.ai/images/kibe.jpg" class="w-full h-48 object-cover rounded-t-xl" alt="Kibe">
+            <div class="p-4">
+              <h5 class="font-semibold mb-2">Kibe</h5>
+              <p class="text-sm text-muted-foreground mb-4"><i class="fas fa-tag mr-1"></i>R$ 2.50</p>
+              <div class="flex items-center mb-4">
+                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-l-md" onclick="decreaseQuantity('Kibe')"><i class="fas fa-minus"></i></button>
+                <input type="number" id="quantity-Kibe" value="1" min="1" max="99" class="shadcn-input mx-0 w-16 text-center rounded-none border-l-0 border-r-0" onchange="updateQuantity('Kibe')">
+                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-r-md" onclick="increaseQuantity('Kibe')"><i class="fas fa-plus"></i></button>
+              </div>
+              <button class="shadcn-button shadcn-button-secondary w-full rounded-md" onclick="addToCart('Kibe')"><i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho</button>
+            </div>
+          </div>
+        
+          <div class="shadcn-card">
+            <img src="https://websim.ai/images/mini-pizza.jpg" class="w-full h-48 object-cover rounded-t-xl" alt="Mini Pizzas">
+            <div class="p-4">
+              <h5 class="font-semibold mb-2">Mini Pizzas</h5>
+              <p class="text-sm text-muted-foreground mb-4"><i class="fas fa-tag mr-1"></i>R$ 3.50</p>
+              <div class="flex items-center mb-4">
+                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-l-md" onclick="decreaseQuantity('Mini Pizzas')"><i class="fas fa-minus"></i></button>
+                <input type="number" id="quantity-Mini Pizzas" value="1" min="1" max="99" class="shadcn-input mx-0 w-16 text-center rounded-none border-l-0 border-r-0" onchange="updateQuantity('Mini Pizzas')">
+                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-r-md" onclick="increaseQuantity('Mini Pizzas')"><i class="fas fa-plus"></i></button>
+              </div>
+              <button class="shadcn-button shadcn-button-secondary w-full rounded-md" onclick="addToCart('Mini Pizzas')"><i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho</button>
+            </div>
+          </div>
+        
+          <div class="shadcn-card">
+            <img src="https://websim.ai/images/brigadeiro.jpg" class="w-full h-48 object-cover rounded-t-xl" alt="Brigadeiros">
+            <div class="p-4">
+              <h5 class="font-semibold mb-2">Brigadeiros</h5>
+              <p class="text-sm text-muted-foreground mb-4"><i class="fas fa-tag mr-1"></i>R$ 1.50</p>
+              <div class="flex items-center mb-4">
+                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-l-md" onclick="decreaseQuantity('Brigadeiros')"><i class="fas fa-minus"></i></button>
+                <input type="number" id="quantity-Brigadeiros" value="1" min="1" max="99" class="shadcn-input mx-0 w-16 text-center rounded-none border-l-0 border-r-0" onchange="updateQuantity('Brigadeiros')">
+                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-r-md" onclick="increaseQuantity('Brigadeiros')"><i class="fas fa-plus"></i></button>
+              </div>
+              <button class="shadcn-button shadcn-button-secondary w-full rounded-md" onclick="addToCart('Brigadeiros')"><i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho</button>
+            </div>
+          </div>
+        
+          <div class="shadcn-card">
+            <img src="https://websim.ai/images/beijinho.jpg" class="w-full h-48 object-cover rounded-t-xl" alt="Beijinhos">
+            <div class="p-4">
+              <h5 class="font-semibold mb-2">Beijinhos</h5>
+              <p class="text-sm text-muted-foreground mb-4"><i class="fas fa-tag mr-1"></i>R$ 1.50</p>
+              <div class="flex items-center mb-4">
+                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-l-md" onclick="decreaseQuantity('Beijinhos')"><i class="fas fa-minus"></i></button>
+                <input type="number" id="quantity-Beijinhos" value="1" min="1" max="99" class="shadcn-input mx-0 w-16 text-center rounded-none border-l-0 border-r-0" onchange="updateQuantity('Beijinhos')">
+                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-r-md" onclick="increaseQuantity('Beijinhos')"><i class="fas fa-plus"></i></button>
+              </div>
+              <button class="shadcn-button shadcn-button-secondary w-full rounded-md" onclick="addToCart('Beijinhos')"><i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho</button>
+            </div>
+          </div>
+
+          <div class="shadcn-card">
+            <img src="https://websim.ai/images/refrigerante.jpg" class="w-full h-48 object-cover rounded-t-xl" alt="Refrigerante">
+            <div class="p-4">
+              <h5 class="font-semibold mb-2">Refrigerante</h5>
+              <p class="text-sm text-muted-foreground mb-4"><i class="fas fa-tag mr-1"></i>R$ 5.00</p>
+              <div class="flex items-center mb-4">
+                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-l-md" onclick="decreaseQuantity('Refrigerante')"><i class="fas fa-minus"></i></button>
+                <input type="number" id="quantity-Refrigerante" value="1" min="1" max="99" class="shadcn-input mx-0 w-16 text-center rounded-none border-l-0 border-r-0" onchange="updateQuantity('Refrigerante')">
+                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-r-md" onclick="increaseQuantity('Refrigerante')"><i class="fas fa-plus"></i></button>
+              </div>
+              <button class="shadcn-button shadcn-button-secondary w-full rounded-md" onclick="addToCart('Refrigerante')"><i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho</button>
+            </div>
+          </div>
+
+          <div class="shadcn-card">
+            <img src="https://websim.ai/images/suco.jpg" class="w-full h-48 object-cover rounded-t-xl" alt="Suco Natural">
+            <div class="p-4">
+              <h5 class="font-semibold mb-2">Suco Natural</h5>
+              <p class="text-sm text-muted-foreground mb-4"><i class="fas fa-tag mr-1"></i>R$ 6.00</p>
+              <div class="flex items-center mb-4">
+                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-l-md" onclick="decreaseQuantity('Suco Natural')"><i class="fas fa-minus"></i></button>
+                <input type="number" id="quantity-Suco Natural" value="1" min="1" max="99" class="shadcn-input mx-0 w-16 text-center rounded-none border-l-0 border-r-0" onchange="updateQuantity('Suco Natural')">
+                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-r-md" onclick="increaseQuantity('Suco Natural')"><i class="fas fa-plus"></i></button>
+              </div>
+              <button class="shadcn-button shadcn-button-secondary w-full rounded-md" onclick="addToCart('Suco Natural')"><i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho</button>
+            </div>
+          </div>
+
+          <div class="shadcn-card">
+            <img src="https://websim.ai/images/quiche.jpg" class="w-full h-48 object-cover rounded-t-xl" alt="Mini Quiche de Espinafre">
+            <div class="p-4">
+              <h5 class="font-semibold mb-2">Mini Quiche de Espinafre</h5>
+              <p class="text-sm text-muted-foreground mb-4"><i class="fas fa-tag mr-1"></i>R$ 3.00</p>
+              <div class="flex items-center mb-4">
+                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-l-md" onclick="decreaseQuantity('Mini Quiche de Espinafre')"><i class="fas fa-minus"></i></button>
+                <input type="number" id="quantity-Mini Quiche de Espinafre" value="1" min="1" max="99" class="shadcn-input mx-0 w-16 text-center rounded-none border-l-0 border-r-0" onchange="updateQuantity('Mini Quiche de Espinafre')">
+                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-r-md" onclick="increaseQuantity('Mini Quiche de Espinafre')"><i class="fas fa-plus"></i></button>
+              </div>
+              <button class="shadcn-button shadcn-button-secondary w-full rounded-md" onclick="addToCart('Mini Quiche de Espinafre')"><i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho</button>
             </div>
           </div>
         </div>
-        @endforeach
-      </div>
-      <div class="btn-box">
-        <button id="ver-mais-btn" class="btn btn-primary">Ver mais</button>
-
-      </div>
-    </div>
-  </div>
-</section>
-
-
-  <input type="hidden" id="codigo" value="{{ $codigo }}">
-  <!-- end food section -->
-
-  <!-- cart section -->
-  <section class="h-100">
-    <div class="container h-100 py-5">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-10">
-          <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="fw-normal mb-0">Carrinho</h1>
-         
-          </div>
-          <div class="card rounded-3 mb-4">
-  <div class="card-body p-4">
-    <div class="row g-3 align-items-center">
-      <div class="col-md-6">
-        <h3 class="mb-0">{{ $servico->nomeServico }}</h3>
-      </div>
-
-    </div>
-    <hr class="my-4">
-    @foreach ($pedidos_servicos as $pedido_servico)
-      <div class="card rounded-3 mb-4">
-        <div class="card-body p-4">
-          <div class="row g-3 align-items-center">
-            <div class="col-md-4">
-              <p class="mb-0">Funcionário: <strong>{{ $pedido_servico->funcionarioTipo }}</strong></p>
-            </div>
-            <div class="col-md-4">
-              <p class="mb-0">Quantidade: <strong>{{ $pedido_servico->quantidade }}</strong></p>
-            </div>
-            <div class="col-md-4 text-end">
-              <h5 class="mb-0">Subtotal: <strong style="color: #FA856E;">R${{ number_format($pedido_servico->subtotal, 2) }}</strong></h5>
-            </div>
-          </div>
-        </div>
-      </div>
-    @endforeach
-    <div class="col-md-12 text-end ">
-        <h3 class="mb-0" >
-          Total dos Serviços:
-          <span style="color: #FA856E;">R${{ number_format($servico->totalServicos, 2) }}</span>
-        </h3>
-      </div>
-  </div>
-</div>
-
-          <div class="cart-items">
-            <!-- Aqui será inserido dinamicamente o conteúdo do carrinho -->
-          </div>
-
- 
-
-
-
-
-
-          <div class="card">
-            <div class="card-body">
-              <a href="{{ url('/website/agendamento/' . $codigo) }}"
-              class="btn btn-warning btn-block btn-lg checkout-btn">Fazer agendamento da festa</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- end cart section -->
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      $('.filters_menu li').click(function() {
-        $('.filters_menu li').removeClass('active');
-        $(this).addClass('active');
-
-        var filterValue = $(this).attr('data-filter');
-        if (filterValue == "*") {
-          $('.filters-content .all').show();
-        } else {
-          $('.filters-content .all').not(filterValue).hide();
-          $('.filters-content .all').filter(filterValue).show();
-        }
-      });
-
-      // Array para armazenar os itens do carrinho
-      let carrinho = [];
-
-      // Função para adicionar um item ao carrinho
-      $('.add-to-cart').click(function(e) {
-        e.preventDefault();
-
-        // Captura informações do produto
-        let id = $(this).data('id');
-        let nome = $(this).data('nome');
-        let caminhoImagem = $(this).data('caminho-imagem');
-        console.log(caminhoImagem)
-        let precoUnitarioElement = $(this).find('.preco-unitario'); // Encontra o elemento que contém o preço unitário
-        let precoUnitario = parseFloat(precoUnitarioElement.text().replace(',', '.')); // Extrai o texto e converte para float
-        let quantidade = parseInt($(this).closest('.options').find('.quantity input').val());
-
-        // Verifica se o item já está no carrinho
-        let index = carrinho.findIndex(item => item.id === id);
-        if (index !== -1) {
-          // Se já está no carrinho, atualiza a quantidade
-          carrinho[index].quantidade += quantidade;
-        } else {
-          // Senão, adiciona ao carrinho
-          carrinho.push({
-            id: id,
-            nome: nome,
-            caminhoImagem: caminhoImagem,
-            precoUnitario: precoUnitario,
-            quantidade: quantidade
-            
-          });
-        }
-
-        // Atualiza visualização do carrinho
-        atualizarCarrinho();
-      });
-
-      // Função para atualizar visualização do carrinho
-      function atualizarCarrinho() {
-        console.log('Atualizando carrinho...');
-        $('.cart-items').empty();
-
-        let total = 0;
-
-        carrinho.forEach(function(item) {
-          let subtotal = item.precoUnitario * item.quantidade;
-          total += subtotal;
-
-          let itemHtml = `
-  <div class="card rounded-3 mb-4">
-  <div class="card-body p-4">
-    <div class="row g-3 align-items-center">
-      <div class="col-md-2">
-<img src="${item.caminhoImagem}" class="img-fluid rounded-3" alt="${item.nome}">
-
-      </div>
-      <div class="col-md-4">
-        <p class="lead fw-normal mb-2">${item.nome}</p>
-        <p class="mb-0">Quantidade: ${item.quantidade}</p>
-      </div>
-      <div class="col-md-3">
-        <h5 class="mb-0">Subtotal: R$${subtotal.toFixed(2)}</h5>
-      </div>
-      <div class="col-md-3 text-end">
-        <button class="btn btn-danger remove-item" data-id="${item.id}">
-          <i class="fas fa-trash fa-lg"></i>
+        <button id="load-more" class="shadcn-button shadcn-button-primary" onclick="loadMoreProducts()">
+          <i class="fas fa-plus mr-2"></i>Ver Mais Produtos
         </button>
       </div>
+      <div class="w-full lg:w-1/4 px-4">
+        <div class="shadcn-card p-4 sticky top-4">
+          <h3 class="text-lg font-semibold mb-4"><i class="fas fa-shopping-cart mr-2"></i>Seu Carrinho</h3>
+          <ul id="cart-list" class="space-y-2 mb-4">
+            <!-- Itens do carrinho serão adicionados aqui -->
+          </ul>
+          <p class="mb-4">Total: R$ <span id="cart-total">0.00</span></p>
+          <button class="shadcn-button shadcn-button-secondary w-full" onclick="checkout()"><i class="fas fa-check mr-2"></i>Finalizar Pedido</button>
+        </div>
+      </div>
     </div>
-  </div>
-  
-</div>
+  </main>
 
+  <footer style="background-color: var(--color-footer); color: white;" class="py-6 mt-12">
+    <div class="container mx-auto text-center">
+      <p>&copy; 2023 Buffet Divino Sabor. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    let cart = {};
+    let currentProducts = [];
+    let displayedProducts = 9;
+    const productsPerPage = 9;
+    const products = [
+      { name: 'Coxinhas', price: 2.50, category: 'salgado', image: 'coxinha.jpg' },
+      { name: 'Bolinhas de Queijo', price: 2.00, category: 'salgado', image: 'bolinha-de-queijo.jpg' },
+      { name: 'Kibe', price: 2.50, category: 'salgado', image: 'kibe.jpg' },
+      { name: 'Mini Pizzas', price: 3.50, category: 'salgado', image: 'mini-pizza.jpg' },
+      { name: 'Brigadeiros', price: 1.50, category: 'doce', image: 'brigadeiro.jpg' },
+      { name: 'Beijinhos', price: 1.50, category: 'doce', image: 'beijinho.jpg' },
+      { name: 'Refrigerante', price: 5.00, category: 'bebida', image: 'refrigerante.jpg' },
+      { name: 'Suco Natural', price: 6.00, category: 'bebida', image: 'suco.jpg' },
+      { name: 'Mini Quiche de Espinafre', price: 3.00, category: 'vegetariano', image: 'quiche.jpg' },
+      { name: 'Bolinho de Queijo', price: 2.50, category: 'vegetariano', image: 'bolinho-queijo.jpg' },
+      { name: 'Empadinha', price: 3.00, category: 'salgado', image: 'empadinha.jpg' },
+      { name: 'Torta de Limão', price: 4.00, category: 'doce', image: 'torta-limao.jpg' },
+      { name: 'Água Mineral', price: 2.00, category: 'bebida', image: 'agua-mineral.jpg' },
+      { name: 'Bruschetta', price: 3.50, category: 'vegetariano', image: 'bruschetta.jpg' },
+      { name: 'Pastel de Forno', price: 3.00, category: 'salgado', image: 'pastel-forno.jpg' },
+    ];
+
+    function loadMoreProducts() {
+      const productList = document.getElementById('product-list');
+      const endIndex = Math.min(displayedProducts + productsPerPage, currentProducts.length);
+      
+      for (let i = displayedProducts; i < endIndex; i++) {
+        const product = currentProducts[i];
+        const productHtml = `
+          <div class="shadcn-card">
+            <img src="https://websim.ai/images/${product.image}" class="w-full h-48 object-cover rounded-t-xl" alt="${product.name}">
+            <div class="p-4">
+              <h5 class="font-semibold mb-2">${product.name}</h5>
+              <p class="text-sm text-muted-foreground mb-4"><i class="fas fa-tag mr-1"></i>R$ ${product.price.toFixed(2)}</p>
+              <div class="flex items-center mb-4">
+                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-l-md" onclick="decreaseQuantity('${product.name}')"><i class="fas fa-minus"></i></button>
+                <input type="number" id="quantity-${product.name}" value="1" min="1" max="99" class="shadcn-input mx-0 w-16 text-center rounded-none border-l-0 border-r-0" onchange="updateQuantity('${product.name}')">
+                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-r-md" onclick="increaseQuantity('${product.name}')"><i class="fas fa-plus"></i></button>
+              </div>
+              <button class="shadcn-button shadcn-button-secondary w-full rounded-md" onclick="addToCart('${product.name}')"><i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho</button>
+            </div>
+          </div>
         `;
+        productList.innerHTML += productHtml;
+      }
+      
+      displayedProducts = endIndex;
+      document.getElementById('load-more').style.display = displayedProducts >= currentProducts.length ? 'none' : 'block';
+    }
 
-          $('.cart-items').append(itemHtml);
-        });
+   // Função para filtrar produtos por categoria
+$('.category-button').on('click', function() {
+    const category = $(this).data('category');
+    const filteredProducts = products.filter(product => product.category === category);
 
-        $('.cart-items').append(`
-  <div class="d-flex justify-content-end mt-4">
-    <div class="bg-light p-3 rounded-3">
-      <h3 class="mb-0">Total dos Produtos: R$${total.toFixed(2)} </h3>
-    </div>
-  </div>
-`);
+    // Limpar a lista de produtos
+    $('#product-list').empty();
 
-        
-        
-        // Mostra o total no carrinho
+    // Construir HTML dos produtos filtrados
+    let html = '';
+    filteredProducts.forEach(product => {
+        html += `<div class="product">${product.name}</div>`;
+    });
+
+    // Adicionar produtos filtrados ao container
+    $('#product-list').append(html);
+
+    // Atualizar classe ativa nos botões de categoria
+    $('.category-button').removeClass('active');
+    $(this).addClass('active');
+});
 
 
+    function addToCart(item) {
+      const quantity = parseInt(document.getElementById(`quantity-${item}`).value);
+      if (cart[item]) {
+        cart[item] += quantity;
+      } else {
+        cart[item] = quantity;
+      }
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartList = document.getElementById('cart-list');
+      const cartTotal = document.getElementById('cart-total');
+      cartList.innerHTML = '';
+      let total = 0;
+
+      for (const [item, count] of Object.entries(cart)) {
+        const product = products.find(p => p.name === item);
+        const li = document.createElement('li');
+        li.className = 'flex justify-between items-center';
+        li.innerHTML = `
+          <span><i class="fas fa-drumstick-bite mr-2"></i>${item} x${count}</span>
+          <span class="flex items-center">
+            R$ ${(product.price * count).toFixed(2)}
+            <button class="shadcn-button shadcn-button-outline ml-2 p-1 rounded-full" onclick="confirmRemoveFromCart('${item}')">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </span>
+        `;
+        cartList.appendChild(li);
+        total += product.price * count;
       }
 
-      // Evento para remover um item do carrinho
-      $(document).on('click', '.remove-item', function(e) {
-        e.preventDefault();
-        let id = $(this).data('id');
+      cartTotal.textContent = total.toFixed(2);
+    }
 
-        // Remove o item do carrinho
-        carrinho = carrinho.filter(item => item.id !== id);
+    function confirmRemoveFromCart(item) {
+      if (confirm(`Tem certeza que deseja remover ${item} do carrinho?`)) {
+        removeFromCart(item);
+      }
+    }
 
-        // Atualiza visualização do carrinho
-        atualizarCarrinho();
-      });
+    function removeFromCart(item) {
+      delete cart[item];
+      updateCart();
+    }
 
-      // Evento para finalizar compra
-      var codigo = document.getElementById('codigo').value;
+    function checkout() {
+      alert('Pedido finalizado! Total: R$ ' + document.getElementById('cart-total').textContent);
+      cart = {};
+      updateCart();
+    }
 
+    function decreaseQuantity(item) {
+      const input = document.getElementById(`quantity-${item}`);
+      if (input.value > 1) {
+        input.value = parseInt(input.value) - 1;
+      }
+    }
 
-      $('.checkout-btn').click(function() {
-        // Verifica se há itens no carrinho para enviar
-        if (carrinho.length === 0) {
-          console.log('O carrinho está vazio.');
-          return;
-        }
+    function increaseQuantity(item) {
+      const input = document.getElementById(`quantity-${item}`);
+      if (input.value < 99) {
+        input.value = parseInt(input.value) + 1;
+      }
+    }
 
-        // Dados a serem enviados
-        let dadosPedido = {
-          codigo: codigo,
-          itens: carrinho
-        };
+    function updateQuantity(item) {
+      const input = document.getElementById(`quantity-${item}`);
+      if (input.value < 1) {
+        input.value = 1;
+      } else if (input.value > 99) {
+        input.value = 99;
+      }
+    }
 
-        // Requisição AJAX para enviar os dados do carrinho
-        $.ajax({
-          type: 'POST',
-          url: '/website/adicionar-ao-pedido',
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          data: dadosPedido,
-          dataType: 'json',
-          success: function(response) {
-            console.log('Dados do carrinho enviados com sucesso:', response.message);
-            // Limpar carrinho ou redirecionar para página de sucesso
-          },
-          error: function(xhr, status, error) {
-            console.error('Erro ao enviar dados do carrinho:', error);
-          }
-        });
-      });
-    });
+    // Inicializar a página com todos os produtos
+    currentProducts = products;
+    loadMoreProducts();
 
-
-
+    // Inicializar tooltips
+    tippy('[data-tippy-content]');
   </script>
-
-
-
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  $(document).ready(function() {
-    var skip = 15; // Começa do produto 16 (índice 15 no array)
-
-    $('#ver-mais-btn').click(function(e) {
-      e.preventDefault();
-      
-      // Requisição AJAX para carregar mais produtos
-      $.ajax({
-        type: 'GET',
-        url: '/website/carregar-mais-produtos',
-        data: { skip: skip },
-        dataType: 'html',
-        success: function(response) {
-          $('#product-list').append(response); // Adiciona os novos produtos ao final da lista
-          skip += 15; // Atualiza o índice de início para os próximos produtos
-          
-          // Se não houver mais produtos para carregar, esconde o botão "Ver mais"
-          if (response.trim() === '') {
-            $('#ver-mais-btn').hide();
-          }
-        },
-        error: function(xhr, status, error) {
-          console.error('Erro ao carregar mais produtos:', error);
-        }
-      });
-    });
-  });
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-
-  <!-- Vendor JS Files -->
-  <script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
-  <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
-  <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/waypoints/noframework.waypoints.js') }}"></script>
-  <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
-
-</body>
-
-</html>
+</body></html>
