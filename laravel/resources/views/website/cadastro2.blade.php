@@ -38,8 +38,8 @@
     </div>
     
     <div class="input-group">
-        <label for="dob">Data de Nascimento:</label>
-        <input type="date" id="dob" name="dob" required value="{{ old('dob', $cliente->dataNascimento ?? '') }}">
+        <label for="dataNascimento">Data de Nascimento:</label>
+        <input type="date" id="dataNascimento" name="dataNascimento" required value="{{ old('dataNascimento', $cliente->dataNascimento ?? '0000-00-00   ' ) }}">
     </div>
     
     <div class="input-group">
