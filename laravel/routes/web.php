@@ -68,6 +68,9 @@ Route::post('/adm/login/logar', [LoginAdminController::class, 'logar'])->name('a
 // Rota para cadastro de administrador
 Route::post('/adm/admin/cadastro', [CadastrarAdminController::class, 'cadastrar'])->name('adm.admin.cadastro');
 
+
+
+
 // Grupo de rotas 'adm' protegido por autenticação admin
 Route::middleware(['admin'])->prefix('adm')->group(function () {
     Route::get('/', function () {
@@ -191,12 +194,15 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
         Route::post('/guardar', [ReceitaItemController::class, 'guardar'])->name('receitasItens.guardar');
         Route::get('/remover/{idReceitasItens}', [ReceitaItemController::class, 'remover'])->name('receitasItens.remover');
     });
+    
     Route::prefix('admins')->group(function () {
         Route::get('/', [AdminController::class, 'index1'])->name('admins.index1');
         Route::get('/show/{idAdmins}', [AdminController::class, 'show'])->name('admins.show');
-         Route::post('/create', [CadastrarAdminController::class, 'create'])->name('admins.create');
-        // Route::get('/remover/{idAdmins}', [AdminController::class, 'remover'])->name('admins.remover');
+        Route::post('/create', [CadastrarAdminController::class, 'create'])->name('admins.create');
+        Route::post('/update', [AdminController ::class, 'update'])->name('admins.update');
+        Route::get('/remover/{idAdmins}', [AdminController::class, 'remover'])->name('admins.remover');
     });
+    
     Route::prefix('galeriaImagens')->group(function () {
         Route::get('/', [GaleriaImagemController::class, 'index'])->name('galeriaImagens.index');
         Route::get('/show/{idGaleriaImagens}', [GaleriaImagemController::class, 'show'])->name('galeriaImagens.show');
