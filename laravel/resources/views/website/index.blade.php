@@ -144,7 +144,7 @@
   <section id="hero" class="d-flex align-items-center">
     <div class="container" data-aos="zoom-out" data-aos-delay="100">
       <h1 style="color: white;">Bem vindo ao <span style="color: #FF944E;"">Buffet Divino Sabor</span></h1>
-      <h2 style="color: white;"">Produzindo eventos com o melhor cardápio desde 2014.</h2>
+      <h2 style="color: white;">Produzindo eventos com o melhor cardápio desde 2014.</h2>
       <div class="d-flex">
         <a href="{{url('website/cadastro2')}}" class="btn-get-started scrollto">Faça seu pedido</a>
         

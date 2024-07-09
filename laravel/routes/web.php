@@ -183,7 +183,7 @@ Route::get('website/login', [LoginClienteController::class, 'index'])->name('log
 Route::post('website/login', [LoginClienteController::class, 'logar'])->name('login.logar');
 
 Route::get('website/cadastro', [CadastrarClienteController::class, 'MostrarFormularioCadastro'])->name('cadastro');
-Route::post('website/cadastro', [CadastrarClienteController::class, 'cadastrar'])->name('cadastro.cadastrar');
+    Route::post('website/cadastro', [CadastrarClienteController::class, 'cadastrar'])->name('cadastro.cadastrar');
 
 // Rotas do prefixo 'website'
 Route::prefix('website')->group(function () {
