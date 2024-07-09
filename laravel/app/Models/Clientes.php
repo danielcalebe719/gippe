@@ -26,7 +26,7 @@ class Clientes extends Authenticatable
         'dataCadastro',
         'dataAtualizacao',
         'dataRemocao',
-        'imgCaminho',
+        'caminhoImagem',
         'telefone',
         'last_login'
         // Adicione outros campos aqui
