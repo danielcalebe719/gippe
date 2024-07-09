@@ -23,12 +23,19 @@ class CadastrarClienteController extends Controller
 
     public function cadastrar(Request $request)
     {
+        // Validação dos dados recebidos do formulário
         $this->validator($request->all())->validate();
-
+    
+        // Criação do cliente no banco de dados
         $cliente = $this->create($request->all());
-
-        return redirect('/website/login')->with('success', 'Cliente registrado com sucesso!');
+    
+        // Retorna uma resposta JSON indicando sucesso
+        return response()->json([
+            'success' => true,
+            'message' => 'Cliente registrado com sucesso!'
+        ]);
     }
+    
 
     protected function validator(array $data)
     {
@@ -47,7 +54,9 @@ class CadastrarClienteController extends Controller
            
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+
         ]);
+        
     }
 
     protected function carregar_dados(Request $request)
