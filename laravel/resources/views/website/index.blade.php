@@ -175,12 +175,12 @@
   <section id="hero" class="d-flex align-items-center">
     <div class="container" data-aos="zoom-out" data-aos-delay="100">
       <h1 style="color: white;">Bem vindo ao <span style="color: #FF944E;"">Buffet Divino Sabor</span></h1>
-      <h2 style=" color: white;"">Produzindo eventos com o melhor cardápio desde 2014.</h2>
-          <div class="d-flex">
-            <a href="{{url('website/cadastro2/')}}" class="btn-get-started scrollto">Faça seu pedido</a>
-
-            <a href="https://youtu.be/y6120QOlsfU?si=0Z_6ErtD0vy7wDzB" class="glightbox btn-watch-video"><i class="bi bi-play-circle" style="color: #FA856E;"></i><span style=" color: white; ">Clique e veja um pouco mais sobre nós</span></a>
-          </div>
+      <h2 style="color: white;"">Produzindo eventos com o melhor cardápio desde 2014.</h2>
+      <div class="d-flex">
+        <a href="{{url('website/cadastro2')}}" class="btn-get-started scrollto">Faça seu pedido</a>
+        
+        <a href="https://youtu.be/y6120QOlsfU?si=0Z_6ErtD0vy7wDzB" class="glightbox btn-watch-video"><i class="bi bi-play-circle" style="color: #FA856E;"></i><span style=" color: white; ">Clique e veja um pouco mais sobre nós</span></a>
+      </div>
     </div>
   </section><!-- End Hero -->
 
