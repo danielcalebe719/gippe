@@ -5,15 +5,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Clientes;
+use App\Models\Agendamentos;
+use App\Models\Feedbacks;
+use App\Models\NotificacoesClientes;
+use App\Models\NotificacoesColaboradores;
+use App\Models\PedidosAndamento;
+use App\Models\PedidosProdutos;
+use App\Models\PedidosServicos;
+use Illuminate\Support\Str;
 
 class Pedidos extends Model
 {
     use HasFactory;
 
-    protected $table = 'pedidos'; // Nome da tabela no banco de dados
+    //protected $table = 'pedidos'; // Nome da tabela no banco de dados
     protected $primaryKey = 'id'; // Nome da chave primária
-    protected $fillable = [   
+
+   
+
+    protected $fillable = [
+        'idServicos',    
         'idClientes', 
+        'codigo',
         'observacao', 
         'status',   
         'totalPedido', 
@@ -23,16 +36,69 @@ class Pedidos extends Model
         
         // Adicione outros campos aqui
     ];
+  
     public $timestamps = false;
 
 
-    public function cliente()
+    public function pedidosProdutos()
     {
-        return $this->hasOne(Clientes::class,'idClientes','idClientes');
+        return $this->hasMany(PedidosProdutos::class, 'idPedidos', 'id');
     }
 
-    
+    // Relacionamento com Produtos através de PedidosProdutos
+    public function produtos()
+    {
+        return $this->hasManyThrough(
+            Produtos::class,
+            PedidosProdutos::class,
+            'idPedidos', // Chave estrangeira na tabela PedidosProdutos
+            'id', // Chave estrangeira na tabela Produtos
+            'id', // Chave local na tabela Pedidos
+            'idProdutos' // Chave local na tabela PedidosProdutos
+        );
+    }
 
+    public function cliente()
+    {
+        return $this->hasOne(Clientes::class,'id','idClientes');
+    }
 
+    public function servico(){
+        return $this->hasOne(Servicos::class,'id','idServicos');
+    }
+
+    public function feedback()
+    {
+        return $this->hasOne(Feedbacks::class,'idPedidos','id');
+    }
+
+    public function notificacoesClientes()
+    {
+        return $this->hasMany(NotificacoesClientes::class,'idPedidos','id');
+    }
+
+    public function notificacoesColaboradores()
+    {
+        return $this->hasMany(NotificacoesColaboradores::class,'idPedidos','id');
+    }
+
+    public function pedidosAndamento()
+    {
+        return $this->hasMany(PedidosAndamento::class,'idPedidos','id');
+    }
+
+    // public function pedidosProdutos()
+    // {
+    //     return $this->hasMany(PedidosProdutos::class,'idPedidos','id');
+    // }
+
+    public function pedidosServicos()
+    {
+        return $this->hasOne(PedidosServicos::class,'idPedidos','id');
+    }
+    public function agendamentos()
+    {
+        return $this->hasOne(Agendamentos::class,'idPedidos','id');
+    }
 
 }

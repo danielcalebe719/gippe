@@ -4,33 +4,38 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\MovimentacoesMateriasPrimas;
+use App\Models\ReceitasItem;
 
-class Clientes extends Model
+class MateriasPrimasEstoque extends Model
 {
     use HasFactory;
 
-    protected $table = 'clientes'; // Nome da tabela no banco de dados
-    protected $primaryKey = 'idClientes'; // Nome da chave primária
+    protected $table = 'materias_primas_estoque'; // Nome da tabela no banco de dados
+    protected $primaryKey = 'id'; // Nome da chave primária
     protected $fillable = [   
         'nome', 
-        'cpf', 
-        'telefone'.
-        'data_de_nascimento', 
-        'status', 
-        'email', 
-        'senha',
-        'dataCadastro',
-        'dataAtualizacao',
+        'classificacao', 
+        'quantidade'.
+        'precoUnitario', 
+        'dataCadastro', 
+        'dataAtualizacao', 
         'dataRemocao',
-        'imgCaminho'
+        'caminhoImagem',
+        'idFornecedor'
         // Adicione outros campos aqui
     ];
     public $timestamps = false;
 
 
-    public function pedidos(){
-        return $this->hasMany(Pedido::class,'idClientes','id');
+    public function movimentacoesMateriasPrimas(){
+        return $this->hasOne(MovimentacoesMateriasPrimas::class,'idMateriaPrima','id');
     }
+
+    // public function receitasItem()
+    // {
+    //     return $this->hasMany(ReceitasItem::class,'idMateriasPrimas','id');
+    // }
 
 
 }

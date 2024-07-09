@@ -40,6 +40,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
+                                <th>Serviço</th>
                                 <th>STATUS</th>
                                 <th>Total Pedido</th>
                                 <th>Data Entrega</th>
@@ -52,6 +53,7 @@
                                 <tr>
                                     <td>{{ $pedido->id }}</td>
                                     <td>{{ $pedido->cliente->nome }}</td>
+                                    <td>{{  $pedido->servico->nome ?? 'Nome do serviço não disponível' }}</td>
                                     <td>{{ $pedido->status }}</td>
                                     <td>{{ $pedido->totalPedido }}</td>
                                     <td>{{ $pedido->dataEntrega }}</td>
@@ -71,6 +73,12 @@
                                                     onclick="abrirModalExclusao('{{ $pedido->id }}')">
                                                     Excluir
                                                 </button>
+                                            </div>
+
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Pedido">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pedidoModal" data-id="{{ $pedido->id }}">
+                                                Ver Produtos
+                                            </button>
                                             </div>
 
 
@@ -107,6 +115,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
+                                <th>Servico</th>
                                 <th>STATUS</th>
                                 <th>Total Pedido</th>
                                 <th>Data Entrega</th>
@@ -119,6 +128,7 @@
                                 <tr>
                                     <td>{{ $pedido->id }}</td>
                                     <td>{{ $pedido->cliente->nome }}</td>
+                                    <td>{{ $pedido->servico->nome ?? 'Nome do serviço não disponível' }}</td>
                                     <td>{{ $pedido->status }}</td>
                                     <td>{{ $pedido->totalPedido }}</td>
                                     <td>{{ $pedido->dataEntrega }}</td>
@@ -140,6 +150,14 @@
                                                 </button>
                                             </div>
 
+                                            <div class="btn-group mr-2" role="group" aria-label="Ações do Pedido">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pedidoModal" data-id="{{ $pedido->id }}">
+                                                Ver Produtos
+                                            </button>
+                                            </div>
+
+                                            
+
 
                                             <div class="btn-group" role="group" aria-label="Ações do Pedido">
                                                 <button class="btn btn-info btn-sm"
@@ -155,6 +173,78 @@
 
                         </tbody>
                     </table>
+
+                    <!-- Modal -->
+    <div class="modal fade" id="pedidoModal" tabindex="-1" role="dialog" aria-labelledby="pedidoModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pedidoModalLabel">Produtos do Pedido</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table >
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Descrição</th>
+                                <th>Preço Unitário</th>
+                                <th>Quantidade</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pedidoProdutosBody">
+                            <!-- Conteúdo será preenchido via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+    $('#pedidoModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Botão que acionou o modal
+        var pedidoId = button.data('id'); // Extrair informação dos atributos data-*
+
+        var modal = $(this);
+        var modalTitle = modal.find('.modal-title');
+        var modalBody = modal.find('#pedidoProdutosBody');
+
+        // Limpar o conteúdo do modal
+        modalTitle.text('Produtos do Pedido #' + pedidoId);
+        modalBody.empty();
+
+        // Fazer a requisição AJAX para obter os produtos do pedido
+        $.ajax({
+            url: '/pedidos/' + pedidoId,
+            method: 'GET',
+            success: function (data) {
+                data.pedidos_produtos.forEach(function (pedidoProduto) {
+                    var produto = pedidoProduto.produto;
+                    var row = `
+                        <tr>
+                            <td>${produto.nome}</td>
+                            <td>${produto.descricao}</td>
+                            <td>${produto.precoUnitario}</td>
+                            <td>${pedidoProduto.quantidade}</td>
+                            <td>${pedidoProduto.subtotal}</td>
+                        </tr>
+                    `;
+                    modalBody.append(row);
+                });
+            }
+        });
+    });
+</script>
+
 
 
 
@@ -177,9 +267,12 @@
                         enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <input type="hidden" name="acao" id="acao" value="adicionar">
                             <label for="Cliente ID">Cliente ID</label>
                             <input type="text" class="form-control" id="idCliente" name="idCliente" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Cliente ID">Serviço ID</label>
+                            <input type="text" class="form-control" id="idServico" name="idServico" required>
                         </div>
                         <div class="form-group">
                             <label for="observacao">Observação</label>
@@ -188,8 +281,10 @@
                         <div class="form-group">
                             <label for="status">Status</label>
                             <select class="form-control" id="status" name="status" required>
+                                <option value="nao_finalizado">Não finalizado</option>
                                 <option value="pendente">Pendente</option>
                                 <option value="aceito">Aceito</option>
+                                <option value="recusado">Recusado</option>
                                 <option value="cancelado">Cancelado</option>
                                 <option value="entregue">Entregue</option>
                             </select>
@@ -343,6 +438,12 @@
                                 required readonly>
                         </div>
                         <div class="form-group">
+
+                            <label for="editClienteID">Serviço ID</label>
+                            <input type="text" class="form-control" id="EditarIdServico" name="idServico" value=""
+                                required readonly>
+                        </div>
+                        <div class="form-group">
                             <label for="editobservacao">Observação</label>
                             <input type="text" class="form-control" id="EditarObservacao" name="observacao" value=""
                                 required>
@@ -356,10 +457,12 @@
                         <div class="form-group">
                             <label for="editStatus">Status</label>
                             <select class="form-control" id="EditarStatus" name="status" required>
-                                <option value="Pendente">Pendente</option>
-                                <option value="Aceito">Aceito</option>
-                                <option value="Cancelado">Cancelado</option>
-                                <option value="Entregue">Entregue</option>
+                                <option value="nao_finalizado">Não finalizado</option>
+                                <option value="pendente">Pendente</option>
+                                <option value="aceito">Aceito</option>
+                                <option value="recusado">Recusado</option>
+                                <option value="cancelado">Cancelado</option>
+                                <option value="entregue">Entregue</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -407,7 +510,6 @@
             <div id="pedidoContent" class="modal-body">
 
                 <div class="form-group row">
-                    <input type="hidden" name="acao" id="acao" value="editar">
                     <label for="DetalhesIdPedido" class="col-sm-3 col-form-label">Pedido ID:</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="DetalhesIdPedidos" name="idPedidos" value=""
@@ -415,9 +517,22 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label for="DetalhesIdPedido" class="col-sm-3 col-form-label">Serviço ID:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="DetalhesIdServicos" name="idServicos" value=""
+                            readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label for="DetalhesObservacao" class="col-sm-3 col-form-label">Observação:</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="DetalhesObservacao" value="" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="DetalhesObservacao" class="col-sm-3 col-form-label">Código:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="DetalhesCodigo" value="" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -467,9 +582,11 @@
             .then(data => {
                 // Preencha os campos do modal com os dados do cliente, ou valores padrão
                 document.getElementById('DetalhesIdPedidos').value = data.id || '';
+                document.getElementById('DetalhesIdServicos').value = data.idServicos || '';
                 document.getElementById('DetalhesObservacao').value = data.observacao || '';
+                document.getElementById('DetalhesCodigo').value = data.codigo || '';
                 document.getElementById('DetalhesDataPedido').value = data.dataPedido ? formatarData(data.dataPedido) : '';
-
+                
 
 
 
@@ -508,6 +625,7 @@
                 // Preencher os campos do formulário com os dados do cliente
                 document.getElementById('EditarIdPedido').value = data.id;
                 document.getElementById('EditarIdCliente').value = data.idClientes;
+                document.getElementById('EditarIdServico').value = data.idServicos;
                 document.getElementById('EditarObservacao').value = data.observacao;
                 document.getElementById('EditarDataEntrega').value = data.dataEntrega;
                 document.getElementById('EditarStatus').value = data.status;

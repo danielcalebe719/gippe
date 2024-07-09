@@ -17,32 +17,35 @@
                     <div class="card mb-4">
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                             <h6 class="m-0 font-weight-bold text-primary">Notificações para Funcionários</h6>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#modalAdicionarNotificacaoCliente">Adicionar Notificação</button>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table align-items-center table-flush" id="dataTableFuncionario">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Título</th>
+                                        <th>ID</th>
                                             <th>Mensagem</th>
                                             <th>Data</th>
+                                            <th>Título</th>
                                             <th>Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <!-- Conteúdo da tabela para notificações de funcionários -->
                                         <!-- Exemplo estático -->
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Pedido Recebido</td>
-                                            <td>Um novo pedido foi recebido.</td>
-                                            <td>01/06/2024</td>
+                                        @foreach($notificacaoColaborador as $notificacao)
+                                <tr>
+                                    <td>{{ $notificacao->id }}</td>
+                                    <td>{{ $notificacao->mensagem }}</td>
+                                    <td>{{ $notificacao->dataEnvio }}</td>
+                                    <td>{{ $notificacao->titulo }}</td>
                                             <td>
                                                 <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalDetalhesNotificacaoFuncionario" onclick="mostrarDetalhes(1, 'funcionario')">Detalhes</button>
                                             </td>
                                         </tr>
                                         <!-- Fim do exemplo -->
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -61,21 +64,19 @@
                                     <thead class="thead-light">
                                         <tr>
                                             <th>ID</th>
-                                            <th>CLiente ID</th>
-                                            <th>Título</th>
                                             <th>Mensagem</th>
                                             <th>Data</th>
+                                            <th>Título</th>
                                             <th>Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- Conteúdo da tabela para notificações de clientes -->
-                                        <tr>
-                                            <td>1</td>
-                                            <td>2</td>
-                                            <td>Promoção Especial</td>
-                                            <td>Desconto de 20% para você.</td>
-                                            <td>01/06/2024</td>
+                                    @foreach($notificacaoCliente as $notificacao)
+                                <tr>
+                                <td>{{ $notificacao->id }}</td>
+                                    <td>{{ $notificacao->mensagem }}</td>
+                                    <td>{{ $notificacao->dataEnvio }}</td>
+                                    <td>{{ $notificacao->titulo }}</td>
                                             <td>
                                                 <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarNotificacaoCliente" onclick="editarNotificacao(1, 'cliente')">Editar</button>
                                                 <button class="btn btn-danger btn-sm" onclick="excluirNotificacao(1, 'cliente')">Excluir</button>
@@ -83,6 +84,7 @@
                                             </td>
                                         </tr>
                                         <!-- Fim do exemplo -->
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

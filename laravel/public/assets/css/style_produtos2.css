@@ -1,6 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap");
-body {
-  font-family: "Open Sans", sans-serif;
+
+@font-face {
+  font-family: Poppins;
+  src: url(/assets/vendor/bootstrap-icons/fonts/Poppins-Regular.ttf);
+}body {
+
+  font-family: Poppins;
+ 
   color: #0c0c0c;
   background-color: #ffffff;
   overflow-x: hidden;

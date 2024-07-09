@@ -44,20 +44,77 @@
     <!-- ======= Header ======= -->
     <header id="header" class="d-flex align-items-center">
         <div class="container d-flex align-items-center justify-content-between">
-            <a href="index.html"><img src="assets/img/logo.png" alt=""><span></span></a>
+            <a href="{{ url('/website') }}"><img src="assets/img/logo.png" alt="" style="max-width: 50%;"><span></span></a>
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                    <li><a class="nav-link scrollto active" href="{{ url('/website') }}">Home</a></li>
                     <li><a class="nav-link scrollto" href="#cardapio">Cardápio</a></li>
                     <li><a class="nav-link scrollto" href="#about">Sobre nós</a></li>
                     <li><a class="nav-link scrollto" href="#portfolio">Galeria de fotos</a></li>
                     <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
-                    <li><a class="nav-link scrollto" href="#contact">Fale Conoco</a></li>
+                    <li><a class="nav-link scrollto" href="#contact">Fale Conosco</a></li>
+
+                    @guest('cliente')
+                    <!-- Mostrar se não estiver logado -->
+                    <li>
+                        <a href="{{ url('website/cadastro') }}"><button id="register-btn" class="nav-link btn"><i class="bi bi-person-plus"></i> Cadastrar-se</button></a>
+                    </li>
+                    <li>
+                        <a href="{{ url('website/login') }}"><button id="login-btn" class="nav-link btn">Fazer Login</button></a>
+                    </li>
+                    @else
+                    <!-- Mostrar se estiver logado -->
+                    <li id="notification-btn">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#notificationsModal">
+                            <button class="nav-link btn"><i class="bi bi-bell"></i> Notificações</button>
+                        </a>
+                    </li>
+                    <li id="profile-btn">
+                        <a href="{{ url('website/perfil') }}"><button class="nav-link btn"><i class="bi bi-person"></i> Perfil</button></a>
+                    </li>
+                    @endguest
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav><!-- .navbar -->
+            </nav>
         </div>
-    </header><!-- End Header -->
+    </header>
+
+
+
+
+    <!-- Notifications Modal -->
+    <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationsModalLabel">Notificações</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Exemplo estático de notificações -->
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Mensagem de exemplo 1</h5>
+                            <p class="card-text">2024-06-26</p>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Mensagem de exemplo 2</h5>
+                            <p class="card-text">2024-06-25</p>
+                        </div>
+                    </div>
+                    <p>Nenhuma notificação encontrada.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if(Auth::guard('cliente')->check())
+    <p>Bem-vindo, {{ Auth::guard('cliente')->user()->email }}!</p>
+    <a href="{{url('website/logout')}}">Logout</a>
+    @else
+    <p>Bem-vindo, visitante!</p>
+    @endif
 
     <!-- ======= Pricing Section ======= -->
     <section id="pricing" class="pricing">
@@ -69,126 +126,106 @@
             </div>
 
             <div class="row">
+
+
+                <!-- Loop para exibir apenas os 4 primeiros serviços -->
+
+
+
+
+
+
+                @foreach ($servicos as $servico)
                 <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
                     <div class="box">
-                        <h3>Serviço 1</h3>
-                        <h4><sup>R$</sup>1500</h4>
+                        <h3>{{ $servico->nomeServico }}</h3>
+                        <h4><sup>R$</sup>{{ $servico->totalServicos }}</h4>
                         <ul>
-                            <li>Barmans: 2</li>
-                            <li>Garçons: 4</li>
-                            <li>Cozinheiros: 2</li>
-                            <li>Para festas de até 50 pessoas</li>
-                            <li>Duração de 5 horas</li>
+                            @foreach ($servico->pedidos_servicos as $pedido)
+                            @if ($pedido->funcionarioTipo == 'Barman')
+                            <li>Barmans: {{ $pedido->quantidade }}</li>
+                            @elseif ($pedido->funcionarioTipo == 'Garcom')
+                            <li>Garçons: {{ $pedido->quantidade }}</li>
+                            @elseif ($pedido->funcionarioTipo == 'Cozinheiro')
+                            <li>Cozinheiros: {{ $pedido->quantidade }}</li>
+                            @endif
+                            @endforeach
+                            <li>Para festas de até {{ $servico->quantidadePessoas }} pessoas</li>
+                            <li>Duração de {{ $servico->duracaoHoras }} horas</li>
                         </ul>
                         <div class="btn-wrap">
-                            <a href="pedidos.html?idServico=1" class="btn-buy">Selecionar Serviço</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="box">
-                        <h3>Serviço 2</h3>
-                        <h4><sup>R$</sup>2500</h4>
-                        <ul>
-                            <li>Barmans: 3</li>
-                            <li>Garçons: 6</li>
-                            <li>Cozinheiros: 3</li>
-                            <li>Para festas de até 100 pessoas</li>
-                            <li>Duração de 6 horas</li>
-                        </ul>
-                        <div class="btn-wrap">
-                            <a href="pedidos.html?idServico=2" class="btn-buy">Selecionar Serviço</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                    <div class="box">
-                        <h3>Serviço 3</h3>
-                        <h4><sup>R$</sup>3500</h4>
-                        <ul>
-                            <li>Barmans: 4</li>
-                            <li>Garçons: 8</li>
-                            <li>Cozinheiros: 4</li>
-                            <li>Para festas de até 150 pessoas</li>
-                            <li>Duração de 8 horas</li>
-                        </ul>
-                        <div class="btn-wrap">
-                            <a href="pedidos.html?idServico=3" class="btn-buy">Selecionar Serviço</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
-                    <div class="box">
-                        <h3>Serviço 4</h3>
-                        <h4><sup>R$</sup>4500</h4>
-                        <ul>
-                            <li>Barmans: 5</li>
-                            <li>Garçons: 10</li>
-                            <li>Cozinheiros: 5</li>
-                            <li>Para festas de até 200 pessoas</li>
-                            <li>Duração de 10 horas</li>
-                        </ul>
-                        <div class="btn-wrap">
-                            <a href="pedidos.html?idServico=4" class="btn-buy">Selecionar Serviço</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br>
-
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-3 col-md-6 mt-4 mt-md-0 justify-content-center" data-aos="fade-up" data-aos-delay="200" id="firstBox">
-                        <div class="box featured">
-                            <h3>Personalizado</h3>
-                            <h4><sup>R$</sup>?</h4>
-                            <div>Aqui você escolhe o serviço de acordo com sua festa</div>
-                            <div class="btn-wrap">
-                                <button id="custombutton" style="border: none; background-color: transparent;">
-                                    <a class="btn-buy">Personalize</a>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-8 mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="200" id="secondBox" style="display:none;">
-                        <div class="box featured">
-                            <h4>Personalize os Serviços:</h4>
-                            <form method="post" action="servicosProcessar.html">
-                                <p>Barmans: <input type="number" name="barmans" min="0" max="999" class="inpt" id="barmans"></p>
-                                <p>Garçons: <input type="number" name="garcons" min="0" max="999" class="inpt" id="garcons"></p>
-                                <p>Cozinheiros: <input type="number" name="cozinheiros" min="0" max="999" class="inpt" id="cozinheiros"></p>
-                                <p>Quantidade de Pessoas: <input type="number" name="quantidadePessoas" min="0" max="999" class="inpt" id="quantidadePessoas"></p>
-                                <p>Duração da Festa (Horas): <input type="number" name="duracaoHoras" min="1" max="24" class="inpt" id="duracaoHoras"></p>
-                                <p id="preco">Preço: R$0,00</p>
-                                <div class="btn-wrap">
-                                    <button type="submit" class="btn-buy">Selecionar Serviço</button>
-                                </div>
+                            <form action="{{ route('processar.servico.padrao') }}" method="post">
+                                @csrf
+                                <input type="hidden" name="idClientes" value="{{ Auth::guard('cliente')->user()->id }}">
+                                <input type="hidden" name="idServicos" value="{{ $servico->id }}">
+                                <button type="submit" class="btn-buy" style="border: none;">Selecionar Serviço</button>
                             </form>
+
+
                         </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+        <br>
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-md-6 mt-4 mt-md-0 justify-content-center" data-aos="fade-up" data-aos-delay="200" id="firstBox">
+                    <div class="box featured">
+                        <h3>Personalizado</h3>
+                        <h4><sup>R$</sup>?</h4>
+                        <div>Aqui você escolhe o serviço de acordo com sua festa</div>
+                        <div class="btn-wrap">
+                            <button id="custombutton" style="border: none; background-color: transparent;">
+                                <a class="btn-buy">Personalize</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8 mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="200" id="secondBox" style="display:none;">
+                    <div class="box featured">
+                        <h4>Personalize os Serviços:</h4>
+                        <form method="post" action="{{ route('processar.servico.personalizado') }}">
+                            @csrf
+                            <input type="hidden" name="idClientes" value="{{ Auth::guard('cliente')->user()->id }}">
+                            <p>Barmans: <input type="number" name="tipo[barmans]" min="0" max="999" class="inpt" id="barmans"></p>
+                            <p>Garçons: <input type="number" name="tipo[garcons]" min="0" max="999" class="inpt" id="garcons"></p>
+                            <p>Cozinheiros: <input type="number" name="tipo[cozinheiros]" min="0" max="999" class="inpt" id="cozinheiros"></p>
+                            <p>Quantidade de Pessoas: <input type="number" name="quantidadePessoas" min="0" max="999" class="inpt" id="quantidadePessoas"></p>
+                            <p>Duração da Festa (Horas): <input type="number" name="duracaoHoras" min="1" max="24" class="inpt" id="duracaoHoras"></p>
+                            <!--<p id="preco">Preço: R$0,00</p>-->
+                            <div class="btn-wrap">
+                                <button type="submit" class="btn-buy" style="border: none;">Selecionar Serviço</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+
+        </div>
     </section>
 
-   <div id="preloader"></div>
+    <div id="preloader"></div>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
- <!-- Vendor JS Files -->
-<script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
-<script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
-<script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
-<script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
-<script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
-<script src="{{ asset('assets/vendor/waypoints/noframework.waypoints.js') }}"></script>
-<script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
+    <!-- Vendor JS Files -->
+    <script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+    <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/waypoints/noframework.waypoints.js') }}"></script>
+    <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
 
-<!-- Template Main JS File -->
-<script src="{{ asset('assets/js/main.js') }}"></script>
+    <!-- Template Main JS File -->
+    <script src="{{ asset('assets/js/mainn.js') }}"></script>
 
     <script>
         window.addEventListener('DOMContentLoaded', (event) => {
@@ -207,8 +244,8 @@
         });
     </script>
     <script>
-        $(document).ready(function () {
-            $("#custombutton").click(function () {
+        $(document).ready(function() {
+            $("#custombutton").click(function() {
                 $("#firstBox").toggleClass(" justify-content-start  justify-content-center");
                 $("#secondBox").toggle(500), 200;
             });

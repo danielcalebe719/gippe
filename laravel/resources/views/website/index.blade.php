@@ -1,4 +1,3 @@
-
 <!-- 27/06/2024-->
 
 <!DOCTYPE html>
@@ -11,15 +10,12 @@
   <title>Buffet Divino Sabor</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
-
+  <link rel="stylesheet" href="{{ asset('css/lightbox.css') }}">
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <link href="path/to/lightbox.css" rel="stylesheet">
-    <!-- Incluir CSS do AOS (se necessário) -->
-    <link href="path/to/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <!-- Favicons -->
   <link href="assets/img/logo.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -27,28 +23,26 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
 </head>
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Vendor CSS Files -->
+<link href="{{asset('assets/vendor/aos/aos.css')}}" rel="stylesheet">
+<link href="{{asset('assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+<link href="{{asset('assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+<link href="{{asset('assets/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
+<link href="{{asset('assets/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
+<link href="{{asset('assets/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+<!-- Template Main CSS File -->
+<link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
 
-  <style>
-    
-  </style>
+
 </head>
 
 <body>
-<!-- ======= Top Bar ======= -->
-<section id="topbar" class="d-flex align-items-center">
+  <!-- ======= Top Bar ======= -->
+  <section id="topbar" class="d-flex align-items-center">
     <div class="container d-flex justify-content-center justify-content-md-between">
       <div class="contact-info d-flex align-items-center">
         <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:buffetdivinosabor@gmail.com">buffetdivinosabor@gmail.com</a></i>
@@ -66,45 +60,53 @@
   <!-- ======= Header ======= -->
   <header id="header" class="d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
-        <a href="{{ url('/website') }}"><img src="assets/img/logo.png" alt="" style="max-width: 50%;"><span></span></a>
-        <nav id="navbar" class="navbar">
-            <ul>
-                <li><a class="nav-link scrollto active" href="{{ url('/website') }}">Home</a></li>
-                <li><a class="nav-link scrollto" href="#cardapio">Cardápio</a></li>
-                <li><a class="nav-link scrollto" href="#about">Sobre nós</a></li>
-                <li><a class="nav-link scrollto" href="#portfolio">Galeria de fotos</a></li>
-                <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
-                <li><a class="nav-link scrollto" href="#contact">Fale Conosco</a></li>
+      <a href="{{ url('/website') }}"><img src="assets/img/logo.png" alt="" style="max-width: 50%;"><span></span></a>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="{{ url('/website') }}">Home</a></li>
+          <li><a class="nav-link scrollto" href="#cardapio">Cardápio</a></li>
+          <li><a class="nav-link scrollto" href="#about">Sobre nós</a></li>
+          <li><a class="nav-link scrollto" href="#portfolio">Galeria de fotos</a></li>
+          <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
+          <li><a class="nav-link scrollto" href="#contact">Fale Conosco</a></li>
 
-                @guest('cliente')
-                <!-- Mostrar se não estiver logado -->
-                <li>
-                    <a href="{{ url('website/cadastro') }}"><button id="register-btn" class="nav-link btn"><i class="bi bi-person-plus"></i> Cadastrar-se</button></a>
-                </li>
-                <li>
-                    <a href="{{ url('website/login') }}"><button id="login-btn" class="nav-link btn">Fazer Login</button></a>
-                </li>
-                @else
-                <!-- Mostrar se estiver logado -->
-                <li id="notification-btn">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#notificationsModal">
-                        <button class="nav-link btn"><i class="bi bi-bell"></i> Notificações</button>
-                    </a>
-                </li>
-                <li id="profile-btn">
-                    <a href="{{ url('website/perfil') }}"><button class="nav-link btn"><i class="bi bi-person"></i> Perfil</button></a>
-                </li>
-                @endguest
-            </ul>
-            <i class="bi bi-list mobile-nav-toggle"></i>
-        </nav>
+          @guest('cliente')
+          <!-- Mostrar se não estiver logado -->
+          <li>
+            <a href="{{ url('website/cadastro') }}">
+              <button id="register-btn" class="nav-link btn"><i class="bi bi-person-plus"></i> Cadastrar-se</button>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url('website/login') }}">
+              <button id="login-btn" class="nav-link btn">Fazer Login</button>
+            </a>
+          </li>
+          @else
+          <!-- Mostrar se estiver logado -->
+          <li id="notification-btn">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#notificationsModal">
+              <button class="nav-link btn"><i class="bi bi-bell"></i> Notificações
+                @if($quantidadeNotificacoes > 0)
+                <span class="badge bg-danger">{{ $quantidadeNotificacoes }}</span>
+                @endif
+              </button>
+            </a>
+          </li>
+          <li id="profile-btn">
+            <a href="{{ url('website/perfil') }}">
+              <button class="nav-link btn"><i class="bi bi-person"></i> Perfil</button>
+            </a>
+          </li>
+          @endguest
+
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
     </div>
-</header>
+  </header>
 
 
-
-
-  <!-- Notifications Modal -->
   <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
@@ -113,30 +115,59 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <!-- Exemplo estático de notificações -->
+          @if ($notificacoes->isNotEmpty())
+          @foreach ($notificacoes as $notificacao)
           <div class="card mb-3">
             <div class="card-body">
-              <h5 class="card-title">Mensagem de exemplo 1</h5>
-              <p class="card-text">2024-06-26</p>
+              <h5 class="card-title">{{ $notificacao->mensagem }}</h5>
+              <p class="card-text">{{ $notificacao->dataEnvio }}</p>
+              <!-- Verificar se a notificação não foi lida -->
+              @if ($notificacao->lido == false)
+              <form class="form-marcar-lida" data-notificacao-id="{{ $notificacao->id }}" action="{{ route('notificacoes.marcarLida', $notificacao->id) }}" method="POST">
+                @csrf
+                <button type="button" class="btn btn-primary btn-marcar-lida">
+                  <i class="bi bi-check"></i> Marcar como lida
+                </button>
+              </form>
+              @else
+              <button type="button" class="btn btn-secondary disabled">
+                <i class="bi bi-check"></i> Lida
+              </button>
+              @endif
             </div>
           </div>
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">Mensagem de exemplo 2</h5>
-              <p class="card-text">2024-06-25</p>
-            </div>
-          </div>
+          @endforeach
+          @else
           <p>Nenhuma notificação encontrada.</p>
+          @endif
         </div>
       </div>
     </div>
   </div>
+
+
+
+
+
+
+
+
+
+
+  <!--@if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
   @if(Auth::guard('cliente')->check())
     <p>Bem-vindo, {{ Auth::guard('cliente')->user()->email }}!</p>
   <a href="{{url('website/logout')}}">Logout</a>
 @else
     <p>Bem-vindo, visitante!</p>
-@endif
+@endif->
 
 
 
@@ -144,7 +175,7 @@
   <section id="hero" class="d-flex align-items-center">
     <div class="container" data-aos="zoom-out" data-aos-delay="100">
       <h1 style="color: white;">Bem vindo ao <span style="color: #FF944E;"">Buffet Divino Sabor</span></h1>
-      <h2 style="color: white;">Produzindo eventos com o melhor cardápio desde 2014.</h2>
+      <h2 style="color: white;"">Produzindo eventos com o melhor cardápio desde 2014.</h2>
       <div class="d-flex">
         <a href="{{url('website/cadastro2')}}" class="btn-get-started scrollto">Faça seu pedido</a>
         
@@ -159,52 +190,52 @@
     <section id="featured-services" class="featured-services">
       <div class="container" data-aos="fade-up">
         <h1><span style="color: #FA856E;"">Venha festejar conosco</span></h1>
-        <div class="row">
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
-              <div class="icon" ><img src="assets/img/formatura.png" alt="" srcset="" style="max-width: 100px;"></div>
-              <h4 class="title"><a href="">Formaturas</a></h4>
-              <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+        <div class=" row">
+            <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+              <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+                <div class="icon"><img src="assets/img/formatura.png" alt="" srcset="" style="max-width: 100px;"></div>
+                <h4 class="title"><a href="">Formaturas</a></h4>
+                <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+              </div>
             </div>
-          </div>
 
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
-              <div class="icon" ><img src="assets/img/rings.png" alt="" srcset="" style="max-width: 100px;"></div>
-              <h4 class="title"><a href="">Casamentos</a></h4>
-              <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+            <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+              <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
+                <div class="icon"><img src="assets/img/rings.png" alt="" srcset="" style="max-width: 100px;"></div>
+                <h4 class="title"><a href="">Casamentos</a></h4>
+                <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+              </div>
             </div>
-          </div>
 
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
-              <div class="icon" ><img src="assets/img/15years.png" alt="" srcset="" style="max-width: 100px;"></div>
-              <h4 class="title"><a href="">15 Anos</a></h4>
-              <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
+            <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+              <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
+                <div class="icon"><img src="assets/img/15years.png" alt="" srcset="" style="max-width: 100px;"></div>
+                <h4 class="title"><a href="">15 Anos</a></h4>
+                <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
+              </div>
             </div>
-          </div>
 
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
-              <div class="icon" ><img src="assets/img/kids.png" alt="" srcset="" style="max-width: 100px;"></div>
-              <h4 class="title"><a href="">Infantil</a></h4>
-              <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+            <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+              <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
+                <div class="icon"><img src="assets/img/kids.png" alt="" srcset="" style="max-width: 100px;"></div>
+                <h4 class="title"><a href="">Infantil</a></h4>
+                <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+              </div>
             </div>
-          </div>
-          
 
-        </div>
+
+      </div>
 
       </div>
     </section><!-- End Featured Services Section -->
 
-    <section  id="cardapio" class=" about section-bg "  ">
-      <div class="section-title">
-        <h2 style="color: #FA856E;">Cardápio</h2>
-        <h3>Veja mais sobre os destaques do nosso<span style="color: #FF944E;"> cardápio</span></h3>
-        <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
+    <section id="cardapio" class=" about section-bg " ">
+      <div class=" section-title">
+      <h2 style="color: #FA856E;">Cardápio</h2>
+      <h3>Veja mais sobre os destaques do nosso<span style="color: #FF944E;"> cardápio</span></h3>
+      <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
       </div>
-      <img src="assets/img/CardapioBuffet.png" alt="" style="max-width: 90%;" class="rounded mx-auto d-block img-fluid"> 
+      <img src="assets/img/CardapioBuffet.png" alt="" style="max-width: 90%;" class="rounded mx-auto d-block img-fluid">
     </section>
 
 
@@ -245,7 +276,7 @@
                 </div>
               </li>
               <li>
-                <i class="bi bi-award" style="color: #FA856E;""></i>
+                <i class=" bi bi-award" style="color: #FA856E;""></i>
                 <div>
                   <h5>Inovação</h5>
                   <p>Quo totam dolorum at pariatur aut distinctio dolorum laudantium illo direna pasata redi</p>
@@ -265,140 +296,134 @@
 
     <!-- ======= Testimonials Section ======= -->
     </div>
-    <section id="testimonials" class="testimonials testimonials-short">
-  <div class="section-title"></div>
-  <div class="container" data-aos="zoom-in">
+    <section id=" testimonials" class="testimonials testimonials-short">
+                  <div class="section-title"></div>
+                  <div class="container" data-aos="zoom-in">
 
-    <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
-      <div class="swiper-wrapper">
+                    <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+                      <div class="swiper-wrapper">
 
-        <div class="swiper-slide">
-          <div class="testimonial-item">
-            <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img img-fluid" alt="">
-            <h3>Pessoa 1</h3>
-            <h4>Casamento</h4>
-            <p>
-              <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-              Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
-              <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-            </p>
-          </div>
-        </div><!-- End testimonial item -->
+                        <div class="swiper-slide">
+                          <div class="testimonial-item">
+                            <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img img-fluid" alt="">
+                            <h3>Pessoa 1</h3>
+                            <h4>Casamento</h4>
+                            <p>
+                              <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                              Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                              <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                            </p>
+                          </div>
+                        </div><!-- End testimonial item -->
 
-        <div class="swiper-slide">
-          <div class="testimonial-item">
-            <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img img-fluid" alt="">
-            <h3>Pessoa 2</h3>
-            <h4>15 anos</h4>
-            <p>
-              <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-              Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
-              <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-            </p>
-          </div>
-        </div><!-- End testimonial item -->
+                        <div class="swiper-slide">
+                          <div class="testimonial-item">
+                            <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img img-fluid" alt="">
+                            <h3>Pessoa 2</h3>
+                            <h4>15 anos</h4>
+                            <p>
+                              <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                              Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
+                              <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                            </p>
+                          </div>
+                        </div><!-- End testimonial item -->
 
-        <div class="swiper-slide">
-          <div class="testimonial-item">
-            <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img img-fluid" alt="">
-            <h3>Pessoa 3</h3>
-            <h4>Casamento</h4>
-            <p>
-              <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-              Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
-              <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-            </p>
-          </div>
-        </div><!-- End testimonial item -->
+                        <div class="swiper-slide">
+                          <div class="testimonial-item">
+                            <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img img-fluid" alt="">
+                            <h3>Pessoa 3</h3>
+                            <h4>Casamento</h4>
+                            <p>
+                              <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                              Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
+                              <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                            </p>
+                          </div>
+                        </div><!-- End testimonial item -->
 
-        <div class="swiper-slide">
-          <div class="testimonial-item">
-            <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img img-fluid" alt="">
-            <h3>Pessoa 4</h3>
-            <h4>Casamento</h4>
-            <p>
-              <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-              Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
-              <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-            </p>
-          </div>
-        </div><!-- End testimonial item -->
+                        <div class="swiper-slide">
+                          <div class="testimonial-item">
+                            <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img img-fluid" alt="">
+                            <h3>Pessoa 4</h3>
+                            <h4>Casamento</h4>
+                            <p>
+                              <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                              Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
+                              <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                            </p>
+                          </div>
+                        </div><!-- End testimonial item -->
 
-        <div class="swiper-slide">
-          <div class="testimonial-item">
-            <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img img-fluid" alt="">
-            <h3>Pessoa 5</h4>
-            <h4>Formatura</h4>
-            <p>
-              <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-              Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
-              <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-            </p>
-          </div>
-        </div><!-- End testimonial item -->
+                        <div class="swiper-slide">
+                          <div class="testimonial-item">
+                            <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img img-fluid" alt="">
+                            <h3>Pessoa 5</h4>
+                              <h4>Formatura</h4>
+                              <p>
+                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                                Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
+                                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                              </p>
+                          </div>
+                        </div><!-- End testimonial item -->c
 
-      </div>
-      <div class="swiper-pagination"></div>
-    </div>
+                      </div>
+                      <div class="swiper-pagination"></div>
+                    </div>
 
-  </div>
-</section><!-- End Testimonials Section -->
+                  </div>
+    </section><!-- End Testimonials Section -->
 
-
-
-<section id="portfolio" class="portfolio">
-    <div class="container" data-aos="fade-up">
+    <!-- Conteúdo da página -->
+    <section id="portfolio" class="portfolio">
+      <div class="container" data-aos="fade-up">
         <div class="section-title">
-            <h2 style="color: #FA856E;">Galeria de Fotos</h2>
-            <h3>Dê uma olhada na nossa <span style="color: #FA856E;">Galeria de Fotos</span></h3>
-            <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
+          <h2 style="color: #FA856E;">Galeria de Fotos</h2>
+          <h3>Dê uma olhada na nossa <span style="color: #FA856E;">Galeria de Fotos</span></h3>
+          <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
         </div>
 
         <div class="row" data-aos="fade-up" data-aos-delay="100">
-            <div class="col-lg-12 d-flex justify-content-center">
-                <ul id="portfolio-flters">
-                    <li data-filter="*" class="filter-active">Todas</li>
-                    <li data-filter=".filter-casamento">Casamentos</li>
-                    <li data-filter=".filter-15anos">15 Anos</li>
-                    <li data-filter=".filter-formatura">Formaturas</li>
-                    <li data-filter=".filter-infantil">Infantil</li>
-                    <li data-filter=".filter-outros">Outros</li>
-                </ul>
+          <div class="col-lg-12 d-flex justify-content-center">
+            <ul id="portfolio-flters">
+              <li data-filter="*" class="filter-active">Todas</li>
+              <li data-filter=".filter-casamento">Casamentos</li>
+              <li data-filter=".filter-15anos">15 Anos</li>
+              <li data-filter=".filter-formatura">Formaturas</li>
+              <li data-filter=".filter-infantil">Infantil</li>
+              <li data-filter=".filter-outros">Outros</li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="portfolio-container" class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+          @foreach($imagens->take(15) as $imagem)
+          <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item filter-{{ strtolower($imagem->evento) }}"  style="padding: 0%; margin:1%;">
+            <div class="portfolio-item-overlay" >
+              <a href="{{ asset('storage/GaleriaImagens/' . $imagem->caminhoImagem) }}" data-lightbox="portfolio" title="{{ $imagem->evento }}">
+                <img class="img-fluid gallery-image" src="{{ asset('storage/GaleriaImagens/' . $imagem->caminhoImagem) }}">
+              </a>
+              <div class="portfolio-info-details">
+                <h4>{{ $imagem->evento }}</h4>
+                <p>{{ $imagem->descricao }}</p>
+              </div>
             </div>
+          </div>
+          @endforeach
         </div>
+      </div>
+    </section>
 
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-            @foreach($imagens as $imagem)
-                <div class="col-lg-3 portfolio-item filter-{{ strtolower($imagem->evento) }}">
-                    <div class="resolve portfolio-item-overlay">
-                        <a href="{{ asset('storage/GaleriaImagens/' . $imagem->nome_imagem) }}" data-lightbox="portfolio" title="{{ $imagem->evento }}">
-                            <img class="img-fluid gallery-image" src="{{ asset('storage/GaleriaImagens/' . $imagem->imagemCaminho) }}" >
-                        </a>
-                        <div class="portfolio-info">
-                            <h4>{{ $imagem->evento }}</h4>
-                            <p>{{ $imagem->descricao }}</p>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-
-        <div class="row">
-            <div class="col-lg-12 d-flex justify-content-center">
-                <button id="load-more-btn" class="btn btn-success">Mostrar mais</button>
-            </div>
-        </div>
-    </div>
-</section>
+    <!-- Lightbox JS -->
+    <script src="{{ asset('js/lightbox.js') }}"></script>
 
 
 
-<script src="path/to/aos.js"></script>
-<script src="path/to/lightbox.js"></script>
 
-   
-    
-   
+
+
+
 
     <!-- ======= FAQ Section ======= -->
     <section id="faq" class="faq section-bg">
@@ -486,48 +511,47 @@
         </div>
 
         <div class="row" data-aos="fade-up" data-aos-delay="100">
-          <div class="col-lg-6">
-            <div class="info-box mb-4">
+          <div class="col-lg-6 ">
+            <div class="info-box mb-4 p-3">
               <i class="bx bx-map"></i>
-              <h3>Nosso endereço</h3>
-              <p>Avenida A, Bairro B, Belo Horizonte</p>
+              <h3 class="mt-3">Nosso endereço</h3>
+              <p class="mb-0">Avenida A, Bairro B, Belo Horizonte</p>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-6">
-            <div class="info-box  mb-4">
+            <div class="info-box mb-4 p-3">
               <i class="bx bx-envelope"></i>
-              <h3>Nosso email</h3>
-              <p>buffetdivinosabor@gmail.com
-              </p>
+              <h3 class="mt-3">Nosso email</h3>
+              <p class="mb-0">buffetdivinosabor@gmail.com</p>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-6">
-            <div class="info-box  mb-4">
+            <div class="info-box mb-4 p-4"> <!-- Ajustado para p-4 para mais padding -->
               <i class="bx bx-phone-call"></i>
-              <h3>Nosso Telefone</h3>
-              <p>+31 95589 55488</p>
+              <h3 class="mt-3">Nosso Telefone</h3>
+              <p class="mb-0">+31 95589 55488</p>
             </div>
           </div>
-
         </div>
+
 
         <div class="row" data-aos="fade-up" data-aos-delay="100">
 
           <div class="col-lg-6 ">
-            <iframe class="mb-4 mb-lg-0"        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d234.446014688871!2d-43.938484827584325!3d-19.91866308281466!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa699b7a4117c47%3A0x67f927e239293eb2!2sP7%20Criativo%20-%20Ag%C3%AAncia%20de%20Desenvolvimento%20da%20Ind%C3%BAstria%20Criativa%20de%20Minas%20Gerais!5e0!3m2!1spt-BR!2sbr!4v1711927363091!5m2!1spt-BR!2sbr"
-            frameborder="0" style="border:0; width: 100%; height: 384px;" allowfullscreen></iframe>
+            <iframe class="mb-4 mb-lg-0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d234.446014688871!2d-43.938484827584325!3d-19.91866308281466!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa699b7a4117c47%3A0x67f927e239293eb2!2sP7%20Criativo%20-%20Ag%C3%AAncia%20de%20Desenvolvimento%20da%20Ind%C3%BAstria%20Criativa%20de%20Minas%20Gerais!5e0!3m2!1spt-BR!2sbr!4v1711927363091!5m2!1spt-BR!2sbr" frameborder="0" style="border:0; width: 100%; height: 384px;" allowfullscreen></iframe>
           </div>
 
           <div class="col-lg-6">
-            <form action="processa_mensagens.php" method="post" role="form" class="php-email-form">
+            <form action="{{ route('website.mensagem') }}" method="post" class="php-email-form">
+              @csrf
               <div class="row">
                 <div class="col form-group">
                   <input type="text" name="nome" class="form-control" id="name" placeholder="Seu nome" required>
                 </div>
                 <div class="col form-group">
-                  <input type="email" class="form-control" name="endereco" id="email" placeholder="Seu Email" required>
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Seu Email" required>
                 </div>
               </div>
               <div class="form-group">
@@ -538,26 +562,61 @@
               </div>
               <div class="my-3">
                 <div class="loading">Carregando</div>
-                <div class="sent-message">Sua mensagem foi enviada</div>
-                
+                <div id="mensagem-sucesso" style="display: none; color: green;">Mensagem enviada com sucesso!</div>
               </div>
               <div class="error-message"></div>
-              <div class="text-center"><button type="submit"> Enviar Mensagem</button></div>
+              <div class="text-center"><button type="submit">Enviar Mensagem</button></div>
             </form>
           </div>
 
+          <script>
+            // Script para mostrar a mensagem de sucesso após o envio do formulário
+            document.addEventListener('DOMContentLoaded', function() {
+              const form = document.querySelector('.php-email-form');
+
+              form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+
+                const loading = document.querySelector('.loading');
+                loading.style.display = 'block';
+
+
+
+                setTimeout(function() {
+                  loading.style.display = 'none';
+                  const mensagemSucesso = document.getElementById('mensagem-sucesso');
+                  mensagemSucesso.style.display = 'block';
+                }, 2000); // Exibe a mensagem após 2 segundos (tempo fictício)
+
+
+              });
+            });
+          </script>
+
+
+
+          <script>
+            $(document).ready(function() {
+              // Esconde a mensagem após 5 segundos
+              setTimeout(function() {
+                $('.alert').alert('close');
+              }, 5000);
+            });
+          </script>
+
         </div>
 
-      
+
     </section><!-- End Contact Section -->
 
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
-    (31)9 1234-5678  |  buffetdivinosabor@gmail.com
-<a class="text-body" href=""></a>
-</div>
+    (31)9 1234-5678 | buffetdivinosabor@gmail.com
+    <a class="text-body" href=""></a>
+  </div>
 
 
 
@@ -572,7 +631,7 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-   <script src=""></script>
+
   <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -580,40 +639,46 @@
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+
 
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  
-  
-  <script src="assets/js/main.js"></script>
+
+
+  <script src="{{asset('assets/js/mainn.js')}}"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+
   <script>
-    
-    window.addEventListener('DOMContentLoaded', (event) => {
-        const portfolioItems = document.querySelectorAll('.portfolio-item');
+    $(document).ready(function() {
+      $('.btn-marcar-lida').click(function() {
+        var form = $(this).closest('form');
+        var formData = form.serialize();
 
-        portfolioItems.forEach(item => {
-            const image = item.querySelector('img');
-            const info = item.querySelector('.portfolio-info');
-
-            // Obtém a largura da imagem
-            const imageWidth = image.offsetWidth;
-
-            // Define a largura do .portfolio-info igual à largura da imagem
-            info.style.width = imageWidth + 'px';
+        $.ajax({
+          url: form.attr('action'),
+          type: 'POST',
+          data: formData,
+          success: function(response) {
+            console.log(response); // Verifica a resposta do servidor
+            // Atualizar a interface conforme necessário
+            console.log('Notificação marcada como lida com sucesso.');
+            form.find('.btn-marcar-lida').attr('disabled', true).addClass('disabled'); // Desativa o botão depois de marcado como lida
+            form.find('.btn-marcar-lida').removeClass('btn-primary').addClass('btn-secondary disabled').html('<i class="bi bi-check"></i> Lida'); // Altera o botão para refletir que a notificação está lida
+          },
+          error: function(xhr) {
+            console.error('Erro ao marcar a notificação como lida.');
+            console.log(xhr.responseText); // Exibe o erro no console para depuração
+          }
         });
+
+        return false; // Evita o comportamento padrão de envio do formulário
+      });
     });
-
-
-
-
-</script>
-<script src="scripts.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-
-
+  </script>
 </body>
 
 </html>

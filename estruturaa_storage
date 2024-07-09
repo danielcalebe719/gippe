@@ -1,0 +1,8 @@
+storage/app/public/ GaleriaImagens :: Para as fotos dos eventos
+storage/app/public/ ImagensProdutos :: Guardar Imagens dos Produtos  
+storage/app/public/ ImagensClientes :: Guardar as imagens dos perfis do Clientes
+
+
+criar link simbólico : 
+
+php artisan storage:link

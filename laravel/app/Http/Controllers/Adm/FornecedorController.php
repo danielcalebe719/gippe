@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Adm;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Clientes;
-use App\Models\EnderecosClientes;
-use App\Models\NotificacoesClientes;
-use App\Models\Pedidos;
+use App\Models\Fornecedores;
+use App\Models\MateriasPrimasEstoque;
+
 use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Carbon;
@@ -15,83 +14,70 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 
-class ClienteController extends Controller
+class FornecedorController extends Controller
 {
     public function index()
     {
-        $clientes = Clientes::all();
-        return view('adm.clientes', compact('clientes'));
+        $fornecedores = Fornecedores::all();
+        return view('adm.fornecedores', compact('fornecedores'));
     }
 
-    public function show($idClientes)
+    public function show($idFornecedores)
     {
-        $cliente = Clientes::find($idClientes);
+        $fornecedor = Fornecedores::find($idFornecedores);
         
-        if ($cliente) {
+        if ($fornecedor) {
 
             
-            return response()->json($cliente);
+            return response()->json($fornecedor);
         } else {
-            return response()->json(['error' => 'Cliente não encontrado'], 404);
+            return response()->json(['error' => 'fornecedor não encontrado'], 404);
         }
     }
     
     
     public function guardar(Request $request)
     {
-        // Validação dos dados
-        /*$request->validate([
-            'nome' => 'nullable|string|max:255',
-            'cpf' => 'nullable|string|max:14|unique:clientes,cpf,' . $request->idCliente . ',idClientes',
-            'dataNascimento' => 'nullable|date',
-            'status' => 'nullable|string|in:ativo,inativo',
-            'email' => 'nullable|email|max:255|unique:clientes,email,' . $request->idCliente . ',idClientes',
-            'senha' => 'nullable|string|min:6',
-            'telefone' => 'nullable|string|max:20',
-            // 'imgCaminho' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);*/   
+         
     
         try {
-            // Busca ou cria um novo cliente
-            $cliente = $request->idCliente ? Clientes::findOrFail($request->idCliente) : new Clientes();
+            // Busca ou cria um novo fornecedor
+            $fornecedor = $request->idFornecedor ? Fornecedores::findOrFail($request->idFornecedor) : new Fornecedores();
     
-            // Preenche os outros campos do cliente
-            $cliente->nome = $request->input('nome');
-            $cliente->cpf = $request->input('cpf');
-            $cliente->dataNascimento = $request->input('dataNascimento');
-            $cliente->status = $request->input('status');
-            $cliente->email = $request->input('email');
-            $cliente->telefone = $request->input('telefone');
-    
-            // Verifica se foi fornecida uma nova senha
-            if ($request->filled('senha')) {
-                $cliente->senha = Hash::make($request->input('senha'));
+            // Preenche os outros campos do fornecedor
+            $fornecedor->nome = $request->input('nome');
+            $fornecedor->telefone1 = $request->input('telefone1');
+            $fornecedor->telefone2 = $request->input('telefone2');
+            $fornecedor->telefone3 = $request->input('telefone3');
+            $fornecedor->email = $request->input('email');
+            $fornecedor->cep = $request->input('cep');
+            $fornecedor->estado = $request->input('estado');
+            $fornecedor->cidade = $request->input('cidade');
+            $fornecedor->rua = $request->input('rua');
+            $fornecedor->numero = $request->input('numero');
+            $fornecedor->complemento = $request->input('complemento');
+            $fornecedor->status = $request->input('status');
+            $fornecedor->cnpj = $request->input('cnpj');
+            if(!$request->idFornecedor){
+                $fornecedor->dataCadastro = now();
             }
+            
+            
     
-            // Trata o upload da imagem, se fornecida
-            if ($request->hasFile('imgCaminho')) {
-                // Deleta a imagem antiga, se existir
-                if ($cliente->imgCaminho && Storage::exists('public/GaleriaImagens/' . $cliente->imgCaminho)) {
-                    Storage::delete('public/GaleriaImagens/' . $cliente->imgCaminho);
-                }
-                
-                // Armazena a nova imagem
-                $path = $request->file('imgCaminho')->store('public/GaleriaImagens');
-                $cliente->imgCaminho = basename($path);
-            }
+            
     
             // Atualiza o timestamp de atualização
-            $cliente->dataAtualizacao = now();  
+            $fornecedor->dataAtualizacao = now();  
     
             // Salva o cliente
-            $cliente->save();
+            $fornecedor->save();
             
-            return redirect()->back()->with('success', 'Cliente adicionado/atualizado com sucesso!');
+            return redirect()->back()->with('success', 'Fornecedor adicionado/atualizado com sucesso!');
             
         } catch (\Exception $e) {
             // Loga o erro para fins de debug
-            Log::error('Erro ao atualizar o cliente: ' . $e->getMessage());
-            return response()->json(['error' => 'Erro ao atualizar o cliente: ' . $e->getMessage()], 500);
+            Log::error('Erro ao atualizar o fornecedor: ' . $e->getMessage());
+            return response()->json(['error' => 'Erro ao atualizar o fornecedor: ' . $e->getMessage()], 500);
         }
     }
     
@@ -109,27 +95,22 @@ class ClienteController extends Controller
 
 
     
-    public function remover($idCliente)
+    public function remover($idFornecedor)
     {
         try {
 
-            $notificacoesclientes = NotificacoesClientes::where('idClientes',$idCliente)->delete();
-            $enderecosclientes = EnderecosClientes::where('idClientes',$idCliente)->delete();
-            $pedido = Pedidos::where('idClientes',$idCliente)->delete();
-            $cliente = Clientes::findOrFail($idCliente);
+            // $materiasPrimasEstoque = MateriasPrimasEstoque::where('idFornecedor',$idFornecedor)->delete();
+            $fornecedor = Fornecedores::findOrFail($idFornecedor);
            
             
-            // Excluir a imagem associada, se existir
-            if ($cliente->imgCaminho) {
-                Storage::delete('public/GaleriaImagens/' . $cliente->imgCaminho);
-            }
+        
 
 
-            $cliente->delete();
+            $fornecedor->delete();
 
-            return response()->json(['message' => 'Cliente excluído com sucesso']);
+            return response()->json(['message' => 'Fornecedor excluído com sucesso']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro ao excluir o cliente: ' . $e->getMessage()], 500);
+            return response()->json(['error' => 'Erro ao excluir o fornecedor: ' . $e->getMessage()], 500);
         }       
     }
 }

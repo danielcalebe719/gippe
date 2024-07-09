@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Adm;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Clientes;
-use App\Models\EnderecosClientes;
-use App\Models\NotificacoesClientes;
-use App\Models\Pedidos;
+use App\Models\MovimentacoesMateriasPrimas;
+use App\Models\ReceitasItem;
+use App\Models\MateriasPrimasEstoque;
 use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Carbon;
@@ -15,22 +14,22 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 
-class ClienteController extends Controller
+class MateriaPrimaController extends Controller
 {
     public function index()
     {
-        $clientes = Clientes::all();
-        return view('adm.clientes', compact('clientes'));
+        $materiasPrimas = MateriasPrimasEstoque::all();
+        return view('adm.MateriaPrimaEstoque', compact('materiasPrimas'));
     }
 
-    public function show($idClientes)
+    public function show($idMateriasPrimas)
     {
-        $cliente = Clientes::find($idClientes);
+        $materiaPrima = MateriasPrimasEstoque::find($idMateriasPrimas);
         
-        if ($cliente) {
+        if ($materiaPrima) {
 
             
-            return response()->json($cliente);
+            return response()->json($materiaPrima);
         } else {
             return response()->json(['error' => 'Cliente não encontrado'], 404);
         }
@@ -53,38 +52,46 @@ class ClienteController extends Controller
     
         try {
             // Busca ou cria um novo cliente
-            $cliente = $request->idCliente ? Clientes::findOrFail($request->idCliente) : new Clientes();
+            $materiaPrima = $request->idMateriaPrima ? MateriasPrimasEstoque::findOrFail($request->idMateriaPrima) : new MateriasPrimasEstoque();
     
             // Preenche os outros campos do cliente
-            $cliente->nome = $request->input('nome');
-            $cliente->cpf = $request->input('cpf');
-            $cliente->dataNascimento = $request->input('dataNascimento');
-            $cliente->status = $request->input('status');
-            $cliente->email = $request->input('email');
-            $cliente->telefone = $request->input('telefone');
-    
-            // Verifica se foi fornecida uma nova senha
-            if ($request->filled('senha')) {
-                $cliente->senha = Hash::make($request->input('senha'));
+            $materiaPrima->nome = $request->input('nome');
+            $materiaPrima->classificacao = $request->input('classificacao');
+            $materiaPrima->quantidade = $request->input('quantidade');
+            $materiaPrima->precoUnitario = $request->input('precoUnitario');
+            $materiaPrima->caminhoImagem = $request->input('caminhoImagem');
+            $materiaPrima->idFornecedor = $request->input('idFornecedor');
+
+            if(!$request->idMateriaPrima){
+                $materiaPrima->dataCadastro = now();
             }
     
-            // Trata o upload da imagem, se fornecida
-            if ($request->hasFile('imgCaminho')) {
-                // Deleta a imagem antiga, se existir
-                if ($cliente->imgCaminho && Storage::exists('public/GaleriaImagens/' . $cliente->imgCaminho)) {
-                    Storage::delete('public/GaleriaImagens/' . $cliente->imgCaminho);
-                }
-                
-                // Armazena a nova imagem
-                $path = $request->file('imgCaminho')->store('public/GaleriaImagens');
-                $cliente->imgCaminho = basename($path);
-            }
+            
+    
+          // Trata o upload da imagem, se fornecida
+if ($request->hasFile('caminhoImagem')) {
+    
+    
+    // Define o nome do arquivo usando o nome do produto e mantém a extensão original
+    $nomeArquivo = $materiaPrima->nome . '.' . $request->file('caminhoImagem')->getClientOriginalExtension();
+    $path = $request->file('caminhoImagem')->storeAs('public/GaleriaImagens/materiasPrimas', $nomeArquivo);
+    // Deleta a imagem antiga, se existir
+    if ($materiaPrima->caminhoImagem && Storage::exists('public/GaleriaImagens/materiasPrimas/' . $materiaPrima->caminhoImagem)) {
+        Storage::delete('public/GaleriaImagens/materiasPrimas/' . $materiaPrima->caminhoImagem);
+    }
+    // Atualiza o campo caminhoImagem com o nome do novo arquivo
+    $materiaPrima->caminhoImagem = $nomeArquivo;
+} else {
+    // Mantém o nome do arquivo existente se não houver uma nova imagem enviada
+    $nomeArquivo = $materiaPrima->caminhoImagem;
+}
+
     
             // Atualiza o timestamp de atualização
-            $cliente->dataAtualizacao = now();  
+            $materiaPrima->dataAtualizacao = now();  
     
             // Salva o cliente
-            $cliente->save();
+            $materiaPrima->save();
             
             return redirect()->back()->with('success', 'Cliente adicionado/atualizado com sucesso!');
             
@@ -109,23 +116,21 @@ class ClienteController extends Controller
 
 
     
-    public function remover($idCliente)
+    public function remover($idMateriaPrima)
     {
         try {
 
-            $notificacoesclientes = NotificacoesClientes::where('idClientes',$idCliente)->delete();
-            $enderecosclientes = EnderecosClientes::where('idClientes',$idCliente)->delete();
-            $pedido = Pedidos::where('idClientes',$idCliente)->delete();
-            $cliente = Clientes::findOrFail($idCliente);
+            
+            $materiaPrima = MateriasPrimasEstoque::findOrFail($idMateriaPrima);
            
             
             // Excluir a imagem associada, se existir
-            if ($cliente->imgCaminho) {
-                Storage::delete('public/GaleriaImagens/' . $cliente->imgCaminho);
+            if ($materiaPrima->imgCaminho) {
+                Storage::delete('public/GaleriaImagens/' . $materiaPrima->imgCaminho);
             }
 
 
-            $cliente->delete();
+            $materiaPrima->delete();
 
             return response()->json(['message' => 'Cliente excluído com sucesso']);
         } catch (\Exception $e) {

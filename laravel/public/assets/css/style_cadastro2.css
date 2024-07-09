@@ -1,0 +1,140 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+}
+.all {
+    margin-top: -50px;
+    background: url('vec.png') center center fixed;
+    background-size: cover;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    filter: blur(5px); /* Aplica um efeito de blur no fundo */
+    -webkit-filter: blur(5px); /* Suporte para navegadores Webkit */
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 500px; /* Aumentar a largura máxima */
+    margin: 50px auto; /* Definir a margem superior */
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+
+.alert {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+.background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.9); /* Cor de fundo com transparência */
+    border-radius: 20px;
+    border: 2.5px solid #FA856E;
+    z-index: -1;
+    backdrop-filter: blur(5px); /* Aplica o filtro de blur */
+    -webkit-backdrop-filter: blur(5px); /* Suporte para navegadores Webkit */
+}
+
+.input-group {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.input-group label {
+    font-size: 1em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.input-group input {
+    width: calc(100% - 22px);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 1em;
+    border: 2px solid #FA856E;
+    border-left: 7px solid #FA856E;
+}
+
+select {
+    width: calc(100% - 22px);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 1em;
+    border: 2px solid #FA856E;
+    border-left: 7px solid #FA856E;
+}
+
+.submit-button {
+    width: 90%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #4CAF50;
+    color: #fff;
+    font-size: 1em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.submit-button:hover {
+    background: #45a049;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.separation-line {
+    width: 100%;
+    border-bottom: 2px solid #FA856E;
+    margin-bottom: 20px;
+}
+
+.separation-line1 {
+    width: 50%;
+    border-bottom: 2px solid #FA856E;
+    margin: 20px auto;
+}
+
+.services-text {
+    text-align: center;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        padding: 20px;
+        margin: 20px auto; /* Reduzir a margem superior */
+    }
+}

@@ -10,15 +10,15 @@ class GaleriaImagens extends Model
     use HasFactory;
 
     protected $table = 'galeria_imagens'; // Nome da tabela correspondente
-
+    protected $primaryKey = 'id';
     protected $fillable = [
         'evento',
         'descricao',
-        'nome_imagem',
-        'tamanho_imagem',
-        'tipo_imagem',
-        'imagemCaminho',
+        'nomeImagem',
+        'tamanhoImagem',
+        'tipoImagem',
+        'caminhoImagem'
     ];
-
+    public $timestamps = false;
     // Outros métodos, como relacionamentos ou scopes, podem ser adicionados aqui
 }
