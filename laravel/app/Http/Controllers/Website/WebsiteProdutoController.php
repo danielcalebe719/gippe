@@ -43,6 +43,7 @@ class WebsiteProdutoController extends Controller
 
     public function adicionarAoPedido(Request $request)
     {
+        dd($request->dadosPedido);
         // Valide os dados recebidos
         $request->validate([
          /*   'itens' => 'required|array', // Verifique se é um array

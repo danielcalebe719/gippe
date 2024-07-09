@@ -1,453 +1,427 @@
-<html><head><base href="https://websim.ai" />
-<title>Buffet Divino Sabor: Delícias para Festas</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-<script src="https://unpkg.com/@popperjs/core@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/tippy.js@6"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+<!DOCTYPE html>
+<html lang="pt-br">
 
-  :root {
-    --color-primary: #FCB774;
-    --color-primary-hover: #FAA562;
-    --color-secondary: #FA856E;
-    --color-secondary-hover: #F97058;
-    --color-background: #FFF5E6;
-    --color-text: #333333;
-    --color-footer: #4A5568;
-  }
+<head>
+  <!-- Meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  body {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--color-background);
-    color: var(--color-text);
-  }
+  <!-- Bootstrap CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
 
-  .shadcn-button {
-    @apply inline-flex items-center justify-center rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background;
-    padding: 0.5rem 1.5rem;
-  }
+  <!-- Bootstrap Icons (versão 1.10.0) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-  .shadcn-button-primary {
-    background-color: var(--color-secondary);
-    color: white;
-  }
+  <!-- Custom CSS -->
+  <style>
+    :root {
+      --color-primary: #FCB774;
+      --color-primary-hover: #FAA562;
+      --color-secondary: #FA856E;
+      --color-secondary-hover: #F97058;
+      --color-background: #FFF5E6;
+      --color-text: #333333;
+      --color-footer: #4A5568;
+    }
 
-  .shadcn-button-primary:hover {
-    background-color: var(--color-secondary-hover);
-  }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--color-background);
+      color: var(--color-text);
+      padding-top: 20px;
+    }
 
-  .shadcn-button-secondary {
-    background-color: var(--color-secondary);
-    color: white;
-  }
+    .filters_menu {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
 
-  .shadcn-button-secondary:hover {
-    background-color: var(--color-secondary-hover);
-  }
+    .filters_menu li {
+      cursor: pointer;
+      padding: 10px 15px;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+    }
 
-  .shadcn-button-outline {
-    @apply border border-input hover:bg-accent hover:text-accent-foreground;
-  }
+    .filters_menu li.active {
+      background-color: var(--color-secondary);
+      color: white;
+    }
 
-  .shadcn-card {
-    @apply rounded-xl border bg-card text-card-foreground shadow-sm;
-    background-color: white;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
+    .filters-content .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
 
-  .shadcn-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-  }
+    .card {
+      width: 100%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #fff;
+      overflow: hidden;
+    }
 
-  .shadcn-badge {
-    @apply inline-flex items-center border rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
-  }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
 
-  .shadcn-input {
-    @apply flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
-  }
+    .card img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
 
-  .shadcn-label {
-    @apply text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
-  }
+    .card-body {
+      padding: 15px;
+    }
 
-  .shadcn-select {
-    @apply flex h-10 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
-  }
+    .card-title {
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+    }
 
-.category-buttons {
-    display: flex;
-    justify-content: center; /* Centraliza os botões horizontalmente */
-    margin-bottom: 20px;
-}
+    .card-text {
+      color: #666;
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
 
-.category-button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    margin-right: 10px;
-}
+    .price {
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
 
-.category-button.active {
-    background-color: #0056b3;
-}
+    .quantity {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 120px;
+      margin-top: 10px;
+    }
 
-  .category-button:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-    transform: translateY(-2px);
-  }
+    .quantity input {
+      text-align: center;
+      width: 50px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 5px;
+      font-size: 1rem;
+      outline: none;
+    }
 
-  .category-button:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(250, 133, 110, 0.5);
-  }
+    .quantity button {
+      background-color: var(--color-secondary);
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
 
-  .category-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.75rem;
-  }
+    .quantity button:hover {
+      background-color: var(--color-secondary-hover);
+    }
 
-  .category-button i {
-    margin-right: 8px;
-  }
+    .btn-add-to-cart {
+      background-color: var(--color-secondary);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
 
-  #load-more {
-    @apply mt-8 mx-auto block;
-  }
-</style>
+    .btn-add-to-cart:hover {
+      background-color: var(--color-secondary-hover);
+    }
+
+    .cart-container {
+      width: 100%;
+      max-width: 300px; /* Ajustar conforme necessário */
+      position: sticky;
+      top: 80px; /* Ajustar conforme necessário */
+      padding-left: 15px;
+    }
+
+    .cart-items {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #fff;
+      padding: 15px;
+      margin-top: 20px;
+    }
+
+    .cart-items h3 {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+
+    .cart-item-img {
+      flex: 0 0 60px;
+      margin-right: 10px;
+    }
+
+    .cart-item-info {
+      flex-grow: 1;
+    }
+
+    .cart-item-info h6 {
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+
+    .cart-item-info p {
+      font-size: 0.875rem;
+      color: #666;
+    }
+
+    .cart-item-info button {
+      background-color: transparent;
+      border: none;
+      color: var(--color-secondary);
+      cursor: pointer;
+    }
+
+    .total-price {
+      margin-top: 20px;
+      text-align: right;
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+
+    .checkout-btn {
+      background-color: var(--color-primary);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .checkout-btn:hover {
+      background-color: var(--color-primary-hover);
+    }
+  </style>
+
+  <!-- Title -->
+  <title>Lista de Produtos</title>
 </head>
+
 <body>
-  <header class="py-12" style="background-color: var(--color-background);">
-    <div class="container mx-auto text-center">
-      <h1 class="text-4xl font-bold mb-2">Bem-vindo ao Buffet Divino Sabor</h1>
-      <p class="text-xl">Desfrute de nossas delícias para tornar sua festa inesquecível</p>
-    </div>
-  </header>
 
-  <main class="container mx-auto my-8">
-    <div class="flex flex-wrap -mx-4">
-      <div class="w-full lg:w-3/4 px-4">
-        <div class="mb-6 category-container">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
         <ul class="filters_menu">
-  <li class="category-button active" data-filter="*"><i class="fas fa-utensils"></i> Todos</li>
-  <li class="category-button" data-filter=".salgado"><i class="fas fa-hamburger"></i> Salgados</li>
-  <li class="category-button" data-filter=".doce"><i class="fas fa-cookie"></i> Doces</li>
-  <li class="category-button" data-filter=".bebida"><i class="fas fa-glass-cheers"></i> Bebidas</li>
-  <li class="category-button" data-filter=".vegetariano"><i class="fas fa-leaf"></i> Vegetariano</li>
-</ul>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="product-list">
-          <div class="shadcn-card">
-            <img src="https://websim.ai/images/coxinha.jpg" class="w-full h-48 object-cover rounded-t-xl" alt="Coxinhas">
-            <div class="p-4">
-              <h5 class="font-semibold mb-2">Coxinhas</h5>
-              <p class="text-sm text-muted-foreground mb-4"><i class="fas fa-tag mr-1"></i>R$ 2.50</p>
-              <div class="flex items-center mb-4">
-                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-l-md" onclick="decreaseQuantity('Coxinhas')"><i class="fas fa-minus"></i></button>
-                <input type="number" id="quantity-Coxinhas" value="1" min="1" max="99" class="shadcn-input mx-0 w-16 text-center rounded-none border-l-0 border-r-0" onchange="updateQuantity('Coxinhas')">
-                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-r-md" onclick="increaseQuantity('Coxinhas')"><i class="fas fa-plus"></i></button>
-              </div>
-              <button class="shadcn-button shadcn-button-secondary w-full rounded-md" onclick="addToCart('Coxinhas')"><i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho</button>
-            </div>
-          </div>
-        
-          <div class="shadcn-card">
-            <img src="https://websim.ai/images/bolinha-de-queijo.jpg" class="w-full h-48 object-cover rounded-t-xl" alt="Bolinhas de Queijo">
-            <div class="p-4">
-              <h5 class="font-semibold mb-2">Bolinhas de Queijo</h5>
-              <p class="text-sm text-muted-foreground mb-4"><i class="fas fa-tag mr-1"></i>R$ 2.00</p>
-              <div class="flex items-center mb-4">
-                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-l-md" onclick="decreaseQuantity('Bolinhas de Queijo')"><i class="fas fa-minus"></i></button>
-                <input type="number" id="quantity-Bolinhas de Queijo" value="1" min="1" max="99" class="shadcn-input mx-0 w-16 text-center rounded-none border-l-0 border-r-0" onchange="updateQuantity('Bolinhas de Queijo')">
-                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-r-md" onclick="increaseQuantity('Bolinhas de Queijo')"><i class="fas fa-plus"></i></button>
-              </div>
-              <button class="shadcn-button shadcn-button-secondary w-full rounded-md" onclick="addToCart('Bolinhas de Queijo')"><i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho</button>
-            </div>
-          </div>
-        
-          <div class="shadcn-card">
-            <img src="https://websim.ai/images/kibe.jpg" class="w-full h-48 object-cover rounded-t-xl" alt="Kibe">
-            <div class="p-4">
-              <h5 class="font-semibold mb-2">Kibe</h5>
-              <p class="text-sm text-muted-foreground mb-4"><i class="fas fa-tag mr-1"></i>R$ 2.50</p>
-              <div class="flex items-center mb-4">
-                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-l-md" onclick="decreaseQuantity('Kibe')"><i class="fas fa-minus"></i></button>
-                <input type="number" id="quantity-Kibe" value="1" min="1" max="99" class="shadcn-input mx-0 w-16 text-center rounded-none border-l-0 border-r-0" onchange="updateQuantity('Kibe')">
-                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-r-md" onclick="increaseQuantity('Kibe')"><i class="fas fa-plus"></i></button>
-              </div>
-              <button class="shadcn-button shadcn-button-secondary w-full rounded-md" onclick="addToCart('Kibe')"><i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho</button>
-            </div>
-          </div>
-        
-          <div class="shadcn-card">
-            <img src="https://websim.ai/images/mini-pizza.jpg" class="w-full h-48 object-cover rounded-t-xl" alt="Mini Pizzas">
-            <div class="p-4">
-              <h5 class="font-semibold mb-2">Mini Pizzas</h5>
-              <p class="text-sm text-muted-foreground mb-4"><i class="fas fa-tag mr-1"></i>R$ 3.50</p>
-              <div class="flex items-center mb-4">
-                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-l-md" onclick="decreaseQuantity('Mini Pizzas')"><i class="fas fa-minus"></i></button>
-                <input type="number" id="quantity-Mini Pizzas" value="1" min="1" max="99" class="shadcn-input mx-0 w-16 text-center rounded-none border-l-0 border-r-0" onchange="updateQuantity('Mini Pizzas')">
-                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-r-md" onclick="increaseQuantity('Mini Pizzas')"><i class="fas fa-plus"></i></button>
-              </div>
-              <button class="shadcn-button shadcn-button-secondary w-full rounded-md" onclick="addToCart('Mini Pizzas')"><i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho</button>
-            </div>
-          </div>
-        
-          <div class="shadcn-card">
-            <img src="https://websim.ai/images/brigadeiro.jpg" class="w-full h-48 object-cover rounded-t-xl" alt="Brigadeiros">
-            <div class="p-4">
-              <h5 class="font-semibold mb-2">Brigadeiros</h5>
-              <p class="text-sm text-muted-foreground mb-4"><i class="fas fa-tag mr-1"></i>R$ 1.50</p>
-              <div class="flex items-center mb-4">
-                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-l-md" onclick="decreaseQuantity('Brigadeiros')"><i class="fas fa-minus"></i></button>
-                <input type="number" id="quantity-Brigadeiros" value="1" min="1" max="99" class="shadcn-input mx-0 w-16 text-center rounded-none border-l-0 border-r-0" onchange="updateQuantity('Brigadeiros')">
-                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-r-md" onclick="increaseQuantity('Brigadeiros')"><i class="fas fa-plus"></i></button>
-              </div>
-              <button class="shadcn-button shadcn-button-secondary w-full rounded-md" onclick="addToCart('Brigadeiros')"><i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho</button>
-            </div>
-          </div>
-        
-          <div class="shadcn-card">
-            <img src="https://websim.ai/images/beijinho.jpg" class="w-full h-48 object-cover rounded-t-xl" alt="Beijinhos">
-            <div class="p-4">
-              <h5 class="font-semibold mb-2">Beijinhos</h5>
-              <p class="text-sm text-muted-foreground mb-4"><i class="fas fa-tag mr-1"></i>R$ 1.50</p>
-              <div class="flex items-center mb-4">
-                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-l-md" onclick="decreaseQuantity('Beijinhos')"><i class="fas fa-minus"></i></button>
-                <input type="number" id="quantity-Beijinhos" value="1" min="1" max="99" class="shadcn-input mx-0 w-16 text-center rounded-none border-l-0 border-r-0" onchange="updateQuantity('Beijinhos')">
-                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-r-md" onclick="increaseQuantity('Beijinhos')"><i class="fas fa-plus"></i></button>
-              </div>
-              <button class="shadcn-button shadcn-button-secondary w-full rounded-md" onclick="addToCart('Beijinhos')"><i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho</button>
-            </div>
-          </div>
+          <li class="active" data-filter="*">Todos</li>
+          <li data-filter=".salgado">Salgados</li>
+          <li data-filter=".doce">Doces</li>
+          <li data-filter=".bebida">Bebidas</li>
+        </ul>
 
-          <div class="shadcn-card">
-            <img src="https://websim.ai/images/refrigerante.jpg" class="w-full h-48 object-cover rounded-t-xl" alt="Refrigerante">
-            <div class="p-4">
-              <h5 class="font-semibold mb-2">Refrigerante</h5>
-              <p class="text-sm text-muted-foreground mb-4"><i class="fas fa-tag mr-1"></i>R$ 5.00</p>
-              <div class="flex items-center mb-4">
-                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-l-md" onclick="decreaseQuantity('Refrigerante')"><i class="fas fa-minus"></i></button>
-                <input type="number" id="quantity-Refrigerante" value="1" min="1" max="99" class="shadcn-input mx-0 w-16 text-center rounded-none border-l-0 border-r-0" onchange="updateQuantity('Refrigerante')">
-                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-r-md" onclick="increaseQuantity('Refrigerante')"><i class="fas fa-plus"></i></button>
+        <div class="filters-content">
+          <div class="row grid">
+            <!-- Aqui serão carregados os produtos -->
+            <?php foreach($produtos as $produto): ?>
+            <div class="col-md-4 mb-4">
+              <div class="card">
+                <img src="<?php echo asset('storage/ImagensProdutos/' . $produto->caminhoImagem); ?>" class="card-img-top" alt="<?php echo $produto->nome; ?>">
+                <div class="card-body">
+                  <h5 class="card-title"><?php echo $produto->nome; ?></h5>
+                  <p class="card-text"><?php echo $produto->descricao; ?></p>
+                  <p class="price"><strong>R$ <?php echo number_format($produto->precoUnitario, 2, ',', '.'); ?></strong></p>
+                  <div class="quantity">
+                    <button class="btn btn-sm btn-decrement"><i class="bi bi-dash"></i></button>
+                    <input type="number" class="form-control quantity-input" value="1" min="1">
+                    <button class="btn btn-sm btn-increment"><i class="bi bi-plus"></i></button>
+                  </div>
+                  <button class="btn btn-add-to-cart mt-3" data-id="<?php echo $produto->id; ?>" data-caminho-imagem="<?php echo asset('storage/ImagensProdutos/' . $produto->caminhoImagem); ?>" data-nome="<?php echo $produto->nome; ?>" data-preco-unitario="<?php echo number_format($produto->precoUnitario, 2, ',', '.'); ?>"><i class="bi bi-cart"></i> Adicionar ao Carrinho</button>
+                </div>
               </div>
-              <button class="shadcn-button shadcn-button-secondary w-full rounded-md" onclick="addToCart('Refrigerante')"><i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho</button>
             </div>
-          </div>
-
-          <div class="shadcn-card">
-            <img src="https://websim.ai/images/suco.jpg" class="w-full h-48 object-cover rounded-t-xl" alt="Suco Natural">
-            <div class="p-4">
-              <h5 class="font-semibold mb-2">Suco Natural</h5>
-              <p class="text-sm text-muted-foreground mb-4"><i class="fas fa-tag mr-1"></i>R$ 6.00</p>
-              <div class="flex items-center mb-4">
-                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-l-md" onclick="decreaseQuantity('Suco Natural')"><i class="fas fa-minus"></i></button>
-                <input type="number" id="quantity-Suco Natural" value="1" min="1" max="99" class="shadcn-input mx-0 w-16 text-center rounded-none border-l-0 border-r-0" onchange="updateQuantity('Suco Natural')">
-                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-r-md" onclick="increaseQuantity('Suco Natural')"><i class="fas fa-plus"></i></button>
-              </div>
-              <button class="shadcn-button shadcn-button-secondary w-full rounded-md" onclick="addToCart('Suco Natural')"><i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho</button>
-            </div>
-          </div>
-
-          <div class="shadcn-card">
-            <img src="https://websim.ai/images/quiche.jpg" class="w-full h-48 object-cover rounded-t-xl" alt="Mini Quiche de Espinafre">
-            <div class="p-4">
-              <h5 class="font-semibold mb-2">Mini Quiche de Espinafre</h5>
-              <p class="text-sm text-muted-foreground mb-4"><i class="fas fa-tag mr-1"></i>R$ 3.00</p>
-              <div class="flex items-center mb-4">
-                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-l-md" onclick="decreaseQuantity('Mini Quiche de Espinafre')"><i class="fas fa-minus"></i></button>
-                <input type="number" id="quantity-Mini Quiche de Espinafre" value="1" min="1" max="99" class="shadcn-input mx-0 w-16 text-center rounded-none border-l-0 border-r-0" onchange="updateQuantity('Mini Quiche de Espinafre')">
-                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-r-md" onclick="increaseQuantity('Mini Quiche de Espinafre')"><i class="fas fa-plus"></i></button>
-              </div>
-              <button class="shadcn-button shadcn-button-secondary w-full rounded-md" onclick="addToCart('Mini Quiche de Espinafre')"><i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho</button>
-            </div>
+            <?php endforeach; ?>
           </div>
         </div>
-        <button id="load-more" class="shadcn-button shadcn-button-primary" onclick="loadMoreProducts()">
-          <i class="fas fa-plus mr-2"></i>Ver Mais Produtos
-        </button>
       </div>
-      <div class="w-full lg:w-1/4 px-4">
-        <div class="shadcn-card p-4 sticky top-4">
-          <h3 class="text-lg font-semibold mb-4"><i class="fas fa-shopping-cart mr-2"></i>Seu Carrinho</h3>
-          <ul id="cart-list" class="space-y-2 mb-4">
-            <!-- Itens do carrinho serão adicionados aqui -->
-          </ul>
-          <p class="mb-4">Total: R$ <span id="cart-total">0.00</span></p>
-          <button class="shadcn-button shadcn-button-secondary w-full" onclick="checkout()"><i class="fas fa-check mr-2"></i>Finalizar Pedido</button>
+
+      <div class="col-md-3">
+        <div class="cart-container">
+          <div class="cart-items">
+            <h3>Carrinho de Compras</h3>
+            <!-- Aqui serão inseridos dinamicamente os itens do carrinho -->
+            <div class="cart-items-list"></div>
+            <div class="total-price mt-3">
+              <h5>Total: R$ <span id="totalPrice">0.00</span></h5>
+            </div>
+            <button class="btn checkout-btn mt-3">Finalizar Compra</button>
+          </div>
         </div>
       </div>
     </div>
-  </main>
+  </div>
 
-  <footer style="background-color: var(--color-footer); color: white;" class="py-6 mt-12">
-    <div class="container mx-auto text-center">
-      <p>&copy; 2023 Buffet Divino Sabor. Todos os direitos reservados.</p>
-    </div>
-  </footer>
-
+  <!-- JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   <script>
-    let cart = {};
-    let currentProducts = [];
-    let displayedProducts = 9;
-    const productsPerPage = 9;
-    const products = [
-      { name: 'Coxinhas', price: 2.50, category: 'salgado', image: 'coxinha.jpg' },
-      { name: 'Bolinhas de Queijo', price: 2.00, category: 'salgado', image: 'bolinha-de-queijo.jpg' },
-      { name: 'Kibe', price: 2.50, category: 'salgado', image: 'kibe.jpg' },
-      { name: 'Mini Pizzas', price: 3.50, category: 'salgado', image: 'mini-pizza.jpg' },
-      { name: 'Brigadeiros', price: 1.50, category: 'doce', image: 'brigadeiro.jpg' },
-      { name: 'Beijinhos', price: 1.50, category: 'doce', image: 'beijinho.jpg' },
-      { name: 'Refrigerante', price: 5.00, category: 'bebida', image: 'refrigerante.jpg' },
-      { name: 'Suco Natural', price: 6.00, category: 'bebida', image: 'suco.jpg' },
-      { name: 'Mini Quiche de Espinafre', price: 3.00, category: 'vegetariano', image: 'quiche.jpg' },
-      { name: 'Bolinho de Queijo', price: 2.50, category: 'vegetariano', image: 'bolinho-queijo.jpg' },
-      { name: 'Empadinha', price: 3.00, category: 'salgado', image: 'empadinha.jpg' },
-      { name: 'Torta de Limão', price: 4.00, category: 'doce', image: 'torta-limao.jpg' },
-      { name: 'Água Mineral', price: 2.00, category: 'bebida', image: 'agua-mineral.jpg' },
-      { name: 'Bruschetta', price: 3.50, category: 'vegetariano', image: 'bruschetta.jpg' },
-      { name: 'Pastel de Forno', price: 3.00, category: 'salgado', image: 'pastel-forno.jpg' },
-    ];
+    $(document).ready(function() {
+      // Incremento e Decremento da Quantidade
+      $('.btn-increment').on('click', function() {
+        var input = $(this).siblings('.quantity-input');
+        var newValue = parseInt(input.val()) + 1;
+        input.val(newValue);
+      });
 
-    function loadMoreProducts() {
-      const productList = document.getElementById('product-list');
-      const endIndex = Math.min(displayedProducts + productsPerPage, currentProducts.length);
+      $('.btn-decrement').on('click', function() {
+        var input = $(this).siblings('.quantity-input');
+        var newValue = parseInt(input.val()) - 1;
+        if (newValue >= 1) {
+          input.val(newValue);
+        }
+      });
+
+      // Adicionar ao Carrinho
+      $('.btn-add-to-cart').on('click', function() {
+        var id = $(this).data('id');
+        var caminhoImagem = $(this).data('caminho-imagem');
+        var nome = $(this).data('nome');
+        var precoUnitario = $(this).data('preco-unitario');
+        var quantidade = $(this).closest('.card-body').find('.quantity-input').val();
       
-      for (let i = displayedProducts; i < endIndex; i++) {
-        const product = currentProducts[i];
-        const productHtml = `
-          <div class="shadcn-card">
-            <img src="https://websim.ai/images/${product.image}" class="w-full h-48 object-cover rounded-t-xl" alt="${product.name}">
-            <div class="p-4">
-              <h5 class="font-semibold mb-2">${product.name}</h5>
-              <p class="text-sm text-muted-foreground mb-4"><i class="fas fa-tag mr-1"></i>R$ ${product.price.toFixed(2)}</p>
-              <div class="flex items-center mb-4">
-                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-l-md" onclick="decreaseQuantity('${product.name}')"><i class="fas fa-minus"></i></button>
-                <input type="number" id="quantity-${product.name}" value="1" min="1" max="99" class="shadcn-input mx-0 w-16 text-center rounded-none border-l-0 border-r-0" onchange="updateQuantity('${product.name}')">
-                <button class="shadcn-button shadcn-button-outline px-2 py-1 rounded-r-md" onclick="increaseQuantity('${product.name}')"><i class="fas fa-plus"></i></button>
-              </div>
-              <button class="shadcn-button shadcn-button-secondary w-full rounded-md" onclick="addToCart('${product.name}')"><i class="fas fa-cart-plus mr-2"></i>Adicionar ao Carrinho</button>
+  $('.add-to-cart').click(function(e) {
+        e.preventDefault();
+
+        // Captura informações do produto
+        let id = $(this).data('id');
+        let nome = $(this).data('nome');
+        let caminhoImagem = $(this).data('caminho-imagem');
+        console.log(caminhoImagem)
+        let precoUnitarioElement = $(this).find('.preco-unitario'); // Encontra o elemento que contém o preço unitário
+        let precoUnitario = parseFloat(precoUnitarioElement.text().replace(',', '.')); // Extrai o texto e converte para float
+        let quantidade = parseInt($(this).closest('.options').find('.quantity input').val());
+
+        // Verifica se o item já está no carrinho
+        let index = carrinho.findIndex(item => item.id === id);
+        if (index !== -1) {
+          // Se já está no carrinho, atualiza a quantidade
+          carrinho[index].quantidade += quantidade;
+        } else {
+          // Senão, adiciona ao carrinho
+          carrinho.push({
+            id: id,
+            nome: nome,
+            caminhoImagem: caminhoImagem,
+            precoUnitario: precoUnitario,
+            quantidade: quantidade
+            
+          });
+        }
+
+        // Atualiza visualização do carrinho
+        atualizarCarrinho();
+      });///tem que arrumar essa disnara aqui
+      
+      Criar HTML do item do carrinho
+        var itemHTML = `
+          <div class="cart-item">
+            <div class="cart-item-img">
+              <img src="${caminhoImagem}" alt="${nome}" style="width: 60px;">
             </div>
+            <div class="cart-item-info flex-grow-1">
+              <h6>${nome}</h6>
+              <p>R$ ${precoUnitario} x ${quantidade}</p>
+            </div>
+            <button class="btn btn-sm btn-remove-item"><i class="bi bi-trash"></i></button>
           </div>
         `;
-        productList.innerHTML += productHtml;
+
+        // Adicionar ao carrinho
+        $('.cart-items-list').append(itemHTML);
+
+        // Calcular e atualizar total do carrinho
+        calcularTotalCarrinho();
+      });
+
+      // Remover item do Carrinho
+      $(document).on('click', '.btn-remove-item', function() {
+        $(this).closest('.cart-item').remove();
+        calcularTotalCarrinho();
+      });
+
+      // Calcular e atualizar total do Carrinho
+      function calcularTotalCarrinho() {
+        var total = 0;
+
+        $('.cart-item').each(function() {
+          var precoStr = $(this).find('p').text().trim().split(' ')[1].replace('R$', '').replace(',', '.');
+          var quantidade = parseInt($(this).find('p').text().trim().split(' ')[3]);
+          var preco = parseFloat(precoStr) * quantidade;
+          total += preco;
+        });
+
+        $('#totalPrice').text(total.toFixed(2));
       }
-      
-      displayedProducts = endIndex;
-      document.getElementById('load-more').style.display = displayedProducts >= currentProducts.length ? 'none' : 'block';
-    }
 
-   // Função para filtrar produtos por categoria
-$('.category-button').on('click', function() {
-    const category = $(this).data('category');
-    const filteredProducts = products.filter(product => product.category === category);
+      // Finalizar Compra (exemplo)
+      $('.checkout-btn').click(function() {
+        // Verifica se há itens no carrinho para enviar
+        if (carrinho.length === 0) {
+          console.log('O carrinho está vazio.');
+          return;
+        }
 
-    // Limpar a lista de produtos
-    $('#product-list').empty();
+        // Dados a serem enviados
+        let dadosPedido = {
+          codigo: codigo,
+          itens: carrinho
+        };
 
-    // Construir HTML dos produtos filtrados
-    let html = '';
-    filteredProducts.forEach(product => {
-        html += `<div class="product">${product.name}</div>`;
+        // Requisição AJAX para enviar os dados do carrinho
+        $.ajax({
+          type: 'POST',
+          url: '/website/adicionar-ao-pedido',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: dadosPedido,
+          dataType: 'json',
+          success: function(response) {
+            console.log('Dados do carrinho enviados com sucesso:', response.message);
+            // Limpar carrinho ou redirecionar para página de sucesso
+          },
+          error: function(xhr, status, error) {
+            console.error('Erro ao enviar dados do carrinho:', error);
+          }
+        });
+      });
+   
+
     });
-
-    // Adicionar produtos filtrados ao container
-    $('#product-list').append(html);
-
-    // Atualizar classe ativa nos botões de categoria
-    $('.category-button').removeClass('active');
-    $(this).addClass('active');
-});
-
-
-    function addToCart(item) {
-      const quantity = parseInt(document.getElementById(`quantity-${item}`).value);
-      if (cart[item]) {
-        cart[item] += quantity;
-      } else {
-        cart[item] = quantity;
-      }
-      updateCart();
-    }
-
-    function updateCart() {
-      const cartList = document.getElementById('cart-list');
-      const cartTotal = document.getElementById('cart-total');
-      cartList.innerHTML = '';
-      let total = 0;
-
-      for (const [item, count] of Object.entries(cart)) {
-        const product = products.find(p => p.name === item);
-        const li = document.createElement('li');
-        li.className = 'flex justify-between items-center';
-        li.innerHTML = `
-          <span><i class="fas fa-drumstick-bite mr-2"></i>${item} x${count}</span>
-          <span class="flex items-center">
-            R$ ${(product.price * count).toFixed(2)}
-            <button class="shadcn-button shadcn-button-outline ml-2 p-1 rounded-full" onclick="confirmRemoveFromCart('${item}')">
-              <i class="fas fa-trash-alt"></i>
-            </button>
-          </span>
-        `;
-        cartList.appendChild(li);
-        total += product.price * count;
-      }
-
-      cartTotal.textContent = total.toFixed(2);
-    }
-
-    function confirmRemoveFromCart(item) {
-      if (confirm(`Tem certeza que deseja remover ${item} do carrinho?`)) {
-        removeFromCart(item);
-      }
-    }
-
-    function removeFromCart(item) {
-      delete cart[item];
-      updateCart();
-    }
-
-    function checkout() {
-      alert('Pedido finalizado! Total: R$ ' + document.getElementById('cart-total').textContent);
-      cart = {};
-      updateCart();
-    }
-
-    function decreaseQuantity(item) {
-      const input = document.getElementById(`quantity-${item}`);
-      if (input.value > 1) {
-        input.value = parseInt(input.value) - 1;
-      }
-    }
-
-    function increaseQuantity(item) {
-      const input = document.getElementById(`quantity-${item}`);
-      if (input.value < 99) {
-        input.value = parseInt(input.value) + 1;
-      }
-    }
-
-    function updateQuantity(item) {
-      const input = document.getElementById(`quantity-${item}`);
-      if (input.value < 1) {
-        input.value = 1;
-      } else if (input.value > 99) {
-        input.value = 99;
-      }
-    }
-
-    // Inicializar a página com todos os produtos
-    currentProducts = products;
-    loadMoreProducts();
-
-    // Inicializar tooltips
-    tippy('[data-tippy-content]');
   </script>
-</body></html>
+
+</body>
+
+</html>
