@@ -201,7 +201,7 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
         Route::post('/create', [CadastrarAdminController::class, 'create'])->name('admins.create');
         Route::post('/update', [AdminController ::class, 'update'])->name('admins.update');
         Route::get('/remover/{idAdmins}', [AdminController::class, 'remover'])->name('admins.remover');
-    });
+    }); 
     
     Route::prefix('galeriaImagens')->group(function () {
         Route::get('/', [GaleriaImagemController::class, 'index'])->name('galeriaImagens.index');
