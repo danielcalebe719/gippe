@@ -135,9 +135,11 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
         Route::get('/', [ClienteController::class, 'index'])->name('clientes.index');
         Route::get('/show/{idClientes}', [ClienteController::class, 'show'])->name('clientes.show');
         Route::get('/showEnderecos/{idClientes}', [ClienteController::class, 'showEnderecos'])->name('clientes.showEnderecos');
+        Route::get('/showEndereco/{idClientes}', [ClienteController::class, 'showEndereco'])->name('clientes.showEndereco');
         Route::post('/guardar', [ClienteController::class, 'guardar'])->name('clientes.guardar');
         Route::post('/guardarEndereco', [ClienteController::class, 'guardarEndereco'])->name('clientes.guardarEndereco');
         Route::get('/remover/{idClientes}', [ClienteController::class, 'remover'])->name('clientes.remover');
+        Route::get('/removerEndereco/{idEnderecos}', [ClienteController::class, 'removerEndereco'])->name('clientes.removerEndereco');
     });
 
     // Rotas específicas para pedidos dentro do grupo 'adm/pedidos'

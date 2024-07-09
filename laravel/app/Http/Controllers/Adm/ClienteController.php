@@ -178,7 +178,7 @@ class ClienteController extends Controller
         try {
 
             
-            $enderecocliente = EnderecosClientes::where('idEnderecos',$idEndereco)->delete();
+            $enderecocliente = EnderecosClientes::findOrFail($idEndereco);
             
            
             
