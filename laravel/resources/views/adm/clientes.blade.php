@@ -166,7 +166,7 @@
 
                                             "<div class='btn-group mr-2' role='group' aria-label='Ações do Cliente'>"+
                                                 "<button type='button' class='btn btn-danger btn-sm' onclick='abrirModalExclusaoEndereco("+response[i].id +")'>Excluir</button>"+
-                                            "</div>" + "</td>" +
+                                            "</div> </td>" +
                       
                     
                     "</tr>")
@@ -238,7 +238,7 @@
 </div>
 
 <!-- Modal Editar Endereço -->
-<div class="modal fade" id="modalEditarEndereco{{ $cliente->id }}" tabindex="-1" role="dialog"
+<div class="modal fade" id="modalEditarEndereco" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -249,12 +249,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formAdicionarEndereco" action="/adm/clientes/guardarEndereco" method="POST"
+                <form id="formEditarEndereco" action="/adm/clientes/guardarEndereco" method="POST"
                     enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="idEndereco" value="">
-                    <input type="hidden" name="idClientes" value="">
-
+                    <input type="hidden" id="editarIdEndereco" name="idEndereco">
                     <div class="form-group">
                         <label for="nome">Tipo</label>
                         <select class="form-control" name="tipo" id="editarTipo"
@@ -275,7 +273,7 @@
                     </div>
                     <div class="form-group">
                         <label for="bairro">Bairro</label>
-                        <input type="text" class="form-control bairro" name="editarBairro" id="bairro"
+                        <input type="text" class="form-control bairro"  id="editarBairro" name="bairro"
                             value="">
                     </div>
 
@@ -314,12 +312,14 @@ function carregarDadosParaEdicaoEndereco(idEndereco) {
                 console.log('API Response:', data); // Log the API response
 
                 // Preencher os campos do formulário com os dados do cliente
-                document.getElementById('editarIdCliente').value = data.id;
-                document.getElementById('editarNome').value = data.nome;
-                document.getElementById('editarCpf').value = data.cpf;
-                document.getElementById('editarStatus').value = data.status;
-                document.getElementById('editarEmail').value = data.email;
-                document.getElementById('editarTelefone').value = data.telefone;
+                document.getElementById('editarIdEndereco').value = data.id;
+                document.getElementById('editarTipo').value = data.tipo;
+                document.getElementById('editarCep').value = data.cep;
+                document.getElementById('editarCidade').value = data.cidade;
+                document.getElementById('editarBairro').value = data.bairro;
+                document.getElementById('editarLogradouro').value = data.rua;
+                document.getElementById('editarNumero').value = data.numero;
+                document.getElementById('editarComplemento').value = data.complemento;
 
                 
 
@@ -331,10 +331,77 @@ function carregarDadosParaEdicaoEndereco(idEndereco) {
             });
     }
 
-    $(document).ready(function () {
-        $('#dataTableHover').DataTable(); // Initialize the DataTable
-    });
+   
 </script>
+
+<div class="modal fade" id="modalConfirmarExclusaoEndereco" tabindex="-1" role="dialog"
+    aria-labelledby="modalConfirmarExclusaoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalConfirmarExclusaoLabel">Confirmar Exclusão</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza de que deseja excluir este cliente?</p>
+                <input type="hidden" id="excluirIdEndereco">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmarExclusaoEndereco">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Função para abrir o modal de confirmação de exclusão
+    function abrirModalExclusaoEndereco(idEndereco) {
+        document.getElementById('excluirIdEndereco').value = idEndereco;
+        $('#modalConfirmarExclusaoEndereco').modal('show');
+    }
+
+    // Função para confirmar a exclusão
+    document.getElementById('confirmarExclusaoEndereco').addEventListener('click', function () {
+        var idEndereco = document.getElementById('excluirIdEndereco').value;
+
+        // Enviar requisição AJAX para excluir o cliente
+        fetch(`/adm/clientes/removerEndereco/${idEndereco}`, {
+            method: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao excluir o cliente');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Fechar o modal de confirmação de exclusão
+                $('#modalConfirmarExclusaoEndereco').modal('hide');
+
+                // Remover a linha do cliente na tabela, se existir
+                let enderecoRow = document.getElementById(`enderecoRow${idEndereco}`);
+                if (enderecoRow) {
+                    enderecoRow.remove();
+                } else {
+                    console.warn(`Elemento enderecoRow${idEndereco} não encontrado para remoção.`);
+                }
+
+                // Exibir mensagem de sucesso
+                location.replace(location.href)
+
+            })
+            .catch(error => {
+                console.log(error)
+                console.error('Erro ao excluir o cliente:', error);
+                alert('Erro ao excluir o clienteeeeeeee');
+            });
+    });
 
 <!-- Modal Adicionar Cliente -->
 <div class="modal fade" id="modalAdicionarCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

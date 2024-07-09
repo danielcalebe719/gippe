@@ -36,9 +36,9 @@ class ClienteController extends Controller
         }
     }
 
-    public function showEnderecos($idClientes)
+    public function showEnderecos($idEndereco)
     {
-        $enderecos = EnderecosClientes::where('idClientes', $idClientes)->get();
+        $enderecos = EnderecosClientes::where('idClientes', $idEndereco)->get();
         
         // Verifica se encontrou algum endereço
     if ($enderecos->isNotEmpty()) {
@@ -173,6 +173,25 @@ class ClienteController extends Controller
 
 
 
+    public function removerEndereco($idEndereco)
+    {
+        try {
+
+            
+            $enderecocliente = EnderecosClientes::where('idEnderecos',$idEndereco)->delete();
+            
+           
+            
+            
+
+
+            $enderecocliente->delete();
+
+            return response()->json(['message' => 'Cliente excluído com sucesso']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao excluir o cliente: ' . $e->getMessage()], 500);
+        }       
+    }
 
 
 
