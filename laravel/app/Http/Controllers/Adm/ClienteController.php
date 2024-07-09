@@ -97,16 +97,23 @@ class ClienteController extends Controller
                 $cliente->dataCadastro = now();
             }
             // Trata o upload da imagem, se fornecida
-            if ($request->hasFile('imgCaminho')) {
-                // Deleta a imagem antiga, se existir
-                if ($cliente->imgCaminho && Storage::exists('public/GaleriaImagens/' . $cliente->imgCaminho)) {
-                    Storage::delete('public/GaleriaImagens/' . $cliente->imgCaminho);
-                }
-                
-                // Armazena a nova imagem
-                $path = $request->file('imgCaminho')->store('public/GaleriaImagens');
-                $cliente->imgCaminho = basename($path);
-            }
+if ($request->hasFile('caminhoImagem')) {
+    
+    
+    // Define o nome do arquivo usando o nome do produto e mantém a extensão original
+    $nomeArquivo = $cliente->nome . '.' . $request->file('caminhoImagem')->getClientOriginalExtension();
+    $path = $request->file('caminhoImagem')->storeAs('public/GaleriaImagens/clientes', $nomeArquivo);
+    // Deleta a imagem antiga, se existir
+    if ($cliente->caminhoImagem && Storage::exists('public/GaleriaImagens/clientes/' . $cliente->caminhoImagem)) {
+        Storage::delete('public/GaleriaImagens/clientes/' . $cliente->caminhoImagem);
+    }
+    // Atualiza o campo caminhoImagem com o nome do novo arquivo
+    $cliente->caminhoImagem = $nomeArquivo;
+} else {
+    // Mantém o nome do arquivo existente se não houver uma nova imagem enviada
+    $nomeArquivo = $cliente->caminhoImagem;
+}
+
     
             // Atualiza o timestamp de atualização
             $cliente->dataAtualizacao = now();  
@@ -209,8 +216,8 @@ class ClienteController extends Controller
            
             
             // Excluir a imagem associada, se existir
-            if ($cliente->imgCaminho) {
-                Storage::delete('public/GaleriaImagens/' . $cliente->imgCaminho);
+            if ($cliente->caminhoImagem) {
+                Storage::delete('public/GaleriaImagens/clientes' . $cliente->caminhoImagem);
             }
 
 

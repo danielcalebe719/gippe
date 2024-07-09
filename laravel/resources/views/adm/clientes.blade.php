@@ -464,7 +464,7 @@
 
                         <div class="form-group">
                             <label for="imgPerfil">Imagem de Perfil</label>
-                            <input type="file" class="form-control-file" id="imgPerfil" name="imgPerfil">
+                            <input type="file" class="form-control-file" id="caminhoImagem" name="caminhoImagem">
                         </div>
                         <button type="submit" class="btn btn-primary">Salvar</button>
                     </form>
@@ -618,7 +618,7 @@
                         <div class="form-group row">
                             <label for="editarImgCaminho" class="col-sm-3 col-form-label">Imagem de Perfil:</label>
                             <div class="col-sm-9">
-                                <input type="file" class="form-control-file" id="editarImgCaminho" name="imgCaminho">
+                                <input type="file" class="form-control-file" id="editarCaminhoImagem" name="caminhoImagem">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -702,12 +702,16 @@
                         </div>
                     </div>
                     <div class="form-group">
+                            <label for="detalhesImgPerfil">Imagem do Produto:</label>
+                            <img id="detalhesImgPerfil" class="form-control-file" src="" alt="Imagem do Produto" style="max-width: 100%; height: auto;">
+                        </div>
+                    <!-- <div class="form-group">
                         <label for="detalhesImgPerfil">Imagem de Perfil</label><br>
                         <div class="img-container">
-                            <img id="detalhesImgCaminho" src="" class="img-fluid img-thumbnail" alt="Imagem de Perfil"
+                            <img id="detalhesCaminhoImagem" src="" class="img-fluid img-thumbnail" alt="Imagem de Perfil"
                                 style="max-width: 200px;">
                         </div>
-                    </div>
+                    </div> -->
 
 
                 </div>
@@ -828,9 +832,9 @@
                     // Exibir apenas parte da senha ou string vazia se não houver senha
 
 
-                    // Atualizar a imagem de perfil ou usar uma imagem padrão caso o caminho seja nulo
-                    let imgPath = data.imgCaminho ? `/storage/GaleriaImagens/${data.imgCaminho}` : '/storage/GaleriaImagens/padrao.png';
-                    document.getElementById('detalhesImgCaminho').src = imgPath;
+                    // Atualize o src da imagem
+            const imgPath = data.caminhoImagem ? `/storage/GaleriaImagens/clientes/${data.caminhoImagem}` : 'default-image-path.jpg';
+            document.getElementById('detalhesImgPerfil').src = imgPath;
 
                     // Abra o modal de detalhes do cliente
                     $('#modalDetalhesCliente').modal('show');
@@ -893,7 +897,7 @@
                     //document.getElementById('editarSenha').value = data.senha;
 
 
-                    document.getElementById('editarImgCaminho').src = 'GaleriaImagens/' + data.imgCaminho;
+                    document.getElementById('editarCaminhoImagem').value = data.caminhoImagem;
 
                     // Abrir o modal de edição do cliente
                     $('#modalEditarCliente').modal('show');
