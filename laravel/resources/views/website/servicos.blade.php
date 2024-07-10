@@ -109,12 +109,7 @@
             </div>
         </div>
     </div>
-    @if(Auth::guard('cliente')->check())
-    <p>Bem-vindo, {{ Auth::guard('cliente')->user()->email }}!</p>
-    <a href="{{url('website/logout')}}">Logout</a>
-    @else
-    <p>Bem-vindo, visitante!</p>
-    @endif
+
 
     <!-- ======= Pricing Section ======= -->
     <section id="pricing" class="pricing">
