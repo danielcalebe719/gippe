@@ -281,12 +281,9 @@
                         <div class="form-group">
                             <label for="status">Status</label>
                             <select class="form-control" id="status" name="status" required>
-                                <option value="nao_finalizado">Não finalizado</option>
-                                <option value="pendente">Pendente</option>
-                                <option value="aceito">Aceito</option>
-                                <option value="recusado">Recusado</option>
-                                <option value="cancelado">Cancelado</option>
-                                <option value="entregue">Entregue</option>
+                            @foreach(App\Models\Pedidos::getStatusArray() as $chave=>$valor)
+                                <option value="{{$chave}}">{{$valor}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
@@ -457,12 +454,9 @@
                         <div class="form-group">
                             <label for="editStatus">Status</label>
                             <select class="form-control" id="EditarStatus" name="status" required>
-                                <option value="nao_finalizado">Não finalizado</option>
-                                <option value="pendente">Pendente</option>
-                                <option value="aceito">Aceito</option>
-                                <option value="recusado">Recusado</option>
-                                <option value="cancelado">Cancelado</option>
-                                <option value="entregue">Entregue</option>
+                                @foreach(App\Models\Pedidos::getStatusArray() as $chave=>$valor)
+                                <option value="{{$chave}}">{{$valor}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">

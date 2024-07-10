@@ -40,6 +40,23 @@ class Pedidos extends Model
     public $timestamps = false;
 
 
+    private static $statusArray = [
+        '1'=>'Nao finalizado',
+        '2'=>'Pendente',
+        '3'=>'aceito',
+        '4'=>'recusado',
+        '5'=>'cancelado',
+        '6'=>'entregue'
+    ];
+    public static function getStatusArray(){
+        return self::$statusArray;
+    }
+
+    public function getStatus(){
+        return self::$notificacoesArray[$this->idNotificacaoArray];
+    }
+
+
     public function pedidosProdutos()
     {
         return $this->hasMany(PedidosProdutos::class, 'idPedidos', 'id');
