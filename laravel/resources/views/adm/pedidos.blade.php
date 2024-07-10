@@ -129,7 +129,7 @@
                                     <td>{{ $pedido->id }}</td>
                                     <td>{{ $pedido->cliente->nome }}</td>
                                     <td>{{ $pedido->servico->nome ?? 'Nome do serviço não disponível' }}</td>
-                                    <td>{{ $pedido->status }}</td>
+                                    <td>{{ $pedido->getStatus() }}</td>
                                     <td>{{ $pedido->totalPedido }}</td>
                                     <td>{{ $pedido->dataEntrega }}</td>
 

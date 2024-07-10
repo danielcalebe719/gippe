@@ -53,7 +53,7 @@ class Pedidos extends Model
     }
 
     public function getStatus(){
-        return self::$notificacoesArray[$this->idNotificacaoArray];
+        return self::$statusArray[$this->id];
     }
 
 
