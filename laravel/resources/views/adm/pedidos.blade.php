@@ -54,12 +54,20 @@
                                     <td>{{ $pedido->id }}</td>
                                     <td>{{ $pedido->cliente->nome }}</td>
                                     <td>{{  $pedido->servico->nome ?? 'Nome do serviço não disponível' }}</td>
-                                    <td>{{ $pedido->status }}</td>
+                                    <td>{{ $pedido->getStatus() }}</td>
                                     <td>{{ $pedido->totalPedido }}</td>
                                     <td>{{ $pedido->dataEntrega }}</td>
 
                                     <td>
                                         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+
+                                        <div class="btn-group mr-2" role="group" aria-label="Ações do Pedido">
+                                                <button type="button" class="btn btn-success btn-sm"
+                                                    onclick="">
+                                                    Aceitar
+                                                </button>
+                                            </div>
+
                                             <div class="btn-group mr-2" role="group" aria-label="Ações do Pedido">
                                                 <button class="btn btn-primary btn-sm"
                                                     onclick="carregarDadosParaEdicao('{{ $pedido->id }}')"
@@ -89,6 +97,7 @@
                                                     Detalhes
                                                 </button>
                                             </div>
+                                            
                                         </div>
                                     </td>
                                 </tr>

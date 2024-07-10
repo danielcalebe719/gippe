@@ -41,19 +41,20 @@ class Pedidos extends Model
 
 
     private static $statusArray = [
+        null => '',
         '1'=>'Nao finalizado',
         '2'=>'Pendente',
-        '3'=>'aceito',
-        '4'=>'recusado',
-        '5'=>'cancelado',
-        '6'=>'entregue'
+        '3'=>'Aceito',
+        '4'=>'Recusado',
+        '5'=>'Cancelado',
+        '6'=>'Entregue'
     ];
     public static function getStatusArray(){
         return self::$statusArray;
     }
 
     public function getStatus(){
-        return self::$statusArray[$this->id];
+        return self::$statusArray[$this->status];
     }
 
 
