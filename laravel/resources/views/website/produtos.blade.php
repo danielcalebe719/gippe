@@ -5,6 +5,7 @@
   <!-- Meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <!-- Bootstrap CSS -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
@@ -12,227 +13,225 @@
   <!-- Bootstrap Icons (versão 1.10.0) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-  <!-- Custom CSS -->
-  <style>
-    :root {
-      --color-primary: #FCB774;
-      --color-primary-hover: #FAA562;
-      --color-secondary: #FA856E;
-      --color-secondary-hover: #F97058;
-      --color-background: #FFF5E6;
-      --color-text: #333333;
-      --color-footer: #4A5568;
-    }
+    <!-- Custom CSS -->
+    <style>
+      :root {
+        --color-primary: #FCB774;
+        --color-primary-hover: #FAA562;
+        --color-secondary: #FA856E;
+        --color-secondary-hover: #F97058;
+        --color-background: #FFF5E6;
+        --color-text: #333333;
+        --color-footer: #4A5568;
+      }
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: var(--color-background);
-      color: var(--color-text);
-      padding-top: 20px;
-    }
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--color-background);
+        color: var(--color-text);
+        padding-top: 20px;
+      }
 
-    .filters_menu {
-      list-style: none;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
+      .filters_menu {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
 
-    .filters_menu li {
-      cursor: pointer;
-      padding: 10px 15px;
-      background-color: #f0f0f0;
-      border-radius: 5px;
-    }
+      .filters_menu li {
+        cursor: pointer;
+        padding: 10px 15px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+      }
 
-    .filters_menu li.active {
-      background-color: var(--color-secondary);
-      color: white;
-    }
+      .filters_menu li.active {
+        background-color: var(--color-secondary);
+        color: white;
+      }
 
-    .filters-content .grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
+      .filters-content .grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
 
-    .card {
-      width: 100%;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      background-color: #fff;
-      overflow: hidden;
-    }
+      .card {
+        width: 100%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+        overflow: hidden;
+      }
 
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
 
-    .card img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
+      .card img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
 
-    .card-body {
-      padding: 15px;
-    }
+      .card-body {
+        padding: 15px;
+      }
 
-    .card-title {
-      font-size: 1.25rem;
-      margin-bottom: 10px;
-    }
+      .card-title {
+        font-size: 1.25rem;
+        margin-bottom: 10px;
+      }
 
-    .card-text {
-      color: #666;
-      font-size: 1rem;
-      margin-bottom: 10px;
-    }
+      .card-text {
+        color: #666;
+        font-size: 1rem;
+        margin-bottom: 10px;
+      }
 
-    .price {
-      font-size: 1.25rem;
-      font-weight: bold;
-    }
+      .price {
+        font-size: 1.25rem;
+        font-weight: bold;
+      }
 
-    .quantity {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 120px;
-      margin-top: 10px;
-    }
+      .quantity {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 120px;
+        margin-top: 10px;
+      }
 
-    .quantity input {
-      text-align: center;
-      width: 50px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      padding: 5px;
-      font-size: 1rem;
-      outline: none;
-    }
+      .quantity input {
+        text-align: center;
+        width: 50px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 5px;
+        font-size: 1rem;
+        outline: none;
+      }
 
-    .quantity button {
-      background-color: var(--color-secondary);
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+      .quantity button {
+        background-color: var(--color-secondary);
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
 
-    .quantity button:hover {
-      background-color: var(--color-secondary-hover);
-    }
+      .quantity button:hover {
+        background-color: var(--color-secondary-hover);
+      }
 
-    .btn-add-to-cart {
-      background-color: var(--color-secondary);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+      .btn-add-to-cart {
+        background-color: var(--color-secondary);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
 
-    .btn-add-to-cart:hover {
-      background-color: var(--color-secondary-hover);
-    }
+      .btn-add-to-cart:hover {
+        background-color: var(--color-secondary-hover);
+      }
 
-    .cart-container {
-      width: 100%;
-      max-width: 300px; /* Ajustar conforme necessário */
-      position: sticky;
-      top: 80px; /* Ajustar conforme necessário */
-      padding-left: 15px;
-    }
+      .cart-container {
+        width: 100%;
+        max-width: 300px; /* Ajustar conforme necessário */
+        position: sticky;
+        top: 80px; /* Ajustar conforme necessário */
+        padding-left: 15px;
+      }
 
-    .cart-items {
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      background-color: #fff;
-      padding: 15px;
-      margin-top: 20px;
-    }
+      .cart-items {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+        padding: 15px;
+        margin-top: 20px;
+      }
 
-    .cart-items h3 {
-      font-size: 1.25rem;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
+      .cart-items h3 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
 
-    .cart-item {
-      display: flex;
-      align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid #ddd;
-    }
+      .cart-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+      }
 
-    .cart-item:last-child {
-      border-bottom: none;
-    }
+      .cart-item:last-child {
+        border-bottom: none;
+      }
 
-    .cart-item-img {
-      flex: 0 0 60px;
-      margin-right: 10px;
-    }
+      .cart-item-img {
+        flex: 0 0 60px;
+        margin-right: 10px;
+      }
 
-    .cart-item-info {
-      flex-grow: 1;
-    }
+      .cart-item-info {
+        flex-grow: 1;
+      }
 
-    .cart-item-info h6 {
-      font-size: 1rem;
-      margin-bottom: 5px;
-    }
+      .cart-item-info h6 {
+        font-size: 1rem;
+        margin-bottom: 5px;
+      }
 
-    .cart-item-info p {
-      font-size: 0.875rem;
-      color: #666;
-    }
+      .cart-item-info p {
+        font-size: 0.875rem;
+        color: #666;
+      }
 
-    .cart-item-info button {
-      background-color: transparent;
-      border: none;
-      color: var(--color-secondary);
-      cursor: pointer;
-    }
+      .cart-item-info button {
+        background-color: transparent;
+        border: none;
+        color: var(--color-secondary);
+        cursor: pointer;
+      }
 
-    .total-price {
-      margin-top: 20px;
-      text-align: right;
-      font-size: 1.25rem;
-      font-weight: bold;
-    }
+      .total-price {
+        margin-top: 20px;
+        text-align: right;
+        font-size: 1.25rem;
+        font-weight: bold;
+      }
 
-    .checkout-btn {
-      background-color: var(--color-primary);
-      color: white;
-      border: none;
-      padding: 15px 30px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+      .checkout-btn {
+        background-color: var(--color-primary);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
 
-    .checkout-btn:hover {
-      background-color: var(--color-primary-hover);
-    }
-  </style>
+      .checkout-btn:hover {
+        background-color: var(--color-primary-hover);
+      }
+    </style>
 
   <!-- Title -->
   <title>Lista de Produtos</title>
 </head>
-
 <body>
-
-  <div class="container">
+<div class="container">
     <div class="row">
       <div class="col-md-9">
         <ul class="filters_menu">
@@ -244,25 +243,33 @@
 
         <div class="filters-content">
           <div class="row grid">
-            <!-- Aqui serão carregados os produtos -->
-            <?php foreach($produtos as $produto): ?>
-            <div class="col-md-4 mb-4">
+            <!-- Iteração sobre os produtos -->
+            @foreach($produtos as $produto)
+            <div class="col-md-4 mb-4 {{ strtolower($produto->tipo) }}">
               <div class="card">
-                <img src="<?php echo asset('storage/ImagensProdutos/' . $produto->caminhoImagem); ?>" class="card-img-top" alt="<?php echo $produto->nome; ?>">
+                <img src="{{ asset('storage/ImagensProdutos/' . $produto->caminhoImagem) }}" class="card-img-top"
+                  alt="{{ $produto->nome }}">
                 <div class="card-body">
-                  <h5 class="card-title"><?php echo $produto->nome; ?></h5>
-                  <p class="card-text"><?php echo $produto->descricao; ?></p>
-                  <p class="price"><strong>R$ <?php echo number_format($produto->precoUnitario, 2, ',', '.'); ?></strong></p>
+                  <h5 class="card-title">{{ $produto->nome }}</h5>
+                  <p class="card-text">{{ $produto->descricao }}</p>
+                  <p class="price"><strong>R$ {{ number_format($produto->precoUnitario, 2, ',', '.') }}</strong></p>
                   <div class="quantity">
                     <button class="btn btn-sm btn-decrement"><i class="bi bi-dash"></i></button>
                     <input type="number" class="form-control quantity-input" value="1" min="1">
                     <button class="btn btn-sm btn-increment"><i class="bi bi-plus"></i></button>
                   </div>
-                  <button class="btn btn-add-to-cart mt-3" data-id="<?php echo $produto->id; ?>" data-caminho-imagem="<?php echo asset('storage/ImagensProdutos/' . $produto->caminhoImagem); ?>" data-nome="<?php echo $produto->nome; ?>" data-preco-unitario="<?php echo number_format($produto->precoUnitario, 2, ',', '.'); ?>"><i class="bi bi-cart"></i> Adicionar ao Carrinho</button>
+                  <button class="btn btn-add-to-cart mt-3"
+                    data-id="{{ $produto->id }}"
+                    data-caminho-imagem="{{ asset('storage/ImagensProdutos/' . $produto->caminhoImagem) }}"
+                    data-nome="{{ $produto->nome }}"
+                    data-preco-unitario="{{ number_format($produto->precoUnitario, 2, ',', '.') }}">
+                  
+                    <i class="bi bi-cart"></i> Adicionar ao Carrinho
+                  </button>
                 </div>
               </div>
             </div>
-            <?php endforeach; ?>
+            @endforeach
           </div>
         </div>
       </div>
@@ -274,7 +281,7 @@
             <!-- Aqui serão inseridos dinamicamente os itens do carrinho -->
             <div class="cart-items-list"></div>
             <div class="total-price mt-3">
-              <h5>Total: R$ <span id="totalPrice">0.00</span></h5>
+              <h5>Total: R$ <span id="cart-total">0.00</span></h5>
             </div>
             <button class="btn checkout-btn mt-3">Finalizar Compra</button>
           </div>
@@ -287,141 +294,159 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   <script>
-    $(document).ready(function() {
-      // Incremento e Decremento da Quantidade
-      $('.btn-increment').on('click', function() {
-        var input = $(this).siblings('.quantity-input');
-        var newValue = parseInt(input.val()) + 1;
-        input.val(newValue);
-      });
+    document.addEventListener('DOMContentLoaded', function () {
+      // Variável para o carrinho
+      var cart = {};
 
-      $('.btn-decrement').on('click', function() {
-        var input = $(this).siblings('.quantity-input');
-        var newValue = parseInt(input.val()) - 1;
-        if (newValue >= 1) {
-          input.val(newValue);
-        }
-      });
-
-      // Adicionar ao Carrinho
-      $('.btn-add-to-cart').on('click', function() {
-        var id = $(this).data('id');
-        var caminhoImagem = $(this).data('caminho-imagem');
-        var nome = $(this).data('nome');
-        var precoUnitario = $(this).data('preco-unitario');
-        var quantidade = $(this).closest('.card-body').find('.quantity-input').val();
-      
-  $('.add-to-cart').click(function(e) {
-        e.preventDefault();
-
-        // Captura informações do produto
-        let id = $(this).data('id');
-        let nome = $(this).data('nome');
-        let caminhoImagem = $(this).data('caminho-imagem');
-        console.log(caminhoImagem)
-        let precoUnitarioElement = $(this).find('.preco-unitario'); // Encontra o elemento que contém o preço unitário
-        let precoUnitario = parseFloat(precoUnitarioElement.text().replace(',', '.')); // Extrai o texto e converte para float
-        let quantidade = parseInt($(this).closest('.options').find('.quantity input').val());
-
-        // Verifica se o item já está no carrinho
-        let index = carrinho.findIndex(item => item.id === id);
-        if (index !== -1) {
-          // Se já está no carrinho, atualiza a quantidade
-          carrinho[index].quantidade += quantidade;
-        } else {
-          // Senão, adiciona ao carrinho
-          carrinho.push({
-            id: id,
-            nome: nome,
-            caminhoImagem: caminhoImagem,
-            precoUnitario: precoUnitario,
-            quantidade: quantidade
-            
+      // Filtro de Categorias
+      var filterItems = document.querySelectorAll('.filters_menu li');
+      filterItems.forEach(function (item) {
+        item.addEventListener('click', function () {
+          filterItems.forEach(function (el) {
+            el.classList.remove('active');
           });
-        }
-
-        // Atualiza visualização do carrinho
-        atualizarCarrinho();
-      });///tem que arrumar essa disnara aqui
-      
-      Criar HTML do item do carrinho
-        var itemHTML = `
-          <div class="cart-item">
-            <div class="cart-item-img">
-              <img src="${caminhoImagem}" alt="${nome}" style="width: 60px;">
-            </div>
-            <div class="cart-item-info flex-grow-1">
-              <h6>${nome}</h6>
-              <p>R$ ${precoUnitario} x ${quantidade}</p>
-            </div>
-            <button class="btn btn-sm btn-remove-item"><i class="bi bi-trash"></i></button>
-          </div>
-        `;
-
-        // Adicionar ao carrinho
-        $('.cart-items-list').append(itemHTML);
-
-        // Calcular e atualizar total do carrinho
-        calcularTotalCarrinho();
-      });
-
-      // Remover item do Carrinho
-      $(document).on('click', '.btn-remove-item', function() {
-        $(this).closest('.cart-item').remove();
-        calcularTotalCarrinho();
-      });
-
-      // Calcular e atualizar total do Carrinho
-      function calcularTotalCarrinho() {
-        var total = 0;
-
-        $('.cart-item').each(function() {
-          var precoStr = $(this).find('p').text().trim().split(' ')[1].replace('R$', '').replace(',', '.');
-          var quantidade = parseInt($(this).find('p').text().trim().split(' ')[3]);
-          var preco = parseFloat(precoStr) * quantidade;
-          total += preco;
+          this.classList.add('active');
+          var filtro = this.getAttribute('data-filter');
+          var gridItems = document.querySelectorAll('.grid .col-md-4');
+          gridItems.forEach(function (gridItem) {
+            gridItem.style.display = 'none';
+            if (filtro === '*' || gridItem.classList.contains(filtro.substring(1))) {
+              gridItem.style.display = 'block';
+            }
+          });
         });
+      });
 
-        $('#totalPrice').text(total.toFixed(2));
-      }
+      // Incremento e Decremento da Quantidade
+      var incrementButtons = document.querySelectorAll('.btn-increment');
+      incrementButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          var input = this.parentElement.querySelector('.quantity-input');
+          var newValue = parseInt(input.value) + 1;
+          input.value = newValue.toString();
+        });
+      });
 
-      // Finalizar Compra (exemplo)
-      $('.checkout-btn').click(function() {
-        // Verifica se há itens no carrinho para enviar
-        if (carrinho.length === 0) {
-          console.log('O carrinho está vazio.');
-          return;
-        }
-
-        // Dados a serem enviados
-        let dadosPedido = {
-          codigo: codigo,
-          itens: carrinho
-        };
-
-        // Requisição AJAX para enviar os dados do carrinho
-        $.ajax({
-          type: 'POST',
-          url: '/website/adicionar-ao-pedido',
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          data: dadosPedido,
-          dataType: 'json',
-          success: function(response) {
-            console.log('Dados do carrinho enviados com sucesso:', response.message);
-            // Limpar carrinho ou redirecionar para página de sucesso
-          },
-          error: function(xhr, status, error) {
-            console.error('Erro ao enviar dados do carrinho:', error);
+      var decrementButtons = document.querySelectorAll('.btn-decrement');
+      decrementButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          var input = this.parentElement.querySelector('.quantity-input');
+          var newValue = parseInt(input.value) - 1;
+          if (newValue >= 1) {
+            input.value = newValue.toString();
           }
         });
       });
-   
 
+      // Adicionar ao Carrinho
+      var addToCartButtons = document.querySelectorAll('.btn-add-to-cart');
+      addToCartButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          var id = this.getAttribute('data-id');
+          var nome = this.getAttribute('data-nome');
+          var precoUnitario = parseFloat(this.getAttribute('data-preco-unitario').replace('.', '').replace(',', '.'));
+          var imagem = this.getAttribute('data-caminho-imagem');
+          var quantidade = parseInt(this.parentElement.querySelector('.quantity-input').value);
+          addToCart(id, nome, precoUnitario, imagem, quantidade);
+         
+        });
+      });
+
+      // Função para adicionar ao carrinho
+      function addToCart(id, nome, precoUnitario, imagem, quantidade) {
+        if (cart[id]) {
+          cart[id].quantidade += quantidade;
+        } else {
+          cart[id] = {
+            id: id,
+            nome: nome,
+            precoUnitario: precoUnitario,
+            imagem: imagem,
+            quantidade: quantidade
+          };
+        }
+        updateCart(); // Atualiza visualmente o carrinho
+      }
+
+      // Função para atualizar o carrinho
+      function updateCart() {
+        var cartList = document.querySelector('.cart-items-list');
+        cartList.innerHTML = '';
+        var total = 0;
+
+        for (var id in cart) {
+          if (cart.hasOwnProperty(id)) {
+            var item = cart[id];
+            var nome = item.nome;
+            var precoUnitario = item.precoUnitario;
+            var imagem = item.imagem;
+            var quantidade = item.quantidade;
+
+            var li = document.createElement('div');
+            li.classList.add('cart-item');
+            li.innerHTML = `
+              <div class="cart-item-img">
+                <img src="${imagem}" alt="${nome}" style="width: 60px;">
+              </div>
+              <div class="cart-item-info flex-grow-1">
+                <h6>${nome}</h6>
+                <p>R$ ${precoUnitario.toFixed(2)} x ${quantidade}</p>
+              </div>
+              <button class="btn btn-sm btn-remove-item" onclick="removeFromCart(${id})">
+                <i class="bi bi-trash"></i>
+              </button>
+            `;
+            cartList.appendChild(li);
+            total += precoUnitario * quantidade;
+          }
+        }
+
+        document.getElementById('cart-total').textContent = total.toFixed(2);
+      }
+
+      // Função para remover do carrinho
+      function removeFromCart(id) {
+        delete cart[id];
+        updateCart(); // Atualiza visualmente o carrinho após remover o item
+      }
+
+      // Finalizar Compra
+      var checkoutButton = document.querySelector('.checkout-btn');
+      checkoutButton.addEventListener('click', function () {
+        if (Object.keys(cart).length === 0) {
+          alert('O carrinho está vazio.');
+          return;
+        }
+        var total = parseFloat(document.getElementById('cart-total').textContent);
+        alert('Pedido finalizado! Total: R$ ' + total.toFixed(2));
+
+        // Dados a serem enviados
+        var dadosPedido = {
+          itens: Object.values(cart), // Enviar apenas os valores dos itens do carrinho
+          codigo: "{{$pedido->codigo}}" // Supondo que você tenha o código do pedido aqui
+        };
+
+        // Requisição AJAX para enviar os dados do carrinho
+        fetch('/website/adicionar-ao-pedido', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify(dadosPedido)
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Sucesso:', data);
+            
+          })
+          .catch((error) => {
+            console.error('Erro:', error);
+          });
+      });
     });
   </script>
-
 </body>
+
 
 </html>
