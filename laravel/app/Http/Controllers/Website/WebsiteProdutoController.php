@@ -40,33 +40,32 @@ class WebsiteProdutoController extends Controller
     
     
 
-
     public function adicionarAoPedido(Request $request)
     {
-        dd($request->dadosPedido);
         // Valide os dados recebidos
         $request->validate([
-         /*   'itens' => 'required|array', // Verifique se é um array
-            'itens.*.id' => 'required|integer', // Verifique se cada item tem um ID válido
-            'itens.*.quantidade' => 'required|integer|min:1', // Verifique se a quantidade é válida*/
+           /* 'itens' => 'required|array', // Verifica se 'itens' é um array
+            'itens.*.id' => 'required|integer', // Verifica se cada item tem um ID válido
+            'itens.*.quantidade' => 'required|integer|min:1', // Verifica se a quantidade é válida
+            'itens.*.precoUnitario' => 'required|numeric|min:0', // Verifica se o preço unitário é válido*/
         ]);
+        
     
         try {
             $codigo = $request->codigo;
     
             // Encontre o pedido com base no código
             $pedido = Pedidos::where('codigo', $codigo)->first();
-            
+    
             if (!$pedido) {
                 return response()->json(['error' => 'Pedido não encontrado'], 404);
             }
     
             // Percorra os itens do carrinho e insira na tabela pedidos_produtos
             foreach ($request->itens as $item) {
-                
                 PedidosProdutos::create([
                     'idPedidos' => $pedido->id,
-                    'subtotal' => $item['precoUnitario'] * $item['quantidade'], // Calcule o subtotal aqui
+                    'subtotal' => $item['precoUnitario'] * $item['quantidade'],
                     'quantidade' => $item['quantidade'],
                     'idProdutos' => $item['id'],
                     // Adicione outros campos conforme necessário
@@ -81,6 +80,9 @@ class WebsiteProdutoController extends Controller
             return response()->json(['error' => 'Erro ao adicionar itens ao pedido: ' . $e->getMessage()], 500);
         }
     }
+    
+
+
     public function carregarMaisProdutos(Request $request)
 {
   

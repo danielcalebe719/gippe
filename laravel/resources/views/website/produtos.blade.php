@@ -5,6 +5,7 @@
   <!-- Meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <!-- Bootstrap CSS -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
@@ -12,227 +13,225 @@
   <!-- Bootstrap Icons (versão 1.10.0) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-  <!-- Custom CSS -->
-  <style>
-    :root {
-      --color-primary: #FCB774;
-      --color-primary-hover: #FAA562;
-      --color-secondary: #FA856E;
-      --color-secondary-hover: #F97058;
-      --color-background: #FFF5E6;
-      --color-text: #333333;
-      --color-footer: #4A5568;
-    }
+    <!-- Custom CSS -->
+    <style>
+      :root {
+        --color-primary: #FCB774;
+        --color-primary-hover: #FAA562;
+        --color-secondary: #FA856E;
+        --color-secondary-hover: #F97058;
+        --color-background: #FFF5E6;
+        --color-text: #333333;
+        --color-footer: #4A5568;
+      }
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: var(--color-background);
-      color: var(--color-text);
-      padding-top: 20px;
-    }
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--color-background);
+        color: var(--color-text);
+        padding-top: 20px;
+      }
 
-    .filters_menu {
-      list-style: none;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
+      .filters_menu {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
 
-    .filters_menu li {
-      cursor: pointer;
-      padding: 10px 15px;
-      background-color: #f0f0f0;
-      border-radius: 5px;
-    }
+      .filters_menu li {
+        cursor: pointer;
+        padding: 10px 15px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+      }
 
-    .filters_menu li.active {
-      background-color: var(--color-secondary);
-      color: white;
-    }
+      .filters_menu li.active {
+        background-color: var(--color-secondary);
+        color: white;
+      }
 
-    .filters-content .grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
+      .filters-content .grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
 
-    .card {
-      width: 100%;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      background-color: #fff;
-      overflow: hidden;
-    }
+      .card {
+        width: 100%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+        overflow: hidden;
+      }
 
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
 
-    .card img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
+      .card img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
 
-    .card-body {
-      padding: 15px;
-    }
+      .card-body {
+        padding: 15px;
+      }
 
-    .card-title {
-      font-size: 1.25rem;
-      margin-bottom: 10px;
-    }
+      .card-title {
+        font-size: 1.25rem;
+        margin-bottom: 10px;
+      }
 
-    .card-text {
-      color: #666;
-      font-size: 1rem;
-      margin-bottom: 10px;
-    }
+      .card-text {
+        color: #666;
+        font-size: 1rem;
+        margin-bottom: 10px;
+      }
 
-    .price {
-      font-size: 1.25rem;
-      font-weight: bold;
-    }
+      .price {
+        font-size: 1.25rem;
+        font-weight: bold;
+      }
 
-    .quantity {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 120px;
-      margin-top: 10px;
-    }
+      .quantity {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 120px;
+        margin-top: 10px;
+      }
 
-    .quantity input {
-      text-align: center;
-      width: 50px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      padding: 5px;
-      font-size: 1rem;
-      outline: none;
-    }
+      .quantity input {
+        text-align: center;
+        width: 50px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 5px;
+        font-size: 1rem;
+        outline: none;
+      }
 
-    .quantity button {
-      background-color: var(--color-secondary);
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+      .quantity button {
+        background-color: var(--color-secondary);
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
 
-    .quantity button:hover {
-      background-color: var(--color-secondary-hover);
-    }
+      .quantity button:hover {
+        background-color: var(--color-secondary-hover);
+      }
 
-    .btn-add-to-cart {
-      background-color: var(--color-secondary);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+      .btn-add-to-cart {
+        background-color: var(--color-secondary);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
 
-    .btn-add-to-cart:hover {
-      background-color: var(--color-secondary-hover);
-    }
+      .btn-add-to-cart:hover {
+        background-color: var(--color-secondary-hover);
+      }
 
-    .cart-container {
-      width: 100%;
-      max-width: 300px; /* Ajustar conforme necessário */
-      position: sticky;
-      top: 80px; /* Ajustar conforme necessário */
-      padding-left: 15px;
-    }
+      .cart-container {
+        width: 100%;
+        max-width: 300px; /* Ajustar conforme necessário */
+        position: sticky;
+        top: 80px; /* Ajustar conforme necessário */
+        padding-left: 15px;
+      }
 
-    .cart-items {
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      background-color: #fff;
-      padding: 15px;
-      margin-top: 20px;
-    }
+      .cart-items {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+        padding: 15px;
+        margin-top: 20px;
+      }
 
-    .cart-items h3 {
-      font-size: 1.25rem;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
+      .cart-items h3 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
 
-    .cart-item {
-      display: flex;
-      align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid #ddd;
-    }
+      .cart-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+      }
 
-    .cart-item:last-child {
-      border-bottom: none;
-    }
+      .cart-item:last-child {
+        border-bottom: none;
+      }
 
-    .cart-item-img {
-      flex: 0 0 60px;
-      margin-right: 10px;
-    }
+      .cart-item-img {
+        flex: 0 0 60px;
+        margin-right: 10px;
+      }
 
-    .cart-item-info {
-      flex-grow: 1;
-    }
+      .cart-item-info {
+        flex-grow: 1;
+      }
 
-    .cart-item-info h6 {
-      font-size: 1rem;
-      margin-bottom: 5px;
-    }
+      .cart-item-info h6 {
+        font-size: 1rem;
+        margin-bottom: 5px;
+      }
 
-    .cart-item-info p {
-      font-size: 0.875rem;
-      color: #666;
-    }
+      .cart-item-info p {
+        font-size: 0.875rem;
+        color: #666;
+      }
 
-    .cart-item-info button {
-      background-color: transparent;
-      border: none;
-      color: var(--color-secondary);
-      cursor: pointer;
-    }
+      .cart-item-info button {
+        background-color: transparent;
+        border: none;
+        color: var(--color-secondary);
+        cursor: pointer;
+      }
 
-    .total-price {
-      margin-top: 20px;
-      text-align: right;
-      font-size: 1.25rem;
-      font-weight: bold;
-    }
+      .total-price {
+        margin-top: 20px;
+        text-align: right;
+        font-size: 1.25rem;
+        font-weight: bold;
+      }
 
-    .checkout-btn {
-      background-color: var(--color-primary);
-      color: white;
-      border: none;
-      padding: 15px 30px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+      .checkout-btn {
+        background-color: var(--color-primary);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
 
-    .checkout-btn:hover {
-      background-color: var(--color-primary-hover);
-    }
-  </style>
+      .checkout-btn:hover {
+        background-color: var(--color-primary-hover);
+      }
+    </style>
 
   <!-- Title -->
   <title>Lista de Produtos</title>
 </head>
-
 <body>
-
-  <div class="container">
+<div class="container">
     <div class="row">
       <div class="col-md-9">
         <ul class="filters_menu">
@@ -264,6 +263,7 @@
                     data-caminho-imagem="{{ asset('storage/ImagensProdutos/' . $produto->caminhoImagem) }}"
                     data-nome="{{ $produto->nome }}"
                     data-preco-unitario="{{ number_format($produto->precoUnitario, 2, ',', '.') }}">
+                  
                     <i class="bi bi-cart"></i> Adicionar ao Carrinho
                   </button>
                 </div>
@@ -295,6 +295,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+      // Variável para o carrinho
+      var cart = {};
+
       // Filtro de Categorias
       var filterItems = document.querySelectorAll('.filters_menu li');
       filterItems.forEach(function (item) {
@@ -339,30 +342,30 @@
       var addToCartButtons = document.querySelectorAll('.btn-add-to-cart');
       addToCartButtons.forEach(function (button) {
         button.addEventListener('click', function () {
+          var id = this.getAttribute('data-id');
           var nome = this.getAttribute('data-nome');
-          var preco = parseFloat(this.getAttribute('data-preco-unitario').replace('.', '').replace(',', '.'));
+          var precoUnitario = parseFloat(this.getAttribute('data-preco-unitario').replace('.', '').replace(',', '.'));
           var imagem = this.getAttribute('data-caminho-imagem');
           var quantidade = parseInt(this.parentElement.querySelector('.quantity-input').value);
-          addToCart(nome, preco, imagem, quantidade);
+          addToCart(id, nome, precoUnitario, imagem, quantidade);
+         
         });
       });
 
-      // Variável para o carrinho
-      var cart = {};
-
       // Função para adicionar ao carrinho
-      function addToCart(nome, preco, imagem, quantidade) {
-        if (cart[nome]) {
-          cart[nome].quantidade += quantidade;
+      function addToCart(id, nome, precoUnitario, imagem, quantidade) {
+        if (cart[id]) {
+          cart[id].quantidade += quantidade;
         } else {
-          cart[nome] = {
+          cart[id] = {
+            id: id,
             nome: nome,
-            preco: preco,
+            precoUnitario: precoUnitario,
             imagem: imagem,
             quantidade: quantidade
           };
         }
-        updateCart();
+        updateCart(); // Atualiza visualmente o carrinho
       }
 
       // Função para atualizar o carrinho
@@ -371,12 +374,13 @@
         cartList.innerHTML = '';
         var total = 0;
 
-        for (var item in cart) {
-          if (cart.hasOwnProperty(item)) {
-            var nome = cart[item].nome;
-            var preco = cart[item].preco;
-            var imagem = cart[item].imagem;
-            var quantidade = cart[item].quantidade;
+        for (var id in cart) {
+          if (cart.hasOwnProperty(id)) {
+            var item = cart[id];
+            var nome = item.nome;
+            var precoUnitario = item.precoUnitario;
+            var imagem = item.imagem;
+            var quantidade = item.quantidade;
 
             var li = document.createElement('div');
             li.classList.add('cart-item');
@@ -386,14 +390,14 @@
               </div>
               <div class="cart-item-info flex-grow-1">
                 <h6>${nome}</h6>
-                <p>R$ ${preco.toFixed(2)} x ${quantidade}</p>
+                <p>R$ ${precoUnitario.toFixed(2)} x ${quantidade}</p>
               </div>
-              <button class="btn btn-sm btn-remove-item" onclick="removeFromCart('${nome}')">
+              <button class="btn btn-sm btn-remove-item" onclick="removeFromCart(${id})">
                 <i class="bi bi-trash"></i>
               </button>
             `;
             cartList.appendChild(li);
-            total += preco * quantidade;
+            total += precoUnitario * quantidade;
           }
         }
 
@@ -401,9 +405,9 @@
       }
 
       // Função para remover do carrinho
-      function removeFromCart(nome) {
-        delete cart[nome];
-        updateCart();
+      function removeFromCart(id) {
+        delete cart[id];
+        updateCart(); // Atualiza visualmente o carrinho após remover o item
       }
 
       // Finalizar Compra
@@ -415,51 +419,34 @@
         }
         var total = parseFloat(document.getElementById('cart-total').textContent);
         alert('Pedido finalizado! Total: R$ ' + total.toFixed(2));
-        cart = {};
-        updateCart();
 
         // Dados a serem enviados
         var dadosPedido = {
-          itens: cart
+          itens: Object.values(cart), // Enviar apenas os valores dos itens do carrinho
+          codigo: "{{$pedido->codigo}}" // Supondo que você tenha o código do pedido aqui
         };
 
         // Requisição AJAX para enviar os dados do carrinho
         fetch('/website/adicionar-ao-pedido', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-          },
-          body: JSON.stringify(dadosPedido)
-        })
-        .then(function (response) {
-          if (!response.ok) {
-            throw new Error('Erro ao enviar dados do carrinho.');
-          }
-          return response.json();
-        })
-        .then(function (data) {
-          console.log('Dados do carrinho enviados com sucesso:', data.message);
-          // Limpar carrinho ou redirecionar para página de sucesso
-        })
-        .catch(function (error) {
-          console.error('Erro ao enviar dados do carrinho:', error);
-        });
-      });
-
-      // Validação da entrada no campo de quantidade
-      var quantityInputs = document.querySelectorAll('.quantity-input');
-      quantityInputs.forEach(function (input) {
-        input.addEventListener('change', function () {
-          var newValue = parseInt(this.value);
-          if (isNaN(newValue) || newValue < 1) {
-            this.value = '1';
-          }
-        });
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify(dadosPedido)
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Sucesso:', data);
+            
+          })
+          .catch((error) => {
+            console.error('Erro:', error);
+          });
       });
     });
   </script>
-
 </body>
+
 
 </html>
