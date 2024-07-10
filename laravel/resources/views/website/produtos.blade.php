@@ -244,25 +244,32 @@
 
         <div class="filters-content">
           <div class="row grid">
-            <!-- Aqui serão carregados os produtos -->
-            <?php foreach($produtos as $produto): ?>
-            <div class="col-md-4 mb-4">
+            <!-- Iteração sobre os produtos -->
+            @foreach($produtos as $produto)
+            <div class="col-md-4 mb-4 {{ strtolower($produto->tipo) }}">
               <div class="card">
-                <img src="<?php echo asset('storage/ImagensProdutos/' . $produto->caminhoImagem); ?>" class="card-img-top" alt="<?php echo $produto->nome; ?>">
+                <img src="{{ asset('storage/ImagensProdutos/' . $produto->caminhoImagem) }}" class="card-img-top"
+                  alt="{{ $produto->nome }}">
                 <div class="card-body">
-                  <h5 class="card-title"><?php echo $produto->nome; ?></h5>
-                  <p class="card-text"><?php echo $produto->descricao; ?></p>
-                  <p class="price"><strong>R$ <?php echo number_format($produto->precoUnitario, 2, ',', '.'); ?></strong></p>
+                  <h5 class="card-title">{{ $produto->nome }}</h5>
+                  <p class="card-text">{{ $produto->descricao }}</p>
+                  <p class="price"><strong>R$ {{ number_format($produto->precoUnitario, 2, ',', '.') }}</strong></p>
                   <div class="quantity">
                     <button class="btn btn-sm btn-decrement"><i class="bi bi-dash"></i></button>
                     <input type="number" class="form-control quantity-input" value="1" min="1">
                     <button class="btn btn-sm btn-increment"><i class="bi bi-plus"></i></button>
                   </div>
-                  <button class="btn btn-add-to-cart mt-3" data-id="<?php echo $produto->id; ?>" data-caminho-imagem="<?php echo asset('storage/ImagensProdutos/' . $produto->caminhoImagem); ?>" data-nome="<?php echo $produto->nome; ?>" data-preco-unitario="<?php echo number_format($produto->precoUnitario, 2, ',', '.'); ?>"><i class="bi bi-cart"></i> Adicionar ao Carrinho</button>
+                  <button class="btn btn-add-to-cart mt-3"
+                    data-id="{{ $produto->id }}"
+                    data-caminho-imagem="{{ asset('storage/ImagensProdutos/' . $produto->caminhoImagem) }}"
+                    data-nome="{{ $produto->nome }}"
+                    data-preco-unitario="{{ number_format($produto->precoUnitario, 2, ',', '.') }}">
+                    <i class="bi bi-cart"></i> Adicionar ao Carrinho
+                  </button>
                 </div>
               </div>
             </div>
-            <?php endforeach; ?>
+            @endforeach
           </div>
         </div>
       </div>
@@ -274,7 +281,7 @@
             <!-- Aqui serão inseridos dinamicamente os itens do carrinho -->
             <div class="cart-items-list"></div>
             <div class="total-price mt-3">
-              <h5>Total: R$ <span id="totalPrice">0.00</span></h5>
+              <h5>Total: R$ <span id="cart-total">0.00</span></h5>
             </div>
             <button class="btn checkout-btn mt-3">Finalizar Compra</button>
           </div>
@@ -287,138 +294,169 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   <script>
-    $(document).ready(function() {
-      // Incremento e Decremento da Quantidade
-      $('.btn-increment').on('click', function() {
-        var input = $(this).siblings('.quantity-input');
-        var newValue = parseInt(input.val()) + 1;
-        input.val(newValue);
-      });
-
-      $('.btn-decrement').on('click', function() {
-        var input = $(this).siblings('.quantity-input');
-        var newValue = parseInt(input.val()) - 1;
-        if (newValue >= 1) {
-          input.val(newValue);
-        }
-      });
-
-      // Adicionar ao Carrinho
-      $('.btn-add-to-cart').on('click', function() {
-        var id = $(this).data('id');
-        var caminhoImagem = $(this).data('caminho-imagem');
-        var nome = $(this).data('nome');
-        var precoUnitario = $(this).data('preco-unitario');
-        var quantidade = $(this).closest('.card-body').find('.quantity-input').val();
-      
-  $('.add-to-cart').click(function(e) {
-        e.preventDefault();
-
-        // Captura informações do produto
-        let id = $(this).data('id');
-        let nome = $(this).data('nome');
-        let caminhoImagem = $(this).data('caminho-imagem');
-        console.log(caminhoImagem)
-        let precoUnitarioElement = $(this).find('.preco-unitario'); // Encontra o elemento que contém o preço unitário
-        let precoUnitario = parseFloat(precoUnitarioElement.text().replace(',', '.')); // Extrai o texto e converte para float
-        let quantidade = parseInt($(this).closest('.options').find('.quantity input').val());
-
-        // Verifica se o item já está no carrinho
-        let index = carrinho.findIndex(item => item.id === id);
-        if (index !== -1) {
-          // Se já está no carrinho, atualiza a quantidade
-          carrinho[index].quantidade += quantidade;
-        } else {
-          // Senão, adiciona ao carrinho
-          carrinho.push({
-            id: id,
-            nome: nome,
-            caminhoImagem: caminhoImagem,
-            precoUnitario: precoUnitario,
-            quantidade: quantidade
-            
+    document.addEventListener('DOMContentLoaded', function () {
+      // Filtro de Categorias
+      var filterItems = document.querySelectorAll('.filters_menu li');
+      filterItems.forEach(function (item) {
+        item.addEventListener('click', function () {
+          filterItems.forEach(function (el) {
+            el.classList.remove('active');
           });
-        }
-
-        // Atualiza visualização do carrinho
-        atualizarCarrinho();
-      });///tem que arrumar essa disnara aqui
-      
-      Criar HTML do item do carrinho
-        var itemHTML = `
-          <div class="cart-item">
-            <div class="cart-item-img">
-              <img src="${caminhoImagem}" alt="${nome}" style="width: 60px;">
-            </div>
-            <div class="cart-item-info flex-grow-1">
-              <h6>${nome}</h6>
-              <p>R$ ${precoUnitario} x ${quantidade}</p>
-            </div>
-            <button class="btn btn-sm btn-remove-item"><i class="bi bi-trash"></i></button>
-          </div>
-        `;
-
-        // Adicionar ao carrinho
-        $('.cart-items-list').append(itemHTML);
-
-        // Calcular e atualizar total do carrinho
-        calcularTotalCarrinho();
-      });
-
-      // Remover item do Carrinho
-      $(document).on('click', '.btn-remove-item', function() {
-        $(this).closest('.cart-item').remove();
-        calcularTotalCarrinho();
-      });
-
-      // Calcular e atualizar total do Carrinho
-      function calcularTotalCarrinho() {
-        var total = 0;
-
-        $('.cart-item').each(function() {
-          var precoStr = $(this).find('p').text().trim().split(' ')[1].replace('R$', '').replace(',', '.');
-          var quantidade = parseInt($(this).find('p').text().trim().split(' ')[3]);
-          var preco = parseFloat(precoStr) * quantidade;
-          total += preco;
+          this.classList.add('active');
+          var filtro = this.getAttribute('data-filter');
+          var gridItems = document.querySelectorAll('.grid .col-md-4');
+          gridItems.forEach(function (gridItem) {
+            gridItem.style.display = 'none';
+            if (filtro === '*' || gridItem.classList.contains(filtro.substring(1))) {
+              gridItem.style.display = 'block';
+            }
+          });
         });
+      });
 
-        $('#totalPrice').text(total.toFixed(2));
-      }
+      // Incremento e Decremento da Quantidade
+      var incrementButtons = document.querySelectorAll('.btn-increment');
+      incrementButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          var input = this.parentElement.querySelector('.quantity-input');
+          var newValue = parseInt(input.value) + 1;
+          input.value = newValue.toString();
+        });
+      });
 
-      // Finalizar Compra (exemplo)
-      $('.checkout-btn').click(function() {
-        // Verifica se há itens no carrinho para enviar
-        if (carrinho.length === 0) {
-          console.log('O carrinho está vazio.');
-          return;
-        }
-
-        // Dados a serem enviados
-        let dadosPedido = {
-          codigo: codigo,
-          itens: carrinho
-        };
-
-        // Requisição AJAX para enviar os dados do carrinho
-        $.ajax({
-          type: 'POST',
-          url: '/website/adicionar-ao-pedido',
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          data: dadosPedido,
-          dataType: 'json',
-          success: function(response) {
-            console.log('Dados do carrinho enviados com sucesso:', response.message);
-            // Limpar carrinho ou redirecionar para página de sucesso
-          },
-          error: function(xhr, status, error) {
-            console.error('Erro ao enviar dados do carrinho:', error);
+      var decrementButtons = document.querySelectorAll('.btn-decrement');
+      decrementButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          var input = this.parentElement.querySelector('.quantity-input');
+          var newValue = parseInt(input.value) - 1;
+          if (newValue >= 1) {
+            input.value = newValue.toString();
           }
         });
       });
-   
 
+      // Adicionar ao Carrinho
+      var addToCartButtons = document.querySelectorAll('.btn-add-to-cart');
+      addToCartButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          var nome = this.getAttribute('data-nome');
+          var preco = parseFloat(this.getAttribute('data-preco-unitario').replace('.', '').replace(',', '.'));
+          var imagem = this.getAttribute('data-caminho-imagem');
+          var quantidade = parseInt(this.parentElement.querySelector('.quantity-input').value);
+          addToCart(nome, preco, imagem, quantidade);
+        });
+      });
+
+      // Variável para o carrinho
+      var cart = {};
+
+      // Função para adicionar ao carrinho
+      function addToCart(nome, preco, imagem, quantidade) {
+        if (cart[nome]) {
+          cart[nome].quantidade += quantidade;
+        } else {
+          cart[nome] = {
+            nome: nome,
+            preco: preco,
+            imagem: imagem,
+            quantidade: quantidade
+          };
+        }
+        updateCart();
+      }
+
+      // Função para atualizar o carrinho
+      function updateCart() {
+        var cartList = document.querySelector('.cart-items-list');
+        cartList.innerHTML = '';
+        var total = 0;
+
+        for (var item in cart) {
+          if (cart.hasOwnProperty(item)) {
+            var nome = cart[item].nome;
+            var preco = cart[item].preco;
+            var imagem = cart[item].imagem;
+            var quantidade = cart[item].quantidade;
+
+            var li = document.createElement('div');
+            li.classList.add('cart-item');
+            li.innerHTML = `
+              <div class="cart-item-img">
+                <img src="${imagem}" alt="${nome}" style="width: 60px;">
+              </div>
+              <div class="cart-item-info flex-grow-1">
+                <h6>${nome}</h6>
+                <p>R$ ${preco.toFixed(2)} x ${quantidade}</p>
+              </div>
+              <button class="btn btn-sm btn-remove-item" onclick="removeFromCart('${nome}')">
+                <i class="bi bi-trash"></i>
+              </button>
+            `;
+            cartList.appendChild(li);
+            total += preco * quantidade;
+          }
+        }
+
+        document.getElementById('cart-total').textContent = total.toFixed(2);
+      }
+
+      // Função para remover do carrinho
+      function removeFromCart(nome) {
+        delete cart[nome];
+        updateCart();
+      }
+
+      // Finalizar Compra
+      var checkoutButton = document.querySelector('.checkout-btn');
+      checkoutButton.addEventListener('click', function () {
+        if (Object.keys(cart).length === 0) {
+          alert('O carrinho está vazio.');
+          return;
+        }
+        var total = parseFloat(document.getElementById('cart-total').textContent);
+        alert('Pedido finalizado! Total: R$ ' + total.toFixed(2));
+        cart = {};
+        updateCart();
+
+        // Dados a serem enviados
+        var dadosPedido = {
+          itens: cart
+        };
+
+        // Requisição AJAX para enviar os dados do carrinho
+        fetch('/website/adicionar-ao-pedido', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+          },
+          body: JSON.stringify(dadosPedido)
+        })
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error('Erro ao enviar dados do carrinho.');
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          console.log('Dados do carrinho enviados com sucesso:', data.message);
+          // Limpar carrinho ou redirecionar para página de sucesso
+        })
+        .catch(function (error) {
+          console.error('Erro ao enviar dados do carrinho:', error);
+        });
+      });
+
+      // Validação da entrada no campo de quantidade
+      var quantityInputs = document.querySelectorAll('.quantity-input');
+      quantityInputs.forEach(function (input) {
+        input.addEventListener('change', function () {
+          var newValue = parseInt(this.value);
+          if (isNaN(newValue) || newValue < 1) {
+            this.value = '1';
+          }
+        });
+      });
     });
   </script>
 
