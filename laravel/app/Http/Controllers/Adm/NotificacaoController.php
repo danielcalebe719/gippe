@@ -54,32 +54,51 @@ class NotificacaoController extends Controller
     }
     
     
-    public function guardar(Request $request)
-    {
-        // Validação dos dados
-        /*$request->validate([
-            'nome' => 'nullable|string|max:255',
-            'cpf' => 'nullable|string|max:14|unique:clientes,cpf,' . $request->idCliente . ',idClientes',
-            'dataNascimento' => 'nullable|date',
-            'status' => 'nullable|string|in:ativo,inativo',
-            'email' => 'nullable|email|max:255|unique:clientes,email,' . $request->idCliente . ',idClientes',
-            'senha' => 'nullable|string|min:6',
-            'telefone' => 'nullable|string|max:20',
-            // 'imgCaminho' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);*/   
     
+    public function guardarCliente(Request $request)
+    {
+          
+        
         try {
             // Busca ou cria um novo cliente
             $notificacao = $request->idNotificacao ? Notificacoes::findOrFail($request->idNotificacao) : new Notificacoes();
-    
+            
+            Notificacoes::transaction(function () use($request, $notificacao) {
+                $notificacao = [
+                    'mensagem' =>   $request->input('mensagem'),
+                    'titulo' =>  $request->input('titulo')
+                ];
+            
+                $notificacaoCliente = [
+                    'idPedidos' =>  $request->input('idPedidos'),
+                    'idClientes' => $request->input('idClientes'),
+                ];
+
+                /*
+                $n = new Notificacoes;
+                $n->mensagem = 'Teste';
+                $n->titulo = 'titulo';
+                $n->save();
+                $idNotificacao = $n->id;
+
+                $nc = new NotificacoesClientes;
+                $nc->idNotificacoes =  $idNotificacao;
+                $nc->mensagem = 'Teste';
+                $nc->titulo = 'titulo';
+                $nc->save();
+                */
+
+            
+                $not = Notificacoes::table('notificacoes')->insert($notificacao);
+                $idNotificacao = $not->id;
+
+                $notificacaoCliente['idNotificacao'] = $idNotificacao;
+                Notificacoes::table('notificacoes_clientes')->insert($notificacaoCliente);
+            });
             // Preenche os outros campos do cliente
-            $notificacao->mensagem = $request->input('mensagem');
-            $notificacao->dataEnvio = $request->input('dataEnvio');
-            $notificacao->titulo = $request->input('titulo');
+           
+            $notificacao->dataEnvio = now();
             
-    
-            
-    
             // Salva o cliente
             $notificacao->save();
             
