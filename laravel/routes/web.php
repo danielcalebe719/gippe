@@ -291,6 +291,10 @@ Route::prefix('website')->group(function () {
     ->middleware('auth:cliente')
     ->name('website.salvar.imagem.perfil');
     
+    Route::get('/pedidos/pedidosDetalhes/{codigo}', [PedidosDetalhesController::class, 'index'])
+    ->middleware('auth:cliente')
+    ->name('pedidosDetalhes.index');
+
    
 
     Route::get('/agendamento/{codigo}', [WebsiteAgendamentoController::class, 'index'])
@@ -313,6 +317,7 @@ Route::prefix('website')->group(function () {
     
         
 
+
         Route::get('/produtos/{codigo}', [WebsiteProdutoController::class, 'index'])
         ->middleware('auth:cliente')
         ->name('website.produtos');
@@ -321,6 +326,8 @@ Route::prefix('website')->group(function () {
             Route::post('/adicionar-ao-pedido' , [WebsiteProdutoController::class, 'adicionarAoPedido'])
             ->middleware('auth:cliente')
             ->name('pedido.adicionar');
+
+      
 
 // Em routes/web.php
 
@@ -334,8 +341,6 @@ Route::get('/carregar-mais-produtos' , [WebsiteProdutoController::class, 'carreg
 
 // Rota de logout
 Route::get('website/logout', [LoginClienteController::class, 'deslogar'])->name('logout');
-
-Route::get('pedidos/pedidosDetalhes', [PedidosDetalhesController::class, 'index'])->name('pedidosDetalhes.index');
 
 
 
