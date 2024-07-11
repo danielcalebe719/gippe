@@ -30,7 +30,11 @@ class PedidoController extends Controller
 
     public function show($idPedidos)
     {
-        $pedido = Pedidos::with('pedidosProdutos.produto')->find($idPedidos);
+        $pedido = Pedidos::with([
+            'pedidosProdutos.produto',
+            'pedidosServicos.servico'
+        ])->find($idPedidos);
+    
         if ($pedido) {
             return response()->json($pedido);
         } else {

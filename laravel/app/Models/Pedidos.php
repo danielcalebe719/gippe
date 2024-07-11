@@ -60,21 +60,25 @@ class Pedidos extends Model
 
     public function pedidosProdutos()
     {
-        return $this->hasMany(PedidosProdutos::class, 'idPedidos', 'id');
+        return $this->hasMany(PedidosProdutos::class, 'idPedidos');
+    }
+    public function pedidosServicos()
+    {
+        return $this->hasMany(PedidosServicos::class, 'idPedidos');
     }
 
     // Relacionamento com Produtos através de PedidosProdutos
-    public function produtos()
-    {
-        return $this->hasManyThrough(
-            Produtos::class,
-            PedidosProdutos::class,
-            'idPedidos', // Chave estrangeira na tabela PedidosProdutos
-            'id', // Chave estrangeira na tabela Produtos
-            'id', // Chave local na tabela Pedidos
-            'idProdutos' // Chave local na tabela PedidosProdutos
-        );
-    }
+    // public function produtos()
+    // {
+    //     return $this->hasManyThrough(
+    //         Produtos::class,
+    //         PedidosProdutos::class,
+    //         'idPedidos', // Chave estrangeira na tabela PedidosProdutos
+    //         'id', // Chave estrangeira na tabela Produtos
+    //         'id', // Chave local na tabela Pedidos
+    //         'idProdutos' // Chave local na tabela PedidosProdutos
+    //     );
+    // }
 
     public function cliente()
     {
@@ -110,10 +114,7 @@ class Pedidos extends Model
     //     return $this->hasMany(PedidosProdutos::class,'idPedidos','id');
     // }
 
-    public function pedidosServicos()
-    {
-        return $this->hasOne(PedidosServicos::class,'idPedidos','id');
-    }
+    
     public function agendamentos()
     {
         return $this->hasOne(Agendamentos::class,'idPedidos','id');
