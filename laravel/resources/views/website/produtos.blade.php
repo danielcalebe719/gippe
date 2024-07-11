@@ -245,7 +245,7 @@
           <div class="row grid">
             <!-- Iteração sobre os produtos -->
             @foreach($produtos as $produto)
-            <div class="col-md-4 mb-4 {{ strtolower($produto->tipo) }}">
+            <div class="col-md-3 mb- {{ strtolower($produto->tipo) }}">
               <div class="card">
                 <img src="{{ asset('storage/ImagensProdutos/' . $produto->caminhoImagem) }}" class="card-img-top"
                   alt="{{ $produto->nome }}">
@@ -401,7 +401,7 @@
           }
         }
 
-        document.getElementById('cart-total').textContent = total.toFixed(2);
+        document.getElementById('cart-total').textContent = total.toFixed();
       }
 
       // Função para remover do carrinho
