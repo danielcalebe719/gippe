@@ -254,6 +254,7 @@ use App\Http\Controllers\Website\WebsiteServicoController;
 use App\Http\Controllers\Website\WebsiteProdutoController;
 use App\Http\Controllers\Website\WebsiteAgendamentoController;
 use App\Http\Controllers\Website\WebsitePerfilController;
+use App\Http\Controllers\Website\PedidosDetalhesController;
 
 // Rotas acessíveis sem autenticação
 Route::get('/', function () {
@@ -334,7 +335,7 @@ Route::get('/carregar-mais-produtos' , [WebsiteProdutoController::class, 'carreg
 // Rota de logout
 Route::get('website/logout', [LoginClienteController::class, 'deslogar'])->name('logout');
 
-
+Route::get('pedidos/pedidosDetalhes', [PedidosDetalhesController::class, 'index'])->name('pedidosDetalhes.index');
 
 
 
