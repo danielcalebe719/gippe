@@ -24,7 +24,7 @@ class PedidosProdutos extends Model
     // Relacionamento com Produtos
     public function produto()
     {
-        return $this->belongsTo(Produtos::class, 'idProdutos', 'id');
+        return $this->belongsTo(Produtos::class, 'idProdutos');
     }
 
     // Relacionamento com Pedidos

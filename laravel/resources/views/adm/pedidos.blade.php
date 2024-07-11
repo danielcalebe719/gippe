@@ -13,6 +13,9 @@
     .alert {
         display: none;
     }
+    #detalhesServico, #detalhesProdutos{
+        display: none;
+    }
 </style>
 
 
@@ -511,7 +514,20 @@
             </div>
 
             <div id="pedidoContent" class="modal-body">
-
+                <!-- Menu -->
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="detalhes-tab" data-bs-toggle="tab" data-bs-target="#detalhes" type="button" role="tab" aria-controls="detalhes" aria-selected="false">Detalhes</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="produtos-tab" data-bs-toggle="tab" data-bs-target="#produtos" type="button" role="tab" aria-controls="produtos" aria-selected="false">Produtos</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="servico-tab" data-bs-toggle="tab" data-bs-target="#servico" type="button" role="tab" aria-controls="servico" aria-selected="false">Serviço</button>
+                    </li>
+                </ul>
+                <br>
+                <div id="detalhes">
                 <div class="form-group row">
                     <label for="DetalhesIdPedido" class="col-sm-3 col-form-label">Pedido ID:</label>
                     <div class="col-sm-9">
@@ -519,13 +535,13 @@
                             readonly>
                     </div>
                 </div>
-                <div class="form-group row">
+                <!-- <div class="form-group row">
                     <label for="DetalhesIdPedido" class="col-sm-3 col-form-label">Serviço ID:</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="DetalhesIdServicos" name="idServicos" value=""
                             readonly>
                     </div>
-                </div>
+                </div> -->
                 <div class="form-group row">
                     <label for="DetalhesObservacao" class="col-sm-3 col-form-label">Observação:</label>
                     <div class="col-sm-9">
@@ -544,7 +560,75 @@
                         <input type="text" class="form-control" id="DetalhesDataPedido" value="" readonly>
                     </div>
                 </div>
+                </div>
 
+                <div id="detalhesProdutos">
+                    <div class="form-group row">
+                        <label for="DetalhesObservacao" class="col-sm-3 col-form-label">Observação:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="DetalhesObservacao" value="" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="detalhesServico">
+                    <div class="form-group row">
+                        <label for="DetalhesIdPedido" class="col-sm-3 col-form-label">Serviço ID:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="DetalhesIdServicos" name="idServicos" value=""
+                                readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="DetalhesIdPedido" class="col-sm-3 col-form-label">Nome do serviço:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="DetalhesNome" name="idServicos" value=""
+                                readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="DetalhesIdPedido" class="col-sm-3 col-form-label">Total do serviço:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="DetalhesTotalServico" name="idServicos" value=""
+                                readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="DetalhesIdPedido" class="col-sm-3 col-form-label">Duração em horas:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="DetalhesDuracao" name="idServicos" value=""
+                                readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="DetalhesIdPedido" class="col-sm-3 col-form-label">Quantidade de pessoas:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="DetalhesQuantidadePessoas" name="idServicos" value=""
+                                readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="DetalhesIdPedido" class="col-sm-3 col-form-label">Quantidade de garçons:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="DetalhesGarcons" name="idServicos" value=""
+                                readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="DetalhesIdPedido" class="col-sm-3 col-form-label">Quantidade de cozinheiros:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="DetalhesCozinheiros" name="idServicos" value=""
+                                readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="DetalhesIdPedido" class="col-sm-3 col-form-label">Quantidade de barmans:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="DetalhesBarmans" name="idServicos" value=""
+                                readonly>
+                        </div>
+                    </div>
+                </div>
                 <!-- Botão para abrir modal de feedback -->
                 <button type="button" class="btn btn-info btn-sm" id="btnFeedback">Visualizar Feedback</button>
             </div>
@@ -552,6 +636,154 @@
         </div>
     </div>
 </div>
+
+<script>
+   function mostrarDetalhes(idPedido) {
+    fetch(`/adm/pedidos/show/${idPedido}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao carregar os detalhes do pedido');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Preencha os campos do modal com os dados do pedido
+            document.getElementById('DetalhesIdPedidos').value = data.id || '';
+            document.getElementById('DetalhesObservacao').value = data.observacao || '';
+            document.getElementById('DetalhesCodigo').value = data.codigo || '';
+            document.getElementById('DetalhesDataPedido').value = data.dataPedido ? formatarData(data.dataPedido) : '';
+
+            // Resetar campos de serviços para evitar dados residuais
+            document.getElementById('DetalhesIdServicos').value = '';
+            document.getElementById('DetalhesNome').value = '';
+            document.getElementById('DetalhesTotalServico').value = '';
+            document.getElementById('DetalhesDuracao').value = '';
+            document.getElementById('DetalhesQuantidadePessoas').value = '';
+            document.getElementById('DetalhesGarcons').value = '';
+            document.getElementById('DetalhesCozinheiros').value = '';
+            document.getElementById('DetalhesBarmans').value = '';
+
+            // Preencher campos de serviços se existirem
+            if (data.pedidos_servicos && data.pedidos_servicos.length > 0) {
+                data.pedidos_servicos.forEach(pedidos_servico => {
+                    const servico = pedidos_servico.servico;
+
+                    // Preencher campos comuns de serviço
+                    document.getElementById('DetalhesIdServicos').value = servico.id || '';
+                    document.getElementById('DetalhesNome').value = servico.nome || '';
+                    document.getElementById('DetalhesTotalServico').value = servico.totalServicos || '';
+                    document.getElementById('DetalhesDuracao').value = servico.duracaoHoras || '';
+                    document.getElementById('DetalhesQuantidadePessoas').value = servico.quantidadePessoas || '';
+
+                    // Preencher campos específicos de tipos de funcionários
+                    if (pedidos_servico.funcionarioTipo === "Garcom") {
+                        document.getElementById('DetalhesGarcons').value = pedidos_servico.quantidade || '';
+                    } else if (pedidos_servico.funcionarioTipo === "Cozinheiro") {
+                        document.getElementById('DetalhesCozinheiros').value = pedidos_servico.quantidade || '';
+                    } else if (pedidos_servico.funcionarioTipo === "Barman") {
+                        document.getElementById('DetalhesBarmans').value = pedidos_servico.quantidade || '';
+                    }
+                });
+            }
+
+            // Preencher campos de serviços se existirem
+            if (data.pedidos_produtos && data.pedidos_produtos.length > 0) {
+                data.pedidos_produtos.forEach(pedidos_produto => {
+                    const produto = pedidos_produto.produto;
+
+                    $(response).each(function (i) {
+                $('#tbodyEndereco').append(
+                    "<tr>" +
+                    "<td>" + response[i].id + "</td>" +
+                    "<td>" + response[i].tipo + "</td>" +
+                    "<td>" + response[i].cep + "</td>" +
+                    "<td>" + response[i].cidade + "</td>" +
+                    "<td>" + response[i].bairro + "</td>" +
+                    "<td>" + response[i].rua + "</td>" +
+                    "<td>" + response[i].numero + "</td>" +
+                    "<td>" + response[i].complemento + "</td>" +
+                    "<td>" +
+                    "<div class='btn-toolbar' role='toolbar' aria-label='Toolbar with button groups'>" +
+                    "<div class='btn-group mr-2' role='group' aria-label='Ações do Cliente'>" +
+                    "<button class='btn btn-primary btn-sm' onclick='carregarDadosParaEdicaoEndereco(" + response[i].id + ")' data-toggle='modal'>Editar</button>" +
+                    "</div>" +
+                    "<div class='btn-group mr-2' role='group' aria-label='Ações do Cliente'>" +
+                    "<button type='button' class='btn btn-danger btn-sm' onclick='abrirModalExclusaoEndereco(" + response[i].id + ")'>Excluir</button>" +
+                    "</div>" +
+                    "</div>" +
+                    "</td>" +
+                    "</tr>"
+                );
+            });
+
+                    // Preencher campos comuns de serviço
+                    document.getElementById('DetalhesIdServicos').value = servico.id || '';
+                    document.getElementById('DetalhesNome').value = servico.nome || '';
+                    document.getElementById('DetalhesTotalServico').value = servico.totalServicos || '';
+                    document.getElementById('DetalhesDuracao').value = servico.duracaoHoras || '';
+                    document.getElementById('DetalhesQuantidadePessoas').value = servico.quantidadePessoas || '';
+
+                    // Preencher campos específicos de tipos de funcionários
+                    if (pedidos_servico.funcionarioTipo === "Garcom") {
+                        document.getElementById('DetalhesGarcons').value = pedidos_servico.quantidade || '';
+                    } else if (pedidos_servico.funcionarioTipo === "Cozinheiro") {
+                        document.getElementById('DetalhesCozinheiros').value = pedidos_servico.quantidade || '';
+                    } else if (pedidos_servico.funcionarioTipo === "Barman") {
+                        document.getElementById('DetalhesBarmans').value = pedidos_servico.quantidade || '';
+                    }
+                });
+            }
+
+            // Abra o modal de detalhes do pedido
+            $('#modalDetalhesPedido').modal('show');
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os detalhes do pedido:', error);
+        });
+}
+
+function formatarData(data) {
+    // Formato de exibição de data desejado
+    let options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    };
+    return new Date(data).toLocaleDateString('pt-BR', options);
+}
+
+
+</script>
+
+<script>
+    $("#produtos-tab").click(function(){
+  $("#detalhes").hide();
+  $("#detalhesProdutos").show();
+  $("#detalhesServico").hide();
+  $("button").removeClass('active');
+  $("#produtos-tab").addClass('active');
+});
+
+$("#servico-tab").click(function(){
+  $("#detalhes").hide();
+  $("#detalhesProdutos").hide();
+  $("#detalhesServico").show();
+  $("button").removeClass('active');
+  $("#servico-tab").addClass('active');
+});
+
+$("#detalhes-tab").click(function(){
+  $("#detalhes").show();
+  $("#detalhesProdutos").hide();
+  $("#detalhesServico").hide();
+  $("button").removeClass('active');
+  $("#detalhes-tab").addClass('active');
+});
+
+
+     
+
+</script>
 
 <!-- Modal Feedback do Pedido -->
 <div class="modal fade" id="modalFeedbackPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -573,46 +805,7 @@
 </div>
 
 
-<script>
-    function mostrarDetalhes(idPedido) {
-        fetch(`/adm/pedidos/show/${idPedido}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro ao carregar os detalhes do pedido');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Preencha os campos do modal com os dados do cliente, ou valores padrão
-                document.getElementById('DetalhesIdPedidos').value = data.id || '';
-                document.getElementById('DetalhesIdServicos').value = data.idServicos || '';
-                document.getElementById('DetalhesObservacao').value = data.observacao || '';
-                document.getElementById('DetalhesCodigo').value = data.codigo || '';
-                document.getElementById('DetalhesDataPedido').value = data.dataPedido ? formatarData(data.dataPedido) : '';
-                
 
-
-
-                // Abra o modal de detalhes do pedido
-                $('#modalDetalhesPedido').modal('show');
-            })
-            .catch(error => {
-                console.error('Erro ao carregar os detalhes do pedido:', error);
-            });
-    }
-
-    function formatarData(data) {
-        // Formato de exibição de data desejado
-        let options = {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit'
-        };
-        return new Date(data).toLocaleDateString('pt-BR', options);
-    }
-
-
-</script>
 
 <script>
     function carregarDadosParaEdicao(idPedido) {
