@@ -1591,3 +1591,41 @@ ALTER TABLE `receitas_itens`
   ADD CONSTRAINT `receitas_itens_ibfk_1` FOREIGN KEY (`idProdutos`) REFERENCES `produtos` (`id`),
   ADD CONSTRAINT `receitas_itens_ibfk_2` FOREIGN KEY (`idMateriasPrimas`) REFERENCES `materias_primas_estoque` (`id`);
 COMMIT;
+
+
+
+
+
+
+--TRIGGERS
+
+CREATE TRIGGER `atualizar_total_pedido` AFTER INSERT ON `pedidos_produtos`
+ FOR EACH ROW BEGIN
+    DECLARE total DECIMAL(10,2);
+    
+    -- Calcula o total dos pedidos_produtos para o pedido atual
+    SELECT SUM(subtotal) INTO total
+    FROM pedidos_produtos
+    WHERE idPedidos = NEW.idPedidos;
+    
+    -- Atualiza o totalPedido na tabela pedidos
+    UPDATE pedidos
+    SET totalPedido = totalPedido+total
+    WHERE id = NEW.idPedidos;
+END
+
+CREATE TRIGGER `calcular_total_servicos` AFTER INSERT ON `pedidos_servicos`
+ FOR EACH ROW BEGIN
+    DECLARE total DECIMAL(10,2);
+
+    -- Calcular o total de subtotais para o serviço
+    SELECT SUM(subtotal) INTO total
+    FROM pedidos_servicos
+    WHERE idServicos = NEW.idServicos;
+
+    -- Atualizar o campo totalServicos na tabela Servicos
+    UPDATE servicos
+    SET totalServicos = total
+    WHERE id = NEW.idServicos;
+END
+
