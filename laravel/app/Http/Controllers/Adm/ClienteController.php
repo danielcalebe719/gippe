@@ -35,6 +35,31 @@ class ClienteController extends Controller
             return response()->json(['error' => 'Cliente não encontrado'], 404);
         }
     }
+
+    public function showEnderecos($idEndereco)
+    {
+        $enderecos = EnderecosClientes::where('idClientes', $idEndereco)->get();
+        
+        // Verifica se encontrou algum endereço
+    if ($enderecos->isNotEmpty()) {
+        return response()->json($enderecos);
+    } else {
+        return response()->json(['error' => 'Cliente não encontrado ou sem endereços'], 404);
+    }
+    }
+
+    public function showEndereco($idEndereco)
+    {
+        $endereco = EnderecosClientes::find($idEndereco);
+        
+        if ($endereco) {
+
+            
+            return response()->json($endereco);
+        } else {
+            return response()->json(['error' => 'Cliente não encontrado'], 404);
+        }
+    }
     
     
     public function guardar(Request $request)
@@ -72,22 +97,71 @@ class ClienteController extends Controller
                 $cliente->dataCadastro = now();
             }
             // Trata o upload da imagem, se fornecida
-            if ($request->hasFile('imgCaminho')) {
-                // Deleta a imagem antiga, se existir
-                if ($cliente->imgCaminho && Storage::exists('public/GaleriaImagens/' . $cliente->imgCaminho)) {
-                    Storage::delete('public/GaleriaImagens/' . $cliente->imgCaminho);
-                }
-                
-                // Armazena a nova imagem
-                $path = $request->file('imgCaminho')->store('public/GaleriaImagens');
-                $cliente->imgCaminho = basename($path);
-            }
+if ($request->hasFile('caminhoImagem')) {
+    
+    
+    // Define o nome do arquivo usando o nome do produto e mantém a extensão original
+    $nomeArquivo = $cliente->nome . '.' . $request->file('caminhoImagem')->getClientOriginalExtension();
+    $path = $request->file('caminhoImagem')->storeAs('public/GaleriaImagens/clientes', $nomeArquivo);
+    // Deleta a imagem antiga, se existir
+    if ($cliente->caminhoImagem && Storage::exists('public/GaleriaImagens/clientes/' . $cliente->caminhoImagem)) {
+        Storage::delete('public/GaleriaImagens/clientes/' . $cliente->caminhoImagem);
+    }
+    // Atualiza o campo caminhoImagem com o nome do novo arquivo
+    $cliente->caminhoImagem = $nomeArquivo;
+} else {
+    // Mantém o nome do arquivo existente se não houver uma nova imagem enviada
+    $nomeArquivo = $cliente->caminhoImagem;
+}
+
     
             // Atualiza o timestamp de atualização
             $cliente->dataAtualizacao = now();  
     
             // Salva o cliente
             $cliente->save();
+            
+            return redirect()->back()->with('success', 'Cliente adicionado/atualizado com sucesso!');
+            
+        } catch (\Exception $e) {
+            // Loga o erro para fins de debug
+            Log::error('Erro ao atualizar o cliente: ' . $e->getMessage());
+            return response()->json(['error' => 'Erro ao atualizar o cliente: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function guardarEndereco(Request $request)
+    {
+        // Validação dos dados
+        /*$request->validate([
+            'nome' => 'nullable|string|max:255',
+            'cpf' => 'nullable|string|max:14|unique:clientes,cpf,' . $request->idCliente . ',idClientes',
+            'dataNascimento' => 'nullable|date',
+            'status' => 'nullable|string|in:ativo,inativo',
+            'email' => 'nullable|email|max:255|unique:clientes,email,' . $request->idCliente . ',idClientes',
+            'senha' => 'nullable|string|min:6',
+            'telefone' => 'nullable|string|max:20',
+            // 'imgCaminho' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);*/   
+    
+        try {
+            // Busca ou cria um novo cliente
+            $endereco = $request->idEndereco ? EnderecosClientes::findOrFail($request->idEndereco) : new EnderecosClientes();
+    
+            // Preenche os outros campos do cliente
+            $endereco->tipo = $request->input('tipo');
+            $endereco->cep = $request->input('cep');
+            $endereco->cidade = $request->input('cidade');
+            $endereco->bairro = $request->input('bairro');
+            $endereco->rua = $request->input('rua');
+            $endereco->numero = $request->input('numero');
+            $endereco->complemento = $request->input('complemento');
+            $endereco->idClientes = $request->input('idClientes');
+    
+            
+    
+            // Salva o cliente
+            $endereco->save();
             
             return redirect()->back()->with('success', 'Cliente adicionado/atualizado com sucesso!');
             
@@ -106,6 +180,25 @@ class ClienteController extends Controller
 
 
 
+    public function removerEndereco($idEndereco)
+    {
+        try {
+
+            
+            $enderecocliente = EnderecosClientes::findOrFail($idEndereco);
+            
+           
+            
+            
+
+
+            $enderecocliente->delete();
+
+            return response()->json(['message' => 'Cliente excluído com sucesso']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao excluir o cliente: ' . $e->getMessage()], 500);
+        }       
+    }
 
 
 
@@ -123,8 +216,8 @@ class ClienteController extends Controller
            
             
             // Excluir a imagem associada, se existir
-            if ($cliente->imgCaminho) {
-                Storage::delete('public/GaleriaImagens/' . $cliente->imgCaminho);
+            if ($cliente->caminhoImagem) {
+                Storage::delete('public/GaleriaImagens/clientes' . $cliente->caminhoImagem);
             }
 
 

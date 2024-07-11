@@ -23,12 +23,19 @@ class CadastrarClienteController extends Controller
 
     public function cadastrar(Request $request)
     {
+        // Validação dos dados recebidos do formulário
         $this->validator($request->all())->validate();
-
+    
+        // Criação do cliente no banco de dados
         $cliente = $this->create($request->all());
-
-        return redirect('/website/login')->with('success', 'Cliente registrado com sucesso!');
+    
+        // Retorna uma resposta JSON indicando sucesso
+        return response()->json([
+            'success' => true,
+            'message' => 'Cliente registrado com sucesso!'
+        ]);
     }
+    
 
     protected function validator(array $data)
     {
@@ -47,19 +54,22 @@ class CadastrarClienteController extends Controller
            
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+
         ]);
+        
     }
 
     protected function carregar_dados(Request $request)
     {
         // Obtém o ID do cliente a partir da sessão
         $idCliente = Auth::guard('cliente')->user()->id;
-
+        
         // Verifica se o ID do cliente foi encontrado
         if ($idCliente) {
             // Busca o cliente e os endereços associados
             $cliente = Clientes::find($idCliente);
             $enderecosClientes = EnderecosClientes::where('idClientes', $idCliente)->get();
+           // dd($cliente->dataNascimento);
 
             // Verifica se o cliente foi encontrado
             if ($cliente) {
@@ -81,34 +91,66 @@ class CadastrarClienteController extends Controller
             'idClientes' => 'nullable|integer',
             'nome' => 'required|string|max:255',
             'cpf' => 'required|digits:11',
-            'dob' => 'required|date',
+            'dataNascimento' => 'required|date',
             'cep' => 'required|digits:8',
             'cidade' => 'required|string|max:255',
             'bairro' => 'required|string|max:255',
             'rua' => 'required|string|max:255',
             'numero' => 'required|integer',
+            'telefone' => 'required|digits_between:10,11',
             'complemento' => 'nullable|string|max:255',
             'tipo' => 'required|in:residencial,comercial',
             'terms' => 'accepted',
+        ], [
+            'telefone.required' => 'O campo telefone é obrigatório.',
+    'telefone.digits_between' => 'O telefone deve ter entre 10 e 11 dígitos.',
+            'nome.required' => 'O campo nome é obrigatório.',
+            'nome.string' => 'O campo nome deve ser uma string.',
+            'nome.max' => 'O campo nome não pode ter mais de :max caracteres.',
+            'cpf.required' => 'O campo CPF é obrigatório.',
+            'cpf.digits' => 'O CPF deve conter exatamente 11 dígitos.',
+            'dataNascimento.required' => 'O campo data de nascimento é obrigatório.',
+            'dataNascimento.date' => 'O campo data de nascimento deve ser uma data válida.',
+            'cep.required' => 'O campo CEP é obrigatório.',
+            'cep.digits' => 'O CEP deve conter exatamente 8 dígitos.',
+            'cidade.required' => 'O campo cidade é obrigatório.',
+            'cidade.string' => 'O campo cidade deve ser uma string.',
+            'cidade.max' => 'O campo cidade não pode ter mais de :max caracteres.',
+            'bairro.required' => 'O campo bairro é obrigatório.',
+            'bairro.string' => 'O campo bairro deve ser uma string.',
+            'bairro.max' => 'O campo bairro não pode ter mais de :max caracteres.',
+            'rua.required' => 'O campo rua é obrigatório.',
+            'rua.string' => 'O campo rua deve ser uma string.',
+            'rua.max' => 'O campo rua não pode ter mais de :max caracteres.',
+            'numero.required' => 'O campo número é obrigatório.',
+            'numero.integer' => 'O campo número deve ser um número inteiro.',
+            'complemento.string' => 'O campo complemento deve ser uma string.',
+            'complemento.max' => 'O campo complemento não pode ter mais de :max caracteres.',
+            'tipo.required' => 'O campo tipo de endereço é obrigatório.',
+            'tipo.in' => 'O tipo de endereço deve ser residencial ou comercial.',
+            'terms.accepted' => 'Você deve concordar com os termos e condições.',
         ]);
+        
     
         // Verifica se há um ID de cliente na sessão
         $idCliente = $validatedData['idClientes'];
-    
+
         try {
             // Inicia uma transação para garantir integridade dos dados
             DB::beginTransaction();
-    
+    //dd( $request['dataNascimento']);
+
             if ($idCliente) {
                 // Busca o cliente pelo ID
                 $cliente = Clientes::findOrFail($idCliente);
     
                 // Atualiza os dados do cliente
                 $cliente->update([
+                   
                     'telefone' => $request->input('telefone'),
                     'cpf' => $validatedData['cpf'],
                     'nome' => $validatedData['nome'],
-                    'dataNascimento' => $validatedData['dob'],
+                    'dataNascimento' =>  $request['dataNascimento'],
                 ]);
             } else {
                 // Cria um novo cliente
@@ -116,7 +158,7 @@ class CadastrarClienteController extends Controller
                     'cpf' => $validatedData['cpf'],
                     'nome' => $validatedData['nome'],
                     'telefone' => $request->input('telefone'),
-                    'dataNascimento' => $validatedData['dob'],
+                      'dataNascimento' =>  $request['dataNascimento'],   
                 ]);
             }
     
@@ -151,13 +193,19 @@ class CadastrarClienteController extends Controller
             // Confirma a transação se tudo ocorrer bem
             DB::commit();
     
-            return redirect()->route('website.servicos')->with('success', 'Cadastro atualizado com sucesso!');
+            return response()->json([
+                'success' => true,
+                'message' => 'cadastro atualizado registrado com sucesso!'
+            ]);
             
         } catch (\Exception $e) {
             // Desfaz a transação em caso de erro
             DB::rollBack();
     
-            return back()->withInput()->withErrors(['error' => 'Ocorreu um erro ao salvar os dados. Por favor, tente novamente mais tarde.']);
+                 return response()->json([
+                'error' => true,
+                'message' => 'Erro ao completar o cadastro'
+            ]);
         }
     }
     

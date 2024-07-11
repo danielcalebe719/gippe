@@ -54,12 +54,20 @@
                                     <td>{{ $pedido->id }}</td>
                                     <td>{{ $pedido->cliente->nome }}</td>
                                     <td>{{  $pedido->servico->nome ?? 'Nome do serviço não disponível' }}</td>
-                                    <td>{{ $pedido->status }}</td>
+                                    <td>{{ $pedido->getStatus() }}</td>
                                     <td>{{ $pedido->totalPedido }}</td>
                                     <td>{{ $pedido->dataEntrega }}</td>
 
                                     <td>
                                         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+
+                                        <div class="btn-group mr-2" role="group" aria-label="Ações do Pedido">
+                                                <button type="button" class="btn btn-success btn-sm"
+                                                    onclick="">
+                                                    Aceitar
+                                                </button>
+                                            </div>
+
                                             <div class="btn-group mr-2" role="group" aria-label="Ações do Pedido">
                                                 <button class="btn btn-primary btn-sm"
                                                     onclick="carregarDadosParaEdicao('{{ $pedido->id }}')"
@@ -89,6 +97,7 @@
                                                     Detalhes
                                                 </button>
                                             </div>
+                                            
                                         </div>
                                     </td>
                                 </tr>
@@ -129,7 +138,7 @@
                                     <td>{{ $pedido->id }}</td>
                                     <td>{{ $pedido->cliente->nome }}</td>
                                     <td>{{ $pedido->servico->nome ?? 'Nome do serviço não disponível' }}</td>
-                                    <td>{{ $pedido->status }}</td>
+                                    <td>{{ $pedido->getStatus() }}</td>
                                     <td>{{ $pedido->totalPedido }}</td>
                                     <td>{{ $pedido->dataEntrega }}</td>
 
@@ -281,12 +290,9 @@
                         <div class="form-group">
                             <label for="status">Status</label>
                             <select class="form-control" id="status" name="status" required>
-                                <option value="nao_finalizado">Não finalizado</option>
-                                <option value="pendente">Pendente</option>
-                                <option value="aceito">Aceito</option>
-                                <option value="recusado">Recusado</option>
-                                <option value="cancelado">Cancelado</option>
-                                <option value="entregue">Entregue</option>
+                            @foreach(App\Models\Pedidos::getStatusArray() as $chave=>$valor)
+                                <option value="{{$chave}}">{{$valor}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
@@ -457,12 +463,9 @@
                         <div class="form-group">
                             <label for="editStatus">Status</label>
                             <select class="form-control" id="EditarStatus" name="status" required>
-                                <option value="nao_finalizado">Não finalizado</option>
-                                <option value="pendente">Pendente</option>
-                                <option value="aceito">Aceito</option>
-                                <option value="recusado">Recusado</option>
-                                <option value="cancelado">Cancelado</option>
-                                <option value="entregue">Entregue</option>
+                                @foreach(App\Models\Pedidos::getStatusArray() as $chave=>$valor)
+                                <option value="{{$chave}}">{{$valor}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">

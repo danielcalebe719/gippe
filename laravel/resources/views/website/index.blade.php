@@ -88,7 +88,7 @@
             <a href="#" data-bs-toggle="modal" data-bs-target="#notificationsModal">
               <button class="nav-link btn"><i class="bi bi-bell"></i> Notificações
                 @if($quantidadeNotificacoes > 0)
-                <span class="badge bg-danger">{{ $quantidadeNotificacoes }}</span>
+                <span class="badge bg-danger quantidadeNotificacoes">{{ $quantidadeNotificacoes }}</span>
                 @endif
               </button>
             </a>
@@ -175,12 +175,12 @@
   <section id="hero" class="d-flex align-items-center">
     <div class="container" data-aos="zoom-out" data-aos-delay="100">
       <h1 style="color: white;">Bem vindo ao <span style="color: #FF944E;"">Buffet Divino Sabor</span></h1>
-      <h2 style=" color: white;"">Produzindo eventos com o melhor cardápio desde 2014.</h2>
-          <div class="d-flex">
-            <a href="{{url('website/cadastro2/')}}" class="btn-get-started scrollto">Faça seu pedido</a>
-
-            <a href="https://youtu.be/y6120QOlsfU?si=0Z_6ErtD0vy7wDzB" class="glightbox btn-watch-video"><i class="bi bi-play-circle" style="color: #FA856E;"></i><span style=" color: white; ">Clique e veja um pouco mais sobre nós</span></a>
-          </div>
+      <h2 style="color: white;"">Produzindo eventos com o melhor cardápio desde 2014.</h2>
+      <div class="d-flex">
+        <a href="{{url('website/cadastro2')}}" class="btn-get-started scrollto">Faça seu pedido</a>
+        
+        <a href="https://youtu.be/y6120QOlsfU?si=0Z_6ErtD0vy7wDzB" class="glightbox btn-watch-video"><i class="bi bi-play-circle" style="color: #FA856E;"></i><span style=" color: white; ">Clique e veja um pouco mais sobre nós</span></a>
+      </div>
     </div>
   </section><!-- End Hero -->
 
@@ -375,45 +375,44 @@
                   </div>
     </section><!-- End Testimonials Section -->
 
-    <!-- Conteúdo da página -->
     <section id="portfolio" class="portfolio">
-      <div class="container" data-aos="fade-up">
-        <div class="section-title">
-          <h2 style="color: #FA856E;">Galeria de Fotos</h2>
-          <h3>Dê uma olhada na nossa <span style="color: #FA856E;">Galeria de Fotos</span></h3>
-          <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
-        </div>
+  <div class="container" data-aos="fade-up">
+    <div class="section-title">
+      <h2 style="color: #FA856E;">Galeria de Fotos</h2>
+      <h3>Dê uma olhada na nossa <span style="color: #FA856E;">Galeria de Fotos</span></h3>
+      <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
+    </div>
 
-        <div class="row" data-aos="fade-up" data-aos-delay="100">
-          <div class="col-lg-12 d-flex justify-content-center">
-            <ul id="portfolio-flters">
-              <li data-filter="*" class="filter-active">Todas</li>
-              <li data-filter=".filter-casamento">Casamentos</li>
-              <li data-filter=".filter-15anos">15 Anos</li>
-              <li data-filter=".filter-formatura">Formaturas</li>
-              <li data-filter=".filter-infantil">Infantil</li>
-              <li data-filter=".filter-outros">Outros</li>
-            </ul>
-          </div>
-        </div>
+    <div class="row" data-aos="fade-up" data-aos-delay="100">
+      <div class="col-lg-12 d-flex justify-content-center">
+        <ul id="portfolio-flters">
+          <li data-filter="*" class="filter-active">Todas</li>
+          <li data-filter=".filter-casamento">Casamentos</li>
+          <li data-filter=".filter-15anos">15 Anos</li>
+          <li data-filter=".filter-formatura">Formaturas</li>
+          <li data-filter=".filter-infantil">Infantil</li>
+          <li data-filter=".filter-outros">Outros</li>
+        </ul>
+      </div>
+    </div>
 
-        <div id="portfolio-container" class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-          @foreach($imagens->take(15) as $imagem)
-          <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item filter-{{ strtolower($imagem->evento) }}"  style="padding: 0%; margin:1%;">
-            <div class="portfolio-item-overlay" >
-              <a href="{{ asset('storage/GaleriaImagens/' . $imagem->imagemCaminho) }}" data-lightbox="portfolio" title="{{ $imagem->evento }}">
-                <img class="img-fluid gallery-image" src="{{ asset('storage/GaleriaImagens/' . $imagem->imagemCaminho) }}">
-              </a>
-              <div class="portfolio-info-details">
-                <h4>{{ $imagem->evento }}</h4>
-                <p>{{ $imagem->descricao }}</p>
-              </div>
-            </div>
+    <div id="portfolio-container" class="row portfolio-container justify-content-center" data-aos="fade-up" data-aos-delay="200">
+      @foreach($imagens->take(15) as $imagem)
+      <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item filter-{{ strtolower($imagem->evento) }}">
+        <div class="portfolio-item-overlay">
+          <a href="{{ asset('storage/GaleriaImagens/' . $imagem->imagemCaminho) }}" data-lightbox="portfolio" title="{{ $imagem->evento }}">
+            <img class="img-fluid gallery-image" src="{{ asset('storage/GaleriaImagens/' . $imagem->imagemCaminho) }}">
+          </a>
+          <div class="portfolio-info-details">
+            <h4>{{ $imagem->evento }}</h4>
+            <p>{{ $imagem->descricao }}</p>
           </div>
-          @endforeach
         </div>
       </div>
-    </section>
+      @endforeach
+    </div>
+  </div>
+</section>
 
     <!-- Lightbox JS -->
     <script src="{{ asset('js/lightbox.js') }}"></script>

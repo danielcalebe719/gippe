@@ -41,7 +41,9 @@
                                     <td>{{ $notificacao->dataEnvio }}</td>
                                     <td>{{ $notificacao->titulo }}</td>
                                             <td>
-                                                <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalDetalhesNotificacaoFuncionario" onclick="mostrarDetalhes(1, 'funcionario')">Detalhes</button>
+                                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarNotificacaoCliente" onclick="editarNotificacao(1, 'cliente')">Editar</button>
+                                                <button class="btn btn-danger btn-sm" onclick="excluirNotificacao(1, 'cliente')">Excluir</button>
+                                                <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalDetalhesNotificacaoCliente" onclick="mostrarDetalhes(1, 'cliente')">Detalhes</button>
                                             </td>
                                         </tr>
                                         <!-- Fim do exemplo -->
@@ -103,11 +105,16 @@
                                 </div>
                               
                                 <div class="modal-body">
-                                    <div class="form-group">
+                                <form id="formAdicionarNotificacaoCliente" method="POST" action="/adm/notificacoes/guardarCliente">
+                                <div class="form-group">
+                                        <label for="idCliente"> ID do Cliente</label>
+                                        <input type="text" class="form-control" id="idCliente" required>
+                                    </div>    
+                                <div class="form-group">
                                         <label for="idCliente"> ID do Cliente</label>
                                         <input type="text" class="form-control" id="idCliente" required>
                                     </div>
-                                    <form id="formAdicionarNotificacaoCliente">
+                                   
                                         <div class="form-group">
                                             <label for="tituloCliente">Título</label>
                                             <input type="text" class="form-control" id="tituloCliente" required>

@@ -52,6 +52,10 @@ use App\Http\Controllers\Adm\Auth\CadastrarAdminController;
 use App\Http\Controllers\Adm\Auth\AdminController;
 use App\Http\Controllers\Adm\Auth\LoginAdminController;
 use App\Http\Middleware\RedirectIfNotAdmin;
+Route::get('/pr', function () {
+    return view('website.produtos');
+})->name('website.produtos');
+
 
 // Rota de login sem proteção de autenticação
 Route::get('/adm/login', function () {
@@ -63,6 +67,9 @@ Route::post('/adm/login/logar', [LoginAdminController::class, 'logar'])->name('a
 
 // Rota para cadastro de administrador
 Route::post('/adm/admin/cadastro', [CadastrarAdminController::class, 'cadastrar'])->name('adm.admin.cadastro');
+
+
+
 
 // Grupo de rotas 'adm' protegido por autenticação admin
 Route::middleware(['admin'])->prefix('adm')->group(function () {
@@ -130,8 +137,12 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
     Route::prefix('clientes')->group(function () {
         Route::get('/', [ClienteController::class, 'index'])->name('clientes.index');
         Route::get('/show/{idClientes}', [ClienteController::class, 'show'])->name('clientes.show');
+        Route::get('/showEnderecos/{idClientes}', [ClienteController::class, 'showEnderecos'])->name('clientes.showEnderecos');
+        Route::get('/showEndereco/{idClientes}', [ClienteController::class, 'showEndereco'])->name('clientes.showEndereco');
         Route::post('/guardar', [ClienteController::class, 'guardar'])->name('clientes.guardar');
+        Route::post('/guardarEndereco', [ClienteController::class, 'guardarEndereco'])->name('clientes.guardarEndereco');
         Route::get('/remover/{idClientes}', [ClienteController::class, 'remover'])->name('clientes.remover');
+        Route::get('/removerEndereco/{idEnderecos}', [ClienteController::class, 'removerEndereco'])->name('clientes.removerEndereco');
     });
 
     // Rotas específicas para pedidos dentro do grupo 'adm/pedidos'
@@ -145,7 +156,7 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
     Route::prefix('notificacoes')->group(function () {
         Route::get('/', [NotificacaoController::class, 'index'])->name('notificacoes.index');
         Route::get('/show/{idNotificacoes}', [NotificacaoController::class, 'show'])->name('notificacoes.show');
-        Route::post('/guardar', [NotificacaoController::class, 'guardar'])->name('notificacoes.guardar');
+        Route::post('/guardarCliente', [NotificacaoController::class, 'guardarCliente'])->name('notificacoes.guardarCliente');
         Route::get('/remover/{idNotificacoes}', [NotificacaoController::class, 'remover'])->name('notificacoes.remover');
     });
     // Rotas específicas para pedidos dentro do grupo 'adm/pedidos'
@@ -185,12 +196,15 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
         Route::post('/guardar', [ReceitaItemController::class, 'guardar'])->name('receitasItens.guardar');
         Route::get('/remover/{idReceitasItens}', [ReceitaItemController::class, 'remover'])->name('receitasItens.remover');
     });
+    
     Route::prefix('admins')->group(function () {
         Route::get('/', [AdminController::class, 'index1'])->name('admins.index1');
         Route::get('/show/{idAdmins}', [AdminController::class, 'show'])->name('admins.show');
-         Route::post('/create', [CadastrarAdminController::class, 'create'])->name('admins.create');
-        // Route::get('/remover/{idAdmins}', [AdminController::class, 'remover'])->name('admins.remover');
-    });
+        Route::post('/create', [CadastrarAdminController::class, 'create'])->name('admins.create');
+        Route::post('/update', [AdminController ::class, 'update'])->name('admins.update');
+        Route::get('/remover/{idAdmins}', [AdminController::class, 'remover'])->name('admins.remover');
+    }); 
+    
     Route::prefix('galeriaImagens')->group(function () {
         Route::get('/', [GaleriaImagemController::class, 'index'])->name('galeriaImagens.index');
         Route::get('/show/{idGaleriaImagens}', [GaleriaImagemController::class, 'show'])->name('galeriaImagens.show');
@@ -240,6 +254,7 @@ use App\Http\Controllers\Website\WebsiteServicoController;
 use App\Http\Controllers\Website\WebsiteProdutoController;
 use App\Http\Controllers\Website\WebsiteAgendamentoController;
 use App\Http\Controllers\Website\WebsitePerfilController;
+use App\Http\Controllers\Website\PedidosDetalhesController;
 
 // Rotas acessíveis sem autenticação
 Route::get('/', function () {
@@ -254,9 +269,7 @@ Route::get('website/login', [LoginClienteController::class, 'index'])->name('log
 Route::post('website/login', [LoginClienteController::class, 'logar'])->name('login.logar');
 
 Route::get('website/cadastro', [CadastrarClienteController::class, 'MostrarFormularioCadastro'])->name('cadastro');
-
-Route::post('website/cadastro', [CadastrarClienteController::class, 'cadastrar'])->name('cadastrar');
-
+Route::post('website/cadastro', [CadastrarClienteController::class, 'cadastrar'])->name('cadastro.cadastrar');
 
 // Rotas do prefixo 'website'
 Route::prefix('website')->group(function () {
@@ -322,7 +335,7 @@ Route::get('/carregar-mais-produtos' , [WebsiteProdutoController::class, 'carreg
 // Rota de logout
 Route::get('website/logout', [LoginClienteController::class, 'deslogar'])->name('logout');
 
-
+Route::get('pedidos/pedidosDetalhes', [PedidosDetalhesController::class, 'index'])->name('pedidosDetalhes.index');
 
 
 

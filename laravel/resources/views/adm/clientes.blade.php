@@ -30,7 +30,7 @@
                                 <th>Data de nascimento</th>
                                 <th>STATUS</th>
                                 <th>Email</th>
-                               
+
                                 <th>Ações</th>
                             </tr>
                         </thead>
@@ -43,7 +43,7 @@
                                     <td>{{ $cliente->dataNascimento }}</td>
                                     <td>{{ $cliente->status }}</td>
                                     <td>{{ $cliente->email }}</td>
-                                    
+
 
 
                                     <td>
@@ -64,8 +64,8 @@
                                             </div>
 
                                             <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">
-                                                <!-- Botão para abrir o modal -->
-                                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalEnderecos{{ $cliente->id }}">
+                                                <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
+                                                    onclick="mostrarEnderecos('{{ $cliente->id }}')">
                                                     Ver Endereços
                                                 </button>
                                             </div>
@@ -82,38 +82,338 @@
 
 
                                 </tr>
-                            <!-- Modal -->
-                <div class="modal fade" id="modalEnderecos{{ $cliente->id }}" tabindex="-1" role="dialog" aria-labelledby="modalEnderecosLabel{{ $cliente->id }}" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalEnderecosLabel{{ $cliente->id }}">Endereços de {{ $cliente->nome }}</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <ul>
-                                    @foreach($cliente->enderecos as $endereco)
-                                        <li>{{ $endereco->rua }}, {{ $endereco->numero }} - {{ $endereco->bairro }}, {{ $endereco->cidade }} - {{ $endereco->cep }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </tbody>
-    </table>
+                            @endforeach
+
+
+                        </tbody>
+                    </table>
+
+
+
 
                 </div>
             </div>
         </div>
     </div>
+    <!-- Modal Detalhes Endereços -->
+    <div class="modal fade" id="modalEnderecos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Detalhes do Endereço</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalAdicionarEndereco" onclick="prepararAdicionarEndereco()"
+                       >Adicionar
+                        Endereço</button>
+                    <div class="table-responsive p-3">
+                        <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                            <thead class="thead-light">
+                                <th>Id</th>
+                                <th>Tipo</th>
+                                <th>CEP</th>
+                                <th>Cidade</th>
+                                <th>Bairro</th>
+                                <th>Rua</th>
+                                <th>Número</th>
+                                <th>Complemento</th>
+                                <th>Ações</th>
+                            </thead>
+                            <tbody id="tbodyEndereco">
 
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let idClienteAtual;
+
+        //Preencher os campos do moodal detalhes
+        function mostrarEnderecos(idCliente) {
+    idClienteAtual = idCliente;
+    fetch(`/adm/clientes/showEnderecos/${idCliente}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao carregar os detalhes do cliente');
+            }
+            return response.json();
+        })
+        .then(response => {
+            $('#tbodyEndereco').empty();
+
+            // Preencher a tabela com os endereços
+            $(response).each(function (i) {
+                $('#tbodyEndereco').append(
+                    "<tr>" +
+                    "<td>" + response[i].id + "</td>" +
+                    "<td>" + response[i].tipo + "</td>" +
+                    "<td>" + response[i].cep + "</td>" +
+                    "<td>" + response[i].cidade + "</td>" +
+                    "<td>" + response[i].bairro + "</td>" +
+                    "<td>" + response[i].rua + "</td>" +
+                    "<td>" + response[i].numero + "</td>" +
+                    "<td>" + response[i].complemento + "</td>" +
+                    "<td>" +
+                    "<div class='btn-toolbar' role='toolbar' aria-label='Toolbar with button groups'>" +
+                    "<div class='btn-group mr-2' role='group' aria-label='Ações do Cliente'>" +
+                    "<button class='btn btn-primary btn-sm' onclick='carregarDadosParaEdicaoEndereco(" + response[i].id + ")' data-toggle='modal'>Editar</button>" +
+                    "</div>" +
+                    "<div class='btn-group mr-2' role='group' aria-label='Ações do Cliente'>" +
+                    "<button type='button' class='btn btn-danger btn-sm' onclick='abrirModalExclusaoEndereco(" + response[i].id + ")'>Excluir</button>" +
+                    "</div>" +
+                    "</div>" +
+                    "</td>" +
+                    "</tr>"
+                );
+            });
+
+            // Abrir o modal de detalhes do cliente
+            $('#modalEnderecos').modal('show');
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os detalhes do cliente:', error);
+            // Mesmo se ocorrer um erro, abrir o modal para mostrar a mensagem de erro
+            $('#tbodyEndereco').empty().append('<tr><td colspan="9">Não há endereços cadastrados.</td></tr>');
+            $('#modalEnderecos').modal('show');
+        });
+}
+        
+        function prepararAdicionarEndereco() {
+    document.getElementById('adicionarIdCliente').value = idClienteAtual;
+    $('#modalAdicionarEndereco').modal('show');
+}
+    </script>
+    <!-- Modal Adicionar Endereço -->
+    <div class="modal fade" id="modalAdicionarEndereco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Adicionar Endereço</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formAdicionarEndereco" action="/adm/clientes/guardarEndereco" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" id="adicionarIdCliente" name="idClientes" value="">
+                        <div class="form-group">
+                            <label for="nome">Tipo</label>
+                            <select class="form-control" name="tipo" id="tipo">
+                                <option value="residencial">Residencial</option>
+                                <option value="comercial">Comercial</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cpf">CEP</label>
+                            <input type="text" class="form-control cep" id="cep" name="cep" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dataNascimento">Cidade</label>
+                            <input type="text" class="form-control cidade" id="cidade" name="cidade" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bairro">Bairro</label>
+                            <input type="text" class="form-control bairro" name="bairro" id="bairro">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Rua</label>
+                            <input type="text" class="form-control logradouro" id="logradouro" name="rua" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefone">Número</label>
+                            <input type="number" class="form-control" id="numero" name="numero" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="senha">Complemento</label>
+                            <input type="text" class="form-control" id="complemento" name="complemento" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar Endereço -->
+    <div class="modal fade" id="modalEditarEndereco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar Endereço</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEditarEndereco" action="/adm/clientes/guardarEndereco" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" id="editarIdEndereco" name="idEndereco">
+                        <input type="hidden" id="editarIdClientes" name="idClientes">
+                        <div class="form-group">
+                            <label for="nome">Tipo</label>
+                            <select class="form-control" name="tipo" id="editarTipo" value="">
+                                <option value="residencial">Residencial</option>
+                                <option value="comercial">Comercial</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cpf">CEP</label>
+                            <input type="text" class="form-control cep" id="editarCep" name="cep" value="" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dataNascimento">Cidade</label>
+                            <input type="text" class="form-control cidade" id="editarCidade" name="cidade" value=""
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bairro">Bairro</label>
+                            <input type="text" class="form-control bairro" id="editarBairro" name="bairro" value="">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Rua</label>
+                            <input type="text" class="form-control logradouro" id="editarLogradouro" name="rua" value=""
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefone">Número</label>
+                            <input type="number" class="form-control" id="editarNumero" name="numero" value="" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="senha">Complemento</label>
+                            <input type="text" class="form-control" id="editarComplemento" name="complemento" value=""
+                                required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function carregarDadosParaEdicaoEndereco(idEndereco) {
+            fetch(`/adm/clientes/showEndereco/${idEndereco}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao carregar os detalhes do cliente');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('API Response:', data); // Log the API response
+
+                    // Preencher os campos do formulário com os dados do cliente
+                    document.getElementById('editarIdEndereco').value = data.id;
+                    document.getElementById('editarIdClientes').value = data.idClientes;
+                    document.getElementById('editarTipo').value = data.tipo;
+                    document.getElementById('editarCep').value = data.cep;
+                    document.getElementById('editarCidade').value = data.cidade;
+                    document.getElementById('editarBairro').value = data.bairro;
+                    document.getElementById('editarLogradouro').value = data.rua;
+                    document.getElementById('editarNumero').value = data.numero;
+                    document.getElementById('editarComplemento').value = data.complemento;
+
+
+
+                    // Abrir o modal de edição do cliente
+                    $('#modalEditarEndereco').modal('show');
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar os detalhes do cliente:', error);
+                });
+        }
+
+
+
+
+
+    </script>
+
+    <div class="modal fade" id="modalConfirmarExclusaoEndereco" tabindex="-1" role="dialog"
+        aria-labelledby="modalConfirmarExclusaoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalConfirmarExclusaoLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza de que deseja excluir este cliente?</p>
+                    <input type="hidden" id="excluirIdEndereco">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmarExclusaoEndereco">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Função para abrir o modal de confirmação de exclusão
+        function abrirModalExclusaoEndereco(idEndereco) {
+            document.getElementById('excluirIdEndereco').value = idEndereco;
+            $('#modalConfirmarExclusaoEndereco').modal('show');
+        }
+
+        // Função para confirmar a exclusão
+        document.getElementById('confirmarExclusaoEndereco').addEventListener('click', function () {
+            var idEndereco = document.getElementById('excluirIdEndereco').value;
+
+            // Enviar requisição AJAX para excluir o cliente
+            fetch(`/adm/clientes/removerEndereco/${idEndereco}`, {
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao excluir o cliente');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Fechar o modal de confirmação de exclusão
+                    $('#modalConfirmarExclusaoEndereco').modal('hide');
+
+                    // Remover a linha do cliente na tabela, se existir
+                    let enderecoRow = document.getElementById(`enderecoRow${idEndereco}`);
+                    if (enderecoRow) {
+                        enderecoRow.remove();
+                    } else {
+                        console.warn(`Elemento enderecoRow${idEndereco} não encontrado para remoção.`);
+                    }
+
+                    // Exibir mensagem de sucesso
+                    location.replace(location.href)
+
+                })
+                .catch(error => {
+                    console.log(error)
+                    console.error('Erro ao excluir o cliente:', error);
+                    alert('Erro ao excluir o clienteeeeeeee');
+                });
+        });
+    </script>
     <!-- Modal Adicionar Cliente -->
     <div class="modal fade" id="modalAdicionarCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -164,7 +464,7 @@
 
                         <div class="form-group">
                             <label for="imgPerfil">Imagem de Perfil</label>
-                            <input type="file" class="form-control-file" id="imgPerfil" name="imgPerfil">
+                            <input type="file" class="form-control-file" id="caminhoImagem" name="caminhoImagem">
                         </div>
                         <button type="submit" class="btn btn-primary">Salvar</button>
                     </form>
@@ -173,64 +473,56 @@
         </div>
     </div>
 
-    <!-- Modal Adicionar Endereço -->
-    <div class="modal fade" id="modalAdicionarEndereco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Adicionar Endereço</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="formAdicionarEndereco" action="/adm/clientes/guardar" method="POST"
-                        enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group">
-                            <label for="nome">Nome</label>
-                            <input type="text" class="form-control" id="nome" name="nome" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="cpf">CPF</label>
-                            <input type="text" class="form-control" id="cpf" name="cpf" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="dataNascimento">Data de Nascimento</label>
-                            <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="status">Status</label>
-                            <select class="form-control" id="status" name="status" required>
-                                <option value="ativo">Ativo</option>
-                                <option value="inativo">Inativo</option>
-                            </select>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="telefone">Telefone</label>
-                            <input type="telefone" class="form-control" id="telefone" name="telefone" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="senha">Senha</label>
-                            <input type="password" class="form-control" id="senha" name="senha" required>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="imgPerfil">Imagem de Perfil</label>
-                            <input type="file" class="form-control-file" id="imgPerfil" name="imgPerfil">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    <script>
+        $(document).ready(function () {
+            // Função para limpar os campos do formulário
+            function limpaFormularioCEP() {
+                $(".logradouro").val(""); // Limpa o campo logradouro
+                $(".bairro").val(""); // Limpa o campo bairro
+                $(".cidade").val(""); // Limpa o campo cidade
+
+            }
+
+            // Evento "blur" para detectar quando o usuário termina de digitar o CEP
+            $("#cep").blur(function () {
+                var cep = $(this).val().replace(/\D/g, ''); // Remove qualquer caractere não numérico do CEP
+                if (cep !== "") {
+                    var validacep = /^[0-9]{8}$/; // Expressão regular para validar o formato do CEP
+                    if (validacep.test(cep)) {
+                        // Preenche os campos com "..." enquanto a busca está sendo realizada
+                        $("#logradouro").val("...");
+                        $("#bairro").val("...");
+                        $("#cidade").val("...");
+
+
+                        // Faz a requisição para a API ViaCEP
+                        $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function (dados) {
+                            if (!("erro" in dados)) {
+                                // Atualiza os campos do formulário com os dados recebidos
+                                $("#logradouro").val(dados.logradouro);
+                                $("#bairro").val(dados.bairro);
+                                $("#cidade").val(dados.localidade);
+
+                            } else {
+                                // CEP não encontrado
+                                limpaFormularioCEP();
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                    } else {
+                        // CEP em formato inválido
+                        limpaFormularioCEP();
+                        alert("Formato de CEP inválido.");
+                    }
+                } else {
+                    // CEP sem valor, limpa formulário
+                    limpaFormularioCEP();
+                }
+            });
+        });
+    </script>
 
 
     <!-- Modal Confirmar Exclusão -->
@@ -326,7 +618,7 @@
                         <div class="form-group row">
                             <label for="editarImgCaminho" class="col-sm-3 col-form-label">Imagem de Perfil:</label>
                             <div class="col-sm-9">
-                                <input type="file" class="form-control-file" id="editarImgCaminho" name="imgCaminho">
+                                <input type="file" class="form-control-file" id="editarCaminhoImagem" name="caminhoImagem">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -410,14 +702,18 @@
                         </div>
                     </div>
                     <div class="form-group">
+                            <label for="detalhesImgPerfil">Imagem do Produto:</label>
+                            <img id="detalhesImgPerfil" class="form-control-file" src="" alt="Imagem do Produto" style="max-width: 100%; height: auto;">
+                        </div>
+                    <!-- <div class="form-group">
                         <label for="detalhesImgPerfil">Imagem de Perfil</label><br>
                         <div class="img-container">
-                            <img id="detalhesImgCaminho" src="" class="img-fluid img-thumbnail" alt="Imagem de Perfil"
+                            <img id="detalhesCaminhoImagem" src="" class="img-fluid img-thumbnail" alt="Imagem de Perfil"
                                 style="max-width: 200px;">
                         </div>
-                    </div>
+                    </div> -->
 
-                    
+
                 </div>
             </div>
         </div>
@@ -536,9 +832,9 @@
                     // Exibir apenas parte da senha ou string vazia se não houver senha
 
 
-                    // Atualizar a imagem de perfil ou usar uma imagem padrão caso o caminho seja nulo
-                    let imgPath = data.imgCaminho ? `/storage/GaleriaImagens/${data.imgCaminho}` : '/storage/GaleriaImagens/padrao.png';
-                    document.getElementById('detalhesImgCaminho').src = imgPath;
+                    // Atualize o src da imagem
+            const imgPath = data.caminhoImagem ? `/storage/GaleriaImagens/clientes/${data.caminhoImagem}` : 'default-image-path.jpg';
+            document.getElementById('detalhesImgPerfil').src = imgPath;
 
                     // Abra o modal de detalhes do cliente
                     $('#modalDetalhesCliente').modal('show');
@@ -601,7 +897,7 @@
                     //document.getElementById('editarSenha').value = data.senha;
 
 
-                    document.getElementById('editarImgCaminho').src = 'GaleriaImagens/' + data.imgCaminho;
+                    document.getElementById('editarCaminhoImagem').value = data.caminhoImagem;
 
                     // Abrir o modal de edição do cliente
                     $('#modalEditarCliente').modal('show');

@@ -19,14 +19,14 @@ class Clientes extends Authenticatable
     protected $fillable = [   
         'nome', 
         'cpf', 
-        'data_de_nascimento', 
+        'dataNascimento', 
         'status', 
         'email', 
         'password',
         'dataCadastro',
         'dataAtualizacao',
         'dataRemocao',
-        'imgCaminho',
+        'caminhoImagem',
         'telefone',
         'last_login'
         // Adicione outros campos aqui

@@ -15,7 +15,7 @@ class PedidosProdutos extends Model
         'idPedidos', 
         'idProdutos', 
         'quantidade',
-        'subtotal',
+        'subtotal'
         // Adicione outros campos aqui
     ];
     public $timestamps = false;

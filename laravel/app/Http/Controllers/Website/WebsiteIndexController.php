@@ -13,6 +13,7 @@ class WebsiteIndexController extends Controller
 {
     public function index()
     {
+
         $notificacoes = collect(); 
         $notificacoes_clientes = collect(); 
         $quantidadeNotificacoes = 0; 
@@ -50,6 +51,7 @@ class WebsiteIndexController extends Controller
 
 public function mensagem_guardar(Request $request)
 {
+    
     // Validação dos dados recebidos
     $request->validate([
         'nome' => 'required|string|max:255',
@@ -84,10 +86,11 @@ public function mensagem_guardar(Request $request)
 
 public function marcarLida($id)
 {
+
     try {
         // Buscar a notificação pelo ID
         $notificacaoCliente = Notificacoes::findOrFail($id);
-
+      
         // Marcar a notificação como lida
         $notificacaoCliente->lido = true;
         $notificacaoCliente->save();
