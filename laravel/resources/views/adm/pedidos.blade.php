@@ -569,6 +569,10 @@
                             <input type="text" class="form-control" id="DetalhesObservacao" value="" readonly>
                         </div>
                     </div>
+                    <!-- produtos.nome
+                    pedidos_produtos.quantidade
+                    pedidos_produtos.subtotal -->
+ 
                 </div>
 
                 <div id="detalhesServico">
