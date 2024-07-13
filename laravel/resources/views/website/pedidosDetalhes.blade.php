@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <base href="https://buffetfestamais.com">
-  <title>Detalhes do Pedido - Buffet Festa Mais</title>
+  <title>Detalhes do Pedido - Buffet Divino Sabor</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Font Awesome para ícones -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   <style>
     body {
       background-color: #f8f9fa;
@@ -62,18 +62,50 @@
         <div class="card-body">
           <h5 class="card-title">Informações do Pedido</h5>
           <div class="d-flex justify-content-between align-items-center mb-3">
-            <span>Status: 
-              <span class="badge bg-success status-badge">{{ $pedido->status }}</span>
+          <span>Status: 
+            <span class="badge bg-success status-badge">
+              @switch($pedido->status)
+                @case('nao_finalizado')
+                  Não Finalizado
+                  @break
+                @case('pendente')
+                  Pendente
+                  @break
+                @case('aceito')
+                  Aceito
+                  @break
+                @case('em_producao')
+                  Em Produção
+                  @break
+                @case('produzido')
+                  Produzido
+                  @break
+                @case('entregue')
+                  Entregue
+                  @break
+                @case('recusado')
+                  Recusado
+                  @break
+                @case('cancelado')
+                  Cancelado
+                  @break
+                @default
+                  {{ $pedido->status }}
+              @endswitch
             </span>
-            <span>Data do Pedido: {{ $pedido->dataPedido }}</span>
+            
+           
           </div>
-          @if ($agendamento)
-          <p><strong>Data da Festa:</strong> {{ $agendamento->dataInicio }}</p>
-          <p><strong>Horário:</strong> {{ $agendamento->horaInicio }} - {{ $agendamento->horaFim }}</p>
-          @endif
-          @if ($servicos)
-          <p><strong>Número de Convidados:</strong> {{ $servicos->quantidadePessoas }}</p>
-          @endif
+         <p><strong>Data do Pedido:</strong> {{ \Carbon\Carbon::parse($pedido->dataPedido)->format('d/m/Y') }}</p>
+@if ($agendamento)
+  <p><strong>Data da Festa:</strong> {{ \Carbon\Carbon::parse($agendamento->dataInicio)->format('d/m/Y') }}</p>
+  <p><strong>Horário:</strong> {{ \Carbon\Carbon::parse($agendamento->horaInicio)->format('H:i') }} - {{ \Carbon\Carbon::parse($agendamento->horaFim)->format('H:i') }}</p>
+ 
+@endif
+ 
+@if ($pedido->status == 'nao_finalizado' || $pedido->status == 'pendente')
+    <a href="{{ route('website.agendamento', $pedido->codigo) }}" class="btn btn-warning">Editar Agendamento</a>
+  @endif
         </div>
       </div>
 
@@ -88,7 +120,7 @@
                   <th>Quantidade</th>
                   <th>Preço</th>
                 </tr>
-              </thead>
+              </thead>  
               <tbody>
                 @foreach ($produtos as $produto_pedido)
                 <tr>
@@ -104,7 +136,7 @@
               <tfoot>
                 <tr>
                   <td colspan="2" class="text-end"><strong>Total:</strong></td>
-                  <td><strong>R$ {{ number_format($pedido->totalPedido, 2, ',', '.') }}</strong></td>
+                  <td><strong>R$ {{ number_format($subtotal_produtos, 2, ',', '.') }} </strong></td>
                 </tr>
               </tfoot>
             </table>
@@ -114,97 +146,115 @@
     </div>
 
     <div class="col-md-4">
+      <!-- Card for Customer Information -->
+      <div class="card order-card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Informações do Cliente</h5>
+          <p><strong>Nome:</strong> {{ $cliente->nome }}</p>
+          <p><strong>Email:</strong> {{ $cliente->email }}</p>
+          <p><strong>Telefone:</strong> {{ $cliente->telefone }}</p>
+        </div>
+      </div>
+
+      <!-- Card for Address Information -->
+      <div class="card order-card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Endereço de Entrega</h5>
+          <p><strong>Rua:</strong> {{ $endereco->rua }}</p>
+          <p><strong>Número:</strong> {{ $endereco->numero }}</p>
+          <p><strong>Bairro:</strong> {{ $endereco->bairro }}</p>
+          <p><strong>Cidade:</strong> {{ $endereco->cidade }}</p>
+          <p><strong>CEP:</strong> {{ $endereco->cep }}</p>
+        </div>
+      </div>
+
+         <!-- Card for Services -->
       <div class="card order-card mb-4">
         <div class="card-body">
           <h5 class="card-title">Serviços Contratados</h5>
           <div class="row text-center">
             @foreach ($pedidos_servicos as $pedido_servico)
-              @if ($pedido_servico->funcionarioTipo === 'cozinheiros')
-                <div class="col-md-4">
-                  <div class="service-icon text-primary">
-                    <i class="fas fa-user-tie"></i>
-                  </div>
-                  <h6>Garçons</h6>
-                  <p>{{ $pedido_servico->quantidade }}</p>
+              <div class="col-md-4">
+                <div class="service-icon {{ $pedido_servico->funcionarioTipo == 'Cozinheiro' ? 'text-danger' : ($pedido_servico->funcionarioTipo == 'Garcom' ? 'text-success' : 'text-info') }}">
+                  <i class="{{ $pedido_servico->funcionarioTipo == 'Cozinheiro' ? 'fas fa-user-tie' : ($pedido_servico->funcionarioTipo == 'Garcom' ? 'fas fa-utensils' : 'fas fa-glass-martini-alt') }}"></i>
                 </div>
-              @elseif ($pedido_servico->funcionarioTipo === 'garcons')
-                <div class="col-md-4">
-                  <div class="service-icon text-success">
-                    <i class="fas fa-utensils"></i>
-                  </div>
-                  <h6>Cozinheiros</h6>
-                  <p>{{ $pedido_servico->quantidade }}</p>
-                </div>
-              @elseif ($pedido_servico->funcionarioTipo === 'barmans')
-                <div class="col-md-4">
-                  <div class="service-icon text-info">
-                    <i class="fas fa-glass-martini-alt"></i>
-                  </div>
-                  <h6>Barman</h6>
-                  <p>{{ $pedido_servico->quantidade }}</p>
-                </div>
-              @endif
+                <h6>
+                  @php
+                    $pluralTipo = $pedido_servico->funcionarioTipo == 'Cozinheiro' ? 'Cozinheiros' : ($pedido_servico->funcionarioTipo == 'Garcom' ? 'Garçons' : 'Barmans');
+                  @endphp
+                  {{ $pluralTipo }}
+                </h6>
+                <p>{{ $pedido_servico->quantidade }}</p>
+              </div>
             @endforeach
+            @if ($servicos)
+            <p><strong>Número de Convidados:</strong> {{ $servicos->quantidadePessoas }}</p>
+            @endif
+            @if ($pedido->status == 'nao_finalizado' || $pedido->status == 'pendente')
+            <a href="{{ url('website/servicos/' . $pedido->codigo) }}" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a> 
+            @endif 
           </div>
         </div>
       </div>
 
+      <!-- Card for Financial Summary -->
       <div class="card order-card mb-4">
         <div class="card-body">
           <h5 class="card-title">Resumo Financeiro</h5>
           <table class="table">
-            <tr>
-              <td>Subtotal Produtos:</td>
-              <td class="text-end">R$ {{ number_format($subtotal_produtos, 2, ',', '.') }}</td>
-            </tr>
-            <tr>
-              <td>Serviços:</td>
-              <td class="text-end">R$ {{ number_format($servicos->totalServicos, 2, ',', '.') }}</td>
-            </tr>
-            <tr>
-              <td>Taxa de Entrega:</td>
-              <td class="text-end">R$ {{ number_format($pedido->taxaEntrega, 2, ',', '.') }}</td>
-            </tr>
-            <tr>
-              <th>Total:</th>
-              <th class="text-end">R$ {{ number_format($pedido->totalPedido, 2, ',', '.') }}</th>
-            </tr>
+            <tbody>
+              <tr>
+                <td>Subtotal Produtos:</td>
+                <td class="text-end">R$ {{ number_format($subtotal_produtos, 2, ',', '.') }}</td>
+              </tr>
+              <tr>
+                <td>Serviços:</td>
+                <td class="text-end">R$ {{ number_format($servicos->totalServicos, 2, ',', '.') }}</td>
+              </tr>
+              <tr>
+                <td>Taxa de Entrega:</td>
+                <td class="text-end">R$ {{ number_format($pedido->taxaEntrega, 2, ',', '.') }}</td>
+              </tr>
+              <tr>
+                <th>Total:</th>
+                <th class="text-end">R$ {{ number_format($pedido->totalPedido, 2, ',', '.') }}</th>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
 
+      <!-- Card for Order Status -->
       <div class="card order-card">
-        <div class="card-body">
-          <h5 class="card-title">Status do Pedido</h5>
-          <div class="timeline">
-            @php
-              $statuses = ['nao_finalizado', 'pendente', 'aceito', 'em_producao', 'produzido', 'entregue'];
-            @endphp
+  <div class="card-body">
+    <h5 class="card-title">Status do Pedido</h5>
+    <div class="timeline">  
+      @php
+        $statuses = [
+          'nao_finalizado' => 'Não Finalizado',
+          'pendente' => 'Pendente',
+          'aceito' => 'Aceito',
+          'em_producao' => 'Em Produção', 
+          'produzido' => 'Produzido',
+          'entregue' => 'Entregue'
+        ];
+      @endphp
 
-            @if($pedido->status == 'recusado' || $pedido->status == 'cancelado')
-              <div class="timeline-item">
-                <p class="mb-0"><strong class="text-danger">{{ ucfirst(str_replace('_', ' ', $pedido->status)) }}</strong></p>
-                <p class="text-muted"></p>
-              </div>
+      @if($pedido->status == 'recusado' || $pedido->status == 'cancelado')
+        <div class="timeline-item">
+          <p class="mb-0"><strong class="text-danger">{{ ucfirst(str_replace('_', ' ', $pedido->status)) }}</strong></p>
+        </div>
+      @else
+        @foreach($statuses as $status_key => $status_value)
+          <div class="timeline-item">
+            @if($pedido->status == $status_key)
+              <p class="mb-0"><strong class="text-primary">{{ $status_value }}</strong></p>
             @else
-              @foreach($statuses as $status)
-                <div class="timeline-item">
-                  @if($pedido->status == $status)
-                    @if($status == 'recusado' || $status == 'cancelado')
-                      <p class="mb-0"><strong class="text-danger">{{ ucfirst(str_replace('_', ' ', $status)) }}</strong></p>
-                    @else
-                      <p class="mb-0"><strong class="text-primary">{{ ucfirst(str_replace('_', ' ', $status)) }}</strong></p>
-                    @endif
-                  @else
-                    <p class="mb-0">{{ ucfirst(str_replace('_', ' ', $status)) }}</p>
-                  @endif    
-                  <p class="text-muted"></p>
-                </div>
-              @endforeach
+              <p class="mb-0">{{ $status_value }}</p>
             @endif
           </div>
-        </div>
-      </div>
+        @endforeach
+      @endif
     </div>
   </div>
 </div>

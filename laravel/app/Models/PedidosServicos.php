@@ -27,4 +27,9 @@ class PedidosServicos extends Model
     }
 
 
+    public function pedidos_servicos()
+    {
+        return $this->hasMany(PedidosServicos::class, 'idServicos', 'id');
+    }
+
 }

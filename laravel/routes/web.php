@@ -301,6 +301,8 @@ Route::prefix('website')->group(function () {
     ->middleware('auth:cliente')
     ->name('website.agendamento');
 
+
+
     Route::post('/agendamento', [WebsiteAgendamentoController::class, 'salvar'])
     ->middleware('auth:cliente')
     ->name('website.agendamento.salvar');
@@ -310,6 +312,10 @@ Route::prefix('website')->group(function () {
     Route::get('/servicos', [WebsiteServicoController::class, 'index'])
         ->middleware('auth:cliente')
         ->name('website.servicos');
+
+        Route::get('/servicos/{codigo?}', [WebsiteServicoController::class, 'index'])
+        ->middleware('auth:cliente')
+        ->name('editar.servico');
 
         
         Route::post('/servicos/processar-servico', [WebsiteServicoController::class, 'salvar_personalizado'])->name('processar.servico.personalizado');

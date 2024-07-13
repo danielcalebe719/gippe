@@ -9,6 +9,7 @@ use App\Models\PedidosServicos;
 use App\Models\Agendamentos;
 use App\Models\EnderecosClientes;
 use App\Models\Servicos;
+use App\Models\Clientes;
 
 class PedidosDetalhesController extends Controller
 {
@@ -20,6 +21,8 @@ class PedidosDetalhesController extends Controller
         // Obtendo produtos do pedido
         $produtos = PedidosProdutos::where('idPedidos', $pedido->id)->get();
         
+        $cliente = Clientes::where('id', $pedido->idClientes)->first();
+
         $subtotal_produtos = 0;
         foreach ($produtos as $produto) {
             $subtotal_produtos += $produto->subtotal; // Ajuste aqui para usar $produto->subtotal
@@ -35,10 +38,12 @@ class PedidosDetalhesController extends Controller
         $agendamento = Agendamentos::where('idPedidos', $pedido->id)->first();
         
         // Obtendo endereço do cliente
-        $endereco = EnderecosClientes::where('idClientes', $pedido->idClientes)->first();
-        
+        $endereco = EnderecosClientes::where('idClientes', $pedido->idClientes)->first()    ;
+
+
+       
         // Renderizando a visualização com os dados obtidos
-        return view('website.pedidosDetalhes', compact('pedido', 'produtos', 'servicos', 'pedidos_servicos', 'agendamento', 'endereco', 'subtotal_produtos'));
+        return view('website.pedidosDetalhes', compact('cliente','pedido', 'produtos', 'servicos', 'pedidos_servicos', 'agendamento', 'endereco', 'subtotal_produtos'));
     }
     
 

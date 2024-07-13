@@ -326,7 +326,8 @@
                   @foreach ($pedidos as $pedido)
                   <tr>
               
-                  <td><a href="{{ route('pedidosDetalhes.index', ['codigo' => $pedido->codigo]) }}">{{ $pedido->codigo }}</a></td>
+                  <td><a href="pedidos/pedidosDetalhes/{{$pedido->codigo}}"> {{ $pedido->codigo }}</a></td>
+
 
 
                     <td>

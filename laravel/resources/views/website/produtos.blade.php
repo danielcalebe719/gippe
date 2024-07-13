@@ -280,7 +280,7 @@
           <div class="row grid">
             <!-- Iteração sobre os produtos -->
             @foreach($produtos as $produto)
-            <div class="col-md-3 mb-{{ $produto->tipo }}">
+            <div class="col-md-3 mb-4 {{ $produto->tipo }}">
               <div class="card">
                 <img src="{{ asset('storage/ImagensProdutos/' . $produto->caminhoImagem) }}" class="card-img-top"
                   alt="{{ $produto->nome }}">
@@ -509,6 +509,9 @@
       .then(response => response.json())
       .then(data => {
         console.log('Sucesso:', data);
+        window.location.href = "{{ route('website.agendamento', ['codigo' => $pedido->codigo]) }}";
+
+
         
       })
       .catch((error) => {
