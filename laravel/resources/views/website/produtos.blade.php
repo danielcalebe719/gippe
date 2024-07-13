@@ -314,6 +314,22 @@
             <div class="cart-items-list"></div>
             <div class="total-price mt-3">
               <div class="card-body p-4">
+              @if($produtosSelecionados)
+                @foreach($produtosSelecionados as $produtoSelecionado)
+                <div class="cart-item" data-id="{{ $produtoSelecionado->produto_id }}">
+                  <div class="cart-item-img">
+                    <img src="{{ asset('storage/ImagensProdutos/' . $produtoSelecionado->caminhoImagem) }}" alt="{{ $produtoSelecionado->nome }}" style="width: 60px;">
+                  </div>
+                  <div class="cart-item-info flex-grow-1">
+                    <h6>{{ $produtoSelecionado->nome }}</h6>
+                    <p>R$ {{ number_format($produtoSelecionado->precoUnitario, 2, ',', '.') }} x {{ $produtoSelecionado->quantidade }}</p>
+                  </div>
+                  <button class="btn btn-sm btn-remove-item" >
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+                @endforeach
+              @endif
                 <h5>Total Produtos: R$ <span id="cart-total">0.00</span></h5>
               </div>
               </div>
@@ -354,171 +370,231 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   <script>
-   document.addEventListener('DOMContentLoaded', function () {
-  // Variável para o carrinho
-  var cart = {};
+    document.addEventListener('DOMContentLoaded', function () {
+    // Variável para o carrinho
+    var cart = {};
 
-  // Filtro de Categorias
-  var filterItems = document.querySelectorAll('.filters_menu li');
-  filterItems.forEach(function (item) {
-    item.addEventListener('click', function () {
-      filterItems.forEach(function (el) {
-        el.classList.remove('active');
+    // Filtro de Categorias
+    var filterItems = document.querySelectorAll('.filters_menu li');
+    filterItems.forEach(function (item) {
+      item.addEventListener('click', function () {
+        filterItems.forEach(function (el) {
+          el.classList.remove('active');
+        });
+        this.classList.add('active');
+        var filtro = this.getAttribute('data-filter');
+        var gridItems = document.querySelectorAll('.grid .col-md-3');
+        gridItems.forEach(function (gridItem) {
+          gridItem.style.display = 'none';
+          if (filtro === '*' || gridItem.classList.contains(filtro.substring(1))) {
+            gridItem.style.display = 'block';
+          }
+        });
       });
-      this.classList.add('active');
-      var filtro = this.getAttribute('data-filter');
-      var gridItems = document.querySelectorAll('.grid .col-md-3');
-      gridItems.forEach(function (gridItem) {
-        gridItem.style.display = 'none';
-        if (filtro === '*' || gridItem.classList.contains(filtro.substring(1))) {
-          gridItem.style.display = 'block';
+    });
+
+
+
+    // Incremento e Decremento da Quantidade
+    var incrementButtons = document.querySelectorAll('.btn-increment');
+    incrementButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        var input = this.parentElement.querySelector('.quantity-input');
+        var newValue = parseInt(input.value) + 1;
+        input.value = newValue.toString();
+      });
+    });
+
+    var decrementButtons = document.querySelectorAll('.btn-decrement');
+    decrementButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        var input = this.parentElement.querySelector('.quantity-input');
+        var newValue = parseInt(input.value) - 1;
+        if (newValue >= 1) {
+          input.value = newValue.toString();
         }
       });
     });
-  });
 
-
-
-  // Incremento e Decremento da Quantidade
-  var incrementButtons = document.querySelectorAll('.btn-increment');
-  incrementButtons.forEach(function (button) {
-    button.addEventListener('click', function () {
-      var input = this.parentElement.querySelector('.quantity-input');
-      var newValue = parseInt(input.value) + 1;
-      input.value = newValue.toString();
+    // Adicionar ao Carrinho
+    var addToCartButtons = document.querySelectorAll('.btn-add-to-cart');
+    addToCartButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        var id = this.getAttribute('data-id');
+        var nome = this.getAttribute('data-nome');
+        var precoUnitario = parseFloat(this.getAttribute('data-preco-unitario').replace('.', '').replace(',', '.'));
+        var imagem = this.getAttribute('data-caminho-imagem');
+        var quantidade = parseInt(this.parentElement.querySelector('.quantity-input').value);
+        addToCart(id, nome, precoUnitario, imagem, quantidade);
+      });
     });
-  });
 
-  var decrementButtons = document.querySelectorAll('.btn-decrement');
-  decrementButtons.forEach(function (button) {
-    button.addEventListener('click', function () {
-      var input = this.parentElement.querySelector('.quantity-input');
-      var newValue = parseInt(input.value) - 1;
-      if (newValue >= 1) {
-        input.value = newValue.toString();
+    // Função para adicionar ao carrinho
+    function addToCart(id, nome, precoUnitario, imagem, quantidade) {
+      if (cart[id]) {
+        cart[id].quantidade += quantidade;
+      } else {
+        cart[id] = {
+          id: id,
+          nome: nome,
+          precoUnitario: precoUnitario,
+          imagem: imagem,
+          quantidade: quantidade
+        };
       }
-    });
-  });
-
-  // Adicionar ao Carrinho
-  var addToCartButtons = document.querySelectorAll('.btn-add-to-cart');
-  addToCartButtons.forEach(function (button) {
-    button.addEventListener('click', function () {
-      var id = this.getAttribute('data-id');
-      var nome = this.getAttribute('data-nome');
-      var precoUnitario = parseFloat(this.getAttribute('data-preco-unitario').replace('.', '').replace(',', '.'));
-      var imagem = this.getAttribute('data-caminho-imagem');
-      var quantidade = parseInt(this.parentElement.querySelector('.quantity-input').value);
-      addToCart(id, nome, precoUnitario, imagem, quantidade);
-    });
-  });
-
-  // Função para adicionar ao carrinho
-  function addToCart(id, nome, precoUnitario, imagem, quantidade) {
-    if (cart[id]) {
-      cart[id].quantidade += quantidade;
-    } else {
-      cart[id] = {
-        id: id,
-        nome: nome,
-        precoUnitario: precoUnitario,
-        imagem: imagem,
-        quantidade: quantidade
-      };
+      updateCart(); // Atualiza visualmente o carrinho
     }
-    updateCart(); // Atualiza visualmente o carrinho
+
+    // Função para atualizar o carrinho
+    function updateCart() {
+      var cartList = document.querySelector('.cart-items-list');
+      cartList.innerHTML = '';
+      var total = 0;
+
+      for (var id in cart) {
+        if (cart.hasOwnProperty(id)) {
+          var item = cart[id];
+          var nome = item.nome;
+          var precoUnitario = item.precoUnitario;
+          var imagem = item.imagem;
+          var quantidade = item.quantidade;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+          var li = document.createElement('div');
+          li.classList.add('cart-item');
+          li.setAttribute('data-id', id); // Adiciona um identificador único
+          li.innerHTML = `
+            <div class="cart-item-img">
+              <img src="${imagem}" alt="${nome}" style="width: 60px;">
+            </div>
+            <div class="cart-item-info flex-grow-1">
+              <h6>${nome}</h6>
+              <p>R$ ${precoUnitario.toFixed(2)} x ${quantidade}</p>
+            </div>
+            <button class="btn btn-sm btn-remove-item">
+              <i class="bi bi-trash"></i>
+            </button>
+          `;
+          cartList.appendChild(li);
+          total += precoUnitario * quantidade;
+        }
+      }
+
+      document.getElementById('cart-total').textContent = total.toFixed(2);
+      
+      // Adiciona evento de clique para remover item do carrinho
+      var removeButtons = document.querySelectorAll('.btn-remove-item');
+      removeButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          var itemId = button.closest('.cart-item').getAttribute('data-id');
+          removeFromCart(itemId);
+        });
+      });
+    }
+
+    // Função para remover do carrinho
+    function removeFromCart(id) {
+      delete cart[id];
+      updateCart(); // Atualiza visualmente o carrinho após remover o item
+    }
+
+    // Finalizar Compra
+    var checkoutButton = document.querySelector('.checkout-btn');
+    checkoutButton.addEventListener('click', function () {
+      if (Object.keys(cart).length === 0) {
+        alert('O carrinho está vazio.');
+        return;
+      }
+      var total = parseFloat(document.getElementById('cart-total').textContent);
+      alert('Pedido finalizado! Total: R$ ' + total.toFixed(2));
+
+      // Dados a serem enviados
+      var dadosPedido = {
+        itens: Object.values(cart), // Enviar apenas os valores dos itens do carrinho
+        codigo: "{{$pedido->codigo}}" // Supondo que você tenha o código do pedido aqui
+      };
+
+      // Requisição AJAX para enviar os dados do carrinho
+      fetch('/website/adicionar-ao-pedido', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+          },
+          body: JSON.stringify(dadosPedido)
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Sucesso:', data);
+          window.location.href = "{{ route('website.agendamento', ['codigo' => $pedido->codigo]) }}";
+
+
+          
+        })
+        .catch((error) => {
+          console.error('Erro:', error);
+        });
+    });
+  });
+
+
+  function calcularTotalInicial() {
+    var total = 0;
+
+    @foreach($produtosSelecionados as $produtoSelecionado)
+      total += {{ $produtoSelecionado->precoUnitario }} * {{ $produtoSelecionado->quantidade }};
+    @endforeach
+
+    document.getElementById('cart-total').textContent = total.toFixed(2);
   }
 
-  // Função para atualizar o carrinho
-  function updateCart() {
-    var cartList = document.querySelector('.cart-items-list');
-    cartList.innerHTML = '';
+  // Chame a função ao carregar a página
+  document.addEventListener('DOMContentLoaded', function () {
+    // ... seu código existente ...
+
+    calcularTotalInicial(); // Calcular o total inicial
+  });
+
+
+  // Chame a função ao carregar a página
+  document.addEventListener('DOMContentLoaded', function () {
+    // ... seu código existente ...
+
+    calcularTotalInicial(); // Calcular o total inicial
+  });
+
+
+  function removeFromCart(id) {
+    delete cart[id];
+    updateCart(); // Atualiza visualmente o carrinho após remover o item
+    calcularTotal(); // Atualiza o total
+  }
+
+  // Atualize a função de atualização do carrinho para incluir o total
+  function calcularTotal() {
     var total = 0;
 
     for (var id in cart) {
       if (cart.hasOwnProperty(id)) {
-        var item = cart[id];
-        var nome = item.nome;
-        var precoUnitario = item.precoUnitario;
-        var imagem = item.imagem;
-        var quantidade = item.quantidade;
-
-        var li = document.createElement('div');
-        li.classList.add('cart-item');
-        li.setAttribute('data-id', id); // Adiciona um identificador único
-        li.innerHTML = `
-          <div class="cart-item-img">
-            <img src="${imagem}" alt="${nome}" style="width: 60px;">
-          </div>
-          <div class="cart-item-info flex-grow-1">
-            <h6>${nome}</h6>
-            <p>R$ ${precoUnitario.toFixed(2)} x ${quantidade}</p>
-          </div>
-          <button class="btn btn-sm btn-remove-item">
-            <i class="bi bi-trash"></i>
-          </button>
-        `;
-        cartList.appendChild(li);
-        total += precoUnitario * quantidade;
+        total += cart[id].precoUnitario * cart[id].quantidade;
       }
     }
 
     document.getElementById('cart-total').textContent = total.toFixed(2);
-    
-    // Adiciona evento de clique para remover item do carrinho
-    var removeButtons = document.querySelectorAll('.btn-remove-item');
-    removeButtons.forEach(function (button) {
-      button.addEventListener('click', function () {
-        var itemId = button.closest('.cart-item').getAttribute('data-id');
-        removeFromCart(itemId);
-      });
-    });
   }
 
-  // Função para remover do carrinho
-  function removeFromCart(id) {
-    delete cart[id];
-    updateCart(); // Atualiza visualmente o carrinho após remover o item
-  }
+  // Atualize a função de atualização do carrinho para incluir o total
+  function calcularTotal() {
+    var total = 0;
 
-  // Finalizar Compra
-  var checkoutButton = document.querySelector('.checkout-btn');
-  checkoutButton.addEventListener('click', function () {
-    if (Object.keys(cart).length === 0) {
-      alert('O carrinho está vazio.');
-      return;
+    for (var id in cart) {
+      if (cart.hasOwnProperty(id)) {
+        total += cart[id].precoUnitario * cart[id].quantidade;
+      }
     }
-    var total = parseFloat(document.getElementById('cart-total').textContent);
-    alert('Pedido finalizado! Total: R$ ' + total.toFixed(2));
 
-    // Dados a serem enviados
-    var dadosPedido = {
-      itens: Object.values(cart), // Enviar apenas os valores dos itens do carrinho
-      codigo: "{{$pedido->codigo}}" // Supondo que você tenha o código do pedido aqui
-    };
+    document.getElementById('cart-total').textContent = total.toFixed(2);
+  }
 
-    // Requisição AJAX para enviar os dados do carrinho
-    fetch('/website/adicionar-ao-pedido', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify(dadosPedido)
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Sucesso:', data);
-        window.location.href = "{{ route('website.agendamento', ['codigo' => $pedido->codigo]) }}";
-
-
-        
-      })
-      .catch((error) => {
-        console.error('Erro:', error);
-      });
-  });
-});
 
   </script>
 </body>

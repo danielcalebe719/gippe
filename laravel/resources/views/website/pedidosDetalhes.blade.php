@@ -140,6 +140,8 @@
                 </tr>
               </tfoot>
             </table>
+         
+            <a href="{{ url('website/produtos/' . $pedido->codigo) }}">Editar Produtos</a>
           </div>
         </div>
       </div>
@@ -173,6 +175,7 @@
         <div class="card-body">
           <h5 class="card-title">Serviços Contratados</h5>
           <div class="row text-center">
+
             @foreach ($pedidos_servicos as $pedido_servico)
               <div class="col-md-4">
                 <div class="service-icon {{ $pedido_servico->funcionarioTipo == 'Cozinheiro' ? 'text-danger' : ($pedido_servico->funcionarioTipo == 'Garcom' ? 'text-success' : 'text-info') }}">

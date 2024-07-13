@@ -194,9 +194,9 @@
                                     <input type="hidden" name="idServicos" value="{{ $servico->id ?? '' }}">
                                     <input type="hidden" name="id" value="{{ $pedidos->id ?? '' }}">
                                     <input type="hidden" name="idClientes" value="{{ Auth::guard('cliente')->user()->id }}">
-                                    <p>Barmans: <input type="number" name="tipo[barmans]" min="0" max="999" class="inpt" id="barmans"></p>
-                                    <p>Garçons: <input type="number" name="tipo[garcons]" min="0" max="999" class="inpt" id="garcons"></p>
-                                    <p>Cozinheiros: <input type="number" name="tipo[cozinheiros]" min="0" max="999" class="inpt" id="cozinheiros"></p>
+                                    <p>Barmans: <input type="number" name="tipo[Barmam]" min="0" max="999" class="inpt" id="barmans"></p>
+                                    <p>Garçons: <input type="number" name="tipo[Garcom]" min="0" max="999" class="inpt" id="garcons"></p>
+                                    <p>Cozinheiros: <input type="number" name="tipo[Cozinheiro]" min="0" max="999" class="inpt" id="cozinheiros"></p>
                                     <p>Quantidade de Pessoas: <input type="number" name="quantidadePessoas" min="0" max="999" class="inpt" id="quantidadePessoas"></p>
                                     <p>Duração da Festa (Horas): <input type="number" name="duracaoHoras" min="1" max="24" class="inpt" id="duracaoHoras"></p>
                                     <!--<p id="preco">Preço: R$0,00</p>-->

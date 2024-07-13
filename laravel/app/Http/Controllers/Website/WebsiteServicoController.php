@@ -31,6 +31,7 @@ class WebsiteServicoController extends Controller
         return view('website.servicos', compact('servicos', 'pedidos'));
     }
     
+
         public function salvar_padrao(Request $request)
         {
             $pedido = Pedidos::find($request->idPedidos);
@@ -40,19 +41,20 @@ class WebsiteServicoController extends Controller
                 $pedido = new Pedidos();
                 $pedido->idServicos = $request->idServicos;
                 $pedido->idClientes = $request->idClientes;
+                $pedido->status = 'nao_finalizado';
                 $criacao = true;
                 do {
                     $codigo = 'PE' . Str::random(6) . mt_rand(10, 99);
                 } while (Pedidos::where('codigo', $codigo)->exists());
                 
                 $pedido->codigo = $codigo;
-                $pedido->status = 'nao_finalizado';
+              
                 $pedido->dataPedido = now();
             } else {
                 // Se o pedido existir, atualize os campos necessários
                 $pedido->idServicos = $request->idServicos;
                 $pedido->idClientes = $request->idClientes;
-                $pedido->status = 'nao_finalizado';
+                $pedido->status = 'pendente';
                 $pedido->dataPedido = now();
                 $criacao = false;
             }
@@ -104,13 +106,14 @@ class WebsiteServicoController extends Controller
             
                 // Verificação se está editando um pedido existente
                 $pedido = Pedidos::find($request->id);
-                
+            
                 if (!$pedido) {
                     // Se não existe pedido, cria um novo
                     $pedido = new Pedidos();
                     $pedido->idServicos = $servico->id;
                     $pedido->idClientes = $request->idClientes;
-            
+                    $pedido->status = 'nao_finalizado';
+                    $criacao = true;
                     do {
                         $codigo = 'PE' . Str::random(6) . mt_rand(10, 99);
                     } while (Pedidos::where('codigo', $codigo)->exists());
@@ -121,11 +124,13 @@ class WebsiteServicoController extends Controller
                     // Atualiza o pedido existente
                     $pedido->idClientes = $request->idClientes;
                     $pedido->idServicos = $servico->id; // Atualiza o serviço associado
+                    $pedido->status = 'pendente';
                     $pedido->dataPedido = now();
+                    $criacao = false;   
                 }
             
                 $pedido->totalPedido = $servico->totalServicos;
-                $pedido->status = 'nao_finalizado';
+              
                 $pedido->save();
             
                 // Atualização ou criação dos pedidos de serviço associados
@@ -152,8 +157,14 @@ class WebsiteServicoController extends Controller
                     ->update(['totalPedido' => $totalServicos]);
             
                 // Redireciona após o processamento
-                return redirect()->route('website.produtos', ['codigo' => $pedido->codigo])
+                if(!$criacao){
+                
+                    return redirect()->route('pedidosDetalhes.index', ['codigo' => $pedido->codigo])
                     ->with('success', 'Serviço Selecionado com sucesso.');
+                }else{
+    
+                return redirect()->route('website.produtos', ['codigo' => $pedido->codigo])
+                    ->with('success', 'Serviço Selecionado com sucesso.');}
             }
             
 

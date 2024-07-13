@@ -31,7 +31,6 @@ class WebsiteAgendamentoController extends Controller
 
     public function salvar(Request $request)
     {
-       
         $request->validate([
             'codigo' => 'required|string',
             'dataInicio' => 'required|date',
@@ -53,18 +52,17 @@ class WebsiteAgendamentoController extends Controller
             'observacao.string' => 'A observação deve ser uma string válida.',
             'observacao.max' => 'A observação não pode ter mais de 255 caracteres.',
         ]);
-        
     
         $codigo = $request->codigo;
         $pedido = Pedidos::where('codigo', $codigo)->first();
-
+    
         if (!$pedido) {
             return redirect()->back()->with('error', 'Pedido não encontrado.');
         }
-
+    
         // Verifica se já existe um agendamento
         $agendamento = Agendamentos::where('idPedidos', $pedido->id)->first();
-
+    
         // Se não existir, cria um novo agendamento
         if (!$agendamento) {
             $agendamento = new Agendamentos();
@@ -73,7 +71,7 @@ class WebsiteAgendamentoController extends Controller
         } else {
             $criacao = false; // Define que está atualizando um agendamento existente
         }
-
+    
         // Atualiza os dados do agendamento
         $agendamento->idPedidos = $pedido->id;
         $agendamento->dataInicio = $request->dataInicio;
@@ -81,7 +79,7 @@ class WebsiteAgendamentoController extends Controller
         $agendamento->horaInicio = $request->horaInicio;
         $agendamento->horaFim = $request->horaFim;
         $agendamento->observacao = $request->observacao;
-
+    
         // Atualiza o pedido
         DB::table('pedidos')
             ->where('id', $pedido->id)
@@ -90,16 +88,17 @@ class WebsiteAgendamentoController extends Controller
                 'dataEntrega' => $agendamento->dataInicio,
                 'status' => 'pendente',
             ]);
-
+    
         // Salva o agendamento
         $agendamento->save();
-
+    
         // Redireciona com mensagens apropriadas
         if ($criacao) {
-            return redirect()->route('website.index')->with('success', 'Pedido realizado com sucesso! Aguarde nossa revisão e fique atento às notificações.');
+            return redirect()->route('website.index')->with('success', "Pedido enviado com sucesso! Seu pedido está agora em análise. Fique de olho nas notificações para mais atualizações.");
         } else {
             return redirect()->route('pedidosDetalhes.index', ['codigo' => $pedido->codigo])
                 ->with('success', 'Serviço selecionado com sucesso.');
         }
     }
+    
 }

@@ -106,6 +106,7 @@
     </div>
   </header>
 
+  
 
   <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
@@ -147,6 +148,21 @@
 
 
 
+
+
+  @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
+<!-- Resto do código HTML da sua página index -->
 
 
 
