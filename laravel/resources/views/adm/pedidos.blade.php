@@ -682,17 +682,19 @@
 
             // Preencher campos de serviços se existirem
             if (data.pedidos_servicos && data.pedidos_servicos.length > 0) {
-                data.pedidos_servicos.forEach(pedidos_servico => {
-                    const servico = pedidos_servico.servico;
+                data.pedidos_servicos.forEach(pedidos_servicos => {
+                    const nome = pedidos_servicos.nome;
 
                     // Preencher campos comuns de serviço
-                    document.getElementById('DetalhesIdServicos').value = servico.id || '';
-                    document.getElementById('DetalhesNome').value = servico.nome || '';
-                    document.getElementById('DetalhesTotalServico').value = servico.totalServicos || '';
-                    document.getElementById('DetalhesDuracao').value = servico.duracaoHoras || '';
-                    document.getElementById('DetalhesQuantidadePessoas').value = servico.quantidadePessoas || '';
+                    //document.getElementById('DetalhesIdServicos').value = servico.id || '';
+                    document.getElementById('DetalhesNome').value = data.pedidosServicos.nome || '';
+                    //document.getElementById('DetalhesTotalServico').value = servico.totalServicos || '';
+                    //document.getElementById('DetalhesDuracao').value = servico.duracaoHoras || '';
+                    //document.getElementById('DetalhesQuantidadePessoas').value = servico.quantidadePessoas || '';
+
 
                     // Preencher campos específicos de tipos de funcionários
+                    /*
                     if (pedidos_servico.funcionarioTipo === "Garcom") {
                         document.getElementById('DetalhesGarcons').value = pedidos_servico.quantidade || '';
                     } else if (pedidos_servico.funcionarioTipo === "Cozinheiro") {
@@ -700,6 +702,7 @@
                     } else if (pedidos_servico.funcionarioTipo === "Barman") {
                         document.getElementById('DetalhesBarmans').value = pedidos_servico.quantidade || '';
                     }
+                        */
                 });
             }
 
