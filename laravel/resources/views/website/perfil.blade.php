@@ -133,9 +133,9 @@
           <div class="card mb-4">
           <div class="card-body text-center">
     @if ($clientes->imgCaminho)
-    <img src="{{ asset('storage/ImagensClientes/' . $clientes->imgCaminho) }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+    <img src="{{ asset('storage/ImagensClientes/' . $clientes->caminhoImagem) }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
     @else
-    <img src="caminho/do/seu/placeholder" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;"> <!-- Se não houver imagem, exibe um placeholder ou ícone padrão -->
+    <img src="{{ asset('storage/ImagensClientes/' . $clientes->caminhoImagem) }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;"> <!-- Se não houver imagem, exibe um placeholder ou ícone padrão -->
     @endif
     <h5 class="my-3">{{ $clientes->nome }}</h5>
     
@@ -331,19 +331,7 @@
 
 
                     <td>
-                      @if ($pedido->status == 'nao_finalizado')
-                      Não Finalizado
-                      @elseif ($pedido->status == 'pendente')
-                      Pendente
-                      @elseif ($pedido->status == 'aceito')
-                      Aceito
-                      @elseif ($pedido->status == 'recusado')
-                      Recusado
-                      @elseif ($pedido->status == 'cancelado')
-                      Cancelado
-                      @else
-                      Desconhecido
-                      @endif
+                    {{$pedido->getStatus()  }}
                     </td>
                     <td>{{ $pedido->dataEntrega }}</td>
 
