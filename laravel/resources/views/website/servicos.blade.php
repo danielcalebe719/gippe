@@ -47,12 +47,12 @@
                 <a href="{{ url('/website') }}"><img src="assets/img/logo.png" alt="" style="max-width: 50%;"><span></span></a>
                 <nav id="navbar" class="navbar">
                     <ul>
-                        <li><a class="nav-link scrollto active" href="{{ url('/website') }}">Home</a></li>
-                        <li><a class="nav-link scrollto" href="#cardapio">Cardápio</a></li>
-                        <li><a class="nav-link scrollto" href="#about">Sobre nós</a></li>
-                        <li><a class="nav-link scrollto" href="#portfolio">Galeria de fotos</a></li>
-                        <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
-                        <li><a class="nav-link scrollto" href="#contact">Fale Conosco</a></li>
+                        <li><a class="nav-link scrollto" href="{{ url('/website') }}">Home</a></li>
+                        <li><a class="nav-link scrollto" href="{{ url('/website') }}#cardapio">Cardápio</a></li>
+                        <li><a class="nav-link scrollto" href="{{ url('/website') }}#about">Sobre nós</a></li>
+                        <li><a class="nav-link scrollto" href="{{ url('/website') }}#portfolio">Galeria de fotos</a></li>
+                        <li><a class="nav-link scrollto" href="{{ url('/website') }}#faq">FAQ</a></li>
+                        <li><a class="nav-link scrollto" href="{{ url('/website') }}#contact">Fale Conosco</a></li>
 
                         @guest('cliente')
                         <!-- Mostrar se não estiver logado -->

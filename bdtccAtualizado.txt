@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 11-Jul-2024 às 21:53
+-- Tempo de geração: 15-Jul-2024 às 18:38
 -- Versão do servidor: 10.4.24-MariaDB
 -- versão do PHP: 8.1.5
 
@@ -36,7 +36,7 @@ CREATE TABLE `admins` (
 INSERT INTO `admins` (`id`, `email`, `password`, `nome`, `last_login`) VALUES
 (1, 'super@super', NULL, 'super@super', NULL),
 (2, 'user@user', NULL, 'user@user', NULL),
-(3, 'se@se', '$2y$12$7V/iAPBTrEhDkjPrXY0mbOK5Iti7rEPiwLiXmPvbmpGv6ihP5MXqa', 'ss', '2024-07-11');
+(3, 'se@se', '$2y$12$7V/iAPBTrEhDkjPrXY0mbOK5Iti7rEPiwLiXmPvbmpGv6ihP5MXqa', 'ss', '2024-07-15');
 
 -- --------------------------------------------------------
 
