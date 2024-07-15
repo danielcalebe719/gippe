@@ -22,8 +22,8 @@ class PedidoController extends Controller
 
     public function index()
 {
-    $pedidosPendentes = Pedidos::where('status', '2')->get();
-    $outrosPedidos = Pedidos::where('status', '!=', '2')->get();
+    $pedidosPendentes = Pedidos::where('status', '7')->get();
+    $outrosPedidos = Pedidos::where('status', '!=', '7')->get();
     
     return view('adm.pedidos', compact('pedidosPendentes', 'outrosPedidos'));
 }
@@ -98,7 +98,18 @@ class PedidoController extends Controller
         }
     }
 
-    
+    public function aceitar($idPedidos){
+        try{
+            $pedido = Pedidos::findOrFail($idPedidos);
+            $pedido->status = 2;
+            $pedido->save();
+            return response()->json(['message' => 'Pedido aceito com sucesso']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao aceitar o pedido: ' . $e->getMessage()], 500);
+        }
+       
+    }
+
     public function remover($idPedidos)
     {
         try {

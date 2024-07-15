@@ -47,7 +47,8 @@ class Pedidos extends Model
         '3'=>'Aceito',
         '4'=>'Recusado',
         '5'=>'Cancelado',
-        '6'=>'Entregue'
+        '6'=>'Entregue',
+        '7'=>'Em Análise'
     ];
     public static function getStatusArray(){
         return self::$statusArray;
@@ -91,7 +92,7 @@ class Pedidos extends Model
 
     public function feedback()
     {
-        return $this->hasOne(Feedbacks::class,'idPedidos','id');
+        return $this->hasOne(Feedbacks::class,'idPedidos');
     }
 
     public function notificacoesClientes()
