@@ -563,12 +563,25 @@
                 </div>
 
                 <div id="detalhesProdutos">
-                    <div class="form-group row">
+                <div class="table-responsive p-3">
+                        <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                            <thead class="thead-light">
+                                <th>Nome</th>
+                                <th>Quantidade</th>
+                                <th>Subtotal</th>
+                                
+                            </thead>
+                            <tbody id="tbodyDetalhesProdutos">
+
+                            </tbody>
+                        </table>
+                </div>
+                    <!-- <div class="form-group row">
                         <label for="DetalhesObservacao" class="col-sm-3 col-form-label">Observação:</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="DetalhesObservacao" value="" readonly>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- produtos.nome
                     pedidos_produtos.quantidade
                     pedidos_produtos.subtotal -->
@@ -690,51 +703,25 @@
                 });
             }
 
+            $('#tbodyDetalhesProdutos').empty();
+
             // Preencher campos de serviços se existirem
             if (data.pedidos_produtos && data.pedidos_produtos.length > 0) {
                 data.pedidos_produtos.forEach(pedidos_produto => {
                     const produto = pedidos_produto.produto;
 
-                    $(response).each(function (i) {
-                $('#tbodyEndereco').append(
+                    
+                $('#tbodyDetalhesProdutos').append(
                     "<tr>" +
-                    "<td>" + response[i].id + "</td>" +
-                    "<td>" + response[i].tipo + "</td>" +
-                    "<td>" + response[i].cep + "</td>" +
-                    "<td>" + response[i].cidade + "</td>" +
-                    "<td>" + response[i].bairro + "</td>" +
-                    "<td>" + response[i].rua + "</td>" +
-                    "<td>" + response[i].numero + "</td>" +
-                    "<td>" + response[i].complemento + "</td>" +
-                    "<td>" +
-                    "<div class='btn-toolbar' role='toolbar' aria-label='Toolbar with button groups'>" +
-                    "<div class='btn-group mr-2' role='group' aria-label='Ações do Cliente'>" +
-                    "<button class='btn btn-primary btn-sm' onclick='carregarDadosParaEdicaoEndereco(" + response[i].id + ")' data-toggle='modal'>Editar</button>" +
-                    "</div>" +
-                    "<div class='btn-group mr-2' role='group' aria-label='Ações do Cliente'>" +
-                    "<button type='button' class='btn btn-danger btn-sm' onclick='abrirModalExclusaoEndereco(" + response[i].id + ")'>Excluir</button>" +
-                    "</div>" +
-                    "</div>" +
-                    "</td>" +
+                    "<td>" + produto.nome + "</td>" +
+                    "<td>" + pedidos_produto.quantidade + "</td>" +
+                    "<td>" + pedidos_produto.subtotal + "</td>" +
+                    
                     "</tr>"
                 );
-            });
+           
 
-                    // Preencher campos comuns de serviço
-                    document.getElementById('DetalhesIdServicos').value = servico.id || '';
-                    document.getElementById('DetalhesNome').value = servico.nome || '';
-                    document.getElementById('DetalhesTotalServico').value = servico.totalServicos || '';
-                    document.getElementById('DetalhesDuracao').value = servico.duracaoHoras || '';
-                    document.getElementById('DetalhesQuantidadePessoas').value = servico.quantidadePessoas || '';
-
-                    // Preencher campos específicos de tipos de funcionários
-                    if (pedidos_servico.funcionarioTipo === "Garcom") {
-                        document.getElementById('DetalhesGarcons').value = pedidos_servico.quantidade || '';
-                    } else if (pedidos_servico.funcionarioTipo === "Cozinheiro") {
-                        document.getElementById('DetalhesCozinheiros').value = pedidos_servico.quantidade || '';
-                    } else if (pedidos_servico.funcionarioTipo === "Barman") {
-                        document.getElementById('DetalhesBarmans').value = pedidos_servico.quantidade || '';
-                    }
+                   
                 });
             }
 
