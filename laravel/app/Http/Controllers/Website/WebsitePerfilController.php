@@ -120,28 +120,30 @@ public function salvar_endereco_cliente(Request $request){
 public function salvar_imagem_perfil(Request $request)
 {
     $request->validate([
-        'imagem' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Verifica se é uma imagem válida
-        'idClientes' => 'required|integer', // Verifica se o ID do cliente é fornecido
+        'imagem' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'idClientes' => 'required|integer',
     ]);
 
     if ($request->hasFile('imagem')) {
         $imagem = $request->file('imagem');
-        $nomeImagem = time() . '_' . $imagem->getClientOriginalName(); // Gera um nome único para a imagem
+        $nomeImagem = time() . '_' . $imagem->getClientOriginalName();
 
-        // Move a imagem para o diretório de armazenamento público
-        $caminhoImagem = $imagem->storeAs('public/ImagensClientes', $nomeImagem);
-
-        // Salva o caminho da imagem no banco de dados para o cliente específico
-        $cliente = Clientes::find($request->idClientes);
-        if ($cliente) {
-            $cliente->imgCaminho = $nomeImagem;
+        try {
+            // Move a imagem para o diretório de armazenamento público
+            $caminhoImagem = $imagem->storeAs('public/ImagensClientes', $nomeImagem);
+            
+            // Salva o caminho da imagem no banco de dados para o cliente específico
+            $cliente = Clientes::findOrFail($request->idClientes);
+            $cliente->caminhoImagem = $nomeImagem; // Changed to match the view
             $cliente->save();
 
             return redirect()->back()->with('success', 'Imagem de perfil atualizada com sucesso.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Falha ao fazer upload da imagem de perfil: ' . $e->getMessage());
         }
     }   
-
-    return redirect()->back()->with('error', 'Falha ao fazer upload da imagem de perfil.');
+    
+    return redirect()->back()->with('error', 'Nenhuma imagem foi enviada.');
 }
 
 

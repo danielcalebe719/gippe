@@ -15,6 +15,10 @@ class PedidosDetalhesController extends Controller
 {
     public function index($codigo)
     {
+
+        $statuses = Pedidos::getStatusArray();
+        unset($statuses[null]); // Remove the empty status
+
         // Obtendo informações do pedido
         $pedido = Pedidos::where('codigo', $codigo)->firstOrFail();
         
@@ -43,7 +47,7 @@ class PedidosDetalhesController extends Controller
 
        
         // Renderizando a visualização com os dados obtidos
-        return view('website.pedidosDetalhes', compact('cliente','pedido', 'produtos', 'servicos', 'pedidos_servicos', 'agendamento', 'endereco', 'subtotal_produtos'));
+        return view('website.pedidosDetalhes', compact('cliente','pedido', 'produtos', 'servicos', 'pedidos_servicos', 'agendamento', 'endereco', 'subtotal_produtos', 'statuses'));
     }
     
 

@@ -64,34 +64,7 @@
           <div class="d-flex justify-content-between align-items-center mb-3">
           <span>Status: 
             <span class="badge bg-success status-badge">
-              @switch($pedido->status)
-                @case('nao_finalizado')
-                  Não Finalizado
-                  @break
-                @case('pendente')
-                  Pendente
-                  @break
-                @case('aceito')
-                  Aceito
-                  @break
-                @case('em_producao')
-                  Em Produção
-                  @break
-                @case('produzido')
-                  Produzido
-                  @break
-                @case('entregue')
-                  Entregue
-                  @break
-                @case('recusado')
-                  Recusado
-                  @break
-                @case('cancelado')
-                  Cancelado
-                  @break
-                @default
-                  {{ $pedido->status }}
-              @endswitch
+            {{$pedido->getStatus()  }}
             </span>
             
            
@@ -103,7 +76,7 @@
  
 @endif
  
-@if ($pedido->status == 'nao_finalizado' || $pedido->status == 'pendente')
+@if ($pedido->status == '1' || $pedido->status == '2')
     <a href="{{ route('website.agendamento', $pedido->codigo) }}" class="btn btn-warning">Editar Agendamento</a>
   @endif
         </div>
@@ -193,7 +166,7 @@
             @if ($servicos)
             <p><strong>Número de Convidados:</strong> {{ $servicos->quantidadePessoas }}</p>
             @endif
-            @if ($pedido->status == 'nao_finalizado' || $pedido->status == 'pendente')
+            @if ($pedido->status == '1' || $pedido->status == '2')
             <a href="{{ url('website/servicos/' . $pedido->codigo) }}" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a> 
             @endif 
           </div>
@@ -227,35 +200,32 @@
         </div>
       </div>
 
-      <!-- Card for Order Status -->
-      <div class="card order-card">
+  <!-- Card for Order Status -->
+<!-- Card for Order Status -->
+<!-- Card for Order Status -->
+<div class="card order-card">
   <div class="card-body">
     <h5 class="card-title">Status do Pedido</h5>
     <div class="timeline">  
       @php
-        $statuses = [
-          'nao_finalizado' => 'Não Finalizado',
-          'pendente' => 'Pendente',
-          'aceito' => 'Aceito',
-          'em_producao' => 'Em Produção', 
-          'produzido' => 'Produzido',
-          'entregue' => 'Entregue'
-        ];
+        $currentStatus = $statuses[$pedido->status] ?? 'Status desconhecido';
       @endphp
 
-      @if($pedido->status == 'recusado' || $pedido->status == 'cancelado')
+      @if(in_array($pedido->status, ['7', '8'])) {{-- Recusado ou Cancelado --}}
         <div class="timeline-item">
-          <p class="mb-0"><strong class="text-danger">{{ ucfirst(str_replace('_', ' ', $pedido->status)) }}</strong></p>
+          <p class="mb-0"><strong class="text-danger">{{ $currentStatus }}</strong></p>
         </div>
       @else
         @foreach($statuses as $status_key => $status_value)
-          <div class="timeline-item">
-            @if($pedido->status == $status_key)
-              <p class="mb-0"><strong class="text-primary">{{ $status_value }}</strong></p>
-            @else
-              <p class="mb-0">{{ $status_value }}</p>
-            @endif
-          </div>
+          @if($status_key != '7' && $status_key != '8') {{-- Não mostrar Recusado e Cancelado na lista --}}
+            <div class="timeline-item">
+              @if($pedido->status == $status_key)
+                <p class="mb-0"><strong class="text-primary">{{ $status_value }}</strong></p>
+              @else
+                <p class="mb-0">{{ $status_value }}</p>
+              @endif
+            </div>
+          @endif
         @endforeach
       @endif
     </div>

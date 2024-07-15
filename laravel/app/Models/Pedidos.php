@@ -42,12 +42,14 @@ class Pedidos extends Model
 
     private static $statusArray = [
         null => '',
-        '1'=>'Nao finalizado',
-        '2'=>'Pendente',
-        '3'=>'Aceito',
-        '4'=>'Recusado',
-        '5'=>'Cancelado',
-        '6'=>'Entregue'
+        '1' => 'Não finalizado',
+        '2' => 'Pendente',
+        '3' => 'Aceito',
+        '4' => 'Em produção',
+        '5' => 'Produzido',
+        '6' => 'Entregue',
+        '7' => 'Recusado',
+        '8' => 'Cancelado'
     ];
     public static function getStatusArray(){
         return self::$statusArray;
