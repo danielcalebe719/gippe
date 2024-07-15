@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 15-Jul-2024 às 21:34
+-- Tempo de geração: 15-Jul-2024 às 21:42
 -- Versão do servidor: 10.4.24-MariaDB
 -- versão do PHP: 8.1.5
 
@@ -554,7 +554,7 @@ INSERT INTO `pedidos` (`id`, `idClientes`, `observacao`, `status`, `totalPedido`
 (10, 52, NULL, 6, NULL, NULL, NULL, 2, '', NULL),
 (11, 52, NULL, 4, NULL, NULL, NULL, 2, '', NULL),
 (12, 52, NULL, 3, NULL, '2024-07-05', NULL, 2, '', NULL),
-(13, 52, 'asdas', 7, '123.00', '2024-07-05', '2024-07-13', 2, '', '2024-07-06'),
+(13, 52, 'asdas', 2, '123.00', '2024-07-05', '2024-07-13', 2, '', '2024-07-06'),
 (14, 52, NULL, 1, NULL, '2024-07-05', NULL, 42, '', NULL),
 (15, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, '', NULL),
 (16, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, '', NULL),
@@ -598,9 +598,9 @@ INSERT INTO `pedidos` (`id`, `idClientes`, `observacao`, `status`, `totalPedido`
 (59, 52, NULL, 1, NULL, '2024-07-05', NULL, 45, 'PEHjdIBE47', NULL),
 (60, 52, NULL, 1, '900.00', '2024-07-05', NULL, 47, 'PEDnPFrH27', NULL),
 (61, 52, 'Ola tudo bem? gostaria de atarasda', 1, '495.00', '2024-07-05', NULL, 48, 'PEQPv7iN68', NULL),
-(62, 52, 'Poise', 7, '1354.00', '2024-07-05', '2024-07-05', 2, 'PEPcfEth80', NULL),
-(63, 1, 'nadinha', 7, '123.00', '2024-07-06', '2024-07-13', 1, NULL, '2024-07-06'),
-(64, 1, 'sadsadsadsa', 7, '200.00', '2024-07-06', '2024-07-13', 1, NULL, '2024-07-06');
+(62, 52, 'Poise', 2, '1354.00', '2024-07-05', '2024-07-05', 2, 'PEPcfEth80', NULL),
+(63, 1, 'nadinha', 2, '123.00', '2024-07-06', '2024-07-13', 1, NULL, '2024-07-06'),
+(64, 1, 'sadsadsadsa', 2, '200.00', '2024-07-06', '2024-07-13', 1, NULL, '2024-07-06');
 
 -- --------------------------------------------------------
 
