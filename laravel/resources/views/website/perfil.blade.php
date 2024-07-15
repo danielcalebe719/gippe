@@ -326,7 +326,10 @@
                   @foreach ($pedidos as $pedido)
                   <tr>
               
-                    <td><a href="">{{ $pedido->codigo }}</a> </td>
+                  <td><a href="pedidos/pedidosDetalhes/{{$pedido->codigo}}"> {{ $pedido->codigo }}</a></td>
+
+
+
                     <td>
                       @if ($pedido->status == 'nao_finalizado')
                       Não Finalizado

@@ -1592,7 +1592,7 @@ ALTER TABLE `receitas_itens`
   ADD CONSTRAINT `receitas_itens_ibfk_2` FOREIGN KEY (`idMateriasPrimas`) REFERENCES `materias_primas_estoque` (`id`);
 COMMIT;
 
-
+  
 
 
 

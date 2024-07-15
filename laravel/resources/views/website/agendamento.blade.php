@@ -1,78 +1,146 @@
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
-    
-
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendamento de Pedido</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <!-- CSS Bootstrap -->
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Bootstrap JS Bundle -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    
+    <!-- Flatpickr Portuguese Localization -->
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
 
-<!-- Flatpickr CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-<!-- Flatpickr JS -->
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-<!-- Flatpickr Portuguese Localization -->
-<script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
-
-<!-- Arquivo de estilos personalizados -->
-<link rel="stylesheet" href="{{ asset('assets/css/styles_agendamento.css') }}">
-
-<!-- Google Fonts - Poppins -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
-<!-- Outro arquivo de estilos personalizados -->
-<link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
-
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background: url('') no-repeat center center fixed;
+            background-size: cover;
+            backdrop-filter: blur(5px);                 display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;  
+        }
+        .container {
+            margin-top: 50px;
+            border-radius: 15px ;
+        }
+        .btn-custom {
+            background-color: #FF944E;
+            border: none;
+        }
+        .btn-confirm {
+            background-color: #fa856e;
+            border: none;
+        }
+        .card-custom {
+            border: none;
+            box-shadow: 0 8px 16px #FA856E;
+            border-radius: 15px ;
+        }
+        .card-title {
+            color: #FF944E;
+        }
+        .form-label {
+            color: #343a40;
+            font-weight: 600;
+        }
+        .form-control {
+            border-radius: 10px;
+        }
+        .modal-header {
+            background-color: #FF944E;
+            color: white;
+        }
+        .modal-footer {
+            border-top: none;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Agendamento de Pedido</h1>
-        <form id="agendamentoForm" method="POST" action="{{route('website.agendamento.salvar')}}">
-            @csrf
-            <input type="hidden" name="codigo" value="{{ $codigo }}">
-            <div class="calendar mb-3">
-                <label for="dataInicio">Selecione a data de início do evento:</label>
-                <input type="text" id="dataInicio" name="dataInicio" class="form-control" required>
+
+<div class="container">
+
+
+        <div class="row justify-content-center">
+            
+            <div class="col-md-8">
+                <div class="card card-custom mb-4">
+                    <div class="card-body">
+                  
+                        <h1 class="card-title mb-4">Agende sua Festa</h1>
+                        @if(!$criacao)
+                        <div class="alert alert-info">
+                            Você está editando um pedido existente. Faça as alterações abaixo.
+                        </div>
+                    @endif  
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        <form id="agendamentoForm" method="POST" action="{{ route('website.agendamento.salvar') }}">
+                            @csrf
+                            <input type="hidden" name="codigo" value="{{ $codigo }}">
+                            
+                            <div class="mb-3">
+                                <label for="dataInicio" class="form-label">Data de Início do Evento:</label>
+                                <input type="text" id="dataInicio" name="dataInicio" class="form-control" value="{{ $agendamento->dataInicio ?? '' }}" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="dataFim" class="form-label">Data de Fim do Evento:</label>
+                                <input type="text" id="dataFim" name="dataFim" class="form-control" value="{{ $agendamento->dataFim ?? '' }}" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="horaInicio" class="form-label">Horário de Início:</label>
+                                <input type="time" id="horaInicio" name="horaInicio" class="form-control" value="{{ $agendamento->horaInicio ?? '' }}" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="horaFim" class="form-label">Horário de Fim:</label>
+                                <input type="time" id="horaFim" name="horaFim" class="form-control" value="{{ $agendamento->horaFim ?? '' }}" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="observacao" class="form-label">Observação:</label>
+                                <textarea class="form-control" id="observacao" name="observacao" rows="4" placeholder="Observação sobre o pedido...">{{ $agendamento->observacao ?? '' }}</textarea>
+                            </div>
+                            
+                            <button type="button" class="btn btn-custom w-100" data-bs-toggle="modal" data-bs-target="#confirmationModal">Agendar</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="calendar mb-3">
-                <label for="dataFim">Selecione a data de fim do evento:</label>
-                <input type="text" id="dataFim" name="dataFim" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label for="horaInicio">Selecione o horário de início do evento:</label>
-                <input type="time" id="horaInicio" name="horaInicio" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label for="horaFim">Selecione o horário de fim do evento:</label>
-                <input type="time" id="horaFim" name="horaFim" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label for="observacao">Observação:</label>
-                <textarea class="form-control" id="observacao" name="observacao" rows="4" placeholder="Observação sobre qualquer coisa do pedido..."></textarea>
-            </div>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background-color: #FF944E; border: none;">Agendar</button>
-        </form>
+        </div>
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Confirmação de Agendamento</h5>
+                    <h5 class="modal-title" id="confirmationModalLabel">Confirmação de Agendamento</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -80,7 +148,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="confirmButton" style="background-color: #fa856e; border: #fa856e;">Confirmar</button>
+                    <button type="button" class="btn btn-confirm" id="confirmButton">Confirmar</button>
                 </div>
             </div>
         </div>
@@ -102,5 +170,4 @@
         });
     </script>
 </body>
-
 </html>

@@ -11,29 +11,52 @@ use App\Models\PedidosServicos;
 
 class WebsiteProdutoController extends Controller
 {
+     
     public function index(Request $request, $codigo)
     {
+        // Busca o pedido pelo código
         $pedido = Pedidos::where('codigo', $codigo)->first();
-        if ($pedido) {
-            $idPedido = $pedido->id;
-            $idServico = $pedido->idServicos;
-            $servico = Servicos::where('id', $idServico)->first();
-            $pedidos_servicos = PedidosServicos::where('idServicos', $idServico)->get();
     
-            // Calcule o subtotal aqui
-       
-    
-            $produto = Produtos::all(); // Recupera todos os produtos do banco de dados
-    
-            return view('website.produtos', [
-                'produtos' => $produto,
-                'codigo' => $codigo,
-                'pedido' => $pedido,
-                'servico' => $servico,
-                'pedidos_servicos' => $pedidos_servicos,
-              
-            ]);
+        if (!$pedido) {
+            // Lida com o caso em que o pedido não é encontrado
+            return redirect()->route('alguma.rota')->with('error', 'Pedido não encontrado.');
         }
+    
+        // Recupera os produtos selecionados para o pedido
+        $produtosSelecionados = PedidosProdutos::where('idPedidos', $pedido->id)
+        ->join('produtos', 'pedidos_produtos.idProdutos', '=', 'produtos.id')
+        ->select('produtos.id as produto_id', 'produtos.nome', 'produtos.descricao', 'produtos.precoUnitario', 'produtos.caminhoImagem', 'pedidos_produtos.quantidade')
+        ->get();
+    
+        
+    
+        
+        $idPedido = $pedido->id;
+        $idServico = $pedido->idServicos;
+    
+        // Busca o serviço relacionado ao pedido
+        $servico = Servicos::where('id', $idServico)->first();
+        
+        // Recupera os serviços associados ao pedido
+        $pedidos_servicos = PedidosServicos::where('idServicos', $idServico)->get();
+    
+        // Calcula o subtotal dos produtos selecionados
+        $subtotal = $produtosSelecionados->sum(function ($prod) {
+            return $prod->precoUnitario * $prod->quantidade;
+        });
+    
+        // Recupera todos os produtos do banco de dados
+        $produto = Produtos::all();
+    
+        return view('website.produtos', [
+            'produtos' => $produto,
+            'codigo' => $codigo,
+            'pedido' => $pedido,
+            'servico' => $servico,
+            'pedidos_servicos' => $pedidos_servicos,
+            'produtosSelecionados' => $produtosSelecionados,
+            'subtotal' => $subtotal,
+        ]);
     }
     
     
@@ -56,6 +79,7 @@ class WebsiteProdutoController extends Controller
     
             // Encontre o pedido com base no código
             $pedido = Pedidos::where('codigo', $codigo)->first();
+        
     
             if (!$pedido) {
                 return response()->json(['error' => 'Pedido não encontrado'], 404);

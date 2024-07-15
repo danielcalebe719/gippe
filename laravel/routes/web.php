@@ -291,11 +291,17 @@ Route::prefix('website')->group(function () {
     ->middleware('auth:cliente')
     ->name('website.salvar.imagem.perfil');
     
+    Route::get('/pedidos/pedidosDetalhes/{codigo}', [PedidosDetalhesController::class, 'index'])
+    ->middleware('auth:cliente')
+    ->name('pedidosDetalhes.index');
+
    
 
     Route::get('/agendamento/{codigo}', [WebsiteAgendamentoController::class, 'index'])
     ->middleware('auth:cliente')
     ->name('website.agendamento');
+
+
 
     Route::post('/agendamento', [WebsiteAgendamentoController::class, 'salvar'])
     ->middleware('auth:cliente')
@@ -307,11 +313,16 @@ Route::prefix('website')->group(function () {
         ->middleware('auth:cliente')
         ->name('website.servicos');
 
+        Route::get('/servicos/{codigo?}', [WebsiteServicoController::class, 'index'])
+        ->middleware('auth:cliente')
+        ->name('editar.servico');
+
         
         Route::post('/servicos/processar-servico', [WebsiteServicoController::class, 'salvar_personalizado'])->name('processar.servico.personalizado');
         Route::post('/servicos/processar-servico/padrao', [WebsiteServicoController::class, 'salvar_padrao'])->name('processar.servico.padrao');
     
         
+
 
         Route::get('/produtos/{codigo}', [WebsiteProdutoController::class, 'index'])
         ->middleware('auth:cliente')
@@ -321,6 +332,8 @@ Route::prefix('website')->group(function () {
             Route::post('/adicionar-ao-pedido' , [WebsiteProdutoController::class, 'adicionarAoPedido'])
             ->middleware('auth:cliente')
             ->name('pedido.adicionar');
+
+      
 
 // Em routes/web.php
 
@@ -334,8 +347,6 @@ Route::get('/carregar-mais-produtos' , [WebsiteProdutoController::class, 'carreg
 
 // Rota de logout
 Route::get('website/logout', [LoginClienteController::class, 'deslogar'])->name('logout');
-
-Route::get('pedidos/pedidosDetalhes', [PedidosDetalhesController::class, 'index'])->name('pedidosDetalhes.index');
 
 
 
