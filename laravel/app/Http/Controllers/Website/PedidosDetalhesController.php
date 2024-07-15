@@ -42,13 +42,58 @@ class PedidosDetalhesController extends Controller
         $agendamento = Agendamentos::where('idPedidos', $pedido->id)->first();
         
         // Obtendo endereço do cliente
-        $endereco = EnderecosClientes::where('idClientes', $pedido->idClientes)->first()    ;
+        $endereco = EnderecosClientes::where('id', $pedido->idEnderecos)->first()    ;
 
 
        
         // Renderizando a visualização com os dados obtidos
         return view('website.pedidosDetalhes', compact('cliente','pedido', 'produtos', 'servicos', 'pedidos_servicos', 'agendamento', 'endereco', 'subtotal_produtos', 'statuses'));
     }
+
+
+
+
+    public function atualizar_endereco(Request $request)
+    {
+    $id = $request->idEnderecos;
+        // Validação dos dados
+        $request->validate([
+            'rua' => 'required|string|max:255',
+            'numero' => 'required|string|max:50',
+            'bairro' => 'required|string|max:100',
+            'cidade' => 'required|string|max:100',
+            'cep' => 'required|string|max:20',
+        ]);
+
+        // Encontrar o endereço pelo ID
+        $endereco = EnderecosClientes::findOrFail($id);
+
+        // Atualizar os dados do endereço
+        $endereco->update($request->all());
+
+        // Redirecionar com uma mensagem de sucesso
+        return redirect()->back()->with('success', 'Endereço atualizado com sucesso!');
+    }
     
 
+    public function atualizar_cliente(Request $request)
+    {
+        $id = $request->idClientes;
+        // Validação dos dados
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'telefone' => 'required|string|max:20',
+            'dataNascimento' => 'required|date',
+        ]);
+
+        // Encontrar o cliente pelo ID
+        $cliente = Clientes::findOrFail($id);
+
+        // Atualizar os dados do cliente
+        $cliente->update($request->all());
+
+        // Redirecionar com uma mensagem de sucesso
+        return redirect()->back()->with('success', 'Informações do cliente atualizadas com sucesso!');
+    }
 }

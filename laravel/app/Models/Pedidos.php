@@ -64,9 +64,9 @@ class Pedidos extends Model
     {
         return $this->hasMany(PedidosProdutos::class, 'idPedidos');
     }
-    public function pedidosServicos()
+    public function pedidos_servicos()
     {
-        return $this->hasMany(PedidosServicos::class, 'idPedidos');
+        return $this->hasMany(PedidosServicos::class, 'idPedidos', 'id'); // ajuste os nomes conforme sua estrutura
     }
 
     // Relacionamento com Produtos através de PedidosProdutos

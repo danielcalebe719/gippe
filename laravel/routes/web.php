@@ -295,6 +295,9 @@ Route::prefix('website')->group(function () {
     ->middleware('auth:cliente')
     ->name('pedidosDetalhes.index');
 
+    Route::post('/atualizar/endereco', [PedidosDetalhesController::class, 'atualizar_endereco'])->name('endereco.atualizar');
+    Route::post('/atualizar/cliente', [PedidosDetalhesController::class, 'atualizar_cliente'])->name('cliente.atualizar');
+
    
 
     Route::get('/agendamento/{codigo}', [WebsiteAgendamentoController::class, 'index'])
