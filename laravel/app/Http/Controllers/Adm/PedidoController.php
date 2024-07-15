@@ -31,11 +31,10 @@ class PedidoController extends Controller
     public function show($idPedidos)
     {
         $pedido = Pedidos::with([
-            'pedidosServicos'
+            'pedidosProdutos.produto',
+            'pedidosServicos.servico'
         ])->find($idPedidos);
-       // dd($pedido->pedidosServicos);
     
-       //dd(response()->json($pedido));
         if ($pedido) {
             return response()->json($pedido);
         } else {
