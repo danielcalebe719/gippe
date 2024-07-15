@@ -22,8 +22,8 @@ class PedidoController extends Controller
 
     public function index()
 {
-    $pedidosPendentes = Pedidos::where('status', '7')->get();
-    $outrosPedidos = Pedidos::where('status', '!=', '7')->get();
+    $pedidosPendentes = Pedidos::where('status', '2')->get();
+    $outrosPedidos = Pedidos::where('status', '!=', '2')->get();
     
     return view('adm.pedidos', compact('pedidosPendentes', 'outrosPedidos'));
 }
