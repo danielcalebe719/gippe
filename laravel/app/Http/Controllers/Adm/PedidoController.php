@@ -101,7 +101,7 @@ class PedidoController extends Controller
     public function aceitar($idPedidos){
         try{
             $pedido = Pedidos::findOrFail($idPedidos);
-            $pedido->status = 2;
+            $pedido->status = 3;
             $pedido->save();
             return response()->json(['message' => 'Pedido aceito com sucesso']);
         } catch (\Exception $e) {
