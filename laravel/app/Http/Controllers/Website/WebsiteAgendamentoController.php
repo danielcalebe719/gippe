@@ -86,7 +86,7 @@ class WebsiteAgendamentoController extends Controller
             ->update([
                 'observacao' => $request->observacao,
                 'dataEntrega' => $agendamento->dataInicio,
-                'status' => 'pendente',
+                'status' => '2',
             ]);
     
         // Salva o agendamento

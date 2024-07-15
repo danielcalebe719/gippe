@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Pedidos;
 
 class Feedbacks extends Model
 {
@@ -14,13 +15,16 @@ class Feedbacks extends Model
     protected $fillable = [   
         'mensagem', 
         'avaliacao', 
-        'dataMensagem'.
+        'dataMensagem',
         'idPedidos'
         // Adicione outros campos aqui
     ];
     public $timestamps = false;
 
-
+    public function produto()
+    {
+        return $this->belongsTo(Pedidos::class, 'idPedidos');
+    }
     
 
 

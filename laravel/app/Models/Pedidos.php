@@ -42,12 +42,14 @@ class Pedidos extends Model
 
     private static $statusArray = [
         null => '',
-        '1'=>'Nao finalizado',
-        '2'=>'Pendente',
-        '3'=>'Aceito',
-        '4'=>'Recusado',
-        '5'=>'Cancelado',
-        '6'=>'Entregue'
+        '1' => 'Não finalizado',
+        '2' => 'Em Análise',
+        '3' => 'Aceito',
+        '4' => 'Em produção',
+        '5' => 'Produzido',
+        '6' => 'Entregue',
+        '7' => 'Recusado',
+        '8' => 'Cancelado'
     ];
     public static function getStatusArray(){
         return self::$statusArray;
@@ -62,9 +64,9 @@ class Pedidos extends Model
     {
         return $this->hasMany(PedidosProdutos::class, 'idPedidos');
     }
-    public function pedidosServicos()
+    public function pedidos_servicos()
     {
-        return $this->hasMany(PedidosServicos::class, 'idPedidos');
+        return $this->hasMany(PedidosServicos::class, 'idPedidos', 'id'); // ajuste os nomes conforme sua estrutura
     }
 
     // Relacionamento com Produtos através de PedidosProdutos
@@ -91,7 +93,7 @@ class Pedidos extends Model
 
     public function feedback()
     {
-        return $this->hasOne(Feedbacks::class,'idPedidos','id');
+        return $this->hasOne(Feedbacks::class,'idPedidos');
     }
 
     public function notificacoesClientes()

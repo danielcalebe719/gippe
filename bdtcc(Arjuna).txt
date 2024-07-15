@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 15-Jul-2024 às 18:38
+-- Tempo de geração: 15-Jul-2024 às 21:42
 -- Versão do servidor: 10.4.24-MariaDB
 -- versão do PHP: 8.1.5
 
@@ -196,6 +196,14 @@ CREATE TABLE `feedbacks` (
   `dataMensagem` date DEFAULT NULL,
   `idPedidos` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `feedbacks`
+--
+
+INSERT INTO `feedbacks` (`id`, `mensagem`, `avaliacao`, `dataMensagem`, `idPedidos`) VALUES
+(1, 'Muito bom!', '5', '2024-07-15', 13),
+(2, 'Muito ruim!', '2', '2024-07-15', 62);
 
 -- --------------------------------------------------------
 
@@ -1325,7 +1333,7 @@ ALTER TABLE `esqueci_senha`
 -- AUTO_INCREMENT de tabela `feedbacks`
 --
 ALTER TABLE `feedbacks`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `formas_pagamento`

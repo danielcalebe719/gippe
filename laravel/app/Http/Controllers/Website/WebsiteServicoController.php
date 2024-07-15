@@ -13,8 +13,9 @@ use Illuminate\Support\Str;
 
 class WebsiteServicoController extends Controller
 {
-    public function index(Request $request, $codigo = null)
+    public function index(Request $request, $codigo = null,)
     {
+
         $pedidos = null;
     
         if ($codigo) {
@@ -41,7 +42,8 @@ class WebsiteServicoController extends Controller
                 $pedido = new Pedidos();
                 $pedido->idServicos = $request->idServicos;
                 $pedido->idClientes = $request->idClientes;
-                $pedido->status = 'nao_finalizado';
+                $pedido->idEnderecos = $request->idEnderecos;
+                $pedido->status = 1;
                 $criacao = true;
                 do {
                     $codigo = 'PE' . Str::random(6) . mt_rand(10, 99);
@@ -54,7 +56,8 @@ class WebsiteServicoController extends Controller
                 // Se o pedido existir, atualize os campos necessários
                 $pedido->idServicos = $request->idServicos;
                 $pedido->idClientes = $request->idClientes;
-                $pedido->status = 'pendente';
+                $pedido->idEnderecos = $request->idEnderecos;
+                $pedido->status = 2;
                 $pedido->dataPedido = now();
                 $criacao = false;
             }
@@ -99,7 +102,7 @@ class WebsiteServicoController extends Controller
                 $servico->nomeServico = 'Personalizado'; 
                 $servico->dataCadastro = now(); 
                 $servico->dataRemocao = null; 
-                $servico->imgCaminho = null; 
+                $servico->caminhoImagem = null; 
                 $servico->duracaoHoras = $request->duracaoHoras;
                 $servico->quantidadePessoas = $request->quantidadePessoas;
                 $servico->save();
@@ -112,7 +115,7 @@ class WebsiteServicoController extends Controller
                     $pedido = new Pedidos();
                     $pedido->idServicos = $servico->id;
                     $pedido->idClientes = $request->idClientes;
-                    $pedido->status = 'nao_finalizado';
+                    $pedido->status = 1;
                     $criacao = true;
                     do {
                         $codigo = 'PE' . Str::random(6) . mt_rand(10, 99);
@@ -124,7 +127,7 @@ class WebsiteServicoController extends Controller
                     // Atualiza o pedido existente
                     $pedido->idClientes = $request->idClientes;
                     $pedido->idServicos = $servico->id; // Atualiza o serviço associado
-                    $pedido->status = 'pendente';
+                    $pedido->status = 2;
                     $pedido->dataPedido = now();
                     $criacao = false;   
                 }

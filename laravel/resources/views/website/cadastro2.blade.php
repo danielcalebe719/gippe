@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 
     <style>
-        /* Adicione os estilos fornecidos aqui */
         .alert {
             padding: 0.75rem 1.25rem;
             margin-bottom: 1rem;
@@ -24,22 +23,22 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #fff5e6; /* Cor de fundo do corpo */
+            background-color: #fff5e6;
         }
 
         .bg-blur {
-            position: fixed; /* Posição fixa para cobrir toda a tela */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background-color: #f2e9e1;
             background-size: cover;
-            z-index: -1; /* Coloca a imagem de fundo atrás de todo o conteúdo */
+            z-index: -1;
         }
 
         .text-bg-primary {
-            background-color: #FAA562; /* Cor de fundo do lado esquerdo */
+            background-color: #FAA562;
             color: #fff;
             padding: 20px;
         }
@@ -47,27 +46,27 @@
         .btn-primary,
         .btn-primary:hover,
         .btn-primary:focus {
-            background-color: #FA856E; /* Cor de fundo do botão de login */
-            border-color: #FA856E; /* Cor da borda do botão de login */
+            background-color: #FA856E;
+            border-color: #FA856E;
         }
 
         .btn-outline-primary,
         .btn-outline-primary:hover,
         .btn-outline-primary:focus {
-            color: #FA856E; /* Cor do texto do botão de redes sociais */
-            border-color: #FA856E; /* Cor da borda do botão de redes sociais */
+            color: #FA856E;
+            border-color: #FA856E;
         }
 
         .form-label {
-            color: #FA856E; /* Cor do texto das labels do formulário */
+            color: #FA856E;
         }
 
         .form-control {
-            border-color: #FA856E; /* Cor da borda dos campos de formulário */
+            border-color: #FA856E;
         }
 
         .text-secondary {
-            color: #FAA562; /* Cor do texto secundário (ex: 'Keep me logged in') */
+            color: #FAA562;
         }
     </style>
 </head>
@@ -78,7 +77,6 @@
         <div class="container">
             <div class="card border-light-subtle shadow-sm" style="border: 5px solid #FA856E; border-radius: 5px;">
                 <div class="row g-0">
-                    <!-- Div movida para a direita -->
                     <div class="col-12 col-md-6 order-md-last d-flex align-items-center justify-content-center"
                         style="background-color: #FA856E; color: #fff; margin: -5px;">
                         <div class="d-flex align-items-center justify-content-center h-100">
@@ -89,12 +87,10 @@
                                 </a>
                                 <hr class="border-primary-subtle mb-4">
                                 <h2 class="h1 mb-4">Complete seu cadastro para continuar nosso atendimento!</h2>
-                                <!-- Texto de boas-vindas ajustado -->
                             </div>
                         </div>
                     </div>
 
-                    <!-- Div movida para a esquerda -->
                     <div class="col-12 col-md-6">
                         <div class="card-body p-3 p-md-4 p-xl-5">
                             <div class="row">
@@ -130,36 +126,50 @@
                                         <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" required value="{{ old('dataNascimento', $cliente->dataNascimento ?? '0000-00-00') }}">
                                     </div>
                                     <div class="col-12">
-                                        <label for="cep" class="form-label">CEP <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="cep" name="cep" maxlength="8" required value="{{ old('cep', $enderecosClientes->first()->cep ?? '') }}">
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="rua" class="form-label">Rua <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="rua" name="rua" maxlength="40" required value="{{ old('rua', $enderecosClientes->first()->rua ?? '') }}">
-                                    </div>
-                                    <div class="col-6">
-                                        <label for="numero" class="form-label">Número <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="numero" name="numero" maxlength="5" required value="{{ old('numero', $enderecosClientes->first()->numero ?? '') }}">
-                                    </div>
-                                    <div class="col-6">
-                                        <label for="complemento" class="form-label">Complemento</label>
-                                        <input type="text" class="form-control" id="complemento" name="complemento" maxlength="20" value="{{ old('complemento', $enderecosClientes->first()->complemento ?? '') }}">
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="bairro" class="form-label">Bairro <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="bairro" name="bairro" maxlength="25" required value="{{ old('bairro', $enderecosClientes->first()->bairro ?? '') }}">
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="cidade" class="form-label">Cidade <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="cidade" name="cidade" maxlength="40" required value="{{ old('cidade', $enderecosClientes->first()->cidade ?? '') }}">
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="tipo" class="form-label">Tipo de Endereço <span class="text-danger">*</span></label>
-                                        <select class="form-select" id="tipo" name="tipo" required>
-                                            <option value="">Selecione o tipo de Endereço</option>
-                                            <option value="residencial" {{ old('tipo', $enderecosClientes->first()->tipo ?? '') == 'residencial' ? 'selected' : '' }}>Residencial</option>
-                                            <option value="comercial" {{ old('tipo', $enderecosClientes->first()->tipo ?? '') == 'comercial' ? 'selected' : '' }}>Comercial</option>
+                                        <label for="endereco_select" class="form-label">Selecione um endereço ou adicione um novo <span class="text-danger">*</span></label>
+                                        <select class="form-select" id="endereco_select" name="endereco_select" required>
+                                            <option value="">Selecione um endereço</option>
+                                            @foreach($enderecosClientes as $endereco)
+                                                <option value="{{ $endereco->id }}">
+                                                    {{ $endereco->rua }}, {{ $endereco->numero }} - {{ $endereco->bairro }}, {{ $endereco->cidade }}
+                                                </option>
+                                            @endforeach
+                                            <option value="novo">Adicionar novo endereço</option>
                                         </select>
+                                    </div>
+                                    <div id="novo_endereco" style="display: none;">
+                                        <div class="col-12">
+                                            <label for="cep" class="form-label">CEP <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="cep" name="cep" maxlength="8">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="rua" class="form-label">Rua <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="rua" name="rua" maxlength="40">
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="numero" class="form-label">Número <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="numero" name="numero" maxlength="5">
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="complemento" class="form-label">Complemento</label>
+                                            <input type="text" class="form-control" id="complemento" name="complemento" maxlength="20">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="bairro" class="form-label">Bairro <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="bairro" name="bairro" maxlength="25">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="cidade" class="form-label">Cidade <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="cidade" name="cidade" maxlength="40">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="tipo" class="form-label">Tipo de Endereço <span class="text-danger">*</span></label>
+                                            <select class="form-select" id="tipo" name="tipo">
+                                                <option value="">Selecione o tipo de Endereço</option>
+                                                <option value="residencial">Residencial</option>
+                                                <option value="comercial">Comercial</option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-check">
@@ -191,6 +201,8 @@
     </section>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+
+
 $(document).ready(function () {
     $('#cadastroForm').submit(function (e) {
         e.preventDefault();
@@ -203,58 +215,83 @@ $(document).ready(function () {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
             success: function (response) {
+                console.log('Resposta AJAX recebida:', response);
                 if (response.success) {
+                    // Armazena o endereco_cliente no localStorage
+                    localStorage.setItem('endereco_cliente', JSON.stringify(response.endereco_cliente));
+                    console.log('Endereço do cliente salvo no localStorage:', response.endereco_cliente);
+
+                    // Verifique se o localStorage está sendo definido corretamente
+                    var enderecoCliente = localStorage.getItem('endereco_cliente');
+                    console.log('Verificação localStorage:', enderecoCliente);
+
+                    // Redireciona para a página de serviços
+                    console.log('Redirecionando para página de serviços...');
                     window.location.href = "{{ url('website/servicos') }}";
                 } else {
-                    $('.alert-danger').remove(); // Remove quaisquer alertas de erro anteriores
+                    $('.alert-danger').remove();
                     $('#erro').empty().append('<div class="alert alert-danger">' + response.message + '</div>');
-                    $('html, body').animate({ scrollTop: 0 }, 'slow'); // Scroll para o topo da página
+                    $('html, body').animate({ scrollTop: 0 }, 'slow');
                 }
             },
             error: function (xhr, status, error) {
-                var errorMessage = xhr.responseJSON.message; // Captura a mensagem de erro do JSON
-                $('.alert-danger').remove(); // Remove quaisquer alertas de erro anteriores
+                var errorMessage = xhr.responseJSON.message;
+                console.log('Erro na resposta AJAX:', errorMessage);
+                $('.alert-danger').remove();
                 $('#erro').empty().append('<div class="alert alert-danger">' + errorMessage + '</div>');
-                $('html, body').animate({ scrollTop: 0 }, 'slow'); // Scroll para o topo da página
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
             }
         });
     });
-});
+
+
+
+
+
+        
+
+        $('#endereco_select').change(function() {
+            if ($(this).val() == 'novo') {
+                $('#novo_endereco').show();
+            } else {
+                $('#novo_endereco').hide();
+            }
+        });
 
         $("#cep").blur(function() {
-            var cep = $(this).val().replace(/\D/g, ''); // Remove qualquer caractere não numérico do CEP
+            var cep = $(this).val().replace(/\D/g, '');
             if (cep !== "") {
-                var validacep = /^[0-9]{8}$/; // Expressão regular para validar o formato do CEP
+                var validacep = /^[0-9]{8}$/;
                 if(validacep.test(cep)) {
-                    // Preenche os campos com "..." enquanto a busca está sendo realizada
                     $("#rua").val("...");
                     $("#bairro").val("...");
                     $("#cidade").val("...");
                     
-                    // Faz a requisição para a API ViaCEP
                     $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function(dados) {
                         if (!("erro" in dados)) {
-                            // Atualiza os campos do formulário com os dados recebidos
                             $("#rua").val(dados.logradouro);
                             $("#bairro").val(dados.bairro);
                             $("#cidade").val(dados.localidade);
                         } else {
-                            // CEP não encontrado
                             limparFormularioCEP();
                             alert("CEP não encontrado.");
                         }
                     });
                 } else {
-                    // CEP em formato inválido
                     limparFormularioCEP();
                     alert("Formato de CEP inválido.");
                 }
             } else {
-                // CEP sem valor
                 limparFormularioCEP();
             }
         });
 
+        function limparFormularioCEP() {
+            $("#rua").val("");
+            $("#bairro").val("");
+            $("#cidade").val("");
+        }
+    });
     </script>
 </body>
 
