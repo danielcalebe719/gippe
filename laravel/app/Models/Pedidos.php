@@ -43,7 +43,7 @@ class Pedidos extends Model
     private static $statusArray = [
         null => '',
         '1' => 'Não finalizado',
-        '2' => 'Pendente',
+        '2' => 'Em Análise',
         '3' => 'Aceito',
         '4' => 'Em produção',
         '5' => 'Produzido',
@@ -93,7 +93,7 @@ class Pedidos extends Model
 
     public function feedback()
     {
-        return $this->hasOne(Feedbacks::class,'idPedidos','id');
+        return $this->hasOne(Feedbacks::class,'idPedidos');
     }
 
     public function notificacoesClientes()

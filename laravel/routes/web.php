@@ -150,6 +150,7 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
         Route::get('/', [PedidoController::class, 'index'])->name('pedidos.index');
         Route::get('/show/{idPedidos}', [PedidoController::class, 'show'])->name('pedidos.show');
         Route::post('/guardar', [PedidoController::class, 'guardar'])->name('pedidos.guardar');
+        Route::get('/aceitar/{idPedidos}', [PedidoController::class, 'aceitar'])->name('pedidos.aceitar');
         Route::get('/remover/{idPedidos}', [PedidoController::class, 'remover'])->name('pedidos.remover');
     });
     // Rotas específicas para pedidos dentro do grupo 'adm/pedidos'
