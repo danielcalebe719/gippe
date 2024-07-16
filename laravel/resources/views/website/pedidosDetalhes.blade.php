@@ -200,11 +200,11 @@
           <div class="card-body">
             <h5 class="card-title">Endereço de Entrega</h5>
           
-            <p><strong>Rua:</strong> {{ $endereco->rua }}</p>
-            <p><strong>Número:</strong> {{ $endereco->numero }}</p>
-            <p><strong>Bairro:</strong> {{ $endereco->bairro }}</p>
-            <p><strong>Cidade:</strong> {{ $endereco->cidade }}</p>
-            <p><strong>CEP:</strong> {{ $endereco->cep }}</p>
+            <p><strong>Rua:</strong> {{ $endereco->rua ?? ''}}</p>
+            <p><strong>Número:</strong> {{ $endereco->numero ?? ''}}</p>
+            <p><strong>Bairro:</strong> {{ $endereco->bairro ?? ''}}</p>
+            <p><strong>Cidade:</strong> {{ $endereco->cidade ?? ''}}</p>
+            <p><strong>CEP:</strong> {{ $endereco->cep ?? ''}}</p>
 
             <!-- Edit Button -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAddressModal">
@@ -225,27 +225,27 @@
               <div class="modal-body">
                 <form action="{{ route('endereco.atualizar')}}" method="POST">
                   @csrf
-                  <input type="hidden" class="form-control" id="idEnderecos" name="idEnderecos" value="{{ $endereco->id }}" required>
+                  <input type="hidden" class="form-control" id="idEnderecos" name="idEnderecos" value="{{ $endereco->id ?? ''}}" required>
 
                   <div class="mb-3">
                     <label for="rua" class="form-label">Rua</label>
-                    <input type="text" class="form-control" id="rua" name="rua" value="{{ $endereco->rua }}" required>
+                    <input type="text" class="form-control" id="rua" name="rua" value="{{ $endereco->rua ?? ''}}" required>
                   </div>
                   <div class="mb-3">
                     <label for="numero" class="form-label">Número</label>
-                    <input type="text" class="form-control" id="numero" name="numero" value="{{ $endereco->numero }}" required>
+                    <input type="text" class="form-control" id="numero" name="numero" value="{{ $endereco->numero ?? ''}}" required>
                   </div>
                   <div class="mb-3">
                     <label for="bairro" class="form-label">Bairro</label>
-                    <input type="text" class="form-control" id="bairro" name="bairro" value="{{ $endereco->bairro }}" required>
+                    <input type="text" class="form-control" id="bairro" name="bairro" value="{{ $endereco->bairro ?? ''}}" required>
                   </div>
                   <div class="mb-3">
                     <label for="cidade" class="form-label">Cidade</label>
-                    <input type="text" class="form-control" id="cidade" name="cidade" value="{{ $endereco->cidade }}" required>
+                    <input type="text" class="form-control" id="cidade" name="cidade" value="{{ $endereco->cidade ?? ''}}" required>
                   </div>
                   <div class="mb-3">
                     <label for="cep" class="form-label">CEP</label>
-                    <input type="text" class="form-control" id="cep" name="cep" value="{{ $endereco->cep }}" required>
+                    <input type="text" class="form-control" id="cep" name="cep" value="{{ $endereco->cep ?? ''}}" required>
                   </div>
               </div>
               <div class="modal-footer">

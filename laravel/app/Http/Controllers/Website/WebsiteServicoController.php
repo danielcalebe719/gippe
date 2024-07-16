@@ -43,6 +43,7 @@ class WebsiteServicoController extends Controller
                 $pedido->idServicos = $request->idServicos;
                 $pedido->idClientes = $request->idClientes;
                 $pedido->idEnderecos = $request->idEnderecos;
+                $pedido->dataAtualizacao = NOW();
                 $pedido->status = 1;
                 $criacao = true;
                 do {
@@ -57,6 +58,7 @@ class WebsiteServicoController extends Controller
                 $pedido->idServicos = $request->idServicos;
                 $pedido->idClientes = $request->idClientes;
                 $pedido->idEnderecos = $request->idEnderecos;
+                $pedido->dataAtualizacao = NOW();
                 $pedido->status = 2;
                 $pedido->dataPedido = now();
                 $criacao = false;

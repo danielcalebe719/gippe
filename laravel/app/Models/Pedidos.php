@@ -116,6 +116,12 @@ class Pedidos extends Model
     //     return $this->hasMany(PedidosProdutos::class,'idPedidos','id');
     // }
 
+
+       public function pedidos_servicos()
+     {
+         return $this->hasMany(PedidosServicos::class,'idPedidos','id');
+     }
+
     
     public function agendamentos()
     {

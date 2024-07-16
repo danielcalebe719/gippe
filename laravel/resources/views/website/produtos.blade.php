@@ -471,9 +471,20 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script>
- document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
     // Variável para o carrinho
     var cart = {};
+
+    // Inicializar o carrinho com os produtos já selecionados
+    @foreach($produtosSelecionados as $produtoSelecionado)
+        cart['{{ $produtoSelecionado->produto_id }}'] = {
+            id: '{{ $produtoSelecionado->produto_id }}',
+            nome: '{{ $produtoSelecionado->nome }}',
+            precoUnitario: {{ $produtoSelecionado->precoUnitario }},
+            imagem: '{{ asset("storage/ImagensProdutos/" . $produtoSelecionado->caminhoImagem) }}',
+            quantidade: {{ $produtoSelecionado->quantidade }}
+        };
+    @endforeach
 
     // Filtro de Categorias
     var filterItems = document.querySelectorAll('.filters_menu li');
@@ -492,24 +503,15 @@
                 }
             });
 
-            // Verifica a quantidade de produtos visíveis e ajusta a ordem do carrinho
             adjustCartPosition();
         });
     });
 
     // Incremento e Decremento da Quantidade
-    document.querySelectorAll('.btn-increment').forEach(function (button) {
+    document.querySelectorAll('.btn-increment, .btn-decrement').forEach(function (button) {
         button.addEventListener('click', function () {
             var input = this.parentElement.querySelector('.quantity-input');
-            var newValue = parseInt(input.value) + 1;
-            input.value = newValue.toString();
-        });
-    });
-
-    document.querySelectorAll('.btn-decrement').forEach(function (button) {
-        button.addEventListener('click', function () {
-            var input = this.parentElement.querySelector('.quantity-input');
-            var newValue = parseInt(input.value) - 1;
+            var newValue = parseInt(input.value) + (this.classList.contains('btn-increment') ? 1 : -1);
             if (newValue >= 1) {
                 input.value = newValue.toString();
             }
@@ -541,7 +543,7 @@
                 quantidade: quantidade
             };
         }
-        updateCart(); // Atualiza visualmente o carrinho
+        updateCart();
     }
 
     // Função para atualizar o carrinho
@@ -553,28 +555,23 @@
         for (var id in cart) {
             if (cart.hasOwnProperty(id)) {
                 var item = cart[id];
-                var nome = item.nome;
-                var precoUnitario = item.precoUnitario;
-                var imagem = item.imagem;
-                var quantidade = item.quantidade;
-
                 var li = document.createElement('div');
                 li.classList.add('cart-item');
-                li.setAttribute('data-id', id); // Adiciona um identificador único
+                li.setAttribute('data-id', id);
                 li.innerHTML = `
                     <div class="cart-item-img">
-                        <img src="${imagem}" alt="${nome}" style="width: 60px;">
+                        <img src="${item.imagem}" alt="${item.nome}" style="width: 60px;">
                     </div>
                     <div class="cart-item-info flex-grow-1">
-                        <h6>${nome}</h6>
-                        <p>R$ ${precoUnitario.toFixed(2)} x ${quantidade}</p>
+                        <h6>${item.nome}</h6>
+                        <p>R$ ${item.precoUnitario.toFixed(2)} x ${item.quantidade}</p>
                     </div>
-                    <button class="btn btn-sm btn-remove-item">
+                    <button class="btn btn-sm btn-remove-item" data-id="${id}">
                         <i class="bi bi-trash"></i>
                     </button>
                 `;
                 cartList.appendChild(li);
-                total += precoUnitario * quantidade;
+                total += item.precoUnitario * item.quantidade;
             }
         }
 
@@ -583,7 +580,7 @@
         // Adiciona evento de clique para remover item do carrinho
         document.querySelectorAll('.btn-remove-item').forEach(function (button) {
             button.addEventListener('click', function () {
-                var itemId = button.closest('.cart-item').getAttribute('data-id');
+                var itemId = this.getAttribute('data-id');
                 removeFromCart(itemId);
             });
         });
@@ -592,55 +589,72 @@
     // Função para remover do carrinho
     function removeFromCart(id) {
         delete cart[id];
-        updateCart(); // Atualiza visualmente o carrinho após remover o item
+        updateCart();
     }
 
-    // Finalizar Compra
-    document.querySelector('.checkout-btn').addEventListener('click', function () {
-        if (Object.keys(cart).length === 0) {
-            alert('O carrinho está vazio.');
-            return;
+
+
+   document.querySelector('.checkout-btn').addEventListener('click', function () {
+    if (Object.keys(cart).length === 0) {
+        alert('O carrinho está vazio.');
+        return;
+    }
+
+    var total = parseFloat(document.getElementById('cart-total').textContent);
+    if (isNaN(total)) {
+        console.error('Total inválido');
+        alert('Ocorreu um erro ao calcular o total. Por favor, atualize a página e tente novamente.');
+        return;
+    }
+
+    // Incluir {{$pedido->codigo}} diretamente no objeto dadosPedido
+    var dadosPedido = {
+        itens: Object.values(cart),
+        codigo: "{{$pedido->codigo ?? ''}}"  // Aqui você insere o valor diretamente
+    };
+
+    console.log('Enviando dados:', dadosPedido);
+
+    fetch('/website/adicionar-ao-pedido', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify(dadosPedido)
+    })
+    .then(response => {
+        console.log('Status da resposta:', response.status);
+        if (!response.ok) {
+            throw new Error('Erro na resposta do servidor: ' + response.status);
         }
-        var total = parseFloat(document.getElementById('cart-total').textContent);
-        alert('Pedido finalizado! Total: R$ ' + total.toFixed(2));
+        return response.json();
+    })
+    .then(data => {
+        console.log('Sucesso:', data);
+        console.log('Código do pedido:', data.codigo);
+        console.log('Criação:', data.criacao);
 
-        // Dados a serem enviados
-        var dadosPedido = {
-            itens: Object.values(cart), // Enviar apenas os valores dos itens do carrinho
-            codigo: "{{$pedido->codigo}}" // Supondo que você tenha o código do pedido aqui
-        };
-
-        // Requisição AJAX para enviar os dados do carrinho
-        fetch('/website/adicionar-ao-pedido', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify(dadosPedido)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Sucesso:', data);
-            window.location.href = "{{ route('website.agendamento', ['codigo' => $pedido->codigo]) }}";
-        })
-        .catch((error) => {
-            console.error('Erro:', error);
-        });
-    });
-
-    // Calcular o total inicial ao carregar a página
-    function calcularTotalInicial() {
-        var total = 0;
-
-        @foreach($produtosSelecionados as $produtoSelecionado)
-            total += {{ $produtoSelecionado->precoUnitario }} * {{ $produtoSelecionado->quantidade }};
-        @endforeach
-
-        document.getElementById('cart-total').textContent = total.toFixed(2);
+        if (data.codigo) {
+    let redirectUrl;
+    if (data.criacao) {
+        redirectUrl = "/website/agendamento/" + data.codigo;
+    } else {
+        redirectUrl = "/website/pedidos/pedidosDetalhes/" + data.codigo;
     }
+    console.log('Redirecionando para:', redirectUrl);
+    alert('Pedido finalizado! Total: R$ ' + total.toFixed(2));
+    window.location.replace(redirectUrl);
+}
+        
+    })
+    .catch((error) => {
+        console.error('Erro:', error);
+        alert('Ocorreu um erro ao processar o pedido. Por favor, tente novamente.');
+    });
+});
 
-    calcularTotalInicial(); // Calcular o total inicial
+
 
     // Função para ajustar a posição do carrinho
     function adjustCartPosition() {
@@ -648,16 +662,16 @@
         var cartContainer = document.querySelector('.cart-container');
 
         if (productCount <= 3) {
-            cartContainer.style.order = '1'; // Coloca o carrinho abaixo dos produtos
+            cartContainer.style.order = '1';
         } else {
-            cartContainer.style.order = '0'; // Coloca o carrinho na ordem padrão
+            cartContainer.style.order = '0';
         }
     }
 
-    // Ajuste a posição do carrinho quando a página carrega
+    // Inicializar o carrinho e ajustar a posição
+    updateCart();
     adjustCartPosition();
 });
-
 </script>
 </body>
 

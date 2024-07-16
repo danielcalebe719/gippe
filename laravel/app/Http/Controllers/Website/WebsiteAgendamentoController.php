@@ -97,7 +97,7 @@ class WebsiteAgendamentoController extends Controller
             return redirect()->route('website.index')->with('success', "Pedido enviado com sucesso! Seu pedido está agora em análise. Fique de olho nas notificações para mais atualizações.");
         } else {
             return redirect()->route('pedidosDetalhes.index', ['codigo' => $pedido->codigo])
-                ->with('success', 'Serviço selecionado com sucesso.');
+                ->with('success', 'Agendamento alterado com sucesso.');
         }
     }
     

@@ -63,57 +63,93 @@ class WebsiteProdutoController extends Controller
     
     
 
-    public function adicionarAoPedido(Request $request)
-    {
-        // Valide os dados recebidos
-        $request->validate([
-           /* 'itens' => 'required|array', // Verifica se 'itens' é um array
-            'itens.*.id' => 'required|integer', // Verifica se cada item tem um ID válido
-            'itens.*.quantidade' => 'required|integer|min:1', // Verifica se a quantidade é válida
-            'itens.*.precoUnitario' => 'required|numeric|min:0', // Verifica se o preço unitário é válido*/
-        ]);
+    
+
+        public function adicionarAoPedido(Request $request)
+        {
+           
+            // Valide os dados recebidos
+            $request->validate([
+                /*'itens' => 'required|array',
+                'itens.*.id' => 'required|integer',
+                'itens.*.quantidade' => 'required|integer|min:1',
+                'itens.*.precoUnitario' => 'required|numeric|min:0',
+                'codigo' => 'required|string'*/
+            ]);
         
-    
-        try {
-            $codigo = $request->codigo;
-    
-            // Encontre o pedido com base no código
-            $pedido = Pedidos::where('codigo', $codigo)->first();
+            try {
+                $codigo = $request->codigo;
+            
+                // Encontre o pedido com base no código
+                $pedido = Pedidos::where('codigo', $codigo)->first();
         
-    
-            if (!$pedido) {
-                return response()->json(['error' => 'Pedido não encontrado'], 404);
-            }
-    
-            // Percorra os itens do carrinho e insira na tabela pedidos_produtos
-            foreach ($request->itens as $item) {
-                PedidosProdutos::create([
-                    'idPedidos' => $pedido->id,
-                    'subtotal' => $item['precoUnitario'] * $item['quantidade'],
-                    'quantidade' => $item['quantidade'],
-                    'idProdutos' => $item['id'],
-                    // Adicione outros campos conforme necessário
+                if (!$pedido) {
+                    return response()->json(['error' => 'Pedido não encontrado'], 404);
+                }
+        
+                // Verifique se existem produtos associados a este pedido
+                $produtosExistentes = PedidosProdutos::where('idPedidos', $pedido->id)->exists();
+                $criacao = true;
+                if ($produtosExistentes) {
+                    // Se existirem produtos, é uma edição. Exclua os produtos existentes.
+                    PedidosProdutos::where('idPedidos', $pedido->id)->delete();
+                    $criacao = false;
+                  
+                } else {
+                    $criacao = true;
+                
+                }
+        
+                // Adicione os novos itens ao pedido
+                foreach ($request->itens as $item) {
+                    PedidosProdutos::create([
+                        'idPedidos' => $pedido->id,
+                        'subtotal' => $item['precoUnitario'] * $item['quantidade'],
+                        'quantidade' => $item['quantidade'],
+                        'idProdutos' => $item['id'],
+                        // Adicione outros campos conforme necessário
+                    ]);
+               
+                }
+              
+        
+                // Atualize o total do pedido
+                $novoTotal = PedidosProdutos::where('idPedidos', $pedido->id)->sum('subtotal');
+                $pedido->totalPedido = $novoTotal;
+                $pedido->dataAtualizacao = NOW();
+                $pedido->save();
+        
+                $mensagem = $produtosExistentes ? 'Itens do carrinho atualizados no pedido com sucesso' : 'Itens do carrinho adicionados ao novo pedido com sucesso';
+                return response()->json([
+                    'message' => $mensagem,
+                    'criacao' => $criacao,
+                    'codigo' => $pedido->codigo
                 ]);
+        
+            } catch (\Exception $e) {
+                // Em caso de erro, capture a exceção e retorne uma resposta de erro
+                return response()->json(['error' => 'Erro ao processar o pedido: ' . $e->getMessage()], 500);
+            }
+        }
+    
+        public function exibirProdutosSelecionados($codigo)
+        {
+            $pedido = Pedidos::where('codigo', $codigo)->first();
+            if (!$pedido) {
+                return redirect()->route('website.produtos')->with('error', 'Pedido não encontrado');
             }
     
-            // Retorne uma resposta adequada, como sucesso ou erro
-            return response()->json(['message' => 'Itens do carrinho adicionados ao pedido com sucesso']);
+            $produtosSelecionados = PedidosProdutos::where('idPedidos', $pedido->id)
+                ->join('produtos', 'pedidos_produtos.idProdutos', '=', 'produtos.id')
+                ->select('pedidos_produtos.*', 'produtos.nome', 'produtos.caminhoImagem')
+                ->get();
     
-        } catch (\Exception $e) {
-            // Em caso de erro, capture a exceção e retorne uma resposta de erro
-            return response()->json(['error' => 'Erro ao adicionar itens ao pedido: ' . $e->getMessage()], 500);
+            $produtos = Produtos::all();
+    
+            return view('website.produtos', compact('produtos', 'produtosSelecionados', 'pedido'));
         }
+    
+        // Adicione outros métodos conforme necessário
     }
     
 
-
-    public function carregarMaisProdutos(Request $request)
-{
-  
-    $skip = $request->query('skip', 0);
-    $produtos = Produtos::skip($skip)->take(5)->get();
-    
-    return view('partials.produtos', compact('produtos'));
-}
-    
-}
