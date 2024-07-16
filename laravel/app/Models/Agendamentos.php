@@ -15,7 +15,7 @@ class Agendamentos extends Model
         'idPedidos',  
         'dataInicio', 
         'dataFim', 
-        'horaInicio'.
+        'horaInicio',
         'horaFim', 
         'observacao',   
         'dataCadastro'
@@ -24,7 +24,10 @@ class Agendamentos extends Model
     ];
     public $timestamps = false;
 
-
+    public function pedido()
+    {
+        return $this->belongsTo(Pedidos::class, 'idPedidos');
+    }
    
 
 

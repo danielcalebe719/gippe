@@ -123,9 +123,9 @@ class Pedidos extends Model
      }
 
     
-    public function agendamentos()
+    public function agendamento()
     {
-        return $this->hasOne(Agendamentos::class,'idPedidos','id');
+        return $this->hasOne(Agendamentos::class, 'idPedidos', 'id');
     }
 
 }

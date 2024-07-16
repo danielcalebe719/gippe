@@ -33,7 +33,8 @@ class PedidoController extends Controller
     {
         $pedido = Pedidos::with([
             'pedidosProdutos.produto',
-            'pedidosServicos.servico'
+            'pedidosServicos.servico',
+            'agendamento'
         ])->find($idPedidos);
     
         if ($pedido) {
