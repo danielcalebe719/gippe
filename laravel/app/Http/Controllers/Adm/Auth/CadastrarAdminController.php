@@ -17,14 +17,16 @@ class CadastrarAdminController extends Controller
 
     public function cadastrar(Request $request)
     {
-       
+        // Valida os dados do request
         $this->validator($request->all())->validate();
-
-        $cliente = $this->create($request->all());
-      
+    
+        // Cria o novo admin e armazena o resultado
+        $admin = $this->create($request->all());
+    
+        // Redireciona para a página de admins com uma mensagem de sucesso
         return redirect('/adm/admins')->with('success', 'Admin registrado com sucesso!');
     }
-
+    
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -34,12 +36,15 @@ class CadastrarAdminController extends Controller
         ]);
     }
 
-    protected function create(array $data)
-    {
-        return Admins::create([
-           'nome' => $data['nome'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-    }
+        protected function create(array $data)
+        {
+            return Admins::create([
+                'nome' => $data['nome'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'permissoes' => $data['permissoes'],
+            ]);
+        }
+        
+    
 }

@@ -202,7 +202,7 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
     Route::prefix('admins')->group(function () {
         Route::get('/', [AdminController::class, 'index1'])->name('admins.index1');
         Route::get('/show/{idAdmins}', [AdminController::class, 'show'])->name('admins.show');
-        Route::post('/create', [CadastrarAdminController::class, 'create'])->name('admins.create');
+        Route::post('/create', [CadastrarAdminController::class, 'cadastrar'])->name('admins.create');
         Route::post('/update', [AdminController ::class, 'update'])->name('admins.update');
         Route::get('/remover/{idAdmins}', [AdminController::class, 'remover'])->name('admins.remover');
     }); 

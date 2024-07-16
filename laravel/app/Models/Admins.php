@@ -19,7 +19,8 @@ class Admins extends Authenticatable
         'email', 
         'password', 
         'nome',
-        'last_login'
+        'last_login',
+        'permissoes'
         // Adicione outros campos aqui
     ];
     public $timestamps = false;

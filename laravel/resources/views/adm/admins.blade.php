@@ -104,6 +104,10 @@
                             <input type="text" class="form-control" id="email" name="email">
                         </div>
                         <div class="form-group">
+                            <label for="permissoes">Permissões</label>
+                            <input type="text" class="form-control" id="permissoes" name="permissoes">
+                        </div>
+                        <div class="form-group">
                             <label for="password">Senha</label>
                             <input type="password" class="form-control" id="password" name="password">
                         </div>
