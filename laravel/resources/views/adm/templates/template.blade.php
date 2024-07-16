@@ -55,7 +55,7 @@
 <body id="page-top">
     <div id="wrapper">
         <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="painel-operacional.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url ('/adm/painel-operacional')}}">
                 <div class="sidebar-brand-icon">
                     <img src="{{ asset('assets/img/logo/logo.png ') }}">
                 </div>
