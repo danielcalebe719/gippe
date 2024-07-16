@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Models\Admins;
 
 class LoginAdminController extends Controller
 {
@@ -25,12 +26,20 @@ class LoginAdminController extends Controller
             $admin = Auth::guard('admin')->user();
             $admin->last_login = now();
             $admin->save();
-
-            return redirect()->intended('/adm/');
+            $admins = Admins::where('id', $admin->id)->first();
+            switch($admins->permissoes){
+                case 1:
+            return redirect()->intended('/adm/painel-operacional');
+            case 2:
+                return redirect()->intended('/adm/painel-operacional');
+            case 3:
+                return redirect()->intended('/adm/painel-financeiro');
+            }   
         }
-
+        
         Session::flash('mensagem', 'Nome de usuário ou senha inválidos!');
-        return redirect()->back()->withInput();
+
+     
     }
 
     public function deslogar(Request $request)

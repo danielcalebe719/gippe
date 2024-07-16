@@ -63,6 +63,8 @@
 
             <hr class="sidebar-divider my-0">
             <br>
+            @if(Auth::guard('admin')->user()->permissoes == 1 || Auth::guard('admin')->user()->permissoes == 2)
+         
             <div id="operacional">
                 <h5 class="text-center">Operações</h5>
                 <li class="nav-item active">
@@ -137,7 +139,10 @@
                         <span class="text-gray-1000">Colaboradores</span>
                     </a>
                 </li>
+            
             </div>
+            @endif
+            @if(Auth::guard('admin')->user()->permissoes == 1 || Auth::guard('admin')->user()->permissoes == 3)
             <div id="financeiro">
                 <hr class="sidebar-divider my-0">
                 <h5 class="text-center">Financeiro</h5>
@@ -166,6 +171,7 @@
                     </a>
                 </li>
             </div>
+            @endif
             <hr class="sidebar-divider">
         </ul>
         <div id="content-wrapper" class="d-flex flex-column">

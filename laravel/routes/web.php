@@ -11,6 +11,7 @@ use App\Http\Controllers\Adm\ServicoController;
 use App\Http\Controllers\Adm\FornecedorController;
 use App\Http\Controllers\Adm\ReceitaItemController;
 use App\Http\Controllers\Adm\GaleriaImagemController;
+use App\Http\Controllers\Adm\GastoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -202,7 +203,7 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
     Route::prefix('admins')->group(function () {
         Route::get('/', [AdminController::class, 'index1'])->name('admins.index1');
         Route::get('/show/{idAdmins}', [AdminController::class, 'show'])->name('admins.show');
-        Route::post('/create', [CadastrarAdminController::class, 'create'])->name('admins.create');
+        Route::post('/create', [CadastrarAdminController::class, 'cadastrar'])->name('admins.create');
         Route::post('/update', [AdminController ::class, 'update'])->name('admins.update');
         Route::get('/remover/{idAdmins}', [AdminController::class, 'remover'])->name('admins.remover');
     }); 
@@ -212,6 +213,13 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
         Route::get('/show/{idGaleriaImagens}', [GaleriaImagemController::class, 'show'])->name('galeriaImagens.show');
         Route::post('/guardar', [GaleriaImagemController::class, 'guardar'])->name('galeriaImagens.guardar');
         Route::get('/remover/{idGaleriaImagens}', [GaleriaImagemController::class, 'remover'])->name('galeriaImagens.remover');
+    });
+
+    Route::prefix('painel-financeiro')->group(function () {
+        Route::get('/', [GastoController::class, 'index'])->name('gastos.index');
+        Route::get('/show/{idGastos}', [GastoController::class, 'show'])->name('gastos.show');
+        Route::post('/guardar', [GastoController::class, 'guardar'])->name('gastos.guardar');
+        Route::get('/remover/{idGastos}', [GastoController::class, 'remover'])->name('gastos.remover');
     });
 });
 Route::get('adm/logout', [LoginAdminController::class, 'deslogar'])->name('logout');

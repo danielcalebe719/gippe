@@ -15,7 +15,8 @@
     }
 
     #detalhesServico,
-    #detalhesProdutos {
+    #detalhesProdutos,
+    #detalhesAgendamento {
         display: none;
     }
 </style>
@@ -433,6 +434,10 @@
                             <button class="nav-link" id="servico-tab" data-bs-toggle="tab" data-bs-target="#servico"
                                 type="button" role="tab" aria-controls="servico" aria-selected="false">Serviço</button>
                         </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="agendamento-tab" data-bs-toggle="tab" data-bs-target="#agendamento"
+                                type="button" role="tab" aria-controls="agendamento" aria-selected="false">Agendamento</button>
+                        </li>
                     </ul>
                     <br>
                     <div id="detalhes">
@@ -443,13 +448,6 @@
                                     readonly>
                             </div>
                         </div>
-                        <!-- <div class="form-group row">
-                    <label for="DetalhesIdPedido" class="col-sm-3 col-form-label">Serviço ID:</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="DetalhesIdServicos" name="idServicos" value=""
-                            readonly>
-                    </div>
-                </div> -->
                         <div class="form-group row">
                             <label for="DetalhesObservacao" class="col-sm-3 col-form-label">Observação:</label>
                             <div class="col-sm-9">
@@ -466,6 +464,40 @@
                             <label for="DetalhesDataPedido" class="col-sm-3 col-form-label">Data de Pedido:</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="DetalhesDataPedido" value="" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="detalhesAgendamento">
+                        <div class="form-group row">
+                            <label for="DetalhesIdPedido" class="col-sm-3 col-form-label">Data de início:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="DetalhesDataInicio" name="dataInicio" value=""
+                                    readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="DetalhesObservacao" class="col-sm-3 col-form-label">Data do fim:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="DetalhesDataFim" value="" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="DetalhesObservacao" class="col-sm-3 col-form-label">Hora de início:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="DetalhesHoraInicio" value="" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="DetalhesDataPedido" class="col-sm-3 col-form-label">Hora do fim:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="DetalhesHoraFim" value="" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="DetalhesDataPedido" class="col-sm-3 col-form-label">Observação:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="DetalhesObservacaoAgendamento" value="" readonly>
                             </div>
                         </div>
                     </div>
@@ -615,15 +647,12 @@
         .then(data => {
             console.log('Dados recebidos:', data); // Verifique os dados recebidos no console
 
-            // Verifique se os campos HTML estão sendo encontrados corretamente
-            console.log('Elemento DetalhesIdFeedback:', document.getElementById('DetalhesIdFeedback'));
-            console.log('Elemento DetalhesMensagem:', document.getElementById('DetalhesMensagem'));
-            console.log('Elemento DetalhesAvaliacao:', document.getElementById('DetalhesAvaliacao'));
+            
 
             // Preenche os campos do modal com os dados do feedback
-            document.getElementById('DetalhesIdFeedback').value = data.id;
-            document.getElementById('DetalhesMensagem').value = data.mensagem;
-            document.getElementById('DetalhesAvaliacao').value = data.avaliacao;
+            document.getElementById('DetalhesIdFeedback').value = data[0].id;
+            document.getElementById('DetalhesMensagem').value = data[0].mensagem;
+            document.getElementById('DetalhesAvaliacao').value = data[0].avaliacao;
 
             // Abre o modal de feedback
             $('#modalFeedbackPedido').modal('show');
@@ -829,6 +858,21 @@
                     });
                 }
 
+                
+                    
+                        
+
+                        // Preencher campos comuns de serviço
+                        document.getElementById('DetalhesDataInicio').value = data.agendamento.dataInicio || '';
+                        document.getElementById('DetalhesDataFim').value = data.agendamento.dataFim || '';
+                        document.getElementById('DetalhesHoraInicio').value = data.agendamento.horaInicio || '';
+                        document.getElementById('DetalhesHoraFim').value = data.agendamento.horaFim || '';
+                        document.getElementById('DetalhesObservacaoAgendamento').value = data.agendamento.observacao || '';
+
+                        
+                    
+                
+
                 // Abra o modal de detalhes do pedido
                 $('#modalDetalhesPedido').modal('show');
             })
@@ -858,6 +902,7 @@
         $("#detalhes").hide();
         $("#detalhesProdutos").show();
         $("#detalhesServico").hide();
+        $("#detalhesAgendamento").hide();
         $("button").removeClass('active');
         $("#produtos-tab").addClass('active');
     });
@@ -866,6 +911,7 @@
         $("#detalhes").hide();
         $("#detalhesProdutos").hide();
         $("#detalhesServico").show();
+        $("#detalhesAgendamento").hide();
         $("button").removeClass('active');
         $("#servico-tab").addClass('active');
     });
@@ -874,8 +920,18 @@
         $("#detalhes").show();
         $("#detalhesProdutos").hide();
         $("#detalhesServico").hide();
+        $("#detalhesAgendamento").hide();
         $("button").removeClass('active');
         $("#detalhes-tab").addClass('active');
+    });
+
+    $("#agendamento-tab").click(function () {
+        $("#detalhes").hide();
+        $("#detalhesProdutos").hide();
+        $("#detalhesServico").hide();
+        $("#detalhesAgendamento").show();
+        $("button").removeClass('active');
+        $("#agendamento-tab").addClass('active');
     });
 
 
