@@ -176,7 +176,7 @@
 
                                     <div class="btn-group mr-2" role="group" aria-label="Ações do Pedido">
                                         <button class="btn btn-success btn-sm" onclick="mostrarFeedback('{{ $pedido->id }}')"
-                                            data-toggle="modal" data-target="#modalDetalhesPedido">
+                                            data-toggle="modal" >
                                             Feedback
                                         </button>
                                     </div>
@@ -189,6 +189,7 @@
                 </tbody>
             </table>
         </div>
+    </div>
     </div>
 
 
@@ -555,7 +556,7 @@
                         </div>
                     </div>
                     <!-- Botão para abrir modal de feedback -->
-                    <button type="button" class="btn btn-info btn-sm" id="btnFeedback" onclick="mostrarFeedback()">Visualizar Feedback</button>
+                    <button type="button" class="btn btn-info btn-sm" id="btnFeedback" onclick="">Visualizar Feedback</button>
                 </div>
 
             </div>
@@ -566,25 +567,74 @@
 
     <!-- Modal Feedback do Pedido -->
     <div class="modal fade" id="modalFeedbackPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Feedback do Pedido</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detalhes do Servico</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label for="detalhesNome Serviço" class="col-sm-3 col-form-label">Id:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="DetalhesIdFeedback" readonly>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <!-- Aqui serão exibidos os detalhes do feedback do pedido -->
-                    <div id="feedbackContent"></div>
+
+                <div class="form-group row">
+                    <label for="detalhesDataCadastro" class="col-sm-3 col-form-label">Mensagem:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="DetalhesMensagem" readonly>
+                    </div>
                 </div>
+                <div class="form-group row">
+                    <label for="detalhesDataAtualizacao" class="col-sm-3 col-form-label">Avaliação:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="DetalhesAvaliacao" readonly>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>
 
-</div>
 
+</div>
+<script>
+    function mostrarFeedback(idPedidos) {
+    fetch(`/adm/pedidos/showFeedback/${idPedidos}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao carregar os detalhes do feedback');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Dados recebidos:', data); // Verifique os dados recebidos no console
+
+            // Verifique se os campos HTML estão sendo encontrados corretamente
+            console.log('Elemento DetalhesIdFeedback:', document.getElementById('DetalhesIdFeedback'));
+            console.log('Elemento DetalhesMensagem:', document.getElementById('DetalhesMensagem'));
+            console.log('Elemento DetalhesAvaliacao:', document.getElementById('DetalhesAvaliacao'));
+
+            // Preenche os campos do modal com os dados do feedback
+            document.getElementById('DetalhesIdFeedback').value = data.id;
+            document.getElementById('DetalhesMensagem').value = data.mensagem;
+            document.getElementById('DetalhesAvaliacao').value = data.avaliacao;
+
+            // Abre o modal de feedback
+            $('#modalFeedbackPedido').modal('show');
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os detalhes do feedback:', error);
+        });
+}
+
+
+</script>
 <script>
     $('#pedidoModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Botão que acionou o modal
@@ -706,9 +756,9 @@
     }
 </script>
 <script>
-    let idPedidoAtual;
+    
     function mostrarDetalhes(idPedido) {
-        idPedidoAtual = idPedido;
+        
         fetch(`/adm/pedidos/show/${idPedido}`)
             .then(response => {
                 if (!response.ok) {
@@ -717,6 +767,7 @@
                 return response.json();
             })
             .then(data => {
+                
                 // Preencha os campos do modal com os dados do pedido
                 document.getElementById('DetalhesIdPedidos').value = data.id || '';
                 document.getElementById('DetalhesObservacao').value = data.observacao || '';
@@ -796,33 +847,9 @@
         return new Date(data).toLocaleDateString('pt-BR', options);
     }
 
-    function mostrarFeedback(idPedido) {
-        idPedido = 
-        fetch(`/adm/pedidos/show/${idPedido}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro ao carregar os detalhes do pedido');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('API Response:', data);
-                // Preencher os campos do formulário com os dados do cliente
-                document.getElementById('EditarIdPedido').value = data.id;
-                document.getElementById('EditarIdCliente').value = data.idClientes;
-                document.getElementById('EditarIdServico').value = data.idServicos;
-                document.getElementById('EditarObservacao').value = data.observacao;
-                document.getElementById('EditarDataEntrega').value = data.dataEntrega;
-                document.getElementById('EditarStatus').value = data.status;
-                document.getElementById('EditarTotalPedido').value = data.totalPedido;
+    
 
-                // Abrir o modal de edição do cliente
-                $('#modalEditarPedido').modal('show');
-            })
-            .catch(error => {
-                console.error('Erro ao carregar os detalhes do pedido:', error);
-            });
-    }
+    
 
 </script>
 

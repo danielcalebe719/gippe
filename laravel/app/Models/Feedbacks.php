@@ -26,7 +26,10 @@ class Feedbacks extends Model
         return $this->belongsTo(Pedidos::class, 'idPedidos');
     }
     
-
+    public function pedido()
+    {
+        return $this->belongsTo(Pedidos::class, 'idPedidos');
+    }
 
 }
 

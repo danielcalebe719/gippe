@@ -64,7 +64,7 @@ class Pedidos extends Model
     {
         return $this->hasMany(PedidosProdutos::class, 'idPedidos');
     }
-    public function pedidos_servicos()
+    public function pedidosServicos()
     {
         return $this->hasMany(PedidosServicos::class, 'idPedidos', 'id'); // ajuste os nomes conforme sua estrutura
     }
@@ -93,7 +93,7 @@ class Pedidos extends Model
 
     public function feedback()
     {
-        return $this->hasOne(Feedbacks::class,'idPedidos');
+        return $this->hasOne(Feedbacks::class,'id', 'idPedidos' );
     }
 
     public function notificacoesClientes()

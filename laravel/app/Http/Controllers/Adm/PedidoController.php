@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Adm;
 
 use Illuminate\Http\Request;
 use App\Models\Pedidos;
+use App\Models\Feedbacks;
 use App\Models\Clientes;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
@@ -39,6 +40,20 @@ class PedidoController extends Controller
             return response()->json($pedido);
         } else {
             return response()->json(['error' => 'Pedido não encontrado'], 404);
+        }
+    }
+
+    public function showFeedback($idPedidos)
+    {
+        $feedbacks = Feedbacks::where('idPedidos',$idPedidos) -> get();
+        
+        
+        if ($feedbacks->isNotEmpty()) {
+
+            
+            return response()->json($feedbacks);
+        } else {
+            return response()->json(['error' => 'feedback não encontrado'], 404);
         }
     }
 
