@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 16-Jul-2024 às 20:27
+-- Tempo de geração: 16-Jul-2024 às 21:45
 -- Versão do servidor: 10.4.24-MariaDB
 -- versão do PHP: 8.1.5
 
@@ -299,6 +299,14 @@ CREATE TABLE `gastos` (
   `dataCadastro` date DEFAULT NULL,
   `dataAtualizacao` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `gastos`
+--
+
+INSERT INTO `gastos` (`id`, `motivo`, `valor`, `dataCadastro`, `dataAtualizacao`) VALUES
+(1, 'kkkkkkkkk', '200.00', '2024-07-16', NULL),
+(2, 'dffdfdfdddfd', '600.00', '2024-07-16', NULL);
 
 -- --------------------------------------------------------
 
@@ -1375,7 +1383,7 @@ ALTER TABLE `galeria_imagens`
 -- AUTO_INCREMENT de tabela `gastos`
 --
 ALTER TABLE `gastos`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `materias_primas_estoque`
@@ -1594,4 +1602,3 @@ ALTER TABLE `receitas_itens`
   ADD CONSTRAINT `receitas_itens_ibfk_1` FOREIGN KEY (`idProdutos`) REFERENCES `produtos` (`id`),
   ADD CONSTRAINT `receitas_itens_ibfk_2` FOREIGN KEY (`idMateriasPrimas`) REFERENCES `materias_primas_estoque` (`id`);
 COMMIT;
-
