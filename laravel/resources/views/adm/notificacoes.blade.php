@@ -3,6 +3,7 @@
 @section('title', 'Notificações')
 
 @section('content')
+<!-- teste -->
 <!-- Begin Page Content -->
 <div class="container-fluid" id="container-wrapper">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -20,8 +21,8 @@
             <button class="btn btn-primary" data-toggle="modal"
                 data-target="#modalAdicionarNotificacaoCliente">Adicionar Notificação</button>
         </div>
-        <div class="card-body">
-            <div class="table-responsive">
+        
+            <div class="table-responsive p-3">
                 <table class="table align-items-center table-flush" id="dataTableFuncionario">
                     <thead class="thead-light">
                         <tr>
@@ -57,7 +58,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        
     </div>
 
     <!-- Notificações para Clientes -->
@@ -67,8 +68,8 @@
             <button class="btn btn-primary" data-toggle="modal"
                 data-target="#modalAdicionarNotificacaoCliente">Adicionar Notificação</button>
         </div>
-        <div class="card-body">
-            <div class="table-responsive">
+        
+            <div class="table-responsive p-3">
                 <table class="table align-items-center table-flush" id="dataTableCliente">
                     <thead class="thead-light">
                         <tr>
@@ -102,7 +103,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        
     </div>
 
     <!-- Modal Adicionar Notificação para Cliente -->
