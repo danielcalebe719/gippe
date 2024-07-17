@@ -17,23 +17,75 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
   <link href="{{ asset('assets/vendor_adm/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
   <style>
+    body {
+      background-color: #f8f9fa;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 900px;
+    }
+
+    .btn-menu {
+      height: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      background-color: #276359;
+      border-color: #276359;
+      color: white;
+    }
+
+    .btn-menu:hover,
+    .btn-menu:focus {
+      background-color: #1e4d46;
+      border-color: #1e4d46;
+      color: white;
+    }
+
+    .btn-menu i {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
     .card-custom {
       background-color: #276359;
       border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
     }
+
     .card-title {
       color: #fff;
       font-weight: bold;
     }
+
     .card img {
       width: 100%;
       height: auto;
     }
+
     .nav-link-custom {
       padding: 0;
       margin: 5px;
     }
+
     @media screen and (max-width: 768px) {
       .nav-link-custom {
         margin-bottom: 10px;
@@ -41,6 +93,7 @@
     }
   </style>
 </head>
+
 <body id="page-top">
   <div id="wrapper">
     <!-- Sidebar -->
@@ -59,7 +112,9 @@
       <div id="content">
         <!-- TopBar -->
         <nav class="navbar navbar-expand navbar-light bg-navbar topbar static-top">
-          <h5 class="text-gray-1000 ml-3">Olá, Nome da Pessoa!</h5>
+        @if(Auth::guard('admin')->check())
+                    <h5 class="text-gray-1000">Olá, {{ Auth::guard('admin')->user()->nome }}!</h5>
+                    @endif
           <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -100,217 +155,134 @@
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-1000">Painel Operacional</h1>
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a style="color: #8ebba7;" href="./">Home</a></li>
+              <li class="breadcrumb-item"><a style="color: #8ebba7;" href="">Home</a></li>
               <li class="breadcrumb-item active" aria-current="page">Painel Operacional</li>
             </ol>
           </div>
 
           <div class="row">
-            <div class="col-lg-4 col-md-6 mb-4">
-            <a class="nav-link nav-link-custom" href="{{ url('adm/clientes') }}">
-                <div class="card card-custom h-100">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col">
-                        <div class="h5 mb-0 card-title">Clientes</div>
-                      </div>
-                      <div class="col-4">
-                        <img src="{{asset('assets/img/clientes.png')}}" alt="Clientes">
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            <div class="col-md-4 col-sm-6">
+              <a class="nav-link nav-link-custom" href="{{ url('adm/clientes') }}">
+                <button class="btn btn-menu w-100">
+                  <i class="bi bi-people"></i> Clientes
+                </button>
               </a>
             </div>
-            
-            <div class="col-lg-4 col-md-6 mb-4">
+
+            <div class="col-md-4 col-sm-6">
               <a class="nav-link nav-link-custom" href="{{ url('adm/pedidos') }}">
-                <div class="card card-custom h-100">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col">
-                        <div class="h5 mb-0 card-title">Pedidos</div>
-                      </div>
-                      <div class="col-4">
-                        <img src="{{asset('assets/img/pedidos.png')}}" alt="Pedidos">
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <button class="btn btn-menu w-100">
+                  <i class="bi bi-cart"></i>
+                  Pedidos
+                </button>
               </a>
             </div>
 
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-md-4 col-sm-6">
               <a class="nav-link nav-link-custom" href="{{ url('adm/produtos') }}">
-                <div class="card card-custom h-100">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col">
-                        <div class="h5 mb-0 card-title">Produtos</div>
-                      </div>
-                      <div class="col-4">
-                        <img src="{{asset('assets/img/produtos.png')}}" alt="Produtos">
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <button class="btn btn-menu w-100">
+                  <i class="bi bi-box-seam"></i>
+                  Produtos
+                </button>
               </a>
             </div>
 
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-md-4 col-sm-6">
               <a class="nav-link nav-link-custom" href="{{ url('adm/MateriaPrimaEstoque') }}">
-                <div class="card card-custom h-100">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col">
-                        <div class="h5 mb-0 card-title">Matérias Primas</div>
-                      </div>
-                      <div class="col-4">
-                        <img src="{{asset('assets/img/estoque.png')}}" alt="Matérias Primas">
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <button class="btn btn-menu w-100">
+                  <i class="bi bi-tools"></i>
+                  Matérias Primas
+                </button>
               </a>
             </div>
 
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-md-4 col-sm-6">
               <a class="nav-link nav-link-custom" href="{{ url('adm/servicos') }}">
-                <div class="card card-custom h-100">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col">
-                        <div class="h5 mb-0 card-title">Serviços</div>
-                      </div>
-                      <div class="col-4">
-                        <img src="{{asset('assets/img/servicos.png')}}" alt="Serviços">
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <button class="btn btn-menu w-100">
+                  <i class="bi bi-gear"></i>
+                  Serviços
+                </button>
               </a>
             </div>
 
-            <div class="col-lg-4 col-md-6 mb-4">
-              <a class="nav-link nav-link-custom" href="{{ url('adm/agendamento') }}">
-                <div class="card card-custom h-100">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col">
-                        <div class="h5 mb-0 card-title">Agenda</div>
-                      </div>
-                      <div class="col-4">
-                        <img src="{{asset('assets/img/agenda.png')}}" alt="Agenda">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-md-4 col-sm-6">
               <a class="nav-link nav-link-custom" href="{{ url('adm/fornecedores') }}">
-                <div class="card card-custom h-100">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col">
-                        <div class="h5 mb-0 card-title">Fornecedores</div>
-                      </div>
-                      <div class="col-4">
-                        <img src="{{asset('assets/img/fornecedores.png')}}" alt="Fornecedores">
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <button class="btn btn-menu w-100">
+                  <i class="bi bi-truck"></i>
+                  Fornecedores
+                </button>
               </a>
             </div>
 
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-md-4 col-sm-6">
               <a class="nav-link nav-link-custom" href="{{ url('adm/notificacoes') }}">
-                <div class="card card-custom h-100">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col">
-                        <div class="h5 mb-0 card-title">Notificações</div>
-                      </div>
-                      <div class="col-4">
-                        <img src="{{asset('assets/img/notificacoes.png')}}" alt="Notificações">
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <button class="btn btn-menu w-100">
+                  <i class="bi bi-bell"></i>
+                  Notificações
+                </button>
               </a>
             </div>
 
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-md-4 col-sm-6">
+              <a class="nav-link nav-link-custom" href="{{ url('adm/agendamento') }}">
+                <button class="btn btn-menu w-100">
+                  <i class="bi bi-calendar-event"></i>
+                  Agenda
+                </button>
+              </a>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
               <a class="nav-link nav-link-custom" href="{{ url('adm/receitasItens') }}">
-                <div class="card card-custom h-100">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col">
-                        <div class="h5 mb-0 card-title">Receitas</div>
-                      </div>
-                      <div class="col-4">
-                        <img src="{{asset('assets/img/cardapio.png')}}" alt="Receitas">
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <button class="btn btn-menu w-100">
+                  <i class="bi bi-journal-text"></i>
+                  Receitas
+                </button>
               </a>
             </div>
 
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-md-4 col-sm-6">
               <a class="nav-link nav-link-custom" href="{{ url('adm/galeriaImagens') }}">
-                <div class="card card-custom h-100">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col">
-                        <div class="h5 mb-0 card-title">Galeria de Imagens</div>
-                      </div>
-                      <div class="col-4">
-                        <img src="{{asset('assets/img/clientes.png')}}" alt="Galeria de Imagens">
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <button class="btn btn-menu w-100">
+                  <i class="bi bi-images"></i>
+                  Galeria de Imagens
+                </button>
               </a>
             </div>
 
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-md-4 col-sm-6">
               <a class="nav-link nav-link-custom" href="{{ url('adm/mensagens') }}">
-                <div class="card card-custom h-100">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col">
-                        <div class="h5 mb-0 card-title">Mensagens</div>
-                      </div>
-                      <div class="col-4">
-                        <img src="{{asset('assets/img/clientes.png')}}" alt="Mensagens">
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <button class="btn btn-menu w-100">
+                  <i class="bi bi-chat-dots"></i>
+                  Mensagens
+                </button>
               </a>
             </div>
 
+            <div class="col-md-4 col-sm-6">
+              <a class="nav-link nav-link-custom" href="{{ url('adm/admins') }}">
+                <button class="btn btn-menu w-100">
+                  <i class="bi bi-person-badge"></i>
+                  Colaboradores
+                </button>
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <footer>
-
       <div class="footer">
-<br><br>
-
-        </div>
+        <br><br>
       </div>
     </footer>
+  </div>
+
   <!-- Scroll to top -->
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
-  </a>  
-
+  </a>
 
   <script src="{{ asset('assets/vendor_adm/jquery/jquery.min.js') }}"></script>
   <script src="{{ asset('assets/vendor_adm/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -320,7 +292,6 @@
   <script src="{{ asset('assets/js/js_adm/js_adm/demo/chart-area-demo.js') }}"></script>
   <script src="{{ asset('assets/js/js_adm/demo/chart-pie-demo.js') }}"></script>
   <script src="{{ asset('assets/js/js_adm/demo/chart-bar-demo.js') }}"></script>
-
 </body>
 
 </html>
