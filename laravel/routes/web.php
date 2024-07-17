@@ -12,6 +12,7 @@ use App\Http\Controllers\Adm\FornecedorController;
 use App\Http\Controllers\Adm\ReceitaItemController;
 use App\Http\Controllers\Adm\GaleriaImagemController;
 use App\Http\Controllers\Adm\GastoController;
+use App\Http\Controllers\Adm\MensagemController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -134,6 +135,10 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
         return view('adm.admins');
     })->name('adm.admins');
 
+    Route::get('/mensagens', function () {
+        return view('adm.mensagens');
+    })->name('adm.mensagens');
+
     // Rotas específicas para clientes dentro do grupo 'adm/clientes'
     Route::prefix('clientes')->group(function () {
         Route::get('/', [ClienteController::class, 'index'])->name('clientes.index');
@@ -220,6 +225,13 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
         Route::get('/show/{idGastos}', [GastoController::class, 'show'])->name('gastos.show');
         Route::post('/guardar', [GastoController::class, 'guardar'])->name('gastos.guardar');
         Route::get('/remover/{idGastos}', [GastoController::class, 'remover'])->name('gastos.remover');
+    });
+
+    Route::prefix('mensagens')->group(function () {
+        Route::get('/', [MensagemController::class, 'index'])->name('mensagens.index');
+        Route::get('/show/{idMensagens}', [MensagemController::class, 'show'])->name('mensagens.show');
+        Route::post('/guardar', [MensagemController::class, 'guardar'])->name('mensagens.guardar');
+        Route::get('/remover/{idMensagens}', [MensagemController::class, 'remover'])->name('mensagens.remover');
     });
 });
 Route::get('adm/logout', [LoginAdminController::class, 'deslogar'])->name('logout');

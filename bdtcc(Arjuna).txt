@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 16-Jul-2024 às 22:12
+-- Tempo de geração: 17-Jul-2024 às 21:49
 -- Versão do servidor: 10.4.24-MariaDB
 -- versão do PHP: 8.1.5
 
@@ -26,17 +26,18 @@ CREATE TABLE `admins` (
   `email` varchar(200) DEFAULT NULL,
   `password` varchar(1024) DEFAULT NULL,
   `nome` varchar(255) NOT NULL,
-  `last_login` date DEFAULT NULL
+  `last_login` date DEFAULT NULL,
+  `permissoes` int(10) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `admins`
 --
 
-INSERT INTO `admins` (`id`, `email`, `password`, `nome`, `last_login`) VALUES
-(1, 'super@super', NULL, 'super@super', NULL),
-(2, 'user@user', NULL, 'user@user', NULL),
-(3, 'se@se', '$2y$12$7V/iAPBTrEhDkjPrXY0mbOK5Iti7rEPiwLiXmPvbmpGv6ihP5MXqa', 'ss', '2024-07-16');
+INSERT INTO `admins` (`id`, `email`, `password`, `nome`, `last_login`, `permissoes`) VALUES
+(1, 'super@super', NULL, 'super@super', NULL, 1),
+(2, 'user@user', NULL, 'user@user', NULL, 1),
+(3, 'se@se', '$2y$12$7V/iAPBTrEhDkjPrXY0mbOK5Iti7rEPiwLiXmPvbmpGv6ihP5MXqa', 'ss', '2024-07-17', 1);
 
 -- --------------------------------------------------------
 
@@ -298,8 +299,17 @@ CREATE TABLE `gastos` (
   `motivo` varchar(255) DEFAULT NULL,
   `valor` decimal(10,2) DEFAULT NULL,
   `dataCadastro` date DEFAULT NULL,
-  `dataAtualizacao` date DEFAULT NULL
+  `dataAtualizacao` date DEFAULT NULL,
+  `departamento` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `gastos`
+--
+
+INSERT INTO `gastos` (`id`, `motivo`, `valor`, `dataCadastro`, `dataAtualizacao`, `departamento`) VALUES
+(1, 'wa', '1.00', '2024-07-17', NULL, 'sasasa'),
+(2, 'sasa', '32.00', '2024-07-17', NULL, 'sasasasa');
 
 -- --------------------------------------------------------
 
@@ -338,7 +348,7 @@ INSERT INTO `materias_primas_estoque` (`id`, `nome`, `classificacao`, `quantidad
 CREATE TABLE `mensagens` (
   `id` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
-  `endereco` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `assunto` varchar(100) NOT NULL,
   `mensagem` text NOT NULL,
   `dataEnvio` timestamp NOT NULL DEFAULT current_timestamp()
@@ -348,7 +358,7 @@ CREATE TABLE `mensagens` (
 -- Extraindo dados da tabela `mensagens`
 --
 
-INSERT INTO `mensagens` (`id`, `nome`, `endereco`, `assunto`, `mensagem`, `dataEnvio`) VALUES
+INSERT INTO `mensagens` (`id`, `nome`, `email`, `assunto`, `mensagem`, `dataEnvio`) VALUES
 (1, '', '', '', 'dasdafdsafsd', '2024-05-25 19:32:18'),
 (2, 'daniel', 'caloko1029@gmail.com', 'assuunto', 'DSDSADSDADSADSAFGIYFGIA', '2024-05-25 19:35:18'),
 (3, 'daniel', 'caloko1029@gmail.com', 'assuunto', 'DSDSADSDADSADSAFGIYFGIA', '2024-05-25 19:36:56'),
@@ -1402,7 +1412,7 @@ ALTER TABLE `galeria_imagens`
 -- AUTO_INCREMENT de tabela `gastos`
 --
 ALTER TABLE `gastos`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `materias_primas_estoque`

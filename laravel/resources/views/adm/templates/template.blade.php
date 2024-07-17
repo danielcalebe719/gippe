@@ -139,6 +139,12 @@
                         <span class="text-gray-1000">Colaboradores</span>
                     </a>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url('adm/mensagens')}}">
+                        <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/notificacoes.png') }}" alt="">
+                        <span class="text-gray-1000">Mensagens</span>
+                    </a>
+                </li>
             
             </div>
             @endif

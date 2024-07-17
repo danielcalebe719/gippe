@@ -8,7 +8,7 @@
                         <h1 class="h3 mb-0 text-gray-800">Mensagenss</h1>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="./">Home</a></li>
-                            <li class="breadcrumb-item">Mensagenss</li>
+                            <li class="breadcrumb-item">Mensagens</li>
                         </ol>
                     </div>
 
@@ -17,7 +17,7 @@
                             <div class="card mb-4">
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">Mensagens</h6>
-                                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalAdicionarMensagens">Adicionar Mensagens</button>
+                                    
                                 </div>
                                 <div class="table-responsive p-3">
                                     <table class="table align-items-center table-flush table-hover" id="dataTableHover">
@@ -27,28 +27,44 @@
                                                 <th>Nome</th>
                                                 <th>Email</th>
                                                 <th>Assunto</th>
-                                                <th>Data Envio</th>
                                                 <th>Ações</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <!-- Aqui vai o conteúdo da tabela vindo do banco de dados -->
-                                            <!-- Exemplo estático para ilustrar -->
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Claudio</td>
-                                                <td>Emai@sdal</td>
-                                                <td>Assunto isso</td>
-                                                <td>15/02/2024</td>
-    
-                                                <td>
-                                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarMensagens">Editar</button>
-                                                    <button class="btn btn-danger btn-sm" onclick="excluirMensagens(1)">Excluir</button>
-                                                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalDetalhesMensagens">Detalhes</button>
-                                               
-                                                </td>
-                                            </tr>
-                                            <!-- Fim do exemplo -->
+                                            @foreach ($mensagens as $mensagem)
+                                        <tr>
+                                            <td>{{ $mensagem->id }}</td>
+                                            <td>{{ $mensagem->nome }}</td>
+                                            <td>{{ $mensagem->email }}</td>
+                                            <td>{{ $mensagem->assunto }}</td>
+                                            
+
+
+                                            <td>
+                                                <div class="btn-toolbar" role="toolbar"
+                                                    aria-label="Toolbar with button groups">
+                                                    
+
+                                                    <div class="btn-group mr-2" role="group"
+                                                        aria-label="Ações do Cliente">
+                                                        <button type="button" class="btn btn-danger btn-sm"
+                                                            onclick="abrirModalExclusao('{{ $mensagem->id }}')">
+                                                            Excluir
+                                                        </button>
+                                                    </div>
+                                                    <div class="btn-group" role="group" aria-label="Ações do Pedido">
+                                                        <button class="btn btn-info btn-sm"
+                                                            onclick="mostrarDetalhes('{{ $mensagem->id }}')"
+                                                            data-toggle="modal">
+                                                            Detalhes
+                                                        </button>
+                                                    </div>
+
+                                                    
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -56,94 +72,9 @@
                         </div>
                     </div>
 
-                    <!-- Modal Adicionar Mensagens -->
-                    <div class="modal fade" id="modalAdicionarMensagens" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Adicionar Mensagens</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="formAdicionarMensagens">
-                                        <div class="form-group">
-                                            <label for="nome">Nome</label>
-                                            <input type="text" class="form-control" id="nome" name="nome" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Email</label>
-                                            <input type="email" class="form-control" id="email" name="email" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="assunto">Assunto/label>
-                                            <input type="text" class="form-control" id="assunto" name="assunto" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="mensagem">Mensagem</label>
-                                            <input type="mensagem" class="form-control" id="mensagem" name="mensagem" required>
-                                        </div>
-                                       
-                                        <button type="submit" class="btn btn-primary">Salvar</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
 
-                    <!-- Modal Editar Mensagens -->
-                    <div class="modal fade" id="modalEditarMensagens" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Editar Mensagens</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="formEditarMensagens">
-                                        <div class="form-group">
-                                            <label for="EditNome">Nome</label>
-                                            <input type="text" class="form-control" id="EditNome" name="nome" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="EditEmail">Email</label>
-                                            <input type="email" class="form-control" id="EditEmail" name="email" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="EditAssunto">Assunto/label>
-                                            <input type="text" class="form-control" id="EditAssunto" name="assunto" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="EditMensagem">Mensagem</label>
-                                            <input type="mensagem" class="form-control" id="EditMensagem" name="mensagem" required>
-                                        </div>
-                                       
-                                        <button type="submit" class="btn btn-primary">Salvar</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-              
-                </div>
-            </footer>
-        </div>
-    </div>
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                  
-                </div>
-            </footer>
-        </div>
-    </div>
+                    
 
     <!-- Modal Detalhes Mensagens -->
 <div class="modal fade" id="modalDetalhesMensagens" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -156,12 +87,7 @@
               </button>
           </div>
           <div class="modal-body">
-              <div class="form-group row">
-                  <label for="detalhesNome" class="col-sm-3 col-form-label">Nome</label>
-                  <div class="col-sm-9">
-                      <input type="text" class="form-control" id="detalhesNome" readonly>
-                  </div>
-              </div>
+              
               <div class="form-group row">
                   <label for="detalhesMensagem" class="col-sm-3 col-form-label">Mensagem</label>
                   <div class="col-sm-9">
@@ -181,6 +107,43 @@
   </div>
 </div>
 
+
+<script>
+    function mostrarDetalhes(idMensagem) {
+        fetch(`/adm/mensagens/show/${idMensagem}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar os detalhes do agendamento');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Preencha os campos do modal com os dados do cliente, ou valores padrão
+                document.getElementById('detalhesMensagem').value = data.mensagem || '';
+                document.getElementById('detalhesDataEnvio').value = data.dataEnvio ? formatarData(data
+                    .dataEnvio) : '';
+                
+
+
+
+                // Abra o modal de detalhes do pedido
+                $('#modalDetalhesMensagens').modal('show');
+            })
+            .catch(error => {
+                console.error('Erro ao carregar os detalhes do produto:', error);
+            });
+    }
+
+    function formatarData(data) {
+        // Formato de exibição de data desejado
+        let options = {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        };
+        return new Date(data).toLocaleDateString('pt-BR', options);
+    }
+</script>
 
     <script>
       
