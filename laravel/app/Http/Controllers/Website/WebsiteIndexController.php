@@ -7,44 +7,51 @@ use App\Models\GaleriaImagens; // Importe o modelo GaleriaImagem
 use App\Models\Notificacoes;
 use App\Models\NotificacoesClientes;
 use App\Models\Mensagens;
+use App\Models\Pedidos;
 use Illuminate\Support\Facades\Auth;
 
 class WebsiteIndexController extends Controller
 {
+   
     public function index()
     {
-
-        $notificacoes = collect(); 
-        $notificacoes_clientes = collect(); 
-        $quantidadeNotificacoes = 0; 
+        $notificacoes = collect();
+        $quantidadeNotificacoes = 0;
+        $pedidos = collect();
+        $notificacoesAgrupadas = collect();
     
         if (Auth::guard('cliente')->check()) {
-            $idClientes = Auth::guard('cliente')->user()->id;
+            $idCliente = Auth::guard('cliente')->user()->id;
     
-            // Busca as notificações específicas do cliente logado
-            $notificacoes_clientes = NotificacoesClientes::where('idClientes', $idClientes)->get();
-            
-            // Obtém os IDs das notificações do cliente
-            $notificacoes_ids = $notificacoes_clientes->pluck('idNotificacoes');
+            // Fetch notifications for the client
+            $notificacoes_clientes = NotificacoesClientes::where('idClientes', $idCliente)->get();
     
-            // Busca as notificações completas baseadas nos IDs obtidos
-            $notificacoes = Notificacoes::whereIn('id', $notificacoes_ids)->get();
+            // Get unique pedido IDs
+            $idsPedidos = $notificacoes_clientes->pluck('idPedidos')->unique();
     
-            // Conta a quantidade de notificações não lidas
+            // Fetch pedidos
+            $pedidos = Pedidos::whereIn('id', $idsPedidos)->get();
+ 
+            // Fetch notifications
+            $notificacoes = Notificacoes::whereIn('id', $notificacoes_clientes->pluck('idNotificacoes'))->get();
+    
+            // Group notifications by pedido ID
+            $notificacoesAgrupadas = $notificacoes->groupBy(function ($notificacao) use ($notificacoes_clientes) {
+                $notificacao_cliente = $notificacoes_clientes->where('idNotificacoes', $notificacao->id)->first();
+                return $notificacao_cliente ? $notificacao_cliente->idPedidos : null;
+            });
+    
+            // Count unread notifications
             $quantidadeNotificacoes = $notificacoes->where('lido', false)->count();
-          //  dd($quantidadeNotificacoes);
         }
     
-        // Debug para verificar o conteúdo da coleção $notificacoes
-       // foreach ($notificacoes as $notificacoes){
-            //dd($notificacoes->id);
-       // }
-     
+        $imagens = GaleriaImagens::all();
     
-        $imagens = GaleriaImagens::all(); // Busca todas as imagens da tabela galeria_imagens
-    
-        return view('website.index', compact('imagens', 'notificacoes', 'notificacoes_clientes', 'quantidadeNotificacoes'));
+        return view('website.index', compact('imagens', 'pedidos', 'notificacoesAgrupadas', 'quantidadeNotificacoes'));
     }
+    
+    
+    
     
 
     

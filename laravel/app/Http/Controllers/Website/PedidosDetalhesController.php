@@ -10,7 +10,7 @@ use App\Models\Agendamentos;
 use App\Models\EnderecosClientes;
 use App\Models\Servicos;
 use App\Models\Clientes;
-
+use App\Models\Feedbacks;
 class PedidosDetalhesController extends Controller
 {
     public function index($codigo)
@@ -96,4 +96,34 @@ class PedidosDetalhesController extends Controller
         // Redirecionar com uma mensagem de sucesso
         return redirect()->back()->with('success', 'Informações do cliente atualizadas com sucesso!');
     }
+
+    public function feedback($codigo)
+    {
+        $pedido = Pedidos::where('codigo', $codigo)->firstOrFail();
+
+        return view('website.feedback', compact('codigo', 'pedido'));
+    }
+
+    public function feedback_salvar(Request $request)
+{
+    // Validação dos dados
+    $request->validate([
+        'avaliacao' => 'required|integer|min:1|max:5',
+        'mensagem' => 'required|string|max:1000',
+        'idPedidos' => 'required|integer|exists:pedidos,id', // Certifique-se de validar a existência do pedido
+       
+    ]);
+
+    // Criação do feedback
+    $feedback = new Feedbacks();
+    $feedback->avaliacao = $request->input('avaliacao');
+    $feedback->mensagem = $request->input('mensagem');
+    $feedback->idPedidos = $request->input('idPedidos');
+    $feedback->dataMensagem = NOW();
+    $feedback->save();
+
+    // Redirecionamento com mensagem de sucesso
+    return redirect()->route('website.index')->with('success', 'Feedback enviado com sucesso!');
+}
+
 }
