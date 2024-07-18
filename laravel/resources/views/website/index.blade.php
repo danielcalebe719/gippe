@@ -110,41 +110,59 @@
 
   <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="notificationsModalLabel">Notificações</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          @if ($notificacoes->isNotEmpty())
-          @foreach ($notificacoes as $notificacao)
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">{{ $notificacao->mensagem }}</h5>
-              <p class="card-text">{{ $notificacao->dataEnvio }}</p>
-              <!-- Verificar se a notificação não foi lida -->
-              @if ($notificacao->lido == false)
-              <form class="form-marcar-lida" data-notificacao-id="{{ $notificacao->id }}" action="{{ route('notificacoes.marcarLida', $notificacao->id) }}" method="POST">
-                @csrf
-                <button type="button" class="btn btn-primary btn-marcar-lida">
-                  <i class="bi bi-check"></i> Marcar como lida
-                </button>
-              </form>
-              @else
-              <button type="button" class="btn btn-secondary disabled">
-                <i class="bi bi-check"></i> Lida
-              </button>
-              @endif
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notificationsModalLabel">Notificações</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-          </div>
-          @endforeach
-          @else
-          <p>Nenhuma notificação encontrada.</p>
-          @endif
+            <div class="modal-body">
+                @if (isset($notificacoesAgrupadas) && $notificacoesAgrupadas->isNotEmpty())
+                    @foreach ($notificacoesAgrupadas as $idPedido => $notificacoesGrupo)
+                        @foreach ($notificacoesGrupo as $notificacao)
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $notificacao->titulo }}</h5>
+                                    <p class="card-text">{{ $notificacao->mensagem }}</p>
+                                    <p class="card-text">{{ $notificacao->dataEnvio }}</p>
+                                    
+                                    @php
+                                        $pedido = $pedidos->where('id', $idPedido)->first();
+                                   
+                                    @endphp
+                        
+                                    @if ($pedido)
+                                    @if ($pedido->status == 8)
+                                    <a href="{{ url('/website/feedback/' . $pedido->codigo) }}" class="btn btn-warning btn-sm">
+                                        <i class="bi bi-star-fill"></i> Avaliar o pedido
+                                    </a>
+                                @endif  
+                                    @else
+                                        <p class="text-danger">Pedido não encontrado (ID: {{ $idPedido }}).</p>
+                                    @endif
+                        
+                                    @if ($notificacao->lido == false)
+                                        <form class="form-marcar-lida" data-notificacao-id="{{ $notificacao->id }}" action="{{ route('notificacoes.marcarLida', $notificacao->id) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-primary btn-sm mt-2 btn-marcar-lida">
+                                                <i class="bi bi-check"></i> Marcar como lida
+                                            </button>
+                                        </form>
+                                    @else
+                                        <button type="button" class="btn btn-secondary btn-sm mt-2 disabled">
+                                            <i class="bi bi-check"></i> Lida
+                                        </button>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+                    @endforeach
+                @else
+                    <p>Nenhuma notificação encontrada.</p>
+                @endif
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 
 
 

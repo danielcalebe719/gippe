@@ -16,7 +16,8 @@ class Feedbacks extends Model
         'mensagem', 
         'avaliacao', 
         'dataMensagem',
-        'idPedidos'
+        'idPedidos',
+        'idClientes',
         // Adicione outros campos aqui
     ];
     public $timestamps = false;

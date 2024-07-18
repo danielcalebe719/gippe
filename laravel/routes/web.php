@@ -73,6 +73,7 @@ Route::post('/adm/admin/cadastro', [CadastrarAdminController::class, 'cadastrar'
 
 
 
+
 // Grupo de rotas 'adm' protegido por autenticação admin
 Route::middleware(['admin'])->prefix('adm')->group(function () {
     Route::get('/', function () {
@@ -313,9 +314,19 @@ Route::prefix('website')->group(function () {
     ->middleware('auth:cliente')
     ->name('website.salvar.imagem.perfil');
     
+    Route::get('/feedback/{codigo}', [PedidosDetalhesController::class, 'feedback'])
+    ->middleware('auth:cliente')
+    ->name('pedidosDetalhes.feedback');
+
+    Route::post('feedback/salvar', [PedidosDetalhesController::class, 'feedback_salvar'])
+    ->middleware('auth:cliente')
+    ->name('feedback.salvar');
+
     Route::get('/pedidos/pedidosDetalhes/{codigo}', [PedidosDetalhesController::class, 'index'])
     ->middleware('auth:cliente')
     ->name('pedidosDetalhes.index');
+
+
 
     Route::post('/atualizar/endereco', [PedidosDetalhesController::class, 'atualizar_endereco'])->name('endereco.atualizar');
     Route::post('/atualizar/cliente', [PedidosDetalhesController::class, 'atualizar_cliente'])->name('cliente.atualizar');
@@ -325,6 +336,7 @@ Route::prefix('website')->group(function () {
     Route::get('/agendamento/{codigo}', [WebsiteAgendamentoController::class, 'index'])
     ->middleware('auth:cliente')
     ->name('website.agendamento');
+    
 
 
 

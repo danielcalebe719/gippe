@@ -49,6 +49,9 @@
         .details {
             display: none;
         }
+         .btn-primary{
+            background-color: #276359;
+         }
     </style>
 </head>
 
@@ -60,10 +63,10 @@
                     <img src="{{ asset('assets/img/logo/logo.png ') }}">
                 </div>
             </a>
-
+            @if(Auth::guard('admin')->user()->permissoes == 1 || Auth::guard('admin')->user()->permissoes == 2)
             <hr class="sidebar-divider my-0">
             <br>
-            @if(Auth::guard('admin')->user()->permissoes == 1 || Auth::guard('admin')->user()->permissoes == 2)
+            
          
             <div id="operacional">
                 <h5 class="text-center">Operações</h5>
@@ -134,34 +137,27 @@
                     </a>
                 </li>
                 <li class="nav-item active">
+                <a href="{{url('adm/mensagens')}}" class="nav-link">
+                <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/notificacoes.png') }}" alt="">
+                        <span class="text-gray-1000">Mensagens</span>
+                </a>
+                </li>
+                <li class="nav-item active">
                     <a class="nav-link" href="{{url('adm/admins')}}">
                         <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/fornecedores.png') }}" alt="">
                         <span class="text-gray-1000">Colaboradores</span>
                     </a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{url('adm/mensagens')}}">
-                        <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/notificacoes.png') }}" alt="">
-                        <span class="text-gray-1000">Mensagens</span>
-                    </a>
-                </li>
-            
             </div>
             @endif
+            <hr class="sidebar-divider my-0">
             @if(Auth::guard('admin')->user()->permissoes == 1 || Auth::guard('admin')->user()->permissoes == 3)
             <div id="financeiro">
-                <hr class="sidebar-divider my-0">
                 <h5 class="text-center">Financeiro</h5>
                 <li class="nav-item active">
                     <a class="nav-link" href="{{url('adm/painel-financeiro')}}">
                         <img class="fas fa-fw fa-tachometer-alt" src="{{ asset('assets/img/menu-img1.png') }}" alt="">
                         <span class="text-gray-1000">Painel Financeiro</span>
-                    </a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{url('adm/painel-financeiro')}}s">
-                        <img class="fas fa-fw fa-tachometer-alt" src="{{ asset('assets/img/menu-img2.png') }}" alt="">
-                        <span class="text-gray-1000">Relatórios Gráficos</span>
                     </a>
                 </li>
                 <li class="nav-item active">
@@ -186,32 +182,10 @@
                     <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-
                     @if(Auth::guard('admin')->check())
-
                     <h5 class="text-gray-1000">Olá, {{ Auth::guard('admin')->user()->nome }}!</h5>
                     @endif
-
-
-
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                                <form class="navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-1 small" placeholder="O que você está procurando?" aria-label="Search" aria-describedby="basic-addon2" style="border-color: #8ebba791">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
                         <div class="topbar-divider d-none d-sm-block"></div>
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -224,22 +198,12 @@
                                     Sair
                                 </a>
                             </div>
-
                         </li>
                     </ul>
                 </nav>
-
-
-        
-        
                 <div class="">  
                     @yield('content')   
                 </div>
-
-
-
-
-
                 <script src="{{ asset('assets/vendor_adm/jquery/jquery.min.js') }}"></script>
                 <script src="{{ asset('assets/vendor_adm/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
                 <!--  <script src="{{ asset('assets/vendor_adm/jquery-easing/jquery.easing.min.js') }}"></script>-->
@@ -254,5 +218,4 @@
                     });
                 </script>
 </body>
-
 </html>
