@@ -49,6 +49,9 @@
         .details {
             display: none;
         }
+         .btn-primary{
+            background-color: #276359;
+         }
     </style>
 </head>
 
