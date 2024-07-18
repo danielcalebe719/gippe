@@ -135,7 +135,7 @@
                 </li>
                 <li class="nav-item active">
                 <a href="{{url('adm/mensagens')}}" class="nav-link">
-                <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/clientes.png') }}" alt="">
+                <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/notificacoes.png') }}" alt="">
                         <span class="text-gray-1000">Mensagens</span>
                 </a>
                 </li>
@@ -145,13 +145,6 @@
                         <span class="text-gray-1000">Colaboradores</span>
                     </a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{url('adm/mensagens')}}">
-                        <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/notificacoes.png') }}" alt="">
-                        <span class="text-gray-1000">Mensagens</span>
-                    </a>
-                </li>
-            
             </div>
             @endif
             <hr class="sidebar-divider my-0">
@@ -162,12 +155,6 @@
                     <a class="nav-link" href="{{url('adm/painel-financeiro')}}">
                         <img class="fas fa-fw fa-tachometer-alt" src="{{ asset('assets/img/menu-img1.png') }}" alt="">
                         <span class="text-gray-1000">Painel Financeiro</span>
-                    </a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{url('adm/painel-financeiro')}}s">
-                        <img class="fas fa-fw fa-tachometer-alt" src="{{ asset('assets/img/menu-img2.png') }}" alt="">
-                        <span class="text-gray-1000">Relatórios Gráficos</span>
                     </a>
                 </li>
                 <li class="nav-item active">
