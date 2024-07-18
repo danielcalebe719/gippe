@@ -44,7 +44,7 @@
         <!-- ======= Header ======= -->
         <header id="header" class="d-flex align-items-center">
             <div class="container d-flex align-items-center justify-content-between">
-                <a href="{{ url('/website') }}"><img src="assets/img/logo.png" alt="" style="max-width: 50%;"><span></span></a>
+                <a href="{{ url('/website') }}"><img src="{{ asset('assets/img/logo.png') }}" alt="" style="max-width: 50%;"><span></span></a>
                 <nav id="navbar" class="navbar">
                     <ul>
                         <li><a class="nav-link scrollto" href="{{ url('/website') }}">Home</a></li>
