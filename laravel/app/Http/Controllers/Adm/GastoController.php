@@ -19,7 +19,8 @@ class GastoController extends Controller
     public function index()
     {
         $gastos = Gastos::all();
-        return view('adm.painel-financeiro', compact('gastos'));
+        $gastosPendentes = Gastos::where("status",'1')->get();
+        return view('adm.painel-financeiro', compact('gastos', 'gastosPendentes'));
     }
 
     public function show($idGastos)
@@ -47,6 +48,8 @@ class GastoController extends Controller
             // Preenche os outros campos do gasto
             $gasto->motivo = $request->input('motivo');
             $gasto->valor = $request->input('valor');
+            $gasto->departamento = $request->input('departamento');
+            $gasto->status = $request->input('status');
             if(!$request->idGasto){
                 $gasto->dataCadastro = now();
             }

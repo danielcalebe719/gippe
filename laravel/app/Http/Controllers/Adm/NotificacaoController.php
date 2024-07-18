@@ -17,12 +17,7 @@ use Illuminate\Support\Facades\Log;
 
 class NotificacaoController extends Controller
 {
-    // public function index()
-    // {
-    //     $notificacaoCliente = Notificacoes::where('idNotificacoes = id');
-    //     $notificacaoColaborador = Notificacoes::where('idNotificacoes = id');
-    //     return view('adm.notificacoes', compact('notificacaoCliente', 'notificacaoColaborador'));
-    // }
+    
 
     public function index()
 {
@@ -42,7 +37,7 @@ class NotificacaoController extends Controller
 
     public function show($idNotificacoes)
     {
-        $notificacao = Clientes::find($idNotificacoes);
+        $notificacao = Notificacoes::find($idNotificacoes);
         
         if ($notificacao) {
 
@@ -111,27 +106,14 @@ class NotificacaoController extends Controller
         }
     }
     
-    
-    
 
-
-
-
-
-
-
-
-
-
-
-    
-    public function remover($idCliente)
+    public function remover($idNotificacao)
     {
         try {
 
-            $notificacoesclientes = NotificacoesClientes::where('idNotificacao',$idCliente)->delete();
-            $enderecosclientes = NotificacoesColaboradores::where('idNotificacao',$idCliente)->delete();
-            $pedido = Pedidos::where('idClientes',$idCliente)->delete();
+            $notificacoesClientes = NotificacoesClientes::where('idNotificacao',$idCliente)->delete();
+            
+            
             $cliente = Clientes::findOrFail($idCliente);
            
             

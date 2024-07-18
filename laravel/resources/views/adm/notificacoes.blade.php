@@ -148,6 +148,44 @@
             </div>
         </div>
     </div>
+     <!-- Modal Adicionar Notificação para Funcionario -->
+     <div class="modal fade" id="modalAdicionarNotificacaoColaborador" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Adicionar Notificação para Colaborador</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="formAdicionarNotificacaoCliente" method="POST" action="/adm/notificacoes/guardarCliente">
+                        <div class="form-group">
+                            <label for="idCliente"> ID do Cliente</label>
+                            <input type="text" class="form-control" id="idCliente" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="idCliente"> ID do Cliente</label>
+                            <input type="text" class="form-control" id="idCliente" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tituloCliente">Título</label>
+                            <input type="text" class="form-control" id="tituloCliente" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mensagemCliente">Mensagem</label>
+                            <textarea class="form-control" id="mensagemCliente" rows="3" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Adicionar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal Editar Notificação para Cliente -->
     <div class="modal fade" id="modalEditarNotificacaoCliente" tabindex="-1" role="dialog"

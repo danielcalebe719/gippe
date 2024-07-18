@@ -15,12 +15,26 @@ class Gastos extends Model
         'motivo', 
         'valor', 
         'dataCadastro',
-        'dataAtualizacao'
+        'dataAtualizacao',
+        'departamento',
+        'status'
         // Adicione outros campos aqui
     ];
     public $timestamps = false;
 
+    private static $statusArray = [
+        null => '',
+        '1' => 'Pendente',
+        '2' => 'Pago'
+        
+    ];
+    public static function getStatusArray(){
+        return self::$statusArray;
+    }
 
+    public function getStatus(){
+        return self::$statusArray[$this->status];
+    }
   
 
 

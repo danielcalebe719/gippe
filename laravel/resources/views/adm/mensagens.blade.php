@@ -91,7 +91,8 @@
               <div class="form-group row">
                   <label for="detalhesMensagem" class="col-sm-3 col-form-label">Mensagem</label>
                   <div class="col-sm-9">
-                      <input type="text" class="form-control" id="detalhesMensagem" readonly>
+                    <textarea name="" id="detalhesMensagem" class="form-control" readonly></textarea>
+                      
                   </div>
               </div>
               <div class="form-group row">
@@ -118,10 +119,10 @@
                 return response.json();
             })
             .then(data => {
+                console.log(data);
                 // Preencha os campos do modal com os dados do cliente, ou valores padrão
                 document.getElementById('detalhesMensagem').value = data.mensagem || '';
-                document.getElementById('detalhesDataEnvio').value = data.dataEnvio ? formatarData(data
-                    .dataEnvio) : '';
+                document.getElementById('detalhesDataEnvio').value = data.dataEnvio || '';
                 
 
 
