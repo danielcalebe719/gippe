@@ -14,7 +14,7 @@ class Mensagens extends Model
     protected $fillable = [   
         'nome', 
         'email', 
-        'assunto'.
+        'assunto',
         'mensagem', 
         'dataEnvio'
         // Adicione outros campos aqui

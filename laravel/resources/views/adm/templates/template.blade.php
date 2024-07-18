@@ -55,7 +55,7 @@
 <body id="page-top">
     <div id="wrapper">
         <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('adm/painel-financeiro')}}">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url ('/adm/painel-operacional')}}">
                 <div class="sidebar-brand-icon">
                     <img src="{{ asset('assets/img/logo/logo.png ') }}">
                 </div>
@@ -143,6 +143,12 @@
                     <a class="nav-link" href="{{url('adm/admins')}}">
                         <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/fornecedores.png') }}" alt="">
                         <span class="text-gray-1000">Colaboradores</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url('adm/mensagens')}}">
+                        <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/notificacoes.png') }}" alt="">
+                        <span class="text-gray-1000">Mensagens</span>
                     </a>
                 </li>
             

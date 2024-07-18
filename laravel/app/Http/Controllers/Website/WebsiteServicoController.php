@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
 use App\Models\Servicos;
+use App\Models\NotificacoesClientes;
+use App\Models\Notificacoes;
 use Illuminate\Http\Request;
 use App\Models\PpServicos;
 use Illuminate\Support\Facades\DB;
 use App\Models\Pedidos;
+use App\Models\Clientes;
 use App\Models\PedidosServicos;
 use Illuminate\Support\Str;
 
@@ -45,6 +48,7 @@ class WebsiteServicoController extends Controller
                 $pedido->idEnderecos = $request->idEnderecos;
                 $pedido->dataAtualizacao = NOW();
                 $pedido->status = 1;
+               
                 $criacao = true;
                 do {
                     $codigo = 'PE' . Str::random(6) . mt_rand(10, 99);
@@ -65,6 +69,24 @@ class WebsiteServicoController extends Controller
             }
             
             $pedido->save();
+
+            
+            $cliente = Clientes::find($request->idClientes);
+            $notificacao = Notificacoes::create([
+                 'titulo' => 'Novo pedido',
+                 'mensagem' => 'Olá ' .$cliente->nome.'! Novo pedido criado: #' . $pedido->codigo .
+                 ' fique atento as notificações 
+                 e acompanhe seu pedido!',
+                 'dataEnvio' => NOW(),
+                 // Outros campos da notificação, se houverem
+             ]);
+             NotificacoesClientes::create([
+                 'idPedidos' => $pedido->id,
+                 'idClientes' => $request->idClientes,
+                'idNotificacoes' => $notificacao->id,
+                 // Outros campos da notificação, se houverem
+             ]); 
+     
             
             $totalServicos = DB::table('servicos')
                 ->where('id', $pedido->idServicos)

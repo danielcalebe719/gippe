@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 15-Jul-2024 às 21:42
+-- Tempo de geração: 17-Jul-2024 às 21:49
 -- Versão do servidor: 10.4.24-MariaDB
 -- versão do PHP: 8.1.5
 
@@ -26,17 +26,18 @@ CREATE TABLE `admins` (
   `email` varchar(200) DEFAULT NULL,
   `password` varchar(1024) DEFAULT NULL,
   `nome` varchar(255) NOT NULL,
-  `last_login` date DEFAULT NULL
+  `last_login` date DEFAULT NULL,
+  `permissoes` int(10) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `admins`
 --
 
-INSERT INTO `admins` (`id`, `email`, `password`, `nome`, `last_login`) VALUES
-(1, 'super@super', NULL, 'super@super', NULL),
-(2, 'user@user', NULL, 'user@user', NULL),
-(3, 'se@se', '$2y$12$7V/iAPBTrEhDkjPrXY0mbOK5Iti7rEPiwLiXmPvbmpGv6ihP5MXqa', 'ss', '2024-07-15');
+INSERT INTO `admins` (`id`, `email`, `password`, `nome`, `last_login`, `permissoes`) VALUES
+(1, 'super@super', NULL, 'super@super', NULL, 1),
+(2, 'user@user', NULL, 'user@user', NULL, 1),
+(3, 'se@se', '$2y$12$7V/iAPBTrEhDkjPrXY0mbOK5Iti7rEPiwLiXmPvbmpGv6ihP5MXqa', 'ss', '2024-07-17', 1);
 
 -- --------------------------------------------------------
 
@@ -85,7 +86,8 @@ INSERT INTO `agendamentos` (`id`, `idPedidos`, `dataInicio`, `dataFim`, `horaIni
 (6, 58, '2024-07-02', '2024-07-02', '15:00:00', '12:00:00', 'sss', NULL, NULL),
 (7, 61, '2024-07-06', '2024-07-06', '17:00:00', '23:00:00', 'Ola tudo bem? gostaria de atarasda', NULL, NULL),
 (8, 62, '2024-07-05', '2024-07-06', '22:50:00', '11:22:00', 'Poise', NULL, NULL),
-(9, 4, '2024-07-06', '2024-07-13', '17:52:00', '17:53:00', 'asdsa', '2024-07-06', '2024-07-06');
+(9, 13, '2024-07-06', '2024-07-13', '17:52:00', '17:53:00', 'asdsa', '2024-07-06', '2024-07-06'),
+(11, 69, '2024-07-01', '2024-07-02', '11:11:00', '12:12:00', 'sass', '2024-07-15', NULL);
 
 -- --------------------------------------------------------
 
@@ -124,13 +126,13 @@ INSERT INTO `clientes` (`id`, `nome`, `cpf`, `dataNascimento`, `status`, `email`
 (47, 'roberto', NULL, NULL, NULL, 'roberto@roa', '$2y$12$KNbyLU6ePjvMl6qAB1bMNeIBkJdxp83c9o1lYJaSTF8uTHZESLL2C', '2024-07-04', '2024-07-04', NULL, NULL, NULL, '2024-07-04'),
 (48, NULL, NULL, NULL, NULL, 'dani@dani', '$2y$12$u.apiJMBpj1h2Fsu7anhIu1/tcNH2izBZ9YZRBF.6egFIrpZeghvq', '2024-07-04', '2024-07-04', NULL, NULL, NULL, '2024-07-04'),
 (51, 'raiz@raiz', '12345612355', '2005-05-05', 'ativo', 'raiz@raiz', '$2y$12$Ty4XHkOZ/4bFD2.ENlGrneWOn7Id9LJRpZg6X5CZRWvd2sLagZ0Y.', '2024-07-04', '2024-07-04', NULL, NULL, '555225522552', '2024-07-04'),
-(52, 'pedrin', '22211122211', '2255-05-12', 'ativo', 'pedro@pedro', '$2y$12$wbCgQgUfY9tdIsWUl/zOTeAf7aFdnH6F/Mrj9DlPpr9ZAaTDGoyRy', '2024-07-04', '2024-07-04', NULL, NULL, '55885455455', '2024-07-05'),
+(52, 'pedrin', '22211122211', '2255-05-12', 'ativo', 'pedro@pedro', '$2y$12$wbCgQgUfY9tdIsWUl/zOTeAf7aFdnH6F/Mrj9DlPpr9ZAaTDGoyRy', '2024-07-04', '2024-07-04', NULL, NULL, '55885455455', '2024-07-16'),
 (53, 'umdia', '11111111111', '4599-05-31', 'ativo', 'umdia@umdia', '$2y$12$v3Ibd1EcBpe7cR8/CWliduq6YA5gJa8b3K4oEKQ6PaZ1p6xYMc5oS', '2024-07-04', '2024-07-04', NULL, NULL, '3195455656', '2024-07-04'),
 (54, 'Pedro', '15332185600', NULL, NULL, NULL, NULL, '2024-07-05', '2024-07-05', NULL, NULL, NULL, NULL),
 (55, NULL, NULL, NULL, NULL, 'rod@rod', '$2y$12$AAzv56xwBfU9KmpGCrReJ.nfA.KmKUe8SarmU9oNE9WOzOdVrKlPi', '2024-07-05', '2024-07-05', NULL, NULL, NULL, '2024-07-05'),
 (56, 'House', '12345678922', '2004-03-02', 'inativo', 'house@ss', NULL, '2024-07-06', '2024-07-06', NULL, NULL, '9922001192', NULL),
 (57, 'House', '12345678922', '2004-03-02', 'inativo', 'house@ss', NULL, '2024-07-06', '2024-07-06', NULL, NULL, '9922001192', NULL),
-(58, 'danada', '15332185600', NULL, 'ativo', 'wqeqe@gmail', NULL, '2024-07-06', '2024-07-06', NULL, NULL, '319954523212', NULL),
+(58, 'danadinha', '15332185600', '2001-01-01', 'ativo', 'ola@gmail', NULL, '2024-07-06', '2024-07-06', NULL, '1721062528_istockphoto-1312429048-612x612.jpg', '31995453589', NULL),
 (59, 'aaa', '12312', '2024-07-06', 'ativo', 'a@a', '$2y$12$BWiiOuxDbRs/x1BnOAL53uCGss1.aF7dANn4LuNCY8XQ62dhRHzey', '2024-07-06', '2024-07-06', NULL, NULL, '123', NULL),
 (60, 'aaa', '12312', '2024-07-06', 'inativo', 'a@a', NULL, '2024-07-06', '2024-07-06', NULL, NULL, '123', NULL),
 (61, 'aaa', '12312', '2024-07-06', 'ativo', 'a@a', NULL, '2024-07-06', '2024-07-06', NULL, NULL, '123', NULL),
@@ -168,7 +170,11 @@ INSERT INTO `enderecos_clientes` (`id`, `tipo`, `cep`, `cidade`, `bairro`, `rua`
 (7, 'residencial', 31530250, 'Belo Horizonte', 'Santa Mônica', 'Rua dos Comanches', 1, '1', 1),
 (9, 'residencial', 31530250, 'Belo Horizonte', 'Santa Mônica', 'Rua dos Comanches', 1, '2', NULL),
 (10, 'comercial', 31530250, 'Belo Horizonte', 'Santa Mônica', 'Rua dos Comanches', 23, '3', NULL),
-(11, 'comercial', 31530250, 'Belo Horizonte', 'Santa Mônica', 'Rua dos Comanches', 546546, '5645654', 1);
+(11, 'comercial', 31530250, 'Belo Horizonte', 'Santa Mônica', 'Rua dos Comanches', 546546, '5645654', 1),
+(12, 'residencial', 44433322, 'asas', 'sas', 'ss', 11, 'ss', 58),
+(13, 'residencial', 31655470, 'Belo Horizonte', 'Mantiqueira', 'Rua Edith Gomes Martinsssss', 1122222, '22', 58),
+(14, 'residencial', 31655444, 'plus', 'plus', 'plus', 11, 'plus', 58),
+(15, 'comercial', 31655470, 'Belo Horizonte', 'Mantiqueira', 'Rua Edith Gomes Martins', 99, 'pp', 52);
 
 -- --------------------------------------------------------
 
@@ -202,8 +208,8 @@ CREATE TABLE `feedbacks` (
 --
 
 INSERT INTO `feedbacks` (`id`, `mensagem`, `avaliacao`, `dataMensagem`, `idPedidos`) VALUES
-(1, 'Muito bom!', '5', '2024-07-15', 13),
-(2, 'Muito ruim!', '2', '2024-07-15', 62);
+(1, 'Muito Bom!', '5', '2024-07-15', 3),
+(2, 'Muito Ruim!', '2', '2024-07-15', 4);
 
 -- --------------------------------------------------------
 
@@ -293,8 +299,17 @@ CREATE TABLE `gastos` (
   `motivo` varchar(255) DEFAULT NULL,
   `valor` decimal(10,2) DEFAULT NULL,
   `dataCadastro` date DEFAULT NULL,
-  `dataAtualizacao` date DEFAULT NULL
+  `dataAtualizacao` date DEFAULT NULL,
+  `departamento` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `gastos`
+--
+
+INSERT INTO `gastos` (`id`, `motivo`, `valor`, `dataCadastro`, `dataAtualizacao`, `departamento`) VALUES
+(1, 'wa', '1.00', '2024-07-17', NULL, 'sasasa'),
+(2, 'sasa', '32.00', '2024-07-17', NULL, 'sasasasa');
 
 -- --------------------------------------------------------
 
@@ -333,7 +348,7 @@ INSERT INTO `materias_primas_estoque` (`id`, `nome`, `classificacao`, `quantidad
 CREATE TABLE `mensagens` (
   `id` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
-  `endereco` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `assunto` varchar(100) NOT NULL,
   `mensagem` text NOT NULL,
   `dataEnvio` timestamp NOT NULL DEFAULT current_timestamp()
@@ -343,7 +358,7 @@ CREATE TABLE `mensagens` (
 -- Extraindo dados da tabela `mensagens`
 --
 
-INSERT INTO `mensagens` (`id`, `nome`, `endereco`, `assunto`, `mensagem`, `dataEnvio`) VALUES
+INSERT INTO `mensagens` (`id`, `nome`, `email`, `assunto`, `mensagem`, `dataEnvio`) VALUES
 (1, '', '', '', 'dasdafdsafsd', '2024-05-25 19:32:18'),
 (2, 'daniel', 'caloko1029@gmail.com', 'assuunto', 'DSDSADSDADSADSAFGIYFGIA', '2024-05-25 19:35:18'),
 (3, 'daniel', 'caloko1029@gmail.com', 'assuunto', 'DSDSADSDADSADSAFGIYFGIA', '2024-05-25 19:36:56'),
@@ -447,23 +462,31 @@ CREATE TABLE `movimentacoes_produtos` (
 
 CREATE TABLE `notificacoes` (
   `id` int(10) NOT NULL,
-  `idNotificacaoArray` int(10) NOT NULL,
+  `idNotificacaoArray` int(10) DEFAULT NULL,
   `mensagem` varchar(500) DEFAULT NULL,
   `dataEnvio` date DEFAULT NULL,
-  `titulo` varchar(255) NOT NULL
+  `titulo` varchar(255) NOT NULL,
+  `lido` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `notificacoes`
 --
 
-INSERT INTO `notificacoes` (`id`, `idNotificacaoArray`, `mensagem`, `dataEnvio`, `titulo`) VALUES
-(1, 1, 'Oi, o seu pedido deve ser pago até o dia...', '2024-06-08', 'PEDIDO'),
-(2, 2, 'Oi, o seu pedido deve ser pago até o dia...dkjsdhsahdlsadhadsadsad', '2024-06-08', 'PEDIDO'),
-(3, 0, 'Olá z, quero que vc isso isso e aquilo', '2024-06-09', 'QUERIDO Z'),
-(4, 0, 'Olá z, quero que vc isso isso e aquilo', '2024-06-09', 'QUERIDO Z'),
-(5, 0, 'o fafa é fota', '2024-06-10', 'fafa viado'),
-(6, 0, 'o fafa é fota', '2024-06-10', 'fafa viado');
+INSERT INTO `notificacoes` (`id`, `idNotificacaoArray`, `mensagem`, `dataEnvio`, `titulo`, `lido`) VALUES
+(1, 1, 'Oi, o seu pedido deve ser pago até o dia...', '2024-06-08', 'PEDIDO', 1),
+(2, 2, 'Oi, o seu pedido deve ser pago até o dia...dkjsdhsahdlsadhadsadsad', '2024-06-08', 'PEDIDO', 0),
+(3, 0, 'Olá z, quero que vc isso isso e aquilo', '2024-06-09', 'QUERIDO Z', 0),
+(4, 0, 'Olá z, quero que vc isso isso e aquilo', '2024-06-09', 'QUERIDO Z', 0),
+(5, 0, 'o fafa é fota', '2024-06-10', 'fafa viado', 0),
+(6, 0, 'o fafa é fota', '2024-06-10', 'fafa viado', 0),
+(7, NULL, 'Olá52Novo pedido criado: #fique atento as notificações \n                    e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 1),
+(8, NULL, 'Olá Novo pedido criado: #fique atento as notificações \n                    e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 1),
+(9, NULL, 'Olápedrin Novo pedido criado: #fique atento as notificações \n                    e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 1),
+(10, NULL, 'Olá pedrin Novo pedido criado: #PEpUBzxk21fique atento as notificações \n                 e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 1),
+(11, NULL, 'Olá pedrin! Novo pedido criado: <a href=\"http://localhost:8086/pedidos/pedidosDetalhes/PEeL8DYW71\">Ver detalhes do pedido #PEeL8DYW71</a> Fique atento às notificações e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 1),
+(12, NULL, 'Olá pedrin! Novo pedido criado: #PEp4ESuz95fique atento as notificações \n                 e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 1),
+(13, NULL, 'Olá pedrin! Novo pedido criado: #PEwqbP6N28fique atento as notificações \n                 e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 1);
 
 -- --------------------------------------------------------
 
@@ -485,7 +508,14 @@ CREATE TABLE `notificacoes_clientes` (
 INSERT INTO `notificacoes_clientes` (`id`, `idPedidos`, `idClientes`, `idNotificacoes`) VALUES
 (1, 3, 52, 1),
 (6, 3, 48, 2),
-(7, 4, 59, 3);
+(7, 4, 59, 3),
+(8, NULL, 52, 7),
+(9, NULL, 52, 8),
+(10, NULL, 52, 9),
+(11, 79, 52, 10),
+(12, 82, 52, 11),
+(13, 85, 52, 12),
+(14, 86, 52, 13);
 
 -- --------------------------------------------------------
 
@@ -536,71 +566,94 @@ CREATE TABLE `pedidos` (
   `dataEntrega` date DEFAULT NULL,
   `idServicos` int(10) NOT NULL,
   `codigo` varchar(255) DEFAULT NULL,
-  `dataAtualizacao` date DEFAULT NULL
+  `dataAtualizacao` date DEFAULT NULL,
+  `idEnderecos` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `pedidos`
 --
 
-INSERT INTO `pedidos` (`id`, `idClientes`, `observacao`, `status`, `totalPedido`, `dataPedido`, `dataEntrega`, `idServicos`, `codigo`, `dataAtualizacao`) VALUES
-(3, 52, NULL, 3, NULL, NULL, '2024-07-09', 36, '', NULL),
-(4, 52, NULL, 4, NULL, NULL, NULL, 37, '', NULL),
-(5, 52, NULL, 5, NULL, NULL, NULL, 38, '', NULL),
-(6, 52, NULL, 6, NULL, NULL, NULL, 39, '', NULL),
-(7, 52, NULL, 3, NULL, NULL, NULL, 40, '', NULL),
-(8, 52, NULL, 4, NULL, NULL, NULL, 41, '', NULL),
-(9, 52, NULL, 5, NULL, NULL, NULL, 2, '', NULL),
-(10, 52, NULL, 6, NULL, NULL, NULL, 2, '', NULL),
-(11, 52, NULL, 4, NULL, NULL, NULL, 2, '', NULL),
-(12, 52, NULL, 3, NULL, '2024-07-05', NULL, 2, '', NULL),
-(13, 52, 'asdas', 2, '123.00', '2024-07-05', '2024-07-13', 2, '', '2024-07-06'),
-(14, 52, NULL, 1, NULL, '2024-07-05', NULL, 42, '', NULL),
-(15, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, '', NULL),
-(16, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, '', NULL),
-(17, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, '', NULL),
-(18, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, '', NULL),
-(19, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, '', NULL),
-(20, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, '', NULL),
-(21, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, '', NULL),
-(22, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, '', NULL),
-(23, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, '', NULL),
-(24, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, '', NULL),
-(25, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, '', NULL),
-(26, 52, NULL, 1, NULL, '2024-07-05', NULL, 4, 'PEJUJKJjhM', NULL),
-(27, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, 'PEiGZ3qS86', NULL),
-(28, 52, NULL, 1, NULL, '2024-07-05', NULL, 44, 'PELlVS1573', NULL),
-(29, 52, NULL, 1, NULL, '2024-07-05', NULL, 4, 'PEJfLnZV47', NULL),
-(30, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, 'PENb0T7b26', NULL),
-(31, 52, NULL, 1, NULL, '2024-07-05', NULL, 3, 'PEKuEcP013', NULL),
-(32, 52, NULL, 1, NULL, '2024-07-05', NULL, 4, 'PEydOHX618', NULL),
-(33, 52, NULL, 1, NULL, '2024-07-05', NULL, 4, 'PEtylGaS36', NULL),
-(34, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, 'PEbmbSUO95', NULL),
-(35, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, 'PEG33xcM19', NULL),
-(36, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, 'PEIDEwms12', NULL),
-(37, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, 'PE3NbUe110', NULL),
-(38, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, 'PEtQzeXf98', NULL),
-(39, 52, NULL, 1, '60.00', '2024-07-05', NULL, 2, 'PEybUOhO49', NULL),
-(45, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, 'PEAVYUTQ14', NULL),
-(46, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, 'PEVgGnl275', NULL),
-(47, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, 'PEak9dEe41', NULL),
-(48, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, 'PEro3tC563', NULL),
-(49, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, 'PEPjRlXt86', NULL),
-(50, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, 'PETy4PDB50', NULL),
-(51, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, 'PE4MayYk37', NULL),
-(52, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, 'PE4Tcfm272', NULL),
-(53, 52, NULL, 1, '86.97', '2024-07-05', NULL, 1, 'PE16ZK9C11', NULL),
-(54, 52, NULL, 1, '1360.00', '2024-07-05', NULL, 2, 'PEpYdAW888', NULL),
-(55, 52, NULL, 1, '2340.00', '2024-07-05', NULL, 2, 'PEw0a79B12', NULL),
-(56, 52, NULL, 1, '1350.00', '2024-07-05', NULL, 2, 'PEqDIv3j33', NULL),
-(57, 52, NULL, 1, '1395.00', '2024-07-05', NULL, 2, 'PETCr5TW93', NULL),
-(58, 52, NULL, 1, '15045.00', '2024-07-05', NULL, 1, 'PEZ35CIo81', NULL),
-(59, 52, NULL, 1, NULL, '2024-07-05', NULL, 45, 'PEHjdIBE47', NULL),
-(60, 52, NULL, 1, '900.00', '2024-07-05', NULL, 47, 'PEDnPFrH27', NULL),
-(61, 52, 'Ola tudo bem? gostaria de atarasda', 1, '495.00', '2024-07-05', NULL, 48, 'PEQPv7iN68', NULL),
-(62, 52, 'Poise', 2, '1354.00', '2024-07-05', '2024-07-05', 2, 'PEPcfEth80', NULL),
-(63, 1, 'nadinha', 2, '123.00', '2024-07-06', '2024-07-13', 1, NULL, '2024-07-06'),
-(64, 1, 'sadsadsadsa', 2, '200.00', '2024-07-06', '2024-07-13', 1, NULL, '2024-07-06');
+INSERT INTO `pedidos` (`id`, `idClientes`, `observacao`, `status`, `totalPedido`, `dataPedido`, `dataEntrega`, `idServicos`, `codigo`, `dataAtualizacao`, `idEnderecos`) VALUES
+(3, 52, NULL, 3, NULL, NULL, '2024-07-09', 36, '', NULL, 13),
+(4, 52, NULL, 4, NULL, NULL, NULL, 37, '', NULL, 13),
+(5, 52, NULL, 5, NULL, NULL, NULL, 38, '', NULL, 13),
+(6, 52, NULL, 6, NULL, NULL, NULL, 39, '', NULL, 13),
+(7, 52, NULL, 3, NULL, NULL, NULL, 40, '', NULL, 13),
+(8, 52, NULL, 4, NULL, NULL, NULL, 41, '', NULL, 13),
+(9, 52, NULL, 5, NULL, NULL, NULL, 2, '', NULL, 13),
+(10, 52, NULL, 6, NULL, NULL, NULL, 2, '', NULL, 13),
+(11, 52, NULL, 4, NULL, NULL, NULL, 2, '', NULL, 13),
+(12, 52, NULL, 3, NULL, '2024-07-05', NULL, 2, '', NULL, 13),
+(13, 52, 'asdas', 2, '123.00', '2024-07-05', '2024-07-13', 2, '', '2024-07-06', 13),
+(14, 52, NULL, 1, NULL, '2024-07-05', NULL, 42, '', NULL, 13),
+(15, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, '', NULL, 13),
+(16, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, '', NULL, 13),
+(17, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, '', NULL, 13),
+(18, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, '', NULL, 13),
+(19, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, '', NULL, 13),
+(20, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, '', NULL, 13),
+(21, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, '', NULL, 13),
+(22, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, '', NULL, 13),
+(23, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, '', NULL, 13),
+(24, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, '', NULL, 13),
+(25, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, '', NULL, 13),
+(26, 52, NULL, 1, NULL, '2024-07-05', NULL, 4, 'PEJUJKJjhM', NULL, 13),
+(27, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, 'PEiGZ3qS86', NULL, 13),
+(28, 52, NULL, 1, NULL, '2024-07-05', NULL, 44, 'PELlVS1573', NULL, 13),
+(29, 52, NULL, 1, NULL, '2024-07-05', NULL, 4, 'PEJfLnZV47', NULL, 13),
+(30, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, 'PENb0T7b26', NULL, 13),
+(31, 52, NULL, 1, NULL, '2024-07-05', NULL, 3, 'PEKuEcP013', NULL, 13),
+(32, 52, NULL, 1, NULL, '2024-07-05', NULL, 4, 'PEydOHX618', NULL, 13),
+(33, 52, NULL, 1, NULL, '2024-07-05', NULL, 4, 'PEtylGaS36', NULL, 13),
+(34, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, 'PEbmbSUO95', NULL, 13),
+(35, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, 'PEG33xcM19', NULL, 13),
+(36, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, 'PEIDEwms12', NULL, 13),
+(37, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, 'PE3NbUe110', NULL, 13),
+(38, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, 'PEtQzeXf98', NULL, 13),
+(39, 52, NULL, 1, '60.00', '2024-07-05', NULL, 2, 'PEybUOhO49', NULL, 13),
+(45, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, 'PEAVYUTQ14', NULL, 13),
+(46, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, 'PEVgGnl275', NULL, 13),
+(47, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, 'PEak9dEe41', NULL, 13),
+(48, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, 'PEro3tC563', NULL, 13),
+(49, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, 'PEPjRlXt86', NULL, 13),
+(50, 52, NULL, 1, NULL, '2024-07-05', NULL, 2, 'PETy4PDB50', NULL, 13),
+(51, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, 'PE4MayYk37', NULL, 13),
+(52, 52, NULL, 1, NULL, '2024-07-05', NULL, 1, 'PE4Tcfm272', NULL, 13),
+(53, 52, NULL, 1, '86.97', '2024-07-05', NULL, 1, 'PE16ZK9C11', NULL, 13),
+(54, 52, NULL, 1, '1360.00', '2024-07-05', NULL, 2, 'PEpYdAW888', NULL, 13),
+(55, 52, NULL, 1, '2340.00', '2024-07-05', NULL, 2, 'PEw0a79B12', NULL, 13),
+(56, 52, NULL, 1, '1350.00', '2024-07-05', NULL, 2, 'PEqDIv3j33', NULL, 13),
+(57, 52, NULL, 1, '1395.00', '2024-07-05', NULL, 2, 'PETCr5TW93', NULL, 13),
+(58, 52, NULL, 1, '15045.00', '2024-07-05', NULL, 1, 'PEZ35CIo81', NULL, 13),
+(59, 52, NULL, 1, NULL, '2024-07-05', NULL, 45, 'PEHjdIBE47', NULL, 13),
+(60, 52, NULL, 1, '900.00', '2024-07-05', NULL, 47, 'PEDnPFrH27', NULL, 13),
+(61, 52, 'Ola tudo bem? gostaria de atarasda', 1, '495.00', '2024-07-05', NULL, 48, 'PEQPv7iN68', NULL, 13),
+(62, 52, 'Poise', 2, '2.00', '2024-07-05', '2024-07-05', 2, 'PEPcfEth80', '2024-07-16', 13),
+(63, 1, 'nadinha', 2, '123.00', '2024-07-06', '2024-07-13', 1, NULL, '2024-07-06', 13),
+(64, 1, 'sadsadsadsa', 2, '200.00', '2024-07-06', '2024-07-13', 1, NULL, '2024-07-06', 13),
+(65, 58, NULL, 1, '1350.00', '2024-07-15', NULL, 2, 'PEfqsspy60', NULL, 13),
+(66, 58, NULL, 1, '0.00', '2024-07-15', NULL, 4, 'PEXClBFw38', NULL, 13),
+(67, 58, NULL, 7, '0.00', '2024-07-15', NULL, 4, 'PEl2I7Cq10', NULL, 13),
+(68, 58, NULL, 1, '1350.00', '2024-07-15', NULL, 2, 'PECWPG1368', NULL, 13),
+(69, 58, 'sass', 2, '1808.00', '2024-07-15', '2024-07-01', 3, 'PEK1UmP279', NULL, 13),
+(70, 58, NULL, 1, '1350.00', '2024-07-15', NULL, 2, 'PE64QlTb68', NULL, 13),
+(71, 58, NULL, 1, '15000.00', '2024-07-15', NULL, 1, 'PEEGBxjN51', NULL, 13),
+(72, 58, NULL, 1, '15000.00', '2024-07-15', NULL, 1, 'PEPk7h3T44', NULL, 12),
+(73, 58, NULL, 1, '1350.00', '2024-07-15', NULL, 2, 'PEfQqu6515', NULL, 12),
+(74, 58, NULL, 1, '0.00', '2024-07-15', NULL, 4, 'PEiJzwrn47', NULL, 13),
+(75, 58, NULL, 1, '15000.00', '2024-07-15', NULL, 1, 'PE8KvBmr26', NULL, 14),
+(76, 52, NULL, 1, '1800.00', '2024-07-16', NULL, 3, 'PExxUvwf94', '2024-07-16', 15),
+(77, 52, NULL, 1, '0.00', '2024-07-16', NULL, 4, 'PEnyKf8348', '2024-07-16', 15),
+(78, 52, NULL, 1, '1350.00', '2024-07-16', NULL, 2, 'PEllyFKn54', '2024-07-16', 15),
+(79, 52, NULL, 1, '1350.00', '2024-07-16', NULL, 2, 'PEpUBzxk21', '2024-07-16', 15),
+(80, 52, NULL, 1, NULL, '2024-07-16', NULL, 2, 'PEH6XlEp94', '2024-07-16', 15),
+(81, 52, NULL, 1, NULL, '2024-07-16', NULL, 2, 'PEWP5ICi15', '2024-07-16', 15),
+(82, 52, NULL, 1, '1350.00', '2024-07-16', NULL, 2, 'PEeL8DYW71', '2024-07-16', 15),
+(83, 52, NULL, 1, NULL, '2024-07-16', NULL, 2, 'PEsEgQ0w37', '2024-07-16', 15),
+(84, 52, NULL, 1, NULL, '2024-07-16', NULL, 2, 'PETeK8Rm98', '2024-07-16', 15),
+(85, 52, NULL, 1, '1350.00', '2024-07-16', NULL, 2, 'PEp4ESuz95', '2024-07-16', 15),
+(86, 52, NULL, 1, '1800.00', '2024-07-16', NULL, 3, 'PEwqbP6N28', '2024-07-16', 15);
 
 -- --------------------------------------------------------
 
@@ -687,7 +740,8 @@ INSERT INTO `pedidos_produtos` (`id`, `idPedidos`, `idProdutos`, `quantidade`, `
 (54, 58, 10, 1, '15.00'),
 (55, 61, 13, 1, '15.00'),
 (56, 61, 14, 1, '15.00'),
-(57, 62, 1, 2, '4.00');
+(58, 69, 1, 4, '8.00'),
+(59, 62, 3, 2, '2.00');
 
 --
 -- Acionadores `pedidos_produtos`
@@ -1216,7 +1270,8 @@ ALTER TABLE `password_reset_tokens`
 ALTER TABLE `pedidos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idCliente` (`idClientes`),
-  ADD KEY `idServicos` (`idServicos`);
+  ADD KEY `idServicos` (`idServicos`),
+  ADD KEY `fk_pedidos_enderecos` (`idEnderecos`);
 
 --
 -- Índices para tabela `pedidos_andamentos`
@@ -1309,7 +1364,7 @@ ALTER TABLE `admpermissoes`
 -- AUTO_INCREMENT de tabela `agendamentos`
 --
 ALTER TABLE `agendamentos`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `clientes`
@@ -1321,7 +1376,7 @@ ALTER TABLE `clientes`
 -- AUTO_INCREMENT de tabela `enderecos_clientes`
 --
 ALTER TABLE `enderecos_clientes`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de tabela `esqueci_senha`
@@ -1357,7 +1412,7 @@ ALTER TABLE `galeria_imagens`
 -- AUTO_INCREMENT de tabela `gastos`
 --
 ALTER TABLE `gastos`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `materias_primas_estoque`
@@ -1393,13 +1448,13 @@ ALTER TABLE `movimentacoes_produtos`
 -- AUTO_INCREMENT de tabela `notificacoes`
 --
 ALTER TABLE `notificacoes`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de tabela `notificacoes_clientes`
 --
 ALTER TABLE `notificacoes_clientes`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `notificacoes_colaboradores`
@@ -1411,7 +1466,7 @@ ALTER TABLE `notificacoes_colaboradores`
 -- AUTO_INCREMENT de tabela `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT de tabela `pedidos_andamentos`
@@ -1423,7 +1478,7 @@ ALTER TABLE `pedidos_andamentos`
 -- AUTO_INCREMENT de tabela `pedidos_produtos`
 --
 ALTER TABLE `pedidos_produtos`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT de tabela `pedidos_servicos`
@@ -1545,6 +1600,7 @@ ALTER TABLE `notificacoes_colaboradores`
 -- Limitadores para a tabela `pedidos`
 --
 ALTER TABLE `pedidos`
+  ADD CONSTRAINT `fk_pedidos_enderecos` FOREIGN KEY (`idEnderecos`) REFERENCES `enderecos_clientes` (`id`),
   ADD CONSTRAINT `idServicos` FOREIGN KEY (`idServicos`) REFERENCES `servicos` (`id`),
   ADD CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`idClientes`) REFERENCES `clientes` (`id`);
 
