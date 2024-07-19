@@ -167,7 +167,8 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
         Route::get('/show/{idNotificacoes}', [NotificacaoController::class, 'show'])->name('notificacoes.show');
         Route::post('/guardarCliente', [NotificacaoController::class, 'guardarCliente'])->name('notificacoes.guardarCliente');
         Route::post('/guardarAdmin', [NotificacaoController::class, 'guardarAdmin'])->name('notificacoes.guardarAdmin');
-        Route::get('/remover/{idNotificacoes}', [NotificacaoController::class, 'remover'])->name('notificacoes.remover');
+        Route::get('/removerCliente/{idNotificacoes}', [NotificacaoController::class, 'removerCliente'])->name('notificacoes.removerCliente');
+        Route::get('/removerColaborador/{idNotificacoes}', [NotificacaoController::class, 'removerColaborador'])->name('notificacoes.removerColaborador');
     });
     // Rotas específicas para pedidos dentro do grupo 'adm/pedidos'
     Route::prefix('agendamentos')->group(function () {

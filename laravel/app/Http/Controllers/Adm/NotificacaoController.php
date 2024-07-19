@@ -138,17 +138,54 @@ public function guardarAdmin(Request $request)
 
     
 
-    public function remover($idNotificacao)
-    {
-        try {
+public function removerCliente($idNotificacao)
+{
+    try {
+        // Encontra a notificação do cliente usando a chave estrangeira idNotificacao
+        $notificacaoCliente = NotificacoesClientes::where('idNotificacoes', $idNotificacao)->first();
 
-           
-            
-           
+        // Verifica se a notificação do cliente existe
+        if ($notificacaoCliente) {
+            $notificacaoCliente->delete();
+        }
 
-            return response()->json(['message' => 'Cliente excluído com sucesso']);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro ao excluir o cliente: ' . $e->getMessage()], 500);
-        }       
+        // Encontra a notificação usando o idNotificacao
+        $notificacao = Notificacoes::find($idNotificacao);
+
+        // Verifica se a notificação existe
+        if ($notificacao) {
+            $notificacao->delete();
+        }
+
+        return response()->json(['message' => 'Cliente excluído com sucesso']);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Erro ao excluir o cliente: ' . $e->getMessage()], 500);
     }
+}
+
+public function removerColaborador($idNotificacao)
+{
+    try {
+        // Encontra a notificação do cliente usando a chave estrangeira idNotificacao
+        $notificacaoColaborador = NotificacoesColaboradores::where('idNotificacoes', $idNotificacao)->first();
+
+        // Verifica se a notificação do cliente existe
+        if ($notificacaoColaborador) {
+            $notificacaoColaborador->delete();
+        }
+
+        // Encontra a notificação usando o idNotificacao
+        $notificacao = Notificacoes::find($idNotificacao);
+
+        // Verifica se a notificação existe
+        if ($notificacao) {
+            $notificacao->delete();
+        }
+
+        return response()->json(['message' => 'Cliente excluído com sucesso']);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Erro ao excluir o cliente: ' . $e->getMessage()], 500);
+    }
+}
+
 }

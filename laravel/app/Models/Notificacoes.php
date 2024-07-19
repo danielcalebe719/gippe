@@ -25,15 +25,15 @@ class Notificacoes extends Model
    
 
     private static $notificacoesArray = [
-        '1'=>'Pedido Criado',
-        '2'=>'Pedido Confirmado',
-        '3'=>'Pedido Cancelado'
+        '1'=>'Não lido',
+        '2'=>'Lido'
+        
     ];
 
 
     
 
-    public function getNotifiacoesArray(){
+    public static function getNotifiacoesArray(){
         return self::$notificacoesArray;
     }
 

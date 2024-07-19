@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 19/07/2024 às 02:50
+-- Tempo de geração: 19/07/2024 às 15:55
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.20
 
@@ -37,7 +37,7 @@ CREATE TABLE `admins` (
 INSERT INTO `admins` (`id`, `email`, `password`, `nome`, `last_login`, `permissoes`) VALUES
 (1, 'super@super', NULL, 'super@super', NULL, 1),
 (2, 'user@user', NULL, 'user@user', NULL, 1),
-(3, 'se@se', '$2y$12$7V/iAPBTrEhDkjPrXY0mbOK5Iti7rEPiwLiXmPvbmpGv6ihP5MXqa', 'ss', '2024-07-18', 1);
+(3, 'se@se', '$2y$12$7V/iAPBTrEhDkjPrXY0mbOK5Iti7rEPiwLiXmPvbmpGv6ihP5MXqa', 'ss', '2024-07-19', 1);
 
 -- --------------------------------------------------------
 
@@ -469,7 +469,7 @@ CREATE TABLE `notificacoes` (
   `mensagem` varchar(500) DEFAULT NULL,
   `dataEnvio` date DEFAULT NULL,
   `titulo` varchar(255) NOT NULL,
-  `lido` tinyint(1) NOT NULL DEFAULT 0
+  `lido` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -477,21 +477,21 @@ CREATE TABLE `notificacoes` (
 --
 
 INSERT INTO `notificacoes` (`id`, `idNotificacaoArray`, `mensagem`, `dataEnvio`, `titulo`, `lido`) VALUES
-(1, 1, 'Oi, o seu pedido deve ser pago até o dia...', '2024-06-08', 'PEDIDO', 1),
-(2, 2, 'Oi, o seu pedido deve ser pago até o dia...dkjsdhsahdlsadhadsadsad', '2024-06-08', 'PEDIDO', 0),
-(3, 0, 'Olá z, quero que vc isso isso e aquilo', '2024-06-09', 'QUERIDO Z', 0),
-(4, 0, 'Olá z, quero que vc isso isso e aquilo', '2024-06-09', 'QUERIDO Z', 0),
-(5, 0, 'o fafa é fota', '2024-06-10', 'fafa viado', 0),
-(6, 0, 'o fafa é fota', '2024-06-10', 'fafa viado', 0),
-(7, NULL, 'Olá52Novo pedido criado: #fique atento as notificações \n                    e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 1),
-(8, NULL, 'Olá Novo pedido criado: #fique atento as notificações \n                    e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 1),
-(9, NULL, 'Olápedrin Novo pedido criado: #fique atento as notificações \n                    e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 1),
-(10, NULL, 'Olá pedrin Novo pedido criado: #PEpUBzxk21fique atento as notificações \n                 e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 1),
-(11, NULL, 'Olá pedrin! Novo pedido criado: <a href=\"http://localhost:8086/pedidos/pedidosDetalhes/PEeL8DYW71\">Ver detalhes do pedido #PEeL8DYW71</a> Fique atento às notificações e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 1),
-(12, NULL, 'Olá pedrin! Novo pedido criado: #PEp4ESuz95fique atento as notificações \n                 e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 1),
-(13, NULL, 'Olá pedrin! Novo pedido criado: #PEwqbP6N28fique atento as notificações \n                 e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 1),
-(14, NULL, 'dafaf', '2024-07-18', 'Algo', 0),
-(16, NULL, 'asdasdasdas', '2024-07-18', 'Algo', 0);
+(1, 1, 'Oi, o seu pedido deve ser pago até o dia 1...', '2024-06-08', 'PEDIDO', 2),
+(2, 2, 'Oi, o seu pedido deve ser pago até o dia...dkjsdhsahdlsadhadsadsad', '2024-06-08', 'PEDIDO', 1),
+(3, 0, 'Olá z, quero que vc isso isso e aquilo', '2024-06-09', 'QUERIDO Z', 1),
+(4, 0, 'Olá z, quero que vc isso isso e aquilo', '2024-06-09', 'QUERIDO Z', 1),
+(5, 0, 'o fafa é fota', '2024-06-10', 'fafa viado', 1),
+(6, 0, 'o fafa é fota', '2024-06-10', 'fafa viado', 1),
+(8, NULL, 'Olá Novo pedido criado: #fique atento as notificações \n                    e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 2),
+(9, NULL, 'Olápedrin Novo pedido criado: #fique atento as notificações \n                    e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 2),
+(10, NULL, 'Olá pedrin Novo pedido criado: #PEpUBzxk21fique atento as notificações \n                 e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 2),
+(11, NULL, 'Olá pedrin! Novo pedido criado: <a href=\"http://localhost:8086/pedidos/pedidosDetalhes/PEeL8DYW71\">Ver detalhes do pedido #PEeL8DYW71</a> Fique atento às notificações e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 2),
+(12, NULL, 'Olá pedrin! Novo pedido criado: #PEp4ESuz95fique atento as notificações \n                 e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 2),
+(13, NULL, 'Olá pedrin! Novo pedido criado: #PEwqbP6N28fique atento as notificações \n                 e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 2),
+(14, NULL, 'dafaf', '2024-07-18', 'Algo', 1),
+(16, NULL, 'asdasdasdas', '2024-07-18', 'Algo', 1),
+(18, NULL, 'Um novo pedido foi feito: 88', '2024-07-19', 'Novo Pedido', 1);
 
 -- --------------------------------------------------------
 
@@ -514,7 +514,6 @@ INSERT INTO `notificacoes_clientes` (`id`, `idPedidos`, `idClientes`, `idNotific
 (1, 3, 52, 1),
 (6, 3, 48, 2),
 (7, 4, 59, 3),
-(8, NULL, 52, 7),
 (9, NULL, 52, 8),
 (10, NULL, 52, 9),
 (11, 79, 52, 10),
@@ -543,7 +542,8 @@ CREATE TABLE `notificacoes_colaboradores` (
 INSERT INTO `notificacoes_colaboradores` (`id`, `idPedidos`, `idAdmins`, `idNotificacoes`) VALUES
 (1, 5, 1, 4),
 (2, 6, 2, 5),
-(3, 3, 3, 16);
+(3, 3, 3, 16),
+(5, 88, 1, 18);
 
 -- --------------------------------------------------------
 
@@ -660,7 +660,34 @@ INSERT INTO `pedidos` (`id`, `idClientes`, `observacao`, `status`, `totalPedido`
 (83, 52, NULL, 1, NULL, '2024-07-16', NULL, 2, 'PEsEgQ0w37', '2024-07-16', 15),
 (84, 52, NULL, 1, NULL, '2024-07-16', NULL, 2, 'PETeK8Rm98', '2024-07-16', 15),
 (85, 52, NULL, 1, 1350.00, '2024-07-16', NULL, 2, 'PEp4ESuz95', '2024-07-16', 15),
-(86, 52, NULL, 1, 1800.00, '2024-07-16', NULL, 3, 'PEwqbP6N28', '2024-07-16', 15);
+(86, 52, NULL, 1, 1800.00, '2024-07-16', NULL, 3, 'PEwqbP6N28', '2024-07-16', 15),
+(88, 52, 'nadinha', 2, 200.00, '2024-07-19', '2024-07-19', 1, NULL, '2024-07-19', NULL);
+
+--
+-- Acionadores `pedidos`
+--
+DELIMITER $$
+CREATE TRIGGER `after_pedido_insert` AFTER INSERT ON `pedidos` FOR EACH ROW BEGIN
+    DECLARE newNotificacaoId INT;
+    DECLARE adminId INT;
+    
+    -- Suponha que você tenha uma maneira de determinar qual admin deve receber a notificação
+    -- Aqui, vamos apenas pegar o primeiro admin como exemplo
+    SET adminId = (SELECT id FROM admins WHERE permissoes = '1' LIMIT 1);
+    
+    -- Insere a notificação na tabela notificacoes
+    INSERT INTO notificacoes (titulo, mensagem, dataEnvio)
+    VALUES ('Novo Pedido', CONCAT('Um novo pedido foi feito: ', NEW.id), NOW());
+    
+    -- Obtém o ID da notificação recém-inserida
+    SET newNotificacaoId = LAST_INSERT_ID();
+    
+    -- Insere o relacionamento na tabela notificacoes_colaboradores
+    INSERT INTO notificacoes_colaboradores (idPedidos, idAdmins, idNotificacoes)
+    VALUES (NEW.id, adminId, newNotificacaoId);
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -1455,7 +1482,7 @@ ALTER TABLE `movimentacoes_produtos`
 -- AUTO_INCREMENT de tabela `notificacoes`
 --
 ALTER TABLE `notificacoes`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de tabela `notificacoes_clientes`
@@ -1467,13 +1494,13 @@ ALTER TABLE `notificacoes_clientes`
 -- AUTO_INCREMENT de tabela `notificacoes_colaboradores`
 --
 ALTER TABLE `notificacoes_colaboradores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT de tabela `pedidos_andamentos`
