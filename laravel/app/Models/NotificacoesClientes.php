@@ -17,4 +17,10 @@ class NotificacoesClientes extends Model
    ];
 
     public $timestamps = false;
+
+    public function notificacao()
+    {
+        return $this->belongsTo(Notificacoes::class, 'idNotificacoes');
+    }
+
 }

@@ -19,7 +19,7 @@
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Notificações para Funcionários</h6>
             <button class="btn btn-primary" data-toggle="modal"
-                data-target="#modalAdicionarNotificacaoCliente">Adicionar Notificação</button>
+                data-target="#modalAdicionarNotificacaoFuncionario">Adicionar Notificação</button>
         </div>
         
             <div class="table-responsive p-3">
@@ -44,8 +44,8 @@
                                 <td>{{ $notificacao->titulo }}</td>
                                 <td>
                                     <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#modalEditarNotificacaoCliente"
-                                        onclick="editarNotificacao(1, 'cliente')">Editar</button>
+                                        
+                                        onclick="carregarDadosParaEdicaoColaborador({{ $notificacao->id }})">Editar</button>
                                     <button class="btn btn-danger btn-sm"
                                         onclick="excluirNotificacao(1, 'cliente')">Excluir</button>
                                     <button class="btn btn-info btn-sm" data-toggle="modal"
@@ -89,8 +89,8 @@
                                 <td>{{ $notificacao->titulo }}</td>
                                 <td>
                                     <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#modalEditarNotificacaoCliente"
-                                        onclick="editarNotificacao(1, 'cliente')">Editar</button>
+                                        
+                                        onclick="carregarDadosParaEdicaoCliente({{ $notificacao->id }})">Editar</button>
                                     <button class="btn btn-danger btn-sm"
                                         onclick="excluirNotificacao(1, 'cliente')">Excluir</button>
                                     <button class="btn btn-info btn-sm" data-toggle="modal"
@@ -106,86 +106,85 @@
         
     </div>
 
+   
+
+<!-- Modal Adicionar Notificação para Cliente -->
+<div class="modal fade" id="modalAdicionarNotificacaoCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Adicionar Notificação para Cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="formAdicionarNotificacaoCliente" method="POST" action="/adm/notificacoes/guardarCliente">
+                    @csrf 
+                    
+                    <div class="form-group">
+                        <label for="idClientes">ID do Cliente</label>
+                        <input type="text" class="form-control" id="idClientes" name="idClientes" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="idPedidos">ID do Pedido</label>
+                        <input type="text" class="form-control" id="idPedidos" name="idPedidos" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="titulo">Título</label>
+                        <input type="text" class="form-control" id="titulo" name="titulo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mensagem">Mensagem</label>
+                        <textarea class="form-control" id="mensagem" name="mensagem" rows="3" required></textarea>
+                    </div>
+                   
+                    <button type="submit" class="btn btn-primary">Adicionar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
     <!-- Modal Adicionar Notificação para Cliente -->
-    <div class="modal fade" id="modalAdicionarNotificacaoCliente" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Adicionar Notificação para Cliente</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+<div class="modal fade" id="modalAdicionarNotificacaoFuncionario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Adicionar Notificação para Cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-                <div class="modal-body">
-                    <form id="formAdicionarNotificacaoCliente" method="POST" action="/adm/notificacoes/guardarCliente">
-                        <div class="form-group">
-                            <label for="idCliente"> ID do Cliente</label>
-                            <input type="text" class="form-control" id="idCliente" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="idCliente"> ID do Cliente</label>
-                            <input type="text" class="form-control" id="idCliente" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="tituloCliente">Título</label>
-                            <input type="text" class="form-control" id="tituloCliente" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="mensagemCliente">Mensagem</label>
-                            <textarea class="form-control" id="mensagemCliente" rows="3" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="dataCliente">Data</label>
-                            <input type="date" class="form-control" id="data
-                                            Cliente" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Adicionar</button>
-                    </form>
-                </div>
+            <div class="modal-body">
+                <form id="formAdicionarNotificacaoCliente" method="POST" action="/adm/notificacoes/guardarAdmin">
+                    @csrf 
+                    
+                    <div class="form-group">
+                        <label for="idClientes">ID do Funcionário</label>
+                        <input type="text" class="form-control" id="idAdmins" name="idAdmins" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="idPedidos">ID do Pedido</label>
+                        <input type="text" class="form-control" id="idPedidos" name="idPedidos" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="titulo">Título</label>
+                        <input type="text" class="form-control" id="titulo" name="titulo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mensagem">Mensagem</label>
+                        <textarea class="form-control" id="mensagem" name="mensagem" rows="3" required></textarea>
+                    </div>
+                   
+                    <button type="submit" class="btn btn-primary">Adicionar</button>
+                </form>
             </div>
         </div>
     </div>
-     <!-- Modal Adicionar Notificação para Funcionario -->
-     <div class="modal fade" id="modalAdicionarNotificacaoColaborador" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Adicionar Notificação para Colaborador</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-                    <form id="formAdicionarNotificacaoCliente" method="POST" action="/adm/notificacoes/guardarCliente">
-                        <div class="form-group">
-                            <label for="idCliente"> ID do Cliente</label>
-                            <input type="text" class="form-control" id="idCliente" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="idCliente"> ID do Cliente</label>
-                            <input type="text" class="form-control" id="idCliente" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="tituloCliente">Título</label>
-                            <input type="text" class="form-control" id="tituloCliente" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="mensagemCliente">Mensagem</label>
-                            <textarea class="form-control" id="mensagemCliente" rows="3" required></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary">Adicionar</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
 
     <!-- Modal Editar Notificação para Cliente -->
     <div class="modal fade" id="modalEditarNotificacaoCliente" tabindex="-1" role="dialog"
@@ -200,23 +199,64 @@
                 </div>
 
                 <div class="modal-body">
-                    <form id="formEditarNotificacaoCliente">
-                        <div class="form-group">
-                            <label for="editaridCliente"> ID do Cliente</label>
-                            <input type="text" class="form-control" id="editaridCliente" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="editarTituloCliente">Título</label>
-                            <input type="text" class="form-control" id="editarTituloCliente" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="editarMensagemCliente">Mensagem</label>
-                            <textarea class="form-control" id="editarMensagemCliente" rows="3" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="editarDataCliente">Data</label>
-                            <input type="date" class="form-control" id="editarDataCliente" required>
-                        </div>
+                    <form id="formEditarNotificacaoCliente" method="POST" action="/adm/notificacoes/guardarCliente" enctype="multipart/form-data">
+                    @csrf
+                        <input type="hidden" id="editarIdNotificacaoC" name="idNotificacao" value="">
+                    <div class="form-group">
+                        <label for="idClientes">ID do Cliente</label>
+                        <input type="text" class="form-control" id="editarIdClientesC" name="idClientes" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="idPedidos">ID do Pedido</label>
+                        <input type="text" class="form-control" id="editarIdPedidosC" name="idPedidos" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="titulo">Título</label>
+                        <input type="text" class="form-control" id="editarTituloC" name="titulo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mensagem">Mensagem</label>
+                        <textarea class="form-control" id="editarMensagemC" name="mensagem" rows="3" required></textarea>
+                    </div>
+                        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar Notificação para Cliente -->
+    <div class="modal fade" id="modalEditarNotificacaoColaborador" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar Notificação para Cliente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="formEditarNotificacaoCliente" method="POST" action="/adm/notificacoes/guardarAdmin" enctype="multipart/form-data">
+                    @csrf
+                        <input type="hidden" id="editarIdNotificacaoA" name="idNotificacao" value="">
+                    <div class="form-group">
+                        <label for="idClientes">ID do Cliente</label>
+                        <input type="text" class="form-control" id="editarIdAdminsA" name="idAdmins" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="idPedidos">ID do Pedido</label>
+                        <input type="text" class="form-control" id="editarIdPedidosA" name="idPedidos" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="titulo">Título</label>
+                        <input type="text" class="form-control" id="editarTituloA" name="titulo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mensagem">Mensagem</label>
+                        <textarea class="form-control" id="editarMensagemA" name="mensagem" rows="3" required></textarea>
+                    </div>
                         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                     </form>
                 </div>
@@ -278,33 +318,63 @@
         $('#dataTableFuncionario').DataTable();
         $('#dataTableCliente').DataTable();
 
-        $('#formAdicionarNotificacaoCliente').on('submit', function (event) {
-            event.preventDefault();
-            // Código para adicionar notificação para cliente
-            adicionarNotificacaoCliente();
-        });
-
-        $('#formEditarNotificacaoCliente').on('submit', function (event) {
-            event.preventDefault();
-            // Código para editar notificação para cliente
-            editarNotificacaoCliente();
-        });
+       
+       
     });
 
-    function adicionarNotificacaoCliente() {
-        // Implementar lógica para adicionar notificação para cliente
-    }
+    function carregarDadosParaEdicaoCliente(idNotificacao) {
+    fetch(`/adm/notificacoes/show/${idNotificacao}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao carregar os detalhes do agendamento');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Dados recebidos:', data);
+            document.getElementById('editarIdNotificacaoC').value = data.id || "";
+            // Preencher os campos do formulário com os dados do cliente
+            // Verifica se existe notificacoesClientes e usa o primeiro item se disponível
+            
+                document.getElementById('editarIdClientesC').value = data.notificacoes_clientes[0].idClientes || "";
+                document.getElementById('editarIdPedidosC').value = data.notificacoes_clientes[0].idPedidos || "";
+            
+            document.getElementById('editarTituloC').value = data.titulo || "";
+            document.getElementById('editarMensagemC').value = data.mensagem || "";
+            
+            // Abrir o modal de edição do cliente
+            $('#modalEditarNotificacaoCliente').modal('show');
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os detalhes do produto:', error);
+        });
+}
 
-    function editarNotificacaoCliente() {
-        // Implementar lógica para editar notificação para cliente
-    }
+function carregarDadosParaEdicaoColaborador(idNotificacao) {
+    fetch(`/adm/notificacoes/show/${idNotificacao}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao carregar os detalhes do agendamento');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Dados recebidos:', data);
 
-    function excluirNotificacao(id, tipo) {
-        // Implementar lógica para excluir notificação
-    }
+            document.getElementById('editarIdNotificacaoA').value = data.id || "";
+            document.getElementById('editarIdAdminsA').value = data.notificacoes_colaboradores[0].idAdmins || "";
+            document.getElementById('editarIdPedidosA').value = data.notificacoes_colaboradores[0].idPedidos || "";
+            
+            document.getElementById('editarTituloA').value = data.titulo || "";
+            document.getElementById('editarMensagemA').value = data.mensagem || "";
+            
+            // Abrir o modal de edição do cliente
+            $('#modalEditarNotificacaoColaborador').modal('show');
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os detalhes do produto:', error);
+        });
+}
 
-    function mostrarDetalhes(id, tipo) {
-        // Implementar lógica para mostrar detalhes da notificação
-    }
 </script>
 @endsection

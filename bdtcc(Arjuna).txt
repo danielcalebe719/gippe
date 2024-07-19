@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 18/07/2024 às 20:45
+-- Tempo de geração: 19/07/2024 às 02:50
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.20
 
@@ -489,7 +489,9 @@ INSERT INTO `notificacoes` (`id`, `idNotificacaoArray`, `mensagem`, `dataEnvio`,
 (10, NULL, 'Olá pedrin Novo pedido criado: #PEpUBzxk21fique atento as notificações \n                 e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 1),
 (11, NULL, 'Olá pedrin! Novo pedido criado: <a href=\"http://localhost:8086/pedidos/pedidosDetalhes/PEeL8DYW71\">Ver detalhes do pedido #PEeL8DYW71</a> Fique atento às notificações e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 1),
 (12, NULL, 'Olá pedrin! Novo pedido criado: #PEp4ESuz95fique atento as notificações \n                 e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 1),
-(13, NULL, 'Olá pedrin! Novo pedido criado: #PEwqbP6N28fique atento as notificações \n                 e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 1);
+(13, NULL, 'Olá pedrin! Novo pedido criado: #PEwqbP6N28fique atento as notificações \n                 e acompanhe seu pedido!', '2024-07-16', 'Novo pedido', 1),
+(14, NULL, 'dafaf', '2024-07-18', 'Algo', 0),
+(16, NULL, 'asdasdasdas', '2024-07-18', 'Algo', 0);
 
 -- --------------------------------------------------------
 
@@ -518,7 +520,8 @@ INSERT INTO `notificacoes_clientes` (`id`, `idPedidos`, `idClientes`, `idNotific
 (11, 79, 52, 10),
 (12, 82, 52, 11),
 (13, 85, 52, 12),
-(14, 86, 52, 13);
+(14, 86, 52, 13),
+(15, 3, 52, 14);
 
 -- --------------------------------------------------------
 
@@ -529,7 +532,7 @@ INSERT INTO `notificacoes_clientes` (`id`, `idPedidos`, `idClientes`, `idNotific
 CREATE TABLE `notificacoes_colaboradores` (
   `id` int(11) NOT NULL,
   `idPedidos` int(10) DEFAULT NULL,
-  `idFuncionario` int(10) DEFAULT NULL,
+  `idAdmins` int(10) DEFAULT NULL,
   `idNotificacoes` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -537,9 +540,10 @@ CREATE TABLE `notificacoes_colaboradores` (
 -- Despejando dados para a tabela `notificacoes_colaboradores`
 --
 
-INSERT INTO `notificacoes_colaboradores` (`id`, `idPedidos`, `idFuncionario`, `idNotificacoes`) VALUES
+INSERT INTO `notificacoes_colaboradores` (`id`, `idPedidos`, `idAdmins`, `idNotificacoes`) VALUES
 (1, 5, 1, 4),
-(2, 6, 2, 5);
+(2, 6, 2, 5),
+(3, 3, 3, 16);
 
 -- --------------------------------------------------------
 
@@ -1258,7 +1262,7 @@ ALTER TABLE `notificacoes_clientes`
 ALTER TABLE `notificacoes_colaboradores`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idPedidos` (`idPedidos`),
-  ADD KEY `idFuncionario` (`idFuncionario`),
+  ADD KEY `idFuncionario` (`idAdmins`),
   ADD KEY `idNotificacoes` (`idNotificacoes`);
 
 --
@@ -1451,19 +1455,19 @@ ALTER TABLE `movimentacoes_produtos`
 -- AUTO_INCREMENT de tabela `notificacoes`
 --
 ALTER TABLE `notificacoes`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de tabela `notificacoes_clientes`
 --
 ALTER TABLE `notificacoes_clientes`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de tabela `notificacoes_colaboradores`
 --
 ALTER TABLE `notificacoes_colaboradores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `pedidos`
@@ -1596,7 +1600,7 @@ ALTER TABLE `notificacoes_clientes`
 --
 ALTER TABLE `notificacoes_colaboradores`
   ADD CONSTRAINT `notificacoes_colaboradores_ibfk_1` FOREIGN KEY (`idPedidos`) REFERENCES `pedidos` (`id`),
-  ADD CONSTRAINT `notificacoes_colaboradores_ibfk_2` FOREIGN KEY (`idFuncionario`) REFERENCES `admins` (`id`),
+  ADD CONSTRAINT `notificacoes_colaboradores_ibfk_2` FOREIGN KEY (`idAdmins`) REFERENCES `admins` (`id`),
   ADD CONSTRAINT `notificacoes_colaboradores_ibfk_3` FOREIGN KEY (`idNotificacoes`) REFERENCES `notificacoes` (`id`);
 
 --

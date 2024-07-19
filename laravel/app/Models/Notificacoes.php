@@ -45,12 +45,12 @@ class Notificacoes extends Model
 
     public function notificacoesClientes()
     {
-        return $this->hasMany(NotificacoesClientes::class,'idNotificacoes','id');
+        return $this->hasMany(NotificacoesClientes::class, 'idNotificacoes');
     }
 
     public function notificacoesColaboradores()
     {
-        return $this->hasMany(NotificacoesColaboradores::class,'idNotificacoes','id');
+        return $this->hasMany(NotificacoesColaboradores::class, 'idNotificacoes');
     }
 
 }
