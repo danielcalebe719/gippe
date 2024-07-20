@@ -1,0 +1,229 @@
+/* Fonte personalizada */
+@font-face {
+  font-family: 'Poppins';
+  src: url('font/Poppins-Regular.ttf') format('truetype');
+}
+
+/* Estilos globais */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 400px; /* Aumentado para uma melhor exibição em telas maiores */
+  height: auto;
+  margin: 100px auto;
+  padding: 40px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 5px 4px 8px #276359;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box; /* Garantir que padding e border estejam incluídos no width e height */
+}
+
+.background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: #fff;
+  border: 2.5px solid #276359;
+  z-index: -1;
+  border-radius: 8px; /* Adicionado para arredondar as bordas da background */
+  box-sizing: border-box; /* Garantir que padding e border estejam incluídos no width e height */
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+  width: 60%; /* Ajustado para uma largura melhor */
+  max-width: 200px; /* Limite de largura */
+}
+
+.services-text {
+  width: 100%;
+  text-align: center; /* Alinha o texto no centro da caixa */
+  margin-bottom: 20px; /* Adiciona espaçamento inferior */
+}
+
+.services-text h2 {
+  font-size: 24px;
+  color: #276359;
+  font-weight: 600;
+  margin: 0; /* Remove margens padrão */
+  line-height: 1.4; /* Ajusta o espaçamento entre linhas para melhor legibilidade */
+} 
+
+.form-group {
+  width: 100%;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.input-group label {
+  display: block;
+  font-size: 0.9em;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  font-size: 1em;
+  border: 2px solid #276359;
+  border-radius: 4px;
+  box-sizing: border-box; /* Garantir que padding e border estejam incluídos no width e height */
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+  border-color: #45a049;
+  outline: none;
+}
+
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  line-height: 1.4;
+  box-sizing: border-box; /* Garantir que padding e border estejam incluídos no width e height */
+}
+
+.alert-success {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+}
+
+.alert-warning {
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+  color: #856404;
+}
+
+.alert-info {
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+  color: #0c5460;
+}
+
+.alert p {
+  margin: 0;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: #45a049;
+  color: #fff;
+  font-size: 1em;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+  box-sizing: border-box; /* Garantir que padding e border estejam incluídos no width e height */
+}
+
+.submit-button:hover {
+  background: #276359;
+}
+
+.separation-line,
+.separation-line1 {
+  border-bottom: 2px solid #276359;
+  margin: 20px 0;
+}
+
+.separation-line1 {
+  width: 50%;
+  margin: 20px auto;
+}
+
+.forgot-password {
+  text-align: right;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.other-options {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.other-options button {
+  background-color: transparent;
+  border: 1px solid #FA856E;
+  color: #FA856E;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 0 10px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.other-options button:hover {
+  background-color: #FA856E;
+  color: #fff;
+}
+
+.quad {
+  background-color: white;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  border: 1.5px solid black;
+}
+
+.isenha {
+  display: flex;
+  flex-direction: row;
+}
+
+.isenha img {
+  max-width: 25px;
+  max-height: 25px;
+}
+
+a {
+  color: #276359;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    padding: 20px;
+    margin: 50px auto;
+  }
+}

@@ -14,32 +14,43 @@ class LoginAdminController extends Controller
     {
         return view('adm.login');
     }
-
     public function logar(Request $request)
     {
+        // Validação dos dados do formulário
+          
+        $messages = [
+            'email.required' => 'O campo email é obrigatório.',
+            'email.email'    => 'O formato do email é inválido.',
+            'password.required' => 'O campo senha é obrigatório.',
+        ];
+    
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
-        ]);
-
+        ], $messages);
+        
+        // Tenta autenticar o usuário
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
             $admin = Auth::guard('admin')->user();
             $admin->last_login = now();
             $admin->save();
+    
+            // Redireciona com base nas permissões do administrador
             $admins = Admins::where('id', $admin->id)->first();
-            switch($admins->permissoes){
+            switch($admins->permissoes) {
                 case 1:
-            return redirect()->intended('/adm/painel-operacional');
-            case 2:
-                return redirect()->intended('/adm/painel-operacional');
-            case 3:
-                return redirect()->intended('/adm/painel-financeiro');
-            }   
+                case 2:
+                    return redirect()->intended('/adm/painel-operacional');
+                case 3:
+                    return redirect('/adm/painel-financeiro');
+                default:
+                    return redirect('/adm/login/')->with('mensagem', 'Permissão não reconhecida.');
+            }
         }
-        
+    
+        // Se a autenticação falhar, define a mensagem de flash e redireciona
         Session::flash('mensagem', 'Nome de usuário ou senha inválidos!');
-
-     
+        return redirect()->intended('/adm/login/');
     }
 
     public function deslogar(Request $request)

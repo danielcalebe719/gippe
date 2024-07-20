@@ -170,9 +170,11 @@
                   </tr>
                 </tfoot>
               </table>
+              @if ($pedido->status == '1' || $pedido->status == '2')
               <button type="button" class="btn btn-primary btn-edit">
                 <a href="{{ url('website/produtos/' . $pedido->codigo) }}"> <i class="fas fa-edit"></i> Editar</a>
               </button>
+              @endif
             </div>
           </div>
         </div>
@@ -187,9 +189,11 @@
             <p><strong>Email:</strong> {{ $cliente->email }}</p>
             <p><strong>Telefone:</strong> {{ $cliente->telefone }}</p>
             <p><strong>Data de Nascimento:</strong> {{ $cliente->dataNascimento }}</p>
+            @if ($pedido->status == '1' || $pedido->status == '2')
             <button type="button" class="btn btn-primary btn-edit" data-toggle="modal" data-target="#editClientModal">
               <i class="fas fa-edit"></i> Editar
             </button>
+            @endif
           </div>
 
 
@@ -247,10 +251,11 @@
             <p><strong>Cidade:</strong> {{ $endereco->cidade ?? ''}}</p>
             <p><strong>CEP:</strong> {{ $endereco->cep ?? ''}}</p>
 
-
+            @if ($pedido->status == '1' || $pedido->status == '2')
             <button type="button" class="btn btn-primary btn-edit" data-bs-toggle="modal" data-bs-target="#editAddressModal">
               <i class="fas fa-edit"></i>Editar
             </button>
+            @endif
           </div>
         </div>
 

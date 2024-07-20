@@ -40,8 +40,10 @@ class ViewServiceProvider extends ServiceProvider
                 $pedidos = Pedidos::whereIn('id', $idsPedidos)->get();
 
                 // Fetch notifications
-                $notificacoes = Notificacoes::whereIn('id', $notificacoes_clientes->pluck('idNotificacoes'))->get();
-
+                $notificacoes = Notificacoes::whereIn('id', $notificacoes_clientes->pluck('idNotificacoes'))
+                ->orderBy('id', 'desc')
+                ->get();
+            
                 // Group notifications by pedido ID
                 $notificacoesAgrupadas = $notificacoes->groupBy(function ($notificacao) use ($notificacoes_clientes) {
                     $notificacao_cliente = $notificacoes_clientes->where('idNotificacoes', $notificacao->id)->first();

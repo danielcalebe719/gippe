@@ -20,6 +20,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <style>
         .row {
             justify-content: center;
@@ -183,7 +186,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
                     @if(Auth::guard('admin')->check())
-                    <h5 class="text-gray-1000">Olá, {{ Auth::guard('admin')->user()->nome }}!</h5>
+                        <h5 class="text-gray-1000">Olá, {{ Auth::guard('admin')->user()->nome }}!</h5>
                     @endif
                     <ul class="navbar-nav ml-auto">
                         <div class="topbar-divider d-none d-sm-block"></div>

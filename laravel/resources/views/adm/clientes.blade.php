@@ -702,7 +702,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                            <label for="detalhesImgPerfil">Imagem do Produto:</label>
+                            <label for="detalhesImgPerfil">Imagem do Cliente:</label>
                             <img id="detalhesImgPerfil" class="form-control-file" src="" alt="Imagem do Produto" style="max-width: 100%; height: auto;">
                         </div>
                     <!-- <div class="form-group">

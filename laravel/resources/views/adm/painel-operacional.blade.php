@@ -19,6 +19,7 @@
   <link href="{{ asset('assets/vendor_adm/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
     body {
       background-color: #f8f9fa;
@@ -93,17 +94,18 @@
     }
   </style>
 </head>
-
+f
 <body id="page-top">
   <div id="wrapper">
     <!-- Sidebar -->
     <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="painel-operacional.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('adm/painel-operacional') }}">
         <div class="sidebar-brand-icon">
           <img id="logo" src="{{asset('assets/img/logo/logo.png')}}">
         </div>
       </a>
       <hr class="sidebar-divider">
+    
       <div class="sidebar-heading"></div>
     </ul>
 
@@ -112,8 +114,11 @@
       <div id="content">
         <!-- TopBar -->
         <nav class="navbar navbar-expand navbar-light bg-navbar topbar static-top">
+        <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
         @if(Auth::guard('admin')->check())
-                    <h5 class="text-gray-1000" style="margin-left: 2%;">  Olá, {{ Auth::guard('admin')->user()->nome }}!</h5>
+                    <h5 class="text-gray-1000">  Olá, {{ Auth::guard('admin')->user()->nome }}!</h5>
                     @endif
           <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown no-arrow">

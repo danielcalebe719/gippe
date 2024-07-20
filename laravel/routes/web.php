@@ -53,6 +53,7 @@ Route::get('/produtos', function () {
 use App\Http\Controllers\Adm\Auth\CadastrarAdminController;
 use App\Http\Controllers\Adm\Auth\AdminController;
 use App\Http\Controllers\Adm\Auth\LoginAdminController;
+use App\Http\Controllers\Adm\OperacionalController;
 use App\Http\Middleware\RedirectIfNotAdmin;
 Route::get('/pr', function () {
     return view('website.produtos');
@@ -228,6 +229,10 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
         Route::get('/show/{idGastos}', [GastoController::class, 'show'])->name('gastos.show');
         Route::post('/guardar', [GastoController::class, 'guardar'])->name('gastos.guardar');
         Route::get('/remover/{idGastos}', [GastoController::class, 'remover'])->name('gastos.remover');
+    });
+    Route::prefix('painel-operacional')->group(function () {
+        Route::get('/', [OperacionalController::class, 'index'])->name('op.index');
+       
     });
     
 

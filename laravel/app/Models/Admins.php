@@ -23,6 +23,9 @@ class Admins extends Authenticatable
         'permissoes'
         // Adicione outros campos aqui
     ];
+    protected $casts = [
+        'last_login' => 'datetime',
+    ];
     public $timestamps = false;
 
     public function admPermissoes()
