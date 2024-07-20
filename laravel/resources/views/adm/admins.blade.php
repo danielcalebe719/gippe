@@ -26,6 +26,7 @@
                                 <th>ID</th>
                                 <th>Nome</th>
                                 <th>Email</th>
+                                <th>Permissão</th>
                                 <th>Ultima vez logado</th>
                                 <th>Ações</th>
                             </tr>
@@ -36,6 +37,7 @@
                                 <td>{{ $admin->id }}</td>
                                 <td>{{ $admin->nome }}</td>
                                 <td>{{ $admin->email }}</td>
+                                <td>{{ $admin->permissoes }}</td>
                                 <td>{{ $admin->last_login }}</td>
                                 <td>
                                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
@@ -104,8 +106,14 @@
                             <input type="text" class="form-control" id="email" name="email">
                         </div>
                         <div class="form-group">
+                            
                             <label for="permissoes">Permissões</label>
-                            <input type="text" class="form-control" id="permissoes" name="permissoes">
+                            <select name="permissoes" id="permissoes" class="form-control">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            </select>
+                           
                         </div>
                         <div class="form-group">
                             <label for="password">Senha</label>
@@ -143,6 +151,14 @@
                         <div class="form-group">
                             <label for="editarEmail">Email</label>
                             <input type="text" class="form-control" id="editarEmail" name="email" required>
+                        </div>
+                        <div class="form-group">
+                        <label for="editarpermissoes">Permissões</label>
+                            <select name="permissoes" id="editarpermissoes" class="form-control">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="editarSenha">Nova Senha</label>

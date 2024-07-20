@@ -229,6 +229,7 @@ Route::middleware(['admin'])->prefix('adm')->group(function () {
         Route::post('/guardar', [GastoController::class, 'guardar'])->name('gastos.guardar');
         Route::get('/remover/{idGastos}', [GastoController::class, 'remover'])->name('gastos.remover');
     });
+    
 
     Route::prefix('mensagens')->group(function () {
         Route::get('/', [MensagemController::class, 'index'])->name('mensagens.index');
@@ -387,7 +388,9 @@ Route::get('/carregar-mais-produtos' , [WebsiteProdutoController::class, 'carreg
 // Rota de logout
 Route::get('website/logout', [LoginClienteController::class, 'deslogar'])->name('logout');
 
-
+Route::get('website/politica-de-cookies', function () {
+    return view('website.cookies');
+})->name('website.cookies');
 
 
 

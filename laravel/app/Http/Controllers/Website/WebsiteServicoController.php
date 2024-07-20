@@ -123,7 +123,7 @@ class WebsiteServicoController extends Controller
             
                 // Criação do serviço
                 $servico = new Servicos();
-                $servico->nomeServico = 'Personalizado'; 
+                $servico->nome = 'Personalizado'; 
                 $servico->dataCadastro = now(); 
                 $servico->dataRemocao = null; 
                 $servico->caminhoImagem = null; 
@@ -183,6 +183,22 @@ class WebsiteServicoController extends Controller
                     ->where('id', $pedido->id)
                     ->update(['totalPedido' => $totalServicos]);
             
+                    $cliente = Clientes::find($request->idClientes);
+            $notificacao = Notificacoes::create([
+                 'titulo' => 'Novo pedido',
+                 'mensagem' => 'Olá ' .$cliente->nome.'! Novo pedido criado: #' . $pedido->codigo .
+                 ' fique atento as notificações 
+                 e acompanhe seu pedido!',
+                 'dataEnvio' => NOW(),
+                 // Outros campos da notificação, se houverem
+             ]);
+             NotificacoesClientes::create([
+                 'idPedidos' => $pedido->id,
+                 'idClientes' => $request->idClientes,
+                'idNotificacoes' => $notificacao->id,
+                 // Outros campos da notificação, se houverem
+             ]); 
+     
                 // Redireciona após o processamento
                 if(!$criacao){
                 

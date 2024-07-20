@@ -9,6 +9,15 @@
     <link href="{{ asset('assets/css/style__cadastro.css') }}" rel="stylesheet">
     
   <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
+  <script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+<script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
+<script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/waypoints/noframework.waypoints.js') }}"></script>
+
+<script src="{{ asset('assets/js/mainn.js') }}"></script>
     <style>
         .alert {
             padding: 0.75rem 1.25rem;
@@ -74,51 +83,7 @@
 </head>
 
 <body>
-     <!-- ======= Top Bar ======= -->
-  <section id="topbar" class="d-flex align-items-center">
-    <div class="container d-flex justify-content-center justify-content-md-between">
-      <div class="contact-info d-flex align-items-center">
-        <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:buffetdivinosabor@gmail.com">buffetdivinosabor@gmail.com</a></i>
-        <i class="bi bi-phone d-flex align-items-center ms-4"><span>+31 95589 55488</span></i>
-      </div>
-      <div class="social-links d-none d-md-flex align-items-center">
-        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======= Header ======= -->
-  <header id="header" class="d-flex align-items-center">
-    <div class="container d-flex align-items-center justify-content-between">
-      <a href="{{ url('/website') }}"><img src="{{asset ('assets/img/logo.png')}}" alt="" style="max-width: 50%;"><span></span></a>
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a class="nav-link scrollto active" href="{{ url('/website') }}">Home</a></li>
-          <li><a class="nav-link scrollto" href="./#cardapio">Cardápio</a></li>
-          <li><a class="nav-link scrollto" href="./#about">Sobre nós</a></li>
-          <li><a class="nav-link scrollto" href="./#portfolio">Galeria de fotos</a></li>
-          <li><a class="nav-link scrollto" href=".#faq">FAQ</a></li>
-          <li><a class="nav-link scrollto" href="./#contact">Fale Conosco</a></li>
-
-
-          <!-- Mostrar se não estiver logado -->
-          <li>
-            <a href="{{ url('website/cadastro') }}">
-              <button id="register-btn" class="nav-link btn"><i class="bi bi-person-plus"></i> Cadastrar-se</button>
-            </a>
-          </li>
-          <li>
-            <a href="{{ url('website/login') }}">
-              <button id="login-btn" class="nav-link btn">Fazer Login</button>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+@include('partials.navbar')
   
     <div class="bg-blur"></div>
     <section class="p-3 p-md-4 p-xl-5">

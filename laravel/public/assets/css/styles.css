@@ -1099,7 +1099,7 @@ section {
 .portfolio-item {
   position: relative;
   overflow: hidden;
-
+margin-top: 2%;
   transition: transform 0.3s ease;
 }
 

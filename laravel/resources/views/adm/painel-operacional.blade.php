@@ -113,12 +113,12 @@
         <!-- TopBar -->
         <nav class="navbar navbar-expand navbar-light bg-navbar topbar static-top">
         @if(Auth::guard('admin')->check())
-                    <h5 class="text-gray-1000">Olá, {{ Auth::guard('admin')->user()->nome }}!</h5>
+                    <h5 class="text-gray-1000" style="margin-left: 2%;">  Olá, {{ Auth::guard('admin')->user()->nome }}!</h5>
                     @endif
           <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
+               
               </a>
               <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
                 <form class="navbar-search">
@@ -139,25 +139,19 @@
                 <img class="boyimg" src="{{asset('assets/img/boy.png')}}">
               </a>
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>Perfil</a>
-                <a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>Configurações</a>
-                <a class="dropdown-item" href="#"><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>Log de Atividade</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="index.html"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Logout</a>
+                <a class="dropdown-item" href="/adm/logout"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Logout</a>
               </div>
             </li>
           </ul>
         </nav>
         <!-- Topbar -->
-
+<br>
         <!-- Container Fluid -->
         <div class="container-fluid" id="container-wrapper">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-1000">Painel Operacional</h1>
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a style="color: #8ebba7;" href="">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Painel Operacional</li>
-            </ol>
+         
           </div>
 
           <div class="row">
@@ -224,7 +218,7 @@
             </div>
 
             <div class="col-md-4 col-sm-6">
-              <a class="nav-link nav-link-custom" href="{{ url('adm/agendamento') }}">
+              <a class="nav-link nav-link-custom" href="{{ url('adm/agendamentos') }}">
                 <button class="btn btn-menu w-100">
                   <i class="bi bi-calendar-event"></i>
                   Agenda

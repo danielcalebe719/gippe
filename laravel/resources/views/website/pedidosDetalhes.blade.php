@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <base href="https://buffetfestamais.com">
+
   <title>Detalhes do Pedido - Buffet Divino Sabor</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,11 +11,12 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   <!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-<link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
+  <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
   <style>
     body {
       background-color: #f8f9fa;
@@ -63,124 +64,50 @@
       font-size: 3rem;
       margin-bottom: 1rem;
     }
+
+    .btn-edit {
+      background-color: #FF944E;
+      /* Cor azul padrão do Bootstrap */
+      border: none;
+      border-radius: 5px;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-edit a {
+
+      color: white;
+
+    }
+
+    .btn-edit i {
+      margin-right: 8px;
+     
+    }
+
+    .btn-edit:hover {
+      background-color: #0056b3;
+   
+    }
   </style>
 </head>
 
 <body>
-<!-- ======= Top Bar ======= -->
-<section id="topbar" class="d-flex align-items-center">
-    <div class="container d-flex justify-content-center justify-content-md-between">
-      <div class="contact-info d-flex align-items-center">
-        <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:buffetdivinosabor@gmail.com">buffetdivinosabor@gmail.com</a></i>
-        <i class="bi bi-phone d-flex align-items-center ms-4"><span>+31 95589 55488</span></i>
-      </div>
-      <div class="social-links d-none d-md-flex align-items-center">
-        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======= Header ======= -->
-  <header id="header" class="d-flex align-items-center">
-    <div class="container d-flex align-items-center justify-content-between">
-      <a href="{{ url('/website') }}"><img src="assets/img/logo.png" alt="" style="max-width: 50%;"><span></span></a>
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a class="nav-link scrollto active" href="{{ url('/website') }}">Home</a></li>
-          <li><a class="nav-link scrollto" href="./#cardapio">Cardápio</a></li>
-          <li><a class="nav-link scrollto" href="./#about">Sobre nós</a></li>
-          <li><a class="nav-link scrollto" href="./#portfolio">Galeria de fotos</a></li>
-          <li><a class="nav-link scrollto" href="./#faq">FAQ</a></li>
-          <li><a class="nav-link scrollto" href="./#contact">Fale Conosco</a></li>
-
-          @guest('cliente')
-          <!-- Mostrar se não estiver logado -->
-          <li>
-            <a href="{{ url('website/cadastro') }}">
-              <button id="register-btn" class="nav-link btn"><i class="bi bi-person-plus"></i> Cadastrar-se</button>
-            </a>
-          </li>
-          <li>
-            <a href="{{ url('website/login') }}">
-              <button id="login-btn" class="nav-link btn">Fazer Login</button>
-            </a>
-          </li>
-          @else
-          <!-- Mostrar se estiver logado -->
-          <li id="notification-btn">
-            <a href="#" data-bs-toggle="modal" data-bs-target="#notificationsModal">
-              <button class="nav-link btn"><i class="bi bi-bell"></i> Notificações
-                @if($quantidadeNotificacoes > 0)
-                <span class="badge bg-danger quantidadeNotificacoes">{{ $quantidadeNotificacoes }}</span>
-                @endif
-              </button>
-            </a>
-          </li>
-          <li id="profile-btn">
-            <a href="{{ url('website/perfil') }}">
-              <button class="nav-link btn"><i class="bi bi-person"></i> Perfil</button>
-            </a>
-          </li>
-          @endguest
-
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav>
-    </div>
-  </header>
-
-  
-
-  <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="notificationsModalLabel">Notificações</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          @if ($notificacoes->isNotEmpty())
-          @foreach ($notificacoes as $notificacao)
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">{{ $notificacao->mensagem }}</h5>
-              <p class="card-text">{{ $notificacao->dataEnvio }}</p>
-              <!-- Verificar se a notificação não foi lida -->
-              @if ($notificacao->lido == false)
-              <form class="form-marcar-lida" data-notificacao-id="{{ $notificacao->id }}" action="{{ route('notificacoes.marcarLida', $notificacao->id) }}" method="POST">
-                @csrf
-                <button type="button" class="btn btn-primary btn-marcar-lida">
-                  <i class="bi bi-check"></i> Marcar como lida
-                </button>
-              </form>
-              @else
-              <button type="button" class="btn btn-secondary disabled">
-                <i class="bi bi-check"></i> Lida
-              </button>
-              @endif
-            </div>
-          </div>
-          @endforeach
-          @else
-          <p>Nenhuma notificação encontrada.</p>
-          @endif
-        </div>
-      </div>
-    </div>
-  </div>
-
+  @include('partials.navbar')
 
 
   <div class="container my-5">
     <h1 class="mb-4">Detalhes do Pedido <strong style="color: #FA856E;">#{{ $pedido->codigo }}</strong></h1>
     @if (session('success'))
-            <div class="alert alert-success">
-              {{ session('success') }}
-            </div>
-            @endif
+    <div class="alert alert-success">
+      {{ session('success') }}
+    </div>
+    @endif
     <div class="row">
       <div class="col-md-8">
         <div class="card order-card mb-4">
@@ -202,7 +129,12 @@
             @endif
 
             @if ($pedido->status == '1' || $pedido->status == '2')
-            <a href="{{ route('website.agendamento', $pedido->codigo) }}" class="btn btn-warning">Editar Agendamento</a>
+            <button type="button" class="btn btn-primary btn-edit">
+
+
+
+              <a href="{{ route('website.agendamento', $pedido->codigo) }}"> <i class="fas fa-edit"></i> Editar</a>
+            </button>
             @endif
           </div>
         </div>
@@ -238,15 +170,16 @@
                   </tr>
                 </tfoot>
               </table>
-
-              <a href="{{ url('website/produtos/' . $pedido->codigo) }}">Editar Produtos</a>
+              <button type="button" class="btn btn-primary btn-edit">
+                <a href="{{ url('website/produtos/' . $pedido->codigo) }}"> <i class="fas fa-edit"></i> Editar</a>
+              </button>
             </div>
           </div>
         </div>
       </div>
 
       <div class="col-md-4">
-        <!-- Card for Customer Information -->
+
         <div class="card order-card mb-4">
           <div class="card-body">
             <h5 class="card-title">Informações do Cliente</h5>
@@ -254,13 +187,14 @@
             <p><strong>Email:</strong> {{ $cliente->email }}</p>
             <p><strong>Telefone:</strong> {{ $cliente->telefone }}</p>
             <p><strong>Data de Nascimento:</strong> {{ $cliente->dataNascimento }}</p>
+            <button type="button" class="btn btn-primary btn-edit" data-toggle="modal" data-target="#editClientModal">
+              <i class="fas fa-edit"></i> Editar
+            </button>
           </div>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editClientModal">
-            Editar Informações
-          </button>
 
 
-          <!-- Modal -->
+
+
           <div class="modal fade" id="editClientModal" tabindex="-1" role="dialog" aria-labelledby="editClientModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -302,27 +236,24 @@
 
         </div>
 
-        <!-- Card for Address Information -->
-        <!-- Card for Address Information -->
+
         <div class="card order-card mb-4">
           <div class="card-body">
             <h5 class="card-title">Endereço de Entrega</h5>
-          
+
             <p><strong>Rua:</strong> {{ $endereco->rua ?? ''}}</p>
             <p><strong>Número:</strong> {{ $endereco->numero ?? ''}}</p>
             <p><strong>Bairro:</strong> {{ $endereco->bairro ?? ''}}</p>
             <p><strong>Cidade:</strong> {{ $endereco->cidade ?? ''}}</p>
             <p><strong>CEP:</strong> {{ $endereco->cep ?? ''}}</p>
 
-            <!-- Edit Button -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAddressModal">
-              Editar Endereço
+
+            <button type="button" class="btn btn-primary btn-edit" data-bs-toggle="modal" data-bs-target="#editAddressModal">
+              <i class="fas fa-edit"></i>Editar
             </button>
           </div>
         </div>
 
-
-        <!-- Edit Address Modal -->
         <div class="modal fade" id="editAddressModal" tabindex="-1" aria-labelledby="editAddressModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -365,7 +296,6 @@
           </div>
         </div>
 
-        <!-- Card for Services -->
         <div class="card order-card mb-4">
           <div class="card-body">
             <h5 class="card-title">Serviços Contratados</h5>
@@ -389,13 +319,16 @@
               <p><strong>Número de Convidados:</strong> {{ $servicos->quantidadePessoas }}</p>
               @endif
               @if ($pedido->status == '1' || $pedido->status == '2')
-              <a href="{{ url('website/servicos/' . $pedido->codigo) }}" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a>
+              <div>
+                <button type="button" class="btn btn-primary btn-edit">
+                  <a href="{{ url('website/servicos/' . $pedido->codigo) }}"> <i class="fas fa-edit"></i>Editar</a>
+                </button>
+              </div>
               @endif
             </div>
           </div>
         </div>
 
-        <!-- Card for Financial Summary -->
         <div class="card order-card mb-4">
           <div class="card-body">
             <h5 class="card-title">Resumo Financeiro</h5>
@@ -421,10 +354,6 @@
             </table>
           </div>
         </div>
-
-        <!-- Card for Order Status -->
-        <!-- Card for Order Status -->
-        <!-- Card for Order Status -->
         <div class="card order-card">
           <div class="card-body">
             <h5 class="card-title">Status do Pedido</h5>
@@ -453,6 +382,15 @@
             </div>
           </div>
         </div>
+        <script src="{{ asset('assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+        <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
+        <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+        <script src="{{ asset('assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+        <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+        <script src="{{ asset('assets/vendor/waypoints/noframework.waypoints.js') }}"></script>
+
+        <script src="{{ asset('assets/js/mainn.js') }}"></script>
 
 </body>
 

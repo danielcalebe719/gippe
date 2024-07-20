@@ -46,6 +46,7 @@
                 <thead class="thead-light">
                     <tr>
                         <th>ID</th>
+                        <th>Código</th>
                         <th>Nome</th>
                         <th>Serviço</th>
                         <th>STATUS</th>
@@ -59,6 +60,7 @@
                     @foreach($pedidosPendentes as $pedido)
                         <tr>
                             <td>{{ $pedido->id }}</td>
+                            <td>{{ $pedido->codigo }}</td>
                             <td>{{ $pedido->cliente->nome }}</td>
                             <td>{{  $pedido->servico->nome ?? 'Nome do serviço não disponível' }}</td>
                             <td>{{ $pedido->getStatus() }}</td>
@@ -128,6 +130,7 @@
                 <thead class="thead-light">
                     <tr>
                         <th>ID</th>
+                        <th>Código</th>
                         <th>Nome</th>
                         <th>Servico</th>
                         <th>STATUS</th>
@@ -141,6 +144,7 @@
                     @foreach($outrosPedidos as $pedido)
                         <tr>
                             <td>{{ $pedido->id }}</td>
+                            <td>{{ $pedido->codigo }}</td>
                             <td>{{ $pedido->cliente->nome }}</td>
                             <td>{{ $pedido->servico->nome ?? 'Nome do serviço não disponível' }}</td>
                             <td>{{ $pedido->getStatus() }}</td>

@@ -161,13 +161,13 @@
                     </a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{url('adm/painel-financeiro#apagar')}}">
+                    <a class="nav-link" href="{{ url('adm/painel-financeiro') }}#apagar">
                         <img class="fas fa-fw fa-tachometer-alt" src="{{ asset('assets/img/menu-img3.png') }}" alt="">
                         <span class="text-gray-1000">À Pagar</span>
                     </a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{url('adm/painel-financeiro#areceber')}}">
+                    <a class="nav-link" href="{{url('adm/painel-financeiro')}}#areceber">
                         <img class="fas fa-fw fa-tachometer-alt" src="{{ asset('assets/img/menu-img4.png') }}" alt="">
                         <span class="text-gray-1000">À Receber</span>
                     </a>

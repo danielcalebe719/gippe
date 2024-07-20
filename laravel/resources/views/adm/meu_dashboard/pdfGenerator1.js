@@ -99,7 +99,6 @@ function generatePDF(res) {
         doc.text(row.tipo, doc.page.margins.left, yPos);
         doc.text(row.id.toString(), doc.page.margins.left + 50, yPos);
         doc.text(row.cliente_nome || '', doc.page.margins.left + 100, yPos);
-        doc.text(row.observacao || '', doc.page.margins.left + 150, yPos);
         doc.text(row.status || '', doc.page.margins.left + 200, yPos);
         doc.text(row.total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }), doc.page.margins.left + 250, yPos);
         doc.text(formatDate(row.data), doc.page.margins.left + 300, yPos);

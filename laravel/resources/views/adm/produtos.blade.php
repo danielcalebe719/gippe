@@ -95,7 +95,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="formAdicionarProduto" method="POST" action="/adm/produtos/guardar">
+                    <form id="formAdicionarProduto" method="POST" action="/adm/produtos/guardar"
+                    enctype="multipart/form-data">
                     @csrf
                         <div class="form-group">
                             <label for="nome">Nome</label>
@@ -132,7 +133,7 @@
                         </div>
                        
                         <div class="form-group">
-                            <label for="imgPerfil">Imagem de Perfil</label>
+                            <label for="imgPerfil">Imagem</label>
                             <input type="file" class="form-control-file" id="caminhoImagem" name="caminhoImagem">
                         </div>
                         <button type="submit" class="btn btn-primary">Salvar</button>
@@ -212,7 +213,7 @@
                         </div>
                         <div class="form-group">
                             <label for="editPreço Unitário">Preço Unitário</label>
-                            <input type="number" class="form-control" id="editarPrecoUnitario" name="precoUnitario"
+                            <input type="text" class="form-control" id="editarPrecoUnitario" name="precoUnitario"
                                 required>
                         </div>
                         

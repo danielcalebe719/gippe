@@ -64,10 +64,10 @@ if ($request->hasFile('caminhoImagem')) {
     
     // Define o nome do arquivo usando o nome do produto e mantém a extensão original
     $nomeArquivo = $produto->nome . '.' . $request->file('caminhoImagem')->getClientOriginalExtension();
-    $path = $request->file('caminhoImagem')->storeAs('public/GaleriaImagens/produtos', $nomeArquivo);
+    $path = $request->file('caminhoImagem')->storeAs('public/ImagensProdutos', $nomeArquivo);
     // Deleta a imagem antiga, se existir
-    if ($produto->caminhoImagem && Storage::exists('public/GaleriaImagens/produtos/' . $produto->caminhoImagem)) {
-        Storage::delete('public/GaleriaImagens/produtos/' . $produto->caminhoImagem);
+    if ($produto->caminhoImagem && Storage::exists('public/ImagensProdutos' . $produto->caminhoImagem)) {
+        Storage::delete('public/ImagensProdutos' . $produto->caminhoImagem);
     }
     // Atualiza o campo caminhoImagem com o nome do novo arquivo
     $produto->caminhoImagem = $nomeArquivo;

@@ -22,93 +22,12 @@
     <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+    
 </head>
 
 <body>
-    <!-- ======= Top Bar ======= -->
-        <section id="topbar" class="d-flex align-items-center">
-            <div class="container d-flex justify-content-center justify-content-md-between">
-                <div class="contact-info d-flex align-items-center">
-                    <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:buffetdivinosabor@gmail.com">buffetdivinosabor@gmail.com</a></i>
-                    <i class="bi bi-phone d-flex align-items-center ms-4"><span>+31 95589 55488</span></i>
-                </div>
-                <div class="social-links d-none d-md-flex align-items-center">
-                    <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                    <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                    <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
-                </div>
-            </div>
-        </section>
+@include('partials.navbar')
 
-        <!-- ======= Header ======= -->
-        <header id="header" class="d-flex align-items-center">
-            <div class="container d-flex align-items-center justify-content-between">
-                <a href="{{ url('/website') }}"><img src="{{ asset('assets/img/logo.png') }}" alt="" style="max-width: 50%;"><span></span></a>
-                <nav id="navbar" class="navbar">
-                    <ul>
-                        <li><a class="nav-link scrollto" href="{{ url('/website') }}">Home</a></li>
-                        <li><a class="nav-link scrollto" href="{{ url('/website') }}#cardapio">Cardápio</a></li>
-                        <li><a class="nav-link scrollto" href="{{ url('/website') }}#about">Sobre nós</a></li>
-                        <li><a class="nav-link scrollto" href="{{ url('/website') }}#portfolio">Galeria de fotos</a></li>
-                        <li><a class="nav-link scrollto" href="{{ url('/website') }}#faq">FAQ</a></li>
-                        <li><a class="nav-link scrollto" href="{{ url('/website') }}#contact">Fale Conosco</a></li>
-
-                        @guest('cliente')
-                        <!-- Mostrar se não estiver logado -->
-                        <li>
-                            <a href="{{ url('website/cadastro') }}"><button id="register-btn" class="nav-link btn"><i class="bi bi-person-plus"></i> Cadastrar-se</button></a>
-                        </li>
-                        <li>
-                            <a href="{{ url('website/login') }}"><button id="login-btn" class="nav-link btn">Fazer Login</button></a>
-                        </li>
-                        @else
-                        <!-- Mostrar se estiver logado -->
-                        <li id="notification-btn">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#notificationsModal">
-                                <button class="nav-link btn"><i class="bi bi-bell"></i> Notificações</button>
-                            </a>
-                        </li>
-                        <li id="profile-btn">
-                            <a href="{{ url('website/perfil') }}"><button class="nav-link btn"><i class="bi bi-person"></i> Perfil</button></a>
-                        </li>
-                        @endguest
-                    </ul>
-                    <i class="bi bi-list mobile-nav-toggle"></i>
-                </nav>
-            </div>
-        </header>
-
-
-
-
-        <!-- Notifications Modal -->
-        <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="notificationsModalLabel">Notificações</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Exemplo estático de notificações -->
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Mensagem de exemplo 1</h5>
-                                <p class="card-text">2024-06-26</p>
-                            </div>
-                        </div>
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Mensagem de exemplo 2</h5>
-                                <p class="card-text">2024-06-25</p>
-                            </div>
-                        </div>
-                        <p>Nenhuma notificação encontrada.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
 
 
             <!-- ======= Pricing Section ======= -->
@@ -137,7 +56,7 @@
                     @foreach ($servicos as $servico)
     <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
         <div class="box">
-            <h3>{{ $servico->nomeServico }}</h3>
+            <h3>{{ $servico->nome }}</h3>
             <h4><sup>R$</sup>{{ $servico->totalServicos }}</h4>
             <ul>
                 @foreach ($servico->pedidos_servicos as $pedido)
@@ -199,7 +118,7 @@
             <p>Barmans: <input type="number" name="tipo[Barmam]" min="0" max="999" class="inpt" id="barmans"></p>
             <p>Garçons: <input type="number" name="tipo[Garcom]" min="0" max="999" class="inpt" id="garcons"></p>
             <p>Cozinheiros: <input type="number" name="tipo[Cozinheiro]" min="0" max="999" class="inpt" id="cozinheiros"></p>
-            <p>Quantidade de Pessoas: <input type="number" name="quantidadePessoas" min="0" max="999" class="inpt" id="quantidadePessoas"></p>
+            <p>Quantidade de Convidados: <input type="number" name="quantidadePessoas" min="0" max="999" class="inpt" id="quantidadePessoas"></p>
             <p>Duração da Festa (Horas): <input type="number" name="duracaoHoras" min="1" max="24" class="inpt" id="duracaoHoras"></p>
             <!--<p id="preco">Preço: R$0,00</p>-->
             <div class="btn-wrap">

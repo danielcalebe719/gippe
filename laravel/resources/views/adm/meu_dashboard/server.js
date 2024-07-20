@@ -83,7 +83,7 @@ app.get('/api/dashboard-data', async (req, res) => {
     const totalReceberQuery = `
       SELECT COALESCE(SUM(totalPedido), 0) AS total_a_receber 
       FROM pedidos 
-      WHERE status = 'aPagar';
+      WHERE status = '3';
     `;
     const [totalReceberRows] = await connection.execute(totalReceberQuery);
 
@@ -91,7 +91,7 @@ app.get('/api/dashboard-data', async (req, res) => {
     const totalPagarQuery = `
       SELECT COALESCE(SUM(valor), 0) AS total_a_pagar 
       FROM gastos 
-      WHERE status = 'a Pagar';
+      WHERE status = '1';
     `;
     const [totalPagarRows] = await connection.execute(totalPagarQuery);
 
@@ -108,7 +108,7 @@ app.get('/api/dashboard-data', async (req, res) => {
     const lucroMensalQuery = `
       SELECT COALESCE(SUM(totalPedido), 0) AS lucro_mensal 
       FROM pedidos 
-      WHERE MONTH(dataPedido) = ? AND YEAR(dataPedido) = ? AND status = 'entregue';
+      WHERE MONTH(dataPedido) = ? AND YEAR(dataPedido) = ? AND status = '6';
     `;
     console.log(lucroMensalQuery)
     const [lucroMensalRows] = await connection.execute(lucroMensalQuery, [currentMonth, new Date().getFullYear()]);
