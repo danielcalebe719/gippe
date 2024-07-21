@@ -38,6 +38,7 @@ class CadastrarAdminController extends Controller
 
         protected function create(array $data)
         {
+            
             return Admins::create([
                 'nome' => $data['nome'],
                 'email' => $data['email'],

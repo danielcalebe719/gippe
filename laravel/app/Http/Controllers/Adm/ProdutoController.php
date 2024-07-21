@@ -8,6 +8,7 @@ use App\Models\Produtos;
 use App\Models\MovimentacoesProdutos;
 use App\Models\PedidosProdutos;
 use App\Models\ReceitasItem;
+use App\Models\ReceitasItens;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
@@ -110,11 +111,12 @@ if ($request->hasFile('caminhoImagem')) {
     
     public function remover($idProduto)
     {
+      
         try {
 
             // $movimentacoesProdutos = MovimentacoesProdutos::where('idProdutos',$idProduto)->delete();
-            // $pedidosProdutos = PedidosProdutos::where('idProdutos',$idProduto)->delete();
-            // $receitasItem = ReceitasItem::where('idProdutos',$idProduto)->delete();
+             $pedidosProdutos = PedidosProdutos::where('idProdutos',$idProduto)->delete();
+             $receitasItem = ReceitasItens::where('idProdutos',$idProduto)->delete();
             $produto = Produtos::findOrFail($idProduto);
            
             

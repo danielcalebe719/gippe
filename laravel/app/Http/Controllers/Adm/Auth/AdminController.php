@@ -42,6 +42,7 @@ class AdminController extends Controller
         $admin = Admins::findOrFail($request->id);
         $admin->nome = $request->nome;
         $admin->email = $request->email;
+        $admin->permissoes = $request->permissoes;
         
         if ($request->has('senha') && !empty($request->senha)) {
             $admin->password = Hash::make($request->senha); // Caso deseje atualizar a senha

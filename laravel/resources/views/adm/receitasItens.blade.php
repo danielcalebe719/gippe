@@ -97,6 +97,7 @@
                     @csrf
                         <div class="form-group">
                             <label for="ProdutoID">Produto ID</label>
+                            
                             <input type="text" class="form-control" id="idProdutos" name="idProdutos" required>
                         </div>
                         <div class="form-group">

@@ -33,7 +33,11 @@
                         </thead>
                         <tbody>
                             @foreach($admins as $admin)
-                            <tr id="adminRow{{ $admin->id }}">
+                            <tr id="adminRow{{ $admin->id }}" 
+                                data-id="{{ $admin->id }}" 
+                                data-nome="{{ $admin->nome }}" 
+                                data-email="{{ $admin->email }}" 
+                                data-permissoes="{{ $admin->permissoes }}">
                                 <td>{{ $admin->id }}</td>
                                 <td>{{ $admin->nome }}</td>
                                 <td>{{ $admin->email }}</td>
@@ -42,7 +46,7 @@
                                 <td>
                                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                                         <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">
-                                            <button class="btn btn-primary btn-sm" onclick="carregarDadosParaEdicao('{{ $admin->id }}')" data-toggle="modal" data-target="#modalEditarColaborador">
+                                            <button class="btn btn-primary btn-sm" onclick="carregarDadosParaEdicao(this)" data-toggle="modal" data-target="#modalEditarColaborador">
                                                 Editar
                                             </button>
                                         </div>
@@ -103,24 +107,22 @@
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="text" class="form-control" id="email" name="email">
+                            <input type="email" class="form-control" id="email" name="email">
                         </div>
                         <div class="form-group">
-                            
                             <label for="permissoes">Permissões</label>
                             <select name="permissoes" id="permissoes" class="form-control">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
                             </select>
-                           
                         </div>
                         <div class="form-group">
                             <label for="password">Senha</label>
                             <input type="password" class="form-control" id="password" name="password">
                         </div>
                         <div class="form-group">
-                            <label for="password_confirmation">Confirmar Senha:</label>
+                            <label for="password_confirmation">Confirmar Senha</label>
                             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
                         </div>
                         <button type="submit" class="btn btn-primary">Salvar</button>
@@ -150,14 +152,14 @@
                         </div>
                         <div class="form-group">
                             <label for="editarEmail">Email</label>
-                            <input type="text" class="form-control" id="editarEmail" name="email" required>
+                            <input type="email" class="form-control" id="editarEmail" name="email" required>
                         </div>
                         <div class="form-group">
-                        <label for="editarpermissoes">Permissões</label>
-                            <select name="permissoes" id="editarpermissoes" class="form-control">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
+                            <label for="editarPermissoes">Permissões</label>
+                            <select name="permissoes" id="editarPermissoes" class="form-control">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -171,7 +173,7 @@
         </div>
     </div>
 
-    <!-- Script para manipular a exclusão -->
+    <!-- Script para manipular a exclusão e edição -->
     <script>
         // Função para abrir o modal de confirmação de exclusão
         function abrirModalExclusao(idAdmin) {
@@ -179,34 +181,38 @@
             $('#modalConfirmarExclusao').modal('show');
         }
 
-        // Função para confirmar a exclusão
-        $(document).ready(function() {
-            $('#confirmarExclusao').click(function() {
-                var idAdmin = $('#excluirIdAdmin').val();
+        // Função para carregar os dados do colaborador para o modal de edição
+        function carregarDadosParaEdicao(button) {
+            var row = button.closest('tr');
+            var id = $(row).data('id');
+            var nome = $(row).data('nome');
+            var email = $(row).data('email');
+            var permissoes = $(row).data('permissoes');
 
-                // Requisição AJAX para exclusão
-                $.ajax({
-                    url: '/adm/admins/remover/' + idAdmin,
-                    type: 'get',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        // Fechar o modal de confirmação
-                        $('#modalConfirmarExclusao').modal('hide');
+            $('#editarId').val(id);
+            $('#editarNome').val(nome);
+            $('#editarEmail').val(email);
+            $('#editarPermissoes').val(permissoes);
+        }
 
-                        // Remover a linha da tabela
-                        $('#adminRow' + idAdmin).remove();
-
-                        // Exibir mensagem de sucesso ou atualizar página
-                        location.replace(location.href);
-                    },
-                    error: function(xhr) {
-                        console.error('Erro ao excluir o colaborador:', xhr);
-                        alert('Erro ao excluir o colaborador');
-                    }
-                });
+        // Função para confirmar exclusão
+        $('#confirmarExclusao').click(function () {
+            var idAdmin = $('#excluirIdAdmin').val();
+            $.ajax({
+                url: '/admins/' + idAdmin,
+                type: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (result) {
+                    $('#adminRow' + idAdmin).remove();
+                    $('#modalConfirmarExclusao').modal('hide');
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
+                }
             });
         });
     </script>
+</div>
 @endsection
