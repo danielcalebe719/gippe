@@ -14,13 +14,20 @@ class ReceitasItens extends Model
     protected $fillable = [   
         'idProdutos', 
         'idMateriasPrimas', 
-        'quantidade'.
+        'quantidade',
         'subtotal'
         // Adicione outros campos aqui
     ];
     public $timestamps = false;
 
-
+    public function produto()
+    {
+        return $this->hasOne(Produtos::class,'id','idProdutos');
+    }
+    public function materiaPrima()
+    {
+        return $this->hasOne(MateriasPrimasEstoque::class,'id','idMateriasPrimas');
+    }
     
 
 

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 20-Jul-2024 às 04:32
--- Versão do servidor: 10.4.32-MariaDB
--- versão do PHP: 8.2.12
+-- Tempo de geração: 22-Jul-2024 às 21:33
+-- Versão do servidor: 10.4.24-MariaDB
+-- versão do PHP: 8.1.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -26,9 +26,9 @@ CREATE TABLE `admins` (
   `email` varchar(200) DEFAULT NULL,
   `password` varchar(1024) DEFAULT NULL,
   `nome` varchar(255) NOT NULL,
-  `last_login` date DEFAULT NULL,
+  `last_login` datetime DEFAULT NULL,
   `permissoes` int(10) DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `admins`
@@ -37,8 +37,8 @@ CREATE TABLE `admins` (
 INSERT INTO `admins` (`id`, `email`, `password`, `nome`, `last_login`, `permissoes`) VALUES
 (1, 'super@super', NULL, 'super@super', NULL, 1),
 (2, 'user@user', NULL, 'user@user', NULL, 1),
-(3, 'se@se', '$2y$12$7V/iAPBTrEhDkjPrXY0mbOK5Iti7rEPiwLiXmPvbmpGv6ihP5MXqa', 'ss', '2024-07-19', 1),
-(5, 'nome@gmail', '$2y$12$IK41wqJTIbEkKsrYXwoV0Oh3C89pGxs0NI3T/bs6fzFpgwPNT1UXq', 'Nome', '2024-07-19', 3);
+(3, 'se@se', '$2y$12$7V/iAPBTrEhDkjPrXY0mbOK5Iti7rEPiwLiXmPvbmpGv6ihP5MXqa', 'ss', '2024-07-22 00:00:00', 1),
+(5, 'nome@gmail', '$2y$12$IK41wqJTIbEkKsrYXwoV0Oh3C89pGxs0NI3T/bs6fzFpgwPNT1UXq', 'Nome', '2024-07-19 00:00:00', 3);
 
 -- --------------------------------------------------------
 
@@ -54,7 +54,7 @@ CREATE TABLE `admpermissoes` (
   `dataAtualizacao` date DEFAULT NULL,
   `dataRemocao` date DEFAULT NULL,
   `idFuncionario` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -72,7 +72,7 @@ CREATE TABLE `agendamentos` (
   `observacao` varchar(255) DEFAULT NULL,
   `dataCadastro` date DEFAULT NULL,
   `dataAtualizacao` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `agendamentos`
@@ -114,21 +114,20 @@ CREATE TABLE `clientes` (
   `caminhoImagem` varchar(200) DEFAULT NULL,
   `telefone` varchar(15) DEFAULT NULL,
   `last_login` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `clientes`
 --
 
 INSERT INTO `clientes` (`id`, `nome`, `cpf`, `dataNascimento`, `status`, `email`, `password`, `dataCadastro`, `dataAtualizacao`, `dataRemocao`, `caminhoImagem`, `telefone`, `last_login`) VALUES
-(1, 'danada', '15332185600', NULL, 'ativo', 'wqeqe@gmail', '$2y$12$SyPZDZqrXf35DgI2TkbKZOmk/JZUbeu2b5XVEQmu2w13T7zXwG1B6', '2024-07-03', '2024-07-09', NULL, 'danada.png', '319954523212', NULL),
-(27, 'Daniel Calebeddd', '2147483647', '2007-09-30', NULL, 'caloko1029@gmail.com', '$2y$10$59LZOS7n2YzjmkfSje7UWOx/4z/qAoM0fPGBhaUv4x18WqQDxQfj2', '2024-06-19', '2024-06-19', NULL, 'Screenshot_5-removebg-preview.png', '', NULL),
-(30, 'Daniel', '2147483647', '0000-00-00', NULL, 'ui', '$2y$10$vemWIh70..Vw5ygVBJp4U.NdDz3yAtj6NB52EjN0p5U8z4npDE8MS', '2024-06-20', '2024-06-20', NULL, 'user_ummd3POvEDfFyeFvVdOMG3OOrwE2_targets_target_qGJRWYc.png', '', NULL),
-(41, 'House', '12345678922', '2004-03-02', 'inativo', 'house@ss', NULL, '2024-07-02', '2024-07-06', NULL, 'aqui.png', '9922001192', NULL),
-(42, 'kays', '12345678988', NULL, 'ativo', 'kays@kays', '$2y$12$TcVVVXvqA48rRM1gIcPWzO/3CMCzCG5Be.lRJ/wFUMUJ27EaoK9gi', '2024-07-02', '2024-07-02', NULL, 'ltIv6H7IkaQLwBmOA7ZXBoQNnFvr9Bsl4yIeMCh7.jpg', '8877665532', NULL),
+(1, 'João Bruno', '15332185600', '2024-07-22', 'ativo', 'wqeqe@gmail', '$2y$12$SyPZDZqrXf35DgI2TkbKZOmk/JZUbeu2b5XVEQmu2w13T7zXwG1B6', '2024-07-03', '2024-07-09', NULL, 'danada.png', '319954523212', NULL),
+(27, 'Daniel Calebe', '2147483647', '2007-09-30', 'ativo', 'caloko1029@gmail.com', '$2y$10$59LZOS7n2YzjmkfSje7UWOx/4z/qAoM0fPGBhaUv4x18WqQDxQfj2', '2024-06-19', '2024-06-19', NULL, 'Screenshot_5-removebg-preview.png', '', NULL),
+(30, 'Pedro Paiva', '2147483647', '2024-07-22', 'ativo', 'ui@ui', '$2y$10$vemWIh70..Vw5ygVBJp4U.NdDz3yAtj6NB52EjN0p5U8z4npDE8MS', '2024-06-20', '2024-07-22', NULL, 'user_ummd3POvEDfFyeFvVdOMG3OOrwE2_targets_target_qGJRWYc.png', '1234', NULL),
+(41, 'Ricardo Dias', '12345678922', '2004-03-02', 'inativo', 'house@ss', NULL, '2024-07-02', '2024-07-06', NULL, 'aqui.png', '9922001192', NULL),
+(42, 'kays', '12345678988', '2024-07-22', 'ativo', 'kays@kays', '$2y$12$TcVVVXvqA48rRM1gIcPWzO/3CMCzCG5Be.lRJ/wFUMUJ27EaoK9gi', '2024-07-02', '2024-07-22', NULL, 'ltIv6H7IkaQLwBmOA7ZXBoQNnFvr9Bsl4yIeMCh7.jpg', '8877665532', NULL),
 (45, 's', '22211122211', '2222-02-11', 'ativo', 'dsadsada@ss', '$2y$12$YKkCd9fP/Gn8Zoacqa9SE.uqRd6baNvxs8FMieQuMVswVMomAok02', '2024-07-03', '2024-07-03', NULL, NULL, '3123213', NULL),
 (46, 's', '12312312322', '0222-02-22', 'ativo', 'sdasdsad@s', '$2y$12$CRD1huq9cRfNf4dhPhUhNerz7XmtBPrCWK7GSKZ5UXdD6Zt.qMgOW', '2024-07-03', '2024-07-03', NULL, NULL, '12123213', NULL),
-(47, 'roberto', NULL, NULL, NULL, 'roberto@roa', '$2y$12$KNbyLU6ePjvMl6qAB1bMNeIBkJdxp83c9o1lYJaSTF8uTHZESLL2C', '2024-07-04', '2024-07-04', NULL, NULL, NULL, '2024-07-04'),
 (48, NULL, NULL, NULL, NULL, 'dani@dani', '$2y$12$u.apiJMBpj1h2Fsu7anhIu1/tcNH2izBZ9YZRBF.6egFIrpZeghvq', '2024-07-04', '2024-07-04', NULL, NULL, NULL, '2024-07-04'),
 (51, 'raiz@raiz', '12345612355', '2005-05-05', 'ativo', 'raiz@raiz', '$2y$12$Ty4XHkOZ/4bFD2.ENlGrneWOn7Id9LJRpZg6X5CZRWvd2sLagZ0Y.', '2024-07-04', '2024-07-04', NULL, NULL, '555225522552', '2024-07-04'),
 (52, 'pedrin', '22211122211', '2255-05-12', 'ativo', 'pedro@pedro', '$2y$12$wbCgQgUfY9tdIsWUl/zOTeAf7aFdnH6F/Mrj9DlPpr9ZAaTDGoyRy', '2024-07-04', '2024-07-04', NULL, '1721430625_coxinha.jpg', '55885455455', '2024-07-19'),
@@ -163,7 +162,7 @@ CREATE TABLE `enderecos_clientes` (
   `numero` int(10) DEFAULT NULL,
   `complemento` varchar(255) DEFAULT NULL,
   `idClientes` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `enderecos_clientes`
@@ -194,7 +193,7 @@ CREATE TABLE `esqueci_senha` (
   `idClientes` int(10) DEFAULT NULL,
   `token` int(10) DEFAULT NULL,
   `dataEmissao` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -208,7 +207,7 @@ CREATE TABLE `feedbacks` (
   `avaliacao` enum('1','2','3','4','5') DEFAULT NULL,
   `dataMensagem` date DEFAULT NULL,
   `idPedidos` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `feedbacks`
@@ -230,7 +229,7 @@ CREATE TABLE `formas_pagamento` (
   `id` int(10) NOT NULL,
   `nome` varchar(255) DEFAULT NULL,
   `classe` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -256,7 +255,7 @@ CREATE TABLE `fornecedores` (
   `dataAtualizacao` date DEFAULT NULL,
   `dataRemocao` date DEFAULT NULL,
   `cnpj` int(14) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `fornecedores`
@@ -278,8 +277,8 @@ CREATE TABLE `galeria_imagens` (
   `nomeImagem` varchar(25) NOT NULL,
   `tamanhoImagem` varchar(25) DEFAULT NULL,
   `tipoImagem` varchar(25) DEFAULT NULL,
-  `caminhoImagem` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `caminhoImagem` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `galeria_imagens`
@@ -311,19 +310,19 @@ CREATE TABLE `gastos` (
   `dataAtualizacao` date DEFAULT NULL,
   `departamento` varchar(255) DEFAULT NULL,
   `status` int(10) DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `gastos`
 --
 
 INSERT INTO `gastos` (`id`, `motivo`, `valor`, `dataCadastro`, `dataAtualizacao`, `departamento`, `status`) VALUES
-(1, 'wa', 1.00, '2024-07-17', '2024-07-18', 'RH', 2),
-(2, 'sasa', 32.00, '2024-07-17', '2024-07-18', 'RH', 1),
-(4, 'sasa', 32.00, '2024-07-18', '2024-07-18', 'RH', 1),
-(5, 'wa', 1.00, '2024-07-18', '2024-07-18', 'RH', 1),
-(7, 'Cobraw', 12.00, '2024-07-19', '2024-07-19', 'Compras', 1),
-(8, 'sdadsaa', 1500.00, '2015-02-02', '2024-07-19', 'Compras', 1);
+(1, 'wa', '1.00', '2024-07-17', '2024-07-18', 'RH', 2),
+(2, 'sasa', '32.00', '2024-07-17', '2024-07-18', 'RH', 1),
+(4, 'sasa', '32.00', '2024-07-18', '2024-07-18', 'RH', 1),
+(5, 'wa', '1.00', '2024-07-18', '2024-07-18', 'RH', 1),
+(7, 'Cobraw', '12.00', '2024-07-19', '2024-07-19', 'Compras', 1),
+(8, 'sdadsaa', '1500.00', '2015-02-02', '2024-07-19', 'Compras', 1);
 
 -- --------------------------------------------------------
 
@@ -341,17 +340,17 @@ CREATE TABLE `materias_primas_estoque` (
   `dataAtualizacao` date DEFAULT NULL,
   `dataRemocao` date DEFAULT NULL,
   `caminhoImagem` varchar(200) DEFAULT NULL,
-  `idFornecedor` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `idFornecedores` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `materias_primas_estoque`
 --
 
-INSERT INTO `materias_primas_estoque` (`id`, `nome`, `classificacao`, `quantidade`, `precoUnitario`, `dataCadastro`, `dataAtualizacao`, `dataRemocao`, `caminhoImagem`, `idFornecedor`) VALUES
-(2, 'ovo', 'nao perecivel', 50, 1.00, '2024-07-06', '2024-07-07', NULL, 'ovo.jpg', 1),
-(3, 'agua', 'nao perecivel', 2, 21.00, '2024-07-06', '2024-07-07', NULL, 'agua.jpg', 1),
-(6, 'farinha', 'perecivel', 1, 5.00, '2024-07-07', '2024-07-07', NULL, 'farinha.jpg', 1);
+INSERT INTO `materias_primas_estoque` (`id`, `nome`, `classificacao`, `quantidade`, `precoUnitario`, `dataCadastro`, `dataAtualizacao`, `dataRemocao`, `caminhoImagem`, `idFornecedores`) VALUES
+(2, 'ovo', 'nao perecivel', 50, '1.00', '2024-07-06', '2024-07-07', NULL, 'ovo.jpg', 1),
+(3, 'agua', 'nao perecivel', 2, '21.00', '2024-07-06', '2024-07-07', NULL, 'agua.jpg', 1),
+(6, 'farinha', 'perecivel', 1, '5.00', '2024-07-07', '2024-07-07', NULL, 'farinha.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -366,14 +365,13 @@ CREATE TABLE `mensagens` (
   `assunto` varchar(100) NOT NULL,
   `mensagem` text NOT NULL,
   `dataEnvio` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `mensagens`
 --
 
 INSERT INTO `mensagens` (`id`, `nome`, `email`, `assunto`, `mensagem`, `dataEnvio`) VALUES
-(1, '', '', '', 'dasdafdsafsd', '2024-05-25'),
 (2, 'daniel', 'caloko1029@gmail.com', 'assuunto', 'DSDSADSDADSADSAFGIYFGIA', '2024-05-25'),
 (3, 'daniel', 'caloko1029@gmail.com', 'assuunto', 'DSDSADSDADSADSAFGIYFGIA', '2024-05-25'),
 (4, 'daniel', 'caloko1029@gmail.com', 'assuunto', 'DSDSADSDADSADSAFGIYFGIA', '2024-05-25'),
@@ -420,7 +418,7 @@ INSERT INTO `mensagens` (`id`, `nome`, `email`, `assunto`, `mensagem`, `dataEnvi
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -450,7 +448,7 @@ CREATE TABLE `movimentacoes_materias_primas` (
   `dataCadastro` date DEFAULT NULL,
   `dataAtualizacao` date DEFAULT NULL,
   `dataRemocao` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -466,7 +464,7 @@ CREATE TABLE `movimentacoes_produtos` (
   `dataCadastro` date DEFAULT NULL,
   `dataAtualizacao` date DEFAULT NULL,
   `dataRemocao` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -481,7 +479,7 @@ CREATE TABLE `notificacoes` (
   `dataEnvio` date DEFAULT NULL,
   `titulo` varchar(255) NOT NULL,
   `lido` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `notificacoes`
@@ -546,7 +544,7 @@ CREATE TABLE `notificacoes_clientes` (
   `idPedidos` int(10) DEFAULT NULL,
   `idClientes` int(10) DEFAULT NULL,
   `idNotificacoes` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `notificacoes_clientes`
@@ -594,7 +592,7 @@ CREATE TABLE `notificacoes_colaboradores` (
   `idPedidos` int(10) DEFAULT NULL,
   `idAdmins` int(10) DEFAULT NULL,
   `idNotificacoes` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `notificacoes_colaboradores`
@@ -625,8 +623,8 @@ INSERT INTO `notificacoes_colaboradores` (`id`, `idPedidos`, `idAdmins`, `idNoti
 --
 
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -640,7 +638,7 @@ CREATE TABLE `pedidos` (
   `id` int(10) NOT NULL,
   `idClientes` int(10) DEFAULT NULL,
   `observacao` varchar(500) DEFAULT NULL,
-  `status` int(10) DEFAULT NULL,
+  `status` int(10) DEFAULT 1,
   `totalPedido` decimal(10,2) DEFAULT NULL,
   `dataPedido` date DEFAULT NULL,
   `dataEntrega` date DEFAULT NULL,
@@ -648,7 +646,7 @@ CREATE TABLE `pedidos` (
   `codigo` varchar(255) DEFAULT NULL,
   `dataAtualizacao` date DEFAULT NULL,
   `idEnderecos` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `pedidos`
@@ -665,7 +663,7 @@ INSERT INTO `pedidos` (`id`, `idClientes`, `observacao`, `status`, `totalPedido`
 (10, 52, NULL, 6, NULL, '2024-07-19', NULL, 2, 'nbb', NULL, 13),
 (11, 52, NULL, 4, NULL, '2024-07-19', NULL, 2, 'nbb', NULL, 13),
 (12, 52, NULL, 3, NULL, '2024-07-19', NULL, 2, 'nbb', NULL, 13),
-(13, 52, 'asdas', 3, 123.00, '2024-07-19', '2024-07-13', 2, 'nbb', '2024-07-06', 13),
+(13, 52, 'asdas', 3, '123.00', '2024-07-19', '2024-07-13', 2, 'nbb', '2024-07-06', 13),
 (14, 52, NULL, 1, NULL, '2024-07-19', NULL, 42, 'nbb', NULL, 13),
 (15, 52, NULL, 1, NULL, '2024-07-19', NULL, 2, 'nbb', NULL, 13),
 (16, 52, NULL, 1, NULL, '2024-07-19', NULL, 2, 'nbb', NULL, 13),
@@ -691,7 +689,7 @@ INSERT INTO `pedidos` (`id`, `idClientes`, `observacao`, `status`, `totalPedido`
 (36, 52, NULL, 1, NULL, '2024-07-19', NULL, 1, 'PEIDEwms12', NULL, 13),
 (37, 52, NULL, 1, NULL, '2024-07-19', NULL, 1, 'PE3NbUe110', NULL, 13),
 (38, 52, NULL, 1, NULL, '2024-07-19', NULL, 2, 'PEtQzeXf98', NULL, 13),
-(39, 52, 'sss', 6, 60.00, '2024-07-19', '2001-01-01', 2, 'PEybUOhO49', '2024-07-19', 13),
+(39, 52, 'sss', 6, '60.00', '2024-07-19', '2001-01-01', 2, 'PEybUOhO49', '2024-07-19', 13),
 (45, 52, NULL, 1, NULL, '2024-07-19', NULL, 2, 'PEAVYUTQ14', NULL, 13),
 (46, 52, NULL, 1, NULL, '2024-07-19', NULL, 1, 'PEVgGnl275', NULL, 13),
 (47, 52, NULL, 1, NULL, '2024-07-19', NULL, 2, 'PEak9dEe41', NULL, 13),
@@ -700,53 +698,53 @@ INSERT INTO `pedidos` (`id`, `idClientes`, `observacao`, `status`, `totalPedido`
 (50, 52, NULL, 1, NULL, '2024-07-19', NULL, 2, 'PETy4PDB50', NULL, 13),
 (51, 52, NULL, 1, NULL, '2024-07-19', NULL, 1, 'PE4MayYk37', NULL, 13),
 (52, 52, NULL, 1, NULL, '2024-07-19', NULL, 1, 'PE4Tcfm272', NULL, 13),
-(53, 52, NULL, 1, 86.97, '2024-07-19', NULL, 1, 'PE16ZK9C11', NULL, 13),
-(54, 52, NULL, 1, 1360.00, '2024-07-19', NULL, 2, 'PEpYdAW888', NULL, 13),
-(55, 52, NULL, 1, 2340.00, '2024-07-19', NULL, 2, 'PEw0a79B12', NULL, 13),
-(56, 52, NULL, 1, 1350.00, '2024-07-19', NULL, 2, 'PEqDIv3j33', NULL, 13),
-(57, 52, NULL, 1, 1395.00, '2024-07-19', NULL, 2, 'PETCr5TW93', NULL, 13),
-(58, 52, 'sss', 3, 30.00, '2024-07-19', '2024-07-02', 1, 'PEZ35CIo81', '2024-07-19', 13),
+(53, 52, NULL, 1, '86.97', '2024-07-19', NULL, 1, 'PE16ZK9C11', NULL, 13),
+(54, 52, NULL, 1, '1360.00', '2024-07-19', NULL, 2, 'PEpYdAW888', NULL, 13),
+(55, 52, NULL, 1, '2340.00', '2024-07-19', NULL, 2, 'PEw0a79B12', NULL, 13),
+(56, 52, NULL, 1, '1350.00', '2024-07-19', NULL, 2, 'PEqDIv3j33', NULL, 13),
+(57, 52, NULL, 1, '1395.00', '2024-07-19', NULL, 2, 'PETCr5TW93', NULL, 13),
+(58, 52, 'sss', 3, '30.00', '2024-07-19', '2024-07-02', 1, 'PEZ35CIo81', '2024-07-19', 13),
 (59, 52, NULL, 1, NULL, '2024-07-19', NULL, 45, 'PEHjdIBE47', NULL, 13),
-(60, 52, NULL, 1, 900.00, '2024-07-19', NULL, 47, 'PEDnPFrH27', NULL, 13),
-(61, 52, 'Ola tudo bem? gostaria de atarasda', 1, 495.00, '2024-07-19', NULL, 48, 'PEQPv7iN68', NULL, 13),
-(62, 52, 'Poise', 3, 2.00, '2024-07-19', '2024-07-05', 2, 'PEPcfEth80', '2024-07-16', 13),
-(63, 1, 'nadinha', 3, 123.00, '2024-07-19', '2024-07-13', 1, 'aaa', '2024-07-06', 13),
-(64, 1, 'sadsadsadsa', 3, 200.00, '2024-07-19', '2024-07-13', 1, 'aaa', '2024-07-06', 13),
-(65, 58, NULL, 1, 1350.00, '2024-07-19', NULL, 2, 'PEfqsspy60', NULL, 13),
-(66, 58, NULL, 1, 0.00, '2024-07-19', NULL, 4, 'PEXClBFw38', NULL, 13),
-(67, 58, NULL, 7, 0.00, '2024-07-19', NULL, 4, 'PEl2I7Cq10', NULL, 13),
-(68, 58, NULL, 1, 1350.00, '2024-07-19', NULL, 2, 'PECWPG1368', NULL, 13),
-(69, 58, 'sass', 3, 1808.00, '2024-07-19', '2024-07-01', 3, 'PEK1UmP279', NULL, 13),
-(70, 58, NULL, 1, 1350.00, '2024-07-19', NULL, 2, 'PE64QlTb68', NULL, 13),
-(71, 58, NULL, 1, 15000.00, '2024-07-19', NULL, 1, 'PEEGBxjN51', NULL, 13),
-(72, 58, NULL, 1, 15000.00, '2024-07-19', NULL, 1, 'PEPk7h3T44', NULL, 12),
-(73, 58, NULL, 1, 1350.00, '2024-07-19', NULL, 2, 'PEfQqu6515', NULL, 12),
-(74, 58, NULL, 1, 0.00, '2024-07-19', NULL, 4, 'PEiJzwrn47', NULL, 13),
-(75, 58, NULL, 1, 15000.00, '2024-07-19', NULL, 1, 'PE8KvBmr26', NULL, 14),
-(76, 52, NULL, 1, 1800.00, '2024-07-19', NULL, 3, 'PExxUvwf94', '2024-07-16', 15),
-(77, 52, NULL, 1, 0.00, '2024-07-19', NULL, 4, 'PEnyKf8348', '2024-07-16', 15),
-(78, 52, NULL, 1, 1350.00, '2024-07-19', NULL, 2, 'PEllyFKn54', '2024-07-16', 15),
-(79, 52, NULL, 1, 1350.00, '2024-07-19', NULL, 2, 'PEpUBzxk21', '2024-07-16', 15),
+(60, 52, NULL, 1, '900.00', '2024-07-19', NULL, 47, 'PEDnPFrH27', NULL, 13),
+(61, 52, 'Ola tudo bem? gostaria de atarasda', 1, '495.00', '2024-07-19', NULL, 48, 'PEQPv7iN68', NULL, 13),
+(62, 52, 'Poise', 3, '2.00', '2024-07-19', '2024-07-05', 2, 'PEPcfEth80', '2024-07-16', 13),
+(63, 1, 'nadinha', 3, '123.00', '2024-07-19', '2024-07-13', 1, 'aaa', '2024-07-06', 13),
+(64, 1, 'sadsadsadsa', 3, '200.00', '2024-07-19', '2024-07-13', 1, 'aaa', '2024-07-06', 13),
+(65, 58, NULL, 1, '1350.00', '2024-07-19', NULL, 2, 'PEfqsspy60', NULL, 13),
+(66, 58, NULL, 1, '0.00', '2024-07-19', NULL, 4, 'PEXClBFw38', NULL, 13),
+(67, 58, NULL, 7, '0.00', '2024-07-19', NULL, 4, 'PEl2I7Cq10', NULL, 13),
+(68, 58, NULL, 1, '1350.00', '2024-07-19', NULL, 2, 'PECWPG1368', NULL, 13),
+(69, 58, 'sass', 3, '1808.00', '2024-07-19', '2024-07-01', 3, 'PEK1UmP279', NULL, 13),
+(70, 58, NULL, 1, '1350.00', '2024-07-19', NULL, 2, 'PE64QlTb68', NULL, 13),
+(71, 58, NULL, 1, '15000.00', '2024-07-19', NULL, 1, 'PEEGBxjN51', NULL, 13),
+(72, 58, NULL, 1, '15000.00', '2024-07-19', NULL, 1, 'PEPk7h3T44', NULL, 12),
+(73, 58, NULL, 1, '1350.00', '2024-07-19', NULL, 2, 'PEfQqu6515', NULL, 12),
+(74, 58, NULL, 1, '0.00', '2024-07-19', NULL, 4, 'PEiJzwrn47', NULL, 13),
+(75, 58, NULL, 1, '15000.00', '2024-07-19', NULL, 1, 'PE8KvBmr26', NULL, 14),
+(76, 52, NULL, 1, '1800.00', '2024-07-19', NULL, 3, 'PExxUvwf94', '2024-07-16', 15),
+(77, 52, NULL, 1, '0.00', '2024-07-19', NULL, 4, 'PEnyKf8348', '2024-07-16', 15),
+(78, 52, NULL, 1, '1350.00', '2024-07-19', NULL, 2, 'PEllyFKn54', '2024-07-16', 15),
+(79, 52, NULL, 1, '1350.00', '2024-07-19', NULL, 2, 'PEpUBzxk21', '2024-07-16', 15),
 (80, 52, NULL, 1, NULL, '2024-07-19', NULL, 2, 'PEH6XlEp94', '2024-07-16', 15),
 (81, 52, NULL, 1, NULL, '2024-07-19', NULL, 2, 'PEWP5ICi15', '2024-07-16', 15),
-(82, 52, NULL, 1, 1350.00, '2024-07-19', NULL, 2, 'PEeL8DYW71', '2024-07-16', 15),
+(82, 52, NULL, 1, '1350.00', '2024-07-19', NULL, 2, 'PEeL8DYW71', '2024-07-16', 15),
 (83, 52, NULL, 1, NULL, '2024-07-19', NULL, 2, 'PEsEgQ0w37', '2024-07-16', 15),
 (84, 52, NULL, 1, NULL, '2024-07-19', NULL, 2, 'PETeK8Rm98', '2024-07-16', 15),
-(85, 52, NULL, 1, 1350.00, '2024-07-19', NULL, 2, 'PEp4ESuz95', '2024-07-16', 15),
-(86, 52, NULL, 8, 1800.00, '2024-07-19', NULL, 3, 'PEwqbP6N28', '2024-07-16', 15),
-(88, 52, 'nadinha', 3, 200.00, '2024-07-19', '2024-07-19', 1, 'aaa', '2024-07-19', NULL),
-(89, 52, NULL, 1, 1350.00, '2024-07-19', NULL, 2, 'PER1y6Fg21', '2024-07-19', 15),
-(90, 52, '231321', 3, 17.91, '2024-07-19', '2024-07-19', 3, 'PEXYmHSb89', '2024-07-19', 15),
-(91, 52, 'sadasda', 4, 7.96, '2024-07-19', '2024-07-19', 2, 'PEk2B6vw68', '2024-07-19', 15),
-(92, 52, 'ss', 6, 0.00, '2024-07-19', '2024-08-02', 4, 'PEzWWMKd19', '2024-07-19', 15),
-(93, 52, 'sadsa', 6, 2000.00, '2024-07-19', '2024-07-19', 2, 'PELMxhYd87', '2024-07-19', 15),
-(94, 52, NULL, 1, 1350.00, '2024-07-19', NULL, 2, 'PEOBCGu759', '2024-07-19', 15),
-(95, 52, NULL, 1, 1800.00, '2024-07-19', NULL, 3, 'PEU83frT33', '2024-07-19', 15),
-(96, 67, 'Queira isso diferente, pois não quero igual', 3, 234.00, '2024-07-19', '2024-07-20', 50, 'PEDBx7K065', '2024-07-19', NULL),
-(97, 67, NULL, 1, 36.00, '2024-07-19', NULL, 51, 'PEp4V9C679', '2024-07-19', NULL),
-(98, 52, NULL, 1, 450.00, '2024-07-19', NULL, 52, 'PEprCjRW69', NULL, NULL),
-(99, 67, 'ss', 6, 1800.00, '2024-07-19', '2001-01-01', 3, 'PESZKlkv66', '2024-07-19', 16),
-(100, 67, NULL, 1, 1350.00, '2024-07-19', NULL, 2, 'PElg8pIP57', '2024-07-19', 16);
+(85, 52, NULL, 1, '1350.00', '2024-07-19', NULL, 2, 'PEp4ESuz95', '2024-07-16', 15),
+(86, 52, NULL, 8, '1800.00', '2024-07-19', NULL, 3, 'PEwqbP6N28', '2024-07-16', 15),
+(88, 52, 'nadinha', 3, '200.00', '2024-07-19', '2024-07-19', 1, 'aaa', '2024-07-19', NULL),
+(89, 52, NULL, 1, '1350.00', '2024-07-19', NULL, 2, 'PER1y6Fg21', '2024-07-19', 15),
+(90, 52, '231321', 3, '17.91', '2024-07-19', '2024-07-19', 3, 'PEXYmHSb89', '2024-07-19', 15),
+(91, 52, 'sadasda', 4, '7.96', '2024-07-19', '2024-07-19', 2, 'PEk2B6vw68', '2024-07-19', 15),
+(92, 52, 'ss', 6, '0.00', '2024-07-19', '2024-08-02', 4, 'PEzWWMKd19', '2024-07-19', 15),
+(93, 52, 'sadsa', 6, '2000.00', '2024-07-19', '2024-07-19', 2, 'PELMxhYd87', '2024-07-19', 15),
+(94, 52, NULL, 1, '1350.00', '2024-07-19', NULL, 2, 'PEOBCGu759', '2024-07-19', 15),
+(95, 52, NULL, 1, '1800.00', '2024-07-19', NULL, 3, 'PEU83frT33', '2024-07-19', 15),
+(96, 67, 'Queira isso diferente, pois não quero igual', 3, '234.00', '2024-07-19', '2024-07-20', 50, 'PEDBx7K065', '2024-07-19', NULL),
+(97, 67, NULL, 1, '36.00', '2024-07-19', NULL, 51, 'PEp4V9C679', '2024-07-19', NULL),
+(98, 52, NULL, 1, '450.00', '2024-07-19', NULL, 52, 'PEprCjRW69', NULL, NULL),
+(99, 67, 'ss', 6, '1800.00', '2024-07-19', '2001-01-01', 3, 'PESZKlkv66', '2024-07-19', 16),
+(100, 67, NULL, 1, '1350.00', '2024-07-19', NULL, 2, 'PElg8pIP57', '2024-07-19', 16);
 
 --
 -- Acionadores `pedidos`
@@ -842,7 +840,7 @@ CREATE TABLE `pedidos_andamentos` (
   `idPedidos` int(10) DEFAULT NULL,
   `data` date DEFAULT NULL,
   `status` enum('pendente','aceito','cancelado','entregue') DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -856,7 +854,7 @@ CREATE TABLE `pedidos_produtos` (
   `idProdutos` int(10) DEFAULT NULL,
   `quantidade` int(10) DEFAULT NULL,
   `subtotal` decimal(10,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `pedidos_produtos`
@@ -873,61 +871,61 @@ INSERT INTO `pedidos_produtos` (`id`, `idPedidos`, `idProdutos`, `quantidade`, `
 (10, NULL, 6, NULL, NULL),
 (11, 33, 6, NULL, NULL),
 (12, NULL, 6, NULL, NULL),
-(13, 13, 6, 1, 1.99),
-(14, 13, 1, 20, 40.00),
-(15, 13, 2, 5, 9.95),
-(16, 33, 3, 15, 29.85),
-(17, 33, 6, 2, 3.98),
-(18, 33, 5, 1, 1.99),
-(19, 33, 5, 1, 1.99),
-(20, 33, 3, 1, 1.99),
-(21, 33, 4, 1, 1.99),
-(22, 33, 5, 1, 1.99),
-(23, 33, 3, 1, 1.99),
-(24, 33, 4, 1, 1.99),
-(25, 33, 5, 1, 1.99),
-(26, 33, 3, 1, 1.99),
-(27, 33, 4, 1, 1.99),
-(28, 33, 5, 1, 1.99),
-(29, 33, 3, 1, 1.99),
-(30, 33, 4, 1, 1.99),
-(31, 37, 5, 2, 3.98),
-(32, 37, 4, 1, 1.99),
-(34, 39, 14, 1, 15.00),
-(35, 39, 13, 1, 15.00),
-(36, 39, 13, 1, 15.00),
-(37, 39, 14, 1, 15.00),
-(38, 53, 1, 1, 2.00),
-(39, 53, 4, 1, 1.99),
-(40, 53, 10, 1, 15.00),
-(41, 53, 13, 1, 15.00),
-(42, 53, 1, 1, 2.00),
-(43, 53, 4, 1, 1.99),
-(44, 53, 10, 1, 15.00),
-(45, 53, 13, 1, 15.00),
-(46, 53, 1, 1, 2.00),
-(47, 53, 4, 1, 1.99),
-(48, 53, 10, 1, 15.00),
-(49, 54, 1, 5, 10.00),
-(50, 55, 14, 66, 990.00),
-(51, 57, 13, 1, 15.00),
-(52, 57, 14, 1, 15.00),
-(55, 61, 13, 1, 15.00),
-(56, 61, 14, 1, 15.00),
-(58, 69, 1, 4, 8.00),
-(59, 62, 3, 2, 2.00),
-(60, 90, 4, 9, 17.91),
-(61, 91, 5, 3, 5.97),
-(62, 91, 6, 1, 1.99),
-(63, 58, 10, 1, 15.00),
-(64, 58, 13, 1, 15.00),
-(65, 93, 3, 2000, 2000.00),
-(66, 96, 1, 7, 14.00),
-(67, 96, 18, 4, 60.00),
-(68, 96, 20, 6, 72.00),
-(69, 96, 21, 4, 88.00),
-(71, 97, 1, 3, 6.00),
-(72, 97, 7, 2, 30.00);
+(13, 13, 6, 1, '1.99'),
+(14, 13, 1, 20, '40.00'),
+(15, 13, 2, 5, '9.95'),
+(16, 33, 3, 15, '29.85'),
+(17, 33, 6, 2, '3.98'),
+(18, 33, 5, 1, '1.99'),
+(19, 33, 5, 1, '1.99'),
+(20, 33, 3, 1, '1.99'),
+(21, 33, 4, 1, '1.99'),
+(22, 33, 5, 1, '1.99'),
+(23, 33, 3, 1, '1.99'),
+(24, 33, 4, 1, '1.99'),
+(25, 33, 5, 1, '1.99'),
+(26, 33, 3, 1, '1.99'),
+(27, 33, 4, 1, '1.99'),
+(28, 33, 5, 1, '1.99'),
+(29, 33, 3, 1, '1.99'),
+(30, 33, 4, 1, '1.99'),
+(31, 37, 5, 2, '3.98'),
+(32, 37, 4, 1, '1.99'),
+(34, 39, 14, 1, '15.00'),
+(35, 39, 13, 1, '15.00'),
+(36, 39, 13, 1, '15.00'),
+(37, 39, 14, 1, '15.00'),
+(38, 53, 1, 1, '2.00'),
+(39, 53, 4, 1, '1.99'),
+(40, 53, 10, 1, '15.00'),
+(41, 53, 13, 1, '15.00'),
+(42, 53, 1, 1, '2.00'),
+(43, 53, 4, 1, '1.99'),
+(44, 53, 10, 1, '15.00'),
+(45, 53, 13, 1, '15.00'),
+(46, 53, 1, 1, '2.00'),
+(47, 53, 4, 1, '1.99'),
+(48, 53, 10, 1, '15.00'),
+(49, 54, 1, 5, '10.00'),
+(50, 55, 14, 66, '990.00'),
+(51, 57, 13, 1, '15.00'),
+(52, 57, 14, 1, '15.00'),
+(55, 61, 13, 1, '15.00'),
+(56, 61, 14, 1, '15.00'),
+(58, 69, 1, 4, '8.00'),
+(59, 62, 3, 2, '2.00'),
+(60, 90, 4, 9, '17.91'),
+(61, 91, 5, 3, '5.97'),
+(62, 91, 6, 1, '1.99'),
+(63, 58, 10, 1, '15.00'),
+(64, 58, 13, 1, '15.00'),
+(65, 93, 3, 2000, '2000.00'),
+(66, 96, 1, 7, '14.00'),
+(67, 96, 18, 4, '60.00'),
+(68, 96, 20, 6, '72.00'),
+(69, 96, 21, 4, '88.00'),
+(71, 97, 1, 3, '6.00'),
+(72, 97, 7, 2, '30.00');
 
 --
 -- Acionadores `pedidos_produtos`
@@ -962,94 +960,94 @@ CREATE TABLE `pedidos_servicos` (
   `funcionarioTipo` varchar(255) DEFAULT NULL,
   `quantidade` int(10) DEFAULT NULL,
   `subtotal` decimal(10,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `pedidos_servicos`
 --
 
 INSERT INTO `pedidos_servicos` (`id`, `idServicos`, `idPedidos`, `funcionarioTipo`, `quantidade`, `subtotal`) VALUES
-(25, 1, 13, 'Garcom', 1, 150.00),
-(26, 1, 13, 'Cozinheiro', 2, 300.00),
-(27, 1, 13, 'Barman', 3, 450.00),
-(28, 2, 62, 'Garcom', 2, 300.00),
-(29, 2, 62, 'Cozinheiro', 3, 450.00),
-(30, 2, 62, 'Barman', 4, 600.00),
-(31, 3, NULL, 'Garcom', 3, 450.00),
-(32, 3, NULL, 'Cozinheiro', 4, 600.00),
-(33, 3, NULL, 'Barman', 5, 750.00),
-(34, 4, NULL, 'Garcom', 0, 0.00),
-(35, 4, NULL, 'Cozinheiro', 0, 0.00),
-(36, 4, NULL, 'Barman', 0, 0.00),
-(37, 6, NULL, 'Barman', 15, 2250.00),
-(38, 6, NULL, 'Garcom', 15, 2250.00),
-(39, 6, NULL, 'Cozinheiro', 15, 2250.00),
-(40, 7, NULL, 'Barman', 22, 3300.00),
-(41, 7, NULL, 'Garcom', 22, 3300.00),
-(42, 7, NULL, 'Cozinheiro', 22, 3300.00),
-(43, 8, NULL, 'Barman', 22, 3300.00),
-(44, 8, NULL, 'Garcom', 22, 3300.00),
-(45, 8, NULL, 'Cozinheiro', 22, 3300.00),
-(46, 9, NULL, 'Barman', 2, 300.00),
-(47, 9, NULL, 'Garcom', 2, 300.00),
-(48, 9, NULL, 'Cozinheiro', 2, 300.00),
-(49, 10, NULL, 'Barman', 2, 300.00),
-(50, 10, NULL, 'Garcom', 2, 300.00),
-(51, 10, NULL, 'Cozinheiro', 2, 300.00),
-(52, 11, NULL, 'Barman', 2, 300.00),
-(53, 11, NULL, 'Garcom', 2, 300.00),
-(54, 11, NULL, 'Cozinheiro', 2, 300.00),
-(55, 13, NULL, 'Barman', 2, 300.00),
-(56, 13, NULL, 'Garcom', 2, 300.00),
-(57, 13, NULL, 'Cozinheiro', 2, 300.00),
-(58, 14, NULL, 'Barman', 2, 300.00),
-(59, 14, NULL, 'Garcom', 21, 3150.00),
-(60, 14, NULL, 'Cozinheiro', 2, 300.00),
-(61, 15, NULL, 'Barman', 2, 300.00),
-(62, 15, NULL, 'Garcom', 2, 300.00),
-(63, 15, NULL, 'Cozinheiro', 2, 300.00),
-(64, 16, NULL, 'Barman', 2, 300.00),
-(65, 16, NULL, 'Garcom', 2, 300.00),
-(66, 16, NULL, 'Cozinheiro', 2, 300.00),
-(67, 17, NULL, 'Barman', 2, 300.00),
-(68, 17, NULL, 'Garcom', 2, 300.00),
-(69, 17, NULL, 'Cozinheiro', 2, 300.00),
-(70, 18, NULL, 'Barman', 2, 300.00),
-(71, 18, NULL, 'Garcom', 2, 300.00),
-(72, 18, NULL, 'Cozinheiro', 2, 300.00),
-(73, 19, NULL, 'Barman', 2, 300.00),
-(74, 19, NULL, 'Garcom', 2, 300.00),
-(75, 19, NULL, 'Cozinheiro', 2, 300.00),
-(77, 39, NULL, 'barmans', 1, 150.00),
-(78, 39, NULL, 'garcons', 1, 150.00),
-(79, 39, NULL, 'cozinheiros', 1, 150.00),
-(81, 41, NULL, 'barmans', 1, 150.00),
-(82, 41, NULL, 'garcons', 1, 150.00),
-(83, 41, NULL, 'cozinheiros', 1, 150.00),
-(84, 42, NULL, 'barmans', 2, 300.00),
-(85, 42, NULL, 'garcons', 2, 300.00),
-(86, 42, NULL, 'cozinheiros', 2, 300.00),
-(87, 44, NULL, 'barmans', 1, 150.00),
-(88, 44, NULL, 'garcons', 1, 150.00),
-(89, 44, NULL, 'cozinheiros', 1, 150.00),
-(90, 45, NULL, 'barmans', 2, 300.00),
-(91, 45, NULL, 'garcons', 2, 300.00),
-(92, 45, NULL, 'cozinheiros', 2, 300.00),
-(93, 47, NULL, 'barmans', 2, 300.00),
-(94, 47, NULL, 'garcons', 2, 300.00),
-(95, 47, NULL, 'cozinheiros', 2, 300.00),
-(96, 48, NULL, 'barmans', 1, 150.00),
-(97, 48, NULL, 'garcons', 1, 150.00),
-(98, 48, NULL, 'cozinheiros', 1, 150.00),
-(99, 50, NULL, 'Barmam', 2, 300.00),
-(100, 50, NULL, 'Garcom', 2, 300.00),
-(101, 50, NULL, 'Cozinheiro', 2, 300.00),
-(102, 51, NULL, 'Barmam', 2, 300.00),
-(103, 51, NULL, 'Garcom', 2, 300.00),
-(104, 51, NULL, 'Cozinheiro', 2, 300.00),
-(105, 52, NULL, 'Barmam', 1, 150.00),
-(106, 52, NULL, 'Garcom', 1, 150.00),
-(107, 52, NULL, 'Cozinheiro', 1, 150.00);
+(25, 1, 13, 'Garcom', 1, '150.00'),
+(26, 1, 13, 'Cozinheiro', 2, '300.00'),
+(27, 1, 13, 'Barman', 3, '450.00'),
+(28, 2, 62, 'Garcom', 2, '300.00'),
+(29, 2, 62, 'Cozinheiro', 3, '450.00'),
+(30, 2, 62, 'Barman', 4, '600.00'),
+(31, 3, NULL, 'Garcom', 3, '450.00'),
+(32, 3, NULL, 'Cozinheiro', 4, '600.00'),
+(33, 3, NULL, 'Barman', 5, '750.00'),
+(34, 4, NULL, 'Garcom', 0, '0.00'),
+(35, 4, NULL, 'Cozinheiro', 0, '0.00'),
+(36, 4, NULL, 'Barman', 0, '0.00'),
+(37, 6, NULL, 'Barman', 15, '2250.00'),
+(38, 6, NULL, 'Garcom', 15, '2250.00'),
+(39, 6, NULL, 'Cozinheiro', 15, '2250.00'),
+(40, 7, NULL, 'Barman', 22, '3300.00'),
+(41, 7, NULL, 'Garcom', 22, '3300.00'),
+(42, 7, NULL, 'Cozinheiro', 22, '3300.00'),
+(43, 8, NULL, 'Barman', 22, '3300.00'),
+(44, 8, NULL, 'Garcom', 22, '3300.00'),
+(45, 8, NULL, 'Cozinheiro', 22, '3300.00'),
+(46, 9, NULL, 'Barman', 2, '300.00'),
+(47, 9, NULL, 'Garcom', 2, '300.00'),
+(48, 9, NULL, 'Cozinheiro', 2, '300.00'),
+(49, 10, NULL, 'Barman', 2, '300.00'),
+(50, 10, NULL, 'Garcom', 2, '300.00'),
+(51, 10, NULL, 'Cozinheiro', 2, '300.00'),
+(52, 11, NULL, 'Barman', 2, '300.00'),
+(53, 11, NULL, 'Garcom', 2, '300.00'),
+(54, 11, NULL, 'Cozinheiro', 2, '300.00'),
+(55, 13, NULL, 'Barman', 2, '300.00'),
+(56, 13, NULL, 'Garcom', 2, '300.00'),
+(57, 13, NULL, 'Cozinheiro', 2, '300.00'),
+(58, 14, NULL, 'Barman', 2, '300.00'),
+(59, 14, NULL, 'Garcom', 21, '3150.00'),
+(60, 14, NULL, 'Cozinheiro', 2, '300.00'),
+(61, 15, NULL, 'Barman', 2, '300.00'),
+(62, 15, NULL, 'Garcom', 2, '300.00'),
+(63, 15, NULL, 'Cozinheiro', 2, '300.00'),
+(64, 16, NULL, 'Barman', 2, '300.00'),
+(65, 16, NULL, 'Garcom', 2, '300.00'),
+(66, 16, NULL, 'Cozinheiro', 2, '300.00'),
+(67, 17, NULL, 'Barman', 2, '300.00'),
+(68, 17, NULL, 'Garcom', 2, '300.00'),
+(69, 17, NULL, 'Cozinheiro', 2, '300.00'),
+(70, 18, NULL, 'Barman', 2, '300.00'),
+(71, 18, NULL, 'Garcom', 2, '300.00'),
+(72, 18, NULL, 'Cozinheiro', 2, '300.00'),
+(73, 19, NULL, 'Barman', 2, '300.00'),
+(74, 19, NULL, 'Garcom', 2, '300.00'),
+(75, 19, NULL, 'Cozinheiro', 2, '300.00'),
+(77, 39, NULL, 'barmans', 1, '150.00'),
+(78, 39, NULL, 'garcons', 1, '150.00'),
+(79, 39, NULL, 'cozinheiros', 1, '150.00'),
+(81, 41, NULL, 'barmans', 1, '150.00'),
+(82, 41, NULL, 'garcons', 1, '150.00'),
+(83, 41, NULL, 'cozinheiros', 1, '150.00'),
+(84, 42, NULL, 'barmans', 2, '300.00'),
+(85, 42, NULL, 'garcons', 2, '300.00'),
+(86, 42, NULL, 'cozinheiros', 2, '300.00'),
+(87, 44, NULL, 'barmans', 1, '150.00'),
+(88, 44, NULL, 'garcons', 1, '150.00'),
+(89, 44, NULL, 'cozinheiros', 1, '150.00'),
+(90, 45, NULL, 'barmans', 2, '300.00'),
+(91, 45, NULL, 'garcons', 2, '300.00'),
+(92, 45, NULL, 'cozinheiros', 2, '300.00'),
+(93, 47, NULL, 'barmans', 2, '300.00'),
+(94, 47, NULL, 'garcons', 2, '300.00'),
+(95, 47, NULL, 'cozinheiros', 2, '300.00'),
+(96, 48, NULL, 'barmans', 1, '150.00'),
+(97, 48, NULL, 'garcons', 1, '150.00'),
+(98, 48, NULL, 'cozinheiros', 1, '150.00'),
+(99, 50, NULL, 'Barmam', 2, '300.00'),
+(100, 50, NULL, 'Garcom', 2, '300.00'),
+(101, 50, NULL, 'Cozinheiro', 2, '300.00'),
+(102, 51, NULL, 'Barmam', 2, '300.00'),
+(103, 51, NULL, 'Garcom', 2, '300.00'),
+(104, 51, NULL, 'Cozinheiro', 2, '300.00'),
+(105, 52, NULL, 'Barmam', 1, '150.00'),
+(106, 52, NULL, 'Garcom', 1, '150.00'),
+(107, 52, NULL, 'Cozinheiro', 1, '150.00');
 
 --
 -- Acionadores `pedidos_servicos`
@@ -1079,11 +1077,11 @@ DELIMITER ;
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) NOT NULL,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `token` varchar(64) NOT NULL,
-  `abilities` text DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1103,55 +1101,55 @@ CREATE TABLE `pp_servicos` (
   `funcionarioTipo` varchar(255) DEFAULT NULL,
   `quantidade` int(10) DEFAULT NULL,
   `subtotal` decimal(10,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `pp_servicos`
 --
 
 INSERT INTO `pp_servicos` (`id`, `idServicos`, `idPedidos`, `funcionarioTipo`, `quantidade`, `subtotal`) VALUES
-(1, 81, NULL, 'barmans', 5, 2.00),
-(2, 81, NULL, 'garcons', 10, 2.00),
-(3, 81, NULL, 'cozinheiros', 15, 2.00),
-(4, 20, NULL, 'barmans', 2, 2.00),
-(5, 20, NULL, 'garcons', 2, 2.00),
-(6, 20, NULL, 'cozinheiros', 2, 2.00),
-(7, 23, NULL, 'barmans', 2, 300.00),
-(8, 23, NULL, 'garcons', 2, 300.00),
-(9, 23, NULL, 'cozinheiros', 2, 300.00),
-(10, 26, NULL, 'barmans', 1, 150.00),
-(11, 26, NULL, 'garcons', 1, 150.00),
-(12, 26, NULL, 'cozinheiros', 1, 150.00),
-(13, 27, NULL, 'barmans', 1, 150.00),
-(14, 27, NULL, 'garcons', 1, 150.00),
-(15, 27, NULL, 'cozinheiros', 1, 150.00),
-(16, 29, NULL, 'barmans', 1, 150.00),
-(17, 29, NULL, 'garcons', 1, 150.00),
-(18, 29, NULL, 'cozinheiros', 1, 150.00),
-(19, 30, NULL, 'barmans', 22, 3300.00),
-(20, 30, NULL, 'garcons', 22, 3300.00),
-(21, 30, NULL, 'cozinheiros', 22, 3300.00),
-(22, 32, NULL, 'barmans', 2, 300.00),
-(23, 32, NULL, 'garcons', 2, 300.00),
-(24, 32, NULL, 'cozinheiros', 2, 300.00),
-(25, 33, NULL, 'barmans', 1, 150.00),
-(26, 33, NULL, 'garcons', 1, 150.00),
-(27, 33, NULL, 'cozinheiros', 1, 150.00),
-(28, 34, NULL, 'barmans', 22, 3300.00),
-(29, 34, NULL, 'garcons', 22, 3300.00),
-(30, 34, NULL, 'cozinheiros', 22, 3300.00),
-(31, 35, NULL, 'barmans', 1, 150.00),
-(32, 35, NULL, 'garcons', 1, 150.00),
-(33, 35, NULL, 'cozinheiros', 1, 150.00),
-(34, 36, NULL, 'barmans', 2, 300.00),
-(35, 36, NULL, 'garcons', 2, 300.00),
-(36, 36, NULL, 'cozinheiros', 2, 300.00),
-(37, 37, NULL, 'barmans', 50, 7500.00),
-(38, 37, NULL, 'garcons', 50, 7500.00),
-(39, 37, NULL, 'cozinheiros', 50, 7500.00),
-(40, 38, NULL, 'barmans', 1, 150.00),
-(41, 38, NULL, 'garcons', 1, 150.00),
-(42, 38, NULL, 'cozinheiros', 1, 150.00);
+(1, 81, NULL, 'barmans', 5, '2.00'),
+(2, 81, NULL, 'garcons', 10, '2.00'),
+(3, 81, NULL, 'cozinheiros', 15, '2.00'),
+(4, 20, NULL, 'barmans', 2, '2.00'),
+(5, 20, NULL, 'garcons', 2, '2.00'),
+(6, 20, NULL, 'cozinheiros', 2, '2.00'),
+(7, 23, NULL, 'barmans', 2, '300.00'),
+(8, 23, NULL, 'garcons', 2, '300.00'),
+(9, 23, NULL, 'cozinheiros', 2, '300.00'),
+(10, 26, NULL, 'barmans', 1, '150.00'),
+(11, 26, NULL, 'garcons', 1, '150.00'),
+(12, 26, NULL, 'cozinheiros', 1, '150.00'),
+(13, 27, NULL, 'barmans', 1, '150.00'),
+(14, 27, NULL, 'garcons', 1, '150.00'),
+(15, 27, NULL, 'cozinheiros', 1, '150.00'),
+(16, 29, NULL, 'barmans', 1, '150.00'),
+(17, 29, NULL, 'garcons', 1, '150.00'),
+(18, 29, NULL, 'cozinheiros', 1, '150.00'),
+(19, 30, NULL, 'barmans', 22, '3300.00'),
+(20, 30, NULL, 'garcons', 22, '3300.00'),
+(21, 30, NULL, 'cozinheiros', 22, '3300.00'),
+(22, 32, NULL, 'barmans', 2, '300.00'),
+(23, 32, NULL, 'garcons', 2, '300.00'),
+(24, 32, NULL, 'cozinheiros', 2, '300.00'),
+(25, 33, NULL, 'barmans', 1, '150.00'),
+(26, 33, NULL, 'garcons', 1, '150.00'),
+(27, 33, NULL, 'cozinheiros', 1, '150.00'),
+(28, 34, NULL, 'barmans', 22, '3300.00'),
+(29, 34, NULL, 'garcons', 22, '3300.00'),
+(30, 34, NULL, 'cozinheiros', 22, '3300.00'),
+(31, 35, NULL, 'barmans', 1, '150.00'),
+(32, 35, NULL, 'garcons', 1, '150.00'),
+(33, 35, NULL, 'cozinheiros', 1, '150.00'),
+(34, 36, NULL, 'barmans', 2, '300.00'),
+(35, 36, NULL, 'garcons', 2, '300.00'),
+(36, 36, NULL, 'cozinheiros', 2, '300.00'),
+(37, 37, NULL, 'barmans', 50, '7500.00'),
+(38, 37, NULL, 'garcons', 50, '7500.00'),
+(39, 37, NULL, 'cozinheiros', 50, '7500.00'),
+(40, 38, NULL, 'barmans', 1, '150.00'),
+(41, 38, NULL, 'garcons', 1, '150.00'),
+(42, 38, NULL, 'cozinheiros', 1, '150.00');
 
 -- --------------------------------------------------------
 
@@ -1171,33 +1169,33 @@ CREATE TABLE `produtos` (
   `dataAtualizacao` date DEFAULT NULL,
   `dataRemocao` date DEFAULT NULL,
   `caminhoImagem` varchar(200) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `produtos`
 --
 
 INSERT INTO `produtos` (`id`, `nome`, `descricao`, `tipo`, `quantidade`, `status`, `precoUnitario`, `dataCadastro`, `dataAtualizacao`, `dataRemocao`, `caminhoImagem`) VALUES
-(1, 'coxinha', 'clássico brasileiro', 'salgado', 20, 'inativo', 2.00, '2024-07-05', '2024-07-07', NULL, 'coxinha.jpg'),
-(2, 'brisadeiro', 'clássico brasileiro', 'doce', 20, 'ativo', 2.00, '2024-07-05', '2024-07-07', NULL, 'brisadeiro.jpg'),
-(3, 'COCAina', 'clássico brasileiro', 'bebida', 20, 'ativo', 1.00, '2024-07-05', '2024-07-07', NULL, 'COCAina_1720365898.png'),
-(4, 'coxinha', 'clássico brasileiro', 'salgado', 20, 'ativo', 1.99, '2024-07-05', '2024-07-05', NULL, 'coxinha.jpg'),
-(5, 'coxinha', 'clássico brasileiro', 'salgado', 20, 'ativo', 1.99, '2024-07-05', '2024-07-05', NULL, 'coxinha.jpg'),
-(6, 'coxinha', 'clássico brasileiro', 'salgado', 20, 'ativo', 1.99, '2024-07-05', '2024-07-05', NULL, 'coxinha.jpg'),
-(7, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', '2024-07-19', NULL, 'arroz.webp'),
-(8, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', '2024-07-07', NULL, 'NPFL4uVARQF8xmopr4kQdfGXw9Oasbv0CYsMlMAi.png'),
-(9, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', NULL, NULL, NULL),
-(10, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', NULL, NULL, NULL),
-(11, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', NULL, NULL, NULL),
-(12, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', NULL, NULL, NULL),
-(13, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', NULL, NULL, NULL),
-(14, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', NULL, NULL, NULL),
-(15, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', NULL, NULL, NULL),
-(16, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', NULL, NULL, NULL),
-(17, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', NULL, NULL, NULL),
-(18, 'arroz', 'v', 'salgado', 10, 'ativo', 15.00, '2024-07-01', NULL, NULL, NULL),
-(20, 'danada', 'Refrigerante', 'bebida', 42, 'ativo', 12.00, '2024-07-06', '2024-07-06', NULL, NULL),
-(21, 'Água Sanitária', 'muito bom de beber', 'bebida', 30, 'ativo', 22.00, '2024-07-19', '2024-07-19', NULL, 'Água Sanitária.jpeg');
+(1, 'coxinha', 'clássico brasileiro', 'salgado', 20, 'inativo', '2.00', '2024-07-05', '2024-07-07', NULL, 'coxinha.jpg'),
+(2, 'brisadeiro', 'clássico brasileiro', 'doce', 20, 'ativo', '2.00', '2024-07-05', '2024-07-07', NULL, 'brisadeiro.jpg'),
+(3, 'COCAina', 'clássico brasileiro', 'bebida', 20, 'ativo', '1.00', '2024-07-05', '2024-07-07', NULL, 'COCAina_1720365898.png'),
+(4, 'coxinha', 'clássico brasileiro', 'salgado', 20, 'ativo', '1.99', '2024-07-05', '2024-07-05', NULL, 'coxinha.jpg'),
+(5, 'coxinha', 'clássico brasileiro', 'salgado', 20, 'ativo', '1.99', '2024-07-05', '2024-07-05', NULL, 'coxinha.jpg'),
+(6, 'coxinha', 'clássico brasileiro', 'salgado', 20, 'ativo', '1.99', '2024-07-05', '2024-07-05', NULL, 'coxinha.jpg'),
+(7, 'arroz', 'v', 'salgado', 10, 'ativo', '15.00', '2024-07-01', '2024-07-19', NULL, 'arroz.webp'),
+(8, 'arroz', 'v', 'salgado', 10, 'ativo', '15.00', '2024-07-01', '2024-07-07', NULL, 'NPFL4uVARQF8xmopr4kQdfGXw9Oasbv0CYsMlMAi.png'),
+(9, 'arroz', 'v', 'salgado', 10, 'ativo', '15.00', '2024-07-01', NULL, NULL, NULL),
+(10, 'arroz', 'v', 'salgado', 10, 'ativo', '15.00', '2024-07-01', NULL, NULL, NULL),
+(11, 'arroz', 'v', 'salgado', 10, 'ativo', '15.00', '2024-07-01', NULL, NULL, NULL),
+(12, 'arroz', 'v', 'salgado', 10, 'ativo', '15.00', '2024-07-01', NULL, NULL, NULL),
+(13, 'arroz', 'v', 'salgado', 10, 'ativo', '15.00', '2024-07-01', NULL, NULL, NULL),
+(14, 'arroz', 'v', 'salgado', 10, 'ativo', '15.00', '2024-07-01', NULL, NULL, NULL),
+(15, 'arroz', 'v', 'salgado', 10, 'ativo', '15.00', '2024-07-01', NULL, NULL, NULL),
+(16, 'arroz', 'v', 'salgado', 10, 'ativo', '15.00', '2024-07-01', NULL, NULL, NULL),
+(17, 'arroz', 'v', 'salgado', 10, 'ativo', '15.00', '2024-07-01', NULL, NULL, NULL),
+(18, 'arroz', 'v', 'salgado', 10, 'ativo', '15.00', '2024-07-01', NULL, NULL, NULL),
+(20, 'danada', 'Refrigerante', 'bebida', 42, 'ativo', '12.00', '2024-07-06', '2024-07-06', NULL, NULL),
+(21, 'Água Sanitária', 'muito bom de beber', 'bebida', 30, 'ativo', '22.00', '2024-07-19', '2024-07-19', NULL, 'Água Sanitária.jpeg');
 
 -- --------------------------------------------------------
 
@@ -1211,15 +1209,15 @@ CREATE TABLE `receitas_itens` (
   `idMateriasPrimas` int(10) DEFAULT NULL,
   `quantidade` int(10) DEFAULT NULL,
   `subtotal` decimal(10,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `receitas_itens`
 --
 
 INSERT INTO `receitas_itens` (`id`, `idProdutos`, `idMateriasPrimas`, `quantidade`, `subtotal`) VALUES
-(1, 7, 3, 50, 100.00),
-(2, 1, 2, 5, 200.00);
+(1, 1, 6, 50, '100.00'),
+(2, 1, 2, 5, '200.00');
 
 -- --------------------------------------------------------
 
@@ -1231,7 +1229,7 @@ CREATE TABLE `relatorios` (
   `id` int(10) NOT NULL,
   `parametros` text DEFAULT NULL,
   `dataEmissao` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -1249,31 +1247,31 @@ CREATE TABLE `servicos` (
   `caminhoImagem` varchar(200) DEFAULT NULL,
   `duracaoHoras` int(11) DEFAULT NULL,
   `quantidadePessoas` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `servicos`
 --
 
 INSERT INTO `servicos` (`id`, `nome`, `totalServicos`, `dataCadastro`, `dataAtualizacao`, `dataRemocao`, `caminhoImagem`, `duracaoHoras`, `quantidadePessoas`) VALUES
-(1, 'festa pequena', 15000.00, '2024-06-09', '2024-07-07', NULL, 'festa pequena.jpg', 4, 30),
-(2, 'festa media', 1350.00, NULL, NULL, NULL, NULL, 7, 50),
-(3, 'festa grande', 1800.00, NULL, NULL, NULL, NULL, 11, 100),
-(4, 'apenas entrega', 0.00, NULL, NULL, NULL, NULL, NULL, 0),
-(6, 'personalizado', 6750.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
-(7, 'personalizado', 9900.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
-(8, 'personalizado', 9900.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
-(9, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
-(10, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
-(11, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(1, 'festa pequena', '15000.00', '2024-06-09', '2024-07-07', NULL, 'festa pequena.jpg', 4, 30),
+(2, 'festa media', '1350.00', NULL, NULL, NULL, NULL, 7, 50),
+(3, 'festa grande', '1800.00', NULL, NULL, NULL, NULL, 11, 100),
+(4, 'apenas entrega', '0.00', NULL, NULL, NULL, NULL, NULL, 0),
+(6, 'personalizado', '6750.00', '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(7, 'personalizado', '9900.00', '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(8, 'personalizado', '9900.00', '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(9, 'personalizado', '900.00', '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(10, 'personalizado', '900.00', '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(11, 'personalizado', '900.00', '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
 (12, 'personalizado', NULL, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
-(13, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
-(14, 'personalizado', 3750.00, '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
-(15, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
-(16, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
-(17, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
-(18, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
-(19, 'personalizado', 900.00, '2024-06-09', '2024-06-09', NULL, NULL, 2, 14),
+(13, 'personalizado', '900.00', '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(14, 'personalizado', '3750.00', '2024-06-09', '2024-06-09', NULL, NULL, NULL, 0),
+(15, 'personalizado', '900.00', '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
+(16, 'personalizado', '900.00', '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
+(17, 'personalizado', '900.00', '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
+(18, 'personalizado', '900.00', '2024-06-09', '2024-06-09', NULL, NULL, 14, NULL),
+(19, 'personalizado', '900.00', '2024-06-09', '2024-06-09', NULL, NULL, 2, 14),
 (20, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 22, 22),
 (21, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 22, 22),
 (22, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 22, 22),
@@ -1295,17 +1293,17 @@ INSERT INTO `servicos` (`id`, `nome`, `totalServicos`, `dataCadastro`, `dataAtua
 (38, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
 (39, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
 (40, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
-(41, 'personalizado', 450.00, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
-(42, 'personalizado', 900.00, '2024-07-05', '2024-07-05', NULL, NULL, 2, 2),
+(41, 'personalizado', '450.00', '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
+(42, 'personalizado', '900.00', '2024-07-05', '2024-07-05', NULL, NULL, 2, 2),
 (43, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
-(44, 'personalizado', 450.00, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
-(45, 'personalizado', 900.00, '2024-07-05', '2024-07-05', NULL, NULL, 2, 2),
+(44, 'personalizado', '450.00', '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
+(45, 'personalizado', '900.00', '2024-07-05', '2024-07-05', NULL, NULL, 2, 2),
 (46, 'personalizado', NULL, '2024-07-05', '2024-07-05', NULL, NULL, 2, 2),
-(47, 'personalizado', 900.00, '2024-07-05', '2024-07-05', NULL, NULL, 2, 2),
-(48, 'personalizado', 450.00, '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
-(50, 'personalizado', 900.00, '2024-07-19', '2024-07-19', NULL, NULL, 11, 52),
-(51, 'personalizado', 900.00, '2024-07-19', '2024-07-19', NULL, NULL, 2, 2),
-(52, 'personalizado', 450.00, '2024-07-19', '2024-07-19', NULL, NULL, 1, 1);
+(47, 'personalizado', '900.00', '2024-07-05', '2024-07-05', NULL, NULL, 2, 2),
+(48, 'personalizado', '450.00', '2024-07-05', '2024-07-05', NULL, NULL, 1, 1),
+(50, 'personalizado', '900.00', '2024-07-19', '2024-07-19', NULL, NULL, 11, 52),
+(51, 'personalizado', '900.00', '2024-07-19', '2024-07-19', NULL, NULL, 2, 2),
+(52, 'personalizado', '450.00', '2024-07-19', '2024-07-19', NULL, NULL, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1315,11 +1313,11 @@ INSERT INTO `servicos` (`id`, `nome`, `totalServicos`, `dataCadastro`, `dataAtua
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `remember_token` varchar(100) DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1405,7 +1403,7 @@ ALTER TABLE `gastos`
 --
 ALTER TABLE `materias_primas_estoque`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idFornecedor` (`idFornecedor`);
+  ADD KEY `idFornecedor` (`idFornecedores`);
 
 --
 -- Índices para tabela `mensagens`
@@ -1765,7 +1763,7 @@ ALTER TABLE `feedbacks`
 -- Limitadores para a tabela `materias_primas_estoque`
 --
 ALTER TABLE `materias_primas_estoque`
-  ADD CONSTRAINT `materias_primas_estoque_ibfk_1` FOREIGN KEY (`idFornecedor`) REFERENCES `fornecedores` (`id`);
+  ADD CONSTRAINT `materias_primas_estoque_ibfk_1` FOREIGN KEY (`idFornecedores`) REFERENCES `fornecedores` (`id`);
 
 --
 -- Limitadores para a tabela `movimentacoes_materias_primas`

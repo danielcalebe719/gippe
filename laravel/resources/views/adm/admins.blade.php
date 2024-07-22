@@ -175,6 +175,9 @@
 
     <!-- Script para manipular a exclusão e edição -->
     <script>
+        $(document).ready(function () {
+        $('#dataTableHover').DataTable(); // Initialize the DataTable
+    });
         // Função para abrir o modal de confirmação de exclusão
         function abrirModalExclusao(idAdmin) {
             $('#excluirIdAdmin').val(idAdmin);

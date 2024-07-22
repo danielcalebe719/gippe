@@ -7,10 +7,10 @@
 
 <div class="container-fluid" id="container-wrapper">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">GaleriaImagenss</h1>
+        <h1 class="h3 mb-0 text-gray-800">Galeria de Imagens</h1>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="./">Home</a></li>
-            <li class="breadcrumb-item">GaleriaImagenss</li>
+            <li class="breadcrumb-item">Galeria de Imagens</li>
         </ol>
     </div>
 
@@ -18,19 +18,18 @@
         <div class="col-lg-12">
             <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">GaleriaImagenss</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Galeria de Imagens</h6>
                     <button class="btn btn-primary" data-toggle="modal"
-                        data-target="#modalAdicionarGaleriaImagens">Adicionar GaleriaImagens</button>
+                        data-target="#modalAdicionarGaleriaImagens">Adicionar Imagem</button>
                 </div>
                 <div class="table-responsive p-3">
                     <table class="table align-items-center table-flush table-hover" id="dataTableHover">
                         <thead class="thead-light">
                             <tr>
                                 <th>ID</th>
-                                <th> Tipo Evento</th>
+                                <th>Tipo Evento</th>
                                 <th>Descrição</th>
                                 <th>Nome da Imagem</th>
-                                <th>Tamanho</th>
                                 <th>Imagem</th>
                                 <th>Ações</th>
                             </tr>
@@ -42,11 +41,7 @@
                                     <td>{{ $galeriaImagem->evento }}</td>
                                     <td>{{ $galeriaImagem->descricao }}</td>
                                     <td>{{ $galeriaImagem->nomeImagem }}</td>
-                                    <td>{{ $galeriaImagem->tamanhoImagem }}</td>
-
                                     <td>{{ $galeriaImagem->caminhoImagem }}</td>
-
-
                                     <td>
                                         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                                             <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">
@@ -189,18 +184,7 @@
 
 
 
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
 
-    </div>
-</footer>
-</div>
-</div>
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-
-    </div>
-</footer>
 </div>
 </div>
 

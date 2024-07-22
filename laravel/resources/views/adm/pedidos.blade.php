@@ -51,7 +51,7 @@
                         <th>Serviço</th>
                         <th>STATUS</th>
                         <th>Total Pedido</th>
-                        <th>Data Entrega</th>
+                        <th>Data de Entrega</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -126,7 +126,7 @@
                 Pedido</button>
         </div>
         <div class="table-responsive p-3">
-            <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+            <table class="table align-items-center table-flush table-hover" id="dataTableNormal">
                 <thead class="thead-light">
                     <tr>
                         <th>ID</th>
@@ -1026,16 +1026,12 @@
 </script>
 
 <script>
-    // $(document).ready(function () {
-    //     // Abrir o modal de detalhes ao clicar no botão
-    //     $('#dataTableHover').on('click', '.btn-detalhes', function () {
-    //         $('#modalDetalhesPedido').modal('show');
-    //     });
-    // });
+    
 
 
     $(document).ready(function () {
-        $('#dataTableHover').DataTable(); // Initialize the DataTable
+        $('#dataTablePendente').DataTable();
+        $('#dataTableNormal').DataTable(); // Initialize the DataTable
     });
 </script>
 @endsection

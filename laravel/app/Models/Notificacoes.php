@@ -16,7 +16,8 @@ class Notificacoes extends Model
     protected $fillable = [   
         'mensagem', 
         'dataEnvio', 
-        'titulo'
+        'titulo',
+        'lido'
         // Adicione outros campos aqui
     ];
     public $timestamps = false;
@@ -25,8 +26,8 @@ class Notificacoes extends Model
    
 
     private static $notificacoesArray = [
-        '1'=>'Não lido',
-        '2'=>'Lido'
+        '0', null , ''=>'Não lido',
+        '1'=>'Lido'
         
     ];
 

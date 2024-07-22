@@ -42,8 +42,8 @@ class Pedidos extends Model
 
     private static $statusArray = [
         null => '',
-        '1' => 'Não finalizado',
-        '2' => 'Em Análise',
+        '2' => 'Não finalizado',
+        '1' => 'Em Análise',
         '3' => 'Aceito',
         '4' => 'Em produção',
         '5' => 'Produzido',

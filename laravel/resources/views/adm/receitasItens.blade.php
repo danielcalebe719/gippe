@@ -25,8 +25,8 @@
                         <thead class="thead-light">
                             <tr>
                                 <th>ID</th>
-                                <th>Produto ID</th>
-                                <th>Materia Prima ID</th>
+                                <th>Produto </th>
+                                <th>Materia Prima </th>
                                 <th>Quantidade</th>
                                 <th>Subtotal</th>
                                 <th>Ações</th>
@@ -36,8 +36,8 @@
                             @foreach($receitasItens as $receitaItem)
                                 <tr>
                                     <td>{{ $receitaItem->id }}</td>
-                                    <td>{{ $receitaItem->idProdutos }}</td>
-                                    <td>{{ $receitaItem->idMateriasPrimas }}</td>
+                                    <td>{{ $receitaItem->produto->nome}}</td>
+                                    <td>{{ $receitaItem->materiaPrima->nome}}</td>
                                     <td>{{ $receitaItem->quantidade }}</td>
                                     <td>{{ $receitaItem->subtotal }}</td>
                                     
@@ -265,18 +265,7 @@
             });
     }
 </script>
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
 
-    </div>
-</footer>
-</div>
-</div>
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-
-    </div>
-</footer>
 </div>
 </div>
 

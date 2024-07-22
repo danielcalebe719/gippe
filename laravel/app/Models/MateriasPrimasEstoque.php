@@ -16,13 +16,13 @@ class MateriasPrimasEstoque extends Model
     protected $fillable = [   
         'nome', 
         'classificacao', 
-        'quantidade'.
+        'quantidade',
         'precoUnitario', 
         'dataCadastro', 
         'dataAtualizacao', 
         'dataRemocao',
         'caminhoImagem',
-        'idFornecedor'
+        'idFornecedores'
         // Adicione outros campos aqui
     ];
     public $timestamps = false;
@@ -30,6 +30,10 @@ class MateriasPrimasEstoque extends Model
 
     public function movimentacoesMateriasPrimas(){
         return $this->hasOne(MovimentacoesMateriasPrimas::class,'idMateriaPrima','id');
+    }
+
+    public function fornecedor(){
+        return $this->hasOne(Fornecedores::class,'id','idFornecedores');
     }
 
     // public function receitasItem()

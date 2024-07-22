@@ -367,7 +367,8 @@
 
 
         $(document).ready(function () {
-            $('#dataTableHover').DataTable(); // Initialize the DataTable
+            $('#dataTableHover').DataTable();
+            $('#dataTablePagar').DataTable(); // Initialize the DataTable
         });
     </script>
 
@@ -387,7 +388,7 @@
 
 <div class="container-fluid" id="container-wrapper" id="apagar">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Gastos</h1>
+            <h1 class="h3 mb-0 text-gray-800">Gastos à pagar</h1>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="./">Home</a></li>
                 <li class="breadcrumb-item">À pagar</li>
@@ -403,7 +404,7 @@
                             Gasto</button>
                     </div>
                     <div class="table-responsive p-3">
-                        <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+                        <table class="table align-items-center table-flush table-hover" id="dataTablePagar">
                             <thead class="thead-light">
                                 <tr>
                                     <th>ID</th>

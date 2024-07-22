@@ -94,7 +94,7 @@
     }
   </style>
 </head>
-f
+
 <body id="page-top">
   <div id="wrapper">
     <!-- Sidebar -->
@@ -263,6 +263,35 @@ f
                 <button class="btn btn-menu w-100">
                   <i class="bi bi-person-badge"></i>
                   Colaboradores
+                </button>
+              </a>
+            </div>
+          </div>
+          <br>
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-1000">Painel Financeiro</h1>
+         
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 col-sm-6">
+              <a class="nav-link nav-link-custom" href="{{ url('adm/painel-financeiro') }}">
+                <button class="btn btn-menu w-100">
+                  <i class="bi bi-laptop"></i> Painel Financeiro
+                </button>
+              </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <a class="nav-link nav-link-custom" href="{{ url('adm/painel-financeiro') }}">
+                <button class="btn btn-menu w-100">
+                  <i class="bi bi-cash"></i> Gastos
+                </button>
+              </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <a class="nav-link nav-link-custom" href="{{ url('adm/painel-financeiro') }}">
+                <button class="btn btn-menu w-100">
+                  <i class="bi bi-cash-coin"></i> Gastos à pagar
                 </button>
               </a>
             </div>

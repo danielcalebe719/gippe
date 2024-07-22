@@ -160,4 +160,77 @@
             $('#dataTableHover').DataTable(); // Initialize the DataTable
         });
     </script>
+
+    <!-- Modal Confirmar Exclusão -->
+ <div class="modal fade" id="modalConfirmarExclusao" tabindex="-1" role="dialog"
+ aria-labelledby="modalConfirmarExclusaoLabel" aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered" role="document">
+     <div class="modal-content">
+         <div class="modal-header">
+             <h5 class="modal-title" id="modalConfirmarExclusaoLabel">Confirmar Exclusão</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+             </button>
+         </div>
+         <div class="modal-body">
+             <p>Tem certeza de que deseja excluir este pedido?</p>
+             <input type="hidden" id="excluirIdMensagem">
+         </div>
+         <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+             <button type="button" class="btn btn-danger" id="confirmarExclusao">Excluir</button>
+         </div>
+     </div>
+ </div>
+</div>
+
+    <script>
+        // Função para abrir o modal de confirmação de exclusão
+        function abrirModalExclusao(idMensagem) {
+            document.getElementById('excluirIdMensagem').value = idMensagem;
+            $('#modalConfirmarExclusao').modal('show');
+        }
+    
+        // Função para confirmar a exclusão
+        document.getElementById('confirmarExclusao').addEventListener('click', function () {
+            var idMensagem = document.getElementById('excluirIdMensagem').value;
+    
+            // Enviar requisição AJAX para excluir o cliente
+            fetch(`/adm/mensagens/remover/${idMensagem}`, {
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao excluir a mensagem');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Fechar o modal de confirmação de exclusão
+                    $('#modalConfirmarExclusao').modal('hide');
+    
+                    // Remover a linha do cliente na tabela, se existir
+                    let mensagemRow = document.getElementById(`mensagemRow${idMensagem}`);
+                    if (mensagemRow) {
+                        mensagemRow.remove();
+                    } else {
+                        console.warn(`Elemento mensagemRow${idMensagem} não encontrado para remoção.`);
+                    }
+    
+                    // Exibir mensagem de sucesso
+                    location.replace(location.href)
+    
+                })
+                .catch(error => {
+                    console.log(error)
+                    console.error('Erro ao excluir a mensagem:', error);
+                    alert('Erro ao excluir a mensagem');
+                });
+        });
+    
+    
+    </script>
 @endsection
