@@ -183,21 +183,7 @@
     </div>
 
 </div>
-</div>
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
 
-    </div>
-</footer>
-</div>
-</div>
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-
-    </div>
-</footer>
-</div>
-</div>
 
 <!-- Modal Detalhes Servico -->
 <div class="modal fade" id="modalDetalhesServico" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

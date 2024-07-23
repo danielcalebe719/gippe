@@ -41,7 +41,7 @@
                                     <td>{{ $galeriaImagem->evento }}</td>
                                     <td>{{ $galeriaImagem->descricao }}</td>
                                     <td>{{ $galeriaImagem->nomeImagem }}</td>
-                                    <td>{{ $galeriaImagem->caminhoImagem }}</td>
+                                    <td><img src="/storage/GaleriaImagens/{{ $galeriaImagem->caminhoImagem }}" alt="" width="50px" height="50px"></td>
                                     <td>
                                         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                                             <div class="btn-group mr-2" role="group" aria-label="Ações do Cliente">

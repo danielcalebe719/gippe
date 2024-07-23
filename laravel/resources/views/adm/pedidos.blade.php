@@ -19,6 +19,12 @@
     #detalhesAgendamento {
         display: none;
     }
+
+    .star-rating i {
+    color: gold;
+    font-size: 1.5em;
+    margin-right: 0.1em;
+}
 </style>
 
 
@@ -36,7 +42,7 @@
 
     <div class="card mb-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Pedidos</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Pedidos em análise</h6>
             <button class="btn btn-primary" data-toggle="modal" data-target="#modalAdicionarPedido">Adicionar
                 Pedido</button>
         </div>
@@ -592,53 +598,51 @@
                         </div>
                     </div>
                     <!-- Botão para abrir modal de feedback -->
-                    <button type="button" class="btn btn-info btn-sm" id="btnFeedback" onclick="">Visualizar Feedback</button>
+                    
                 </div>
 
             </div>
         </div>
     </div>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 
     <!-- Modal Feedback do Pedido -->
-    <div class="modal fade" id="modalFeedbackPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="modalFeedbackPedido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Detalhes do Servico</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Detalhes do Serviço</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                    <label for="detalhesNome Serviço" class="col-sm-3 col-form-label">Id:</label>
+                    <label for="detalhesIdFeedback" class="col-sm-3 col-form-label">Id:</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="DetalhesIdFeedback" readonly>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label for="detalhesDataCadastro" class="col-sm-3 col-form-label">Mensagem:</label>
+                    <label for="detalhesMensagem" class="col-sm-3 col-form-label">Mensagem:</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="DetalhesMensagem" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="detalhesDataAtualizacao" class="col-sm-3 col-form-label">Avaliação:</label>
+                    <label for="detalhesAvaliacao" class="col-sm-3 col-form-label">Avaliação:</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="DetalhesAvaliacao" readonly>
+                        <div id="DetalhesAvaliacao" class="star-rating"></div>
                     </div>
                 </div>
-                
             </div>
         </div>
     </div>
-
-
 </div>
+
 <script>
     function mostrarFeedback(idPedidos) {
     fetch(`/adm/pedidos/showFeedback/${idPedidos}`)
@@ -651,12 +655,20 @@
         .then(data => {
             console.log('Dados recebidos:', data); // Verifique os dados recebidos no console
 
-            
-
             // Preenche os campos do modal com os dados do feedback
             document.getElementById('DetalhesIdFeedback').value = data[0].id;
             document.getElementById('DetalhesMensagem').value = data[0].mensagem;
-            document.getElementById('DetalhesAvaliacao').value = data[0].avaliacao;
+
+            // Preenche as estrelas de acordo com a avaliação
+            const avaliacao = data[0].avaliacao;
+            const starContainer = document.getElementById('DetalhesAvaliacao');
+            starContainer.innerHTML = ''; // Limpa qualquer estrela existente
+
+            for (let i = 1; i <= 5; i++) {
+                const star = document.createElement('i');
+                star.className = i <= avaliacao ? 'fas fa-star' : 'far fa-star';
+                starContainer.appendChild(star);
+            }
 
             // Abre o modal de feedback
             $('#modalFeedbackPedido').modal('show');
@@ -665,6 +677,7 @@
             console.error('Erro ao carregar os detalhes do feedback:', error);
         });
 }
+
 
 
 </script>

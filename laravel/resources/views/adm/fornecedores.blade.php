@@ -318,21 +318,7 @@
     </div>
 
 </div>
-</div>
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
 
-    </div>
-</footer>
-</div>
-</div>
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-
-    </div>
-</footer>
-</div>
-</div>
 
 <script>
     function carregarDadosParaEdicao(idFornecedor) {
