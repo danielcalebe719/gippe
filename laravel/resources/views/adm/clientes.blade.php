@@ -3,6 +3,10 @@
 @extends('adm.templates.template')
 @section('title', 'Clientes')
 @section('content')
+
+<style>
+    
+</style>
 <div class="container-fluid" id="container-wrapper">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Clientes</h1>
@@ -441,13 +445,7 @@
                             <label for="dataNascimento">Data de Nascimento</label>
                             <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" required>
                         </div>
-                        <div class="form-group">
-                            <label for="status">Status</label>
-                            <select class="form-control" id="status" name="status" required>
-                                <option value="ativo">Ativo</option>
-                                <option value="inativo">Inativo</option>
-                            </select>
-                        </div>
+                        
 
                         <div class="form-group">
                             <label for="email">Email</label>
@@ -457,10 +455,7 @@
                             <label for="telefone">Telefone</label>
                             <input type="telefone" class="form-control" id="telefone" name="telefone" required>
                         </div>
-                        <div class="form-group">
-                            <label for="senha">Senha</label>
-                            <input type="password" class="form-control" id="senha" name="senha" required>
-                        </div>
+                        
 
                         <div class="form-group">
                             <label for="imgPerfil">Imagem de Perfil</label>
@@ -618,7 +613,8 @@
                         <div class="form-group row">
                             <label for="editarImgCaminho" class="col-sm-3 col-form-label">Imagem de Perfil:</label>
                             <div class="col-sm-9">
-                                <input type="file" class="form-control-file" id="editarCaminhoImagem" name="caminhoImagem">
+                                <input type="file" class="form-control-file" id="" name="caminhoImagem">
+                                <img id="editarCaminhoImagem" class="form-control-file" src="" alt="Imagem do Produto" style="max-width: 150px; height: auto; border-radius: 70px;">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -646,6 +642,10 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
+                        
+                        <img id="detalhesImgPerfil" class="form-control-file" src="" alt="Imagem do Produto" style="max-width: 150px; height: auto; border-radius: 70px;">
+                    </div>
+                    <div class="form-group row">
                         <label for="detalhesId" class="col-sm-3 col-form-label">ID:</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="detalhesId" readonly>
@@ -670,17 +670,24 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="detalhesStatus" class="col-sm-3 col-form-label">Status:</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="detalhesStatus" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group row">
                         <label for="detalhesEmail" class="col-sm-3 col-form-label">Email:</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="detalhesEmail" readonly>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label for="detalhesTelefone" class="col-sm-3 col-form-label">Telefone:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="detalhesTelefone" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="detalhesStatus" class="col-sm-3 col-form-label">Status:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="detalhesStatus" readonly>
+                        </div>
+                    </div>
+                    
 
                     <div class="form-group row">
                         <label for="detalhesDataCadastro" class="col-sm-3 col-form-label">Data de Cadastro:</label>
@@ -695,16 +702,8 @@
                             <input type="text" class="form-control" id="detalhesDataAtualizacao" readonly>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="detalhesTelefone" class="col-sm-3 col-form-label">Telefone:</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="detalhesTelefone" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                            <label for="detalhesImgPerfil">Imagem do Cliente:</label>
-                            <img id="detalhesImgPerfil" class="form-control-file" src="" alt="Imagem do Produto" style="max-width: 100%; height: auto;">
-                        </div>
+                    
+                    
                     <!-- <div class="form-group">
                         <label for="detalhesImgPerfil">Imagem de Perfil</label><br>
                         <div class="img-container">
@@ -808,66 +807,94 @@
         }
 
         //Preencher os campos do moodal detalhes
-        function mostrarDetalhes(idCliente) {
-            fetch(`/adm/clientes/show/${idCliente}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Erro ao carregar os detalhes do cliente');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Preencha os campos do modal com os dados do cliente, ou valores padrão
-                    document.getElementById('detalhesId').value = data.id || '';
-                    document.getElementById('detalhesNome').value = data.nome || '';
-                    document.getElementById('detalhesCPF').value = data.cpf || '';
-                    document.getElementById('detalhesDataNascimento').value = formatarDataEdit(data.dataNascimento) || '';
-                    document.getElementById('detalhesDataCadastro').value = formatarDataEdit(data.dataCadastro) || '';
-                    document.getElementById('detalhesDataAtualizacao').value = formatarDataEdit(data.dataAtualizacao) || '';
-                    document.getElementById('detalhesStatus').value = data.status || '';
-                    document.getElementById('detalhesEmail').value = data.email || '';
-                    document.getElementById('detalhesTelefone').value = data.telefone || ''; // Verifique se 'telefone' está corretamente definido em 'data'
+        function formatarDataEdit(data) {
+    if (!data) return '';
 
+    const dataObj = new Date(data);
+    const dia = String(dataObj.getDate()).padStart(2, '0');
+    const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
+    const ano = dataObj.getFullYear();
 
-                    // Exibir apenas parte da senha ou string vazia se não houver senha
+    return `${dia}/${mes}/${ano}`;
+}
 
+function formatarCPF(cpf) {
+    if (!cpf) return '';
+    
+    // Remover qualquer caractere que não seja número
+    cpf = cpf.replace(/\D/g, '');
+    
+    // Aplicar a máscara de CPF
+    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+}
 
-                    // Atualize o src da imagem
-            const imgPath = data.caminhoImagem ? `/storage/GaleriaImagens/clientes/${data.caminhoImagem}` : 'default-image-path.jpg';
+function formatarTelefone(telefone) {
+    if (!telefone) return '';
+    
+    // Remover qualquer caractere que não seja número
+    telefone = telefone.replace(/\D/g, '');
+    
+    // Aplicar a máscara de telefone (considerando que pode ser com 8 ou 9 dígitos no número)
+    if (telefone.length === 11) {
+        return telefone.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+    } else if (telefone.length === 10) {
+        return telefone.replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3");
+    }
+
+    return telefone; // Retornar o telefone sem formatação se o comprimento não for esperado
+}
+
+function mostrarDetalhes(idCliente) {
+    fetch(`/adm/clientes/show/${idCliente}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao carregar os detalhes do cliente');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Preencha os campos do modal com os dados do cliente, ou valores padrão
+            document.getElementById('detalhesId').value = data.id || '';
+            document.getElementById('detalhesNome').value = data.nome || '';
+            document.getElementById('detalhesCPF').value = formatarCPF(data.cpf) || '';
+            document.getElementById('detalhesDataNascimento').value = formatarDataEdit(data.dataNascimento) || '';
+            document.getElementById('detalhesDataCadastro').value = formatarDataEdit(data.dataCadastro) || '';
+            document.getElementById('detalhesDataAtualizacao').value = formatarDataEdit(data.dataAtualizacao) || '';
+            document.getElementById('detalhesStatus').value = data.status || '';
+            document.getElementById('detalhesEmail').value = data.email || '';
+            document.getElementById('detalhesTelefone').value = formatarTelefone(data.telefone) || ''; // Formatação do telefone
+
+            // Atualize o src da imagem
+            const imgPath = data.caminhoImagem ? `/storage/ImagensClientes/${data.caminhoImagem}` : 'default-image-path.jpg';
             document.getElementById('detalhesImgPerfil').src = imgPath;
 
-                    // Abra o modal de detalhes do cliente
-                    $('#modalDetalhesCliente').modal('show');
-                })
-
-                .catch(error => {
-                    console.error('Erro ao carregar os detalhes do cliente:', error);
-                });
-        }
-
-
-        function formatarData(data) {
-            // Formato de exibição de data desejado
-            let options = {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit'
-            };
-            return new Date(data).toLocaleDateString('pt-BR', options);
-        }
+            // Abra o modal de detalhes do cliente
+            $('#modalDetalhesCliente').modal('show');
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os detalhes do cliente:', error);
+        });
+}
+function formatarData(data) {
+        // Formato de exibição de data desejado
+        let options = {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        };
+        return new Date(data).toLocaleDateString('pt-BR', options);
+    }
 
 
 
+        
 
 
 
-        function formatarDataEdit(dataString) {
-            // Verifica se a dataString está no formato esperado "yyyy-mm-dd"
-            if (!dataString) return '';
 
-            // A data já está no formato correto, não é necessário fazer split
-            return dataString;
-        }
+
+
+        
 
         function carregarDadosParaEdicao(idCliente) {
             fetch(`/adm/clientes/show/${idCliente}`)
@@ -883,21 +910,21 @@
                     // Preencher os campos do formulário com os dados do cliente
                     document.getElementById('editarIdCliente').value = data.id;
                     document.getElementById('editarNome').value = data.nome;
-                    document.getElementById('editarCpf').value = data.cpf;
+                    document.getElementById('editarCpf').value = formatarCPF(data.cpf);
 
                     // Format the date for display
-                    let dataFormatada = data.dataNascimento ? formatarDataEdit(data.dataNascimento) : '';
-                    console.log('Formatted Date:', dataFormatada); // Log the formatted date
-                    document.getElementById('editarDataNascimento').value = dataFormatada;
+                    
+                    document.getElementById('editarDataNascimento').value = data.dataNascimento;
 
                     document.getElementById('editarStatus').value = data.status;
                     document.getElementById('editarEmail').value = data.email;
-                    document.getElementById('editarTelefone').value = data.telefone;
+                    document.getElementById('editarTelefone').value = formatarTelefone(data.telefone) || '';
 
                     //document.getElementById('editarSenha').value = data.senha;
 
 
-                    document.getElementById('editarCaminhoImagem').value = data.caminhoImagem;
+                    const imgPath = data.caminhoImagem ? `/storage/ImagensClientes/${data.caminhoImagem}` : 'default-image-path.jpg';
+            document.getElementById('editarCaminhoImagem').src = imgPath;
 
                     // Abrir o modal de edição do cliente
                     $('#modalEditarCliente').modal('show');

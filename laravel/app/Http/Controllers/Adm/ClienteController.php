@@ -64,17 +64,7 @@ class ClienteController extends Controller
     
     public function guardar(Request $request)
     {
-        // Validação dos dados
-        /*$request->validate([
-            'nome' => 'nullable|string|max:255',
-            'cpf' => 'nullable|string|max:14|unique:clientes,cpf,' . $request->idCliente . ',idClientes',
-            'dataNascimento' => 'nullable|date',
-            'status' => 'nullable|string|in:ativo,inativo',
-            'email' => 'nullable|email|max:255|unique:clientes,email,' . $request->idCliente . ',idClientes',
-            'senha' => 'nullable|string|min:6',
-            'telefone' => 'nullable|string|max:20',
-            // 'imgCaminho' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);*/   
+          
     
         try {
             // Busca ou cria um novo cliente
@@ -82,7 +72,7 @@ class ClienteController extends Controller
     
             // Preenche os outros campos do cliente
             $cliente->nome = $request->input('nome');
-            $cliente->cpf = $request->input('cpf');
+            $cliente->cpf = preg_replace('/\D/', '', $request->input('cpf'));
             $cliente->dataNascimento = $request->input('dataNascimento');
             $cliente->status = $request->input('status');
             $cliente->email = $request->input('email');

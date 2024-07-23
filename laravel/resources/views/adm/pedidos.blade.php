@@ -76,6 +76,13 @@
                             <td>
                                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
 
+                                    <div class="btn-group" role="group" aria-label="Ações do Pedido">
+                                        <button class="btn btn-info btn-sm" onclick="mostrarDetalhes('{{ $pedido->id }}')"
+                                            data-toggle="modal" data-target="#modalDetalhesPedido">
+                                            Detalhes
+                                        </button>
+                                    </div>
+
                                     <div class="btn-group mr-2" role="group" aria-label="Ações do Pedido">
                                         <button type="button" class="btn btn-success btn-sm"
                                             onclick="abrirModalAceitarPedido('{{ $pedido->id }}')">
@@ -101,12 +108,7 @@
 
 
 
-                                    <div class="btn-group" role="group" aria-label="Ações do Pedido">
-                                        <button class="btn btn-info btn-sm" onclick="mostrarDetalhes('{{ $pedido->id }}')"
-                                            data-toggle="modal" data-target="#modalDetalhesPedido">
-                                            Detalhes
-                                        </button>
-                                    </div>
+                                    
 
                                 </div>
                             </td>
@@ -619,17 +621,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-group row">
-                    <label for="detalhesIdFeedback" class="col-sm-3 col-form-label">Id:</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="DetalhesIdFeedback" readonly>
-                    </div>
-                </div>
+                
+                        <input type="hidden" class="form-control" id="DetalhesIdFeedback" readonly>
+                   
 
                 <div class="form-group row">
                     <label for="detalhesMensagem" class="col-sm-3 col-form-label">Mensagem:</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="DetalhesMensagem" readonly>
+                        <textarea type="text" class="form-control" id="DetalhesMensagem" rows="5" cols="3" readonly></textarea>
                     </div>
                 </div>
                 <div class="form-group row">
