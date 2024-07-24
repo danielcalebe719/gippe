@@ -21,6 +21,30 @@
                         data-target="#modalAdicionarFornecedor">Adicionar Fornecedor</button>
                 </div>
 
+@php
+function formatarCNPJ($cnpj) {
+    return substr($cnpj, 0, 2) . '.' . substr($cnpj, 2, 3) . '.' . substr($cnpj, 5, 3) . '/' . substr($cnpj, 8, 4) . '-' . substr($cnpj, 12, 2);
+}
+@endphp
+@php
+function formatarTelefone($telefone) {
+    if (strlen($telefone) == 10) {
+        // Formato: (XX) XXXX-XXXX
+        return '(' . substr($telefone, 0, 2) . ') ' . substr($telefone, 2, 4) . '-' . substr($telefone, 6, 4);
+    } elseif (strlen($telefone) == 11) {
+        // Formato: (XX) XXXXX-XXXX
+        return '(' . substr($telefone, 0, 2) . ') ' . substr($telefone, 2, 5) . '-' . substr($telefone, 7, 4);
+    }
+    return $telefone; // Caso não tenha o número de dígitos esperado
+}
+@endphp
+@php
+function formatarCEP($cep) {
+    return substr($cep, 0, 5) . '-' . substr($cep, 5, 3);
+}
+@endphp
+
+
                 <div class="table-responsive p-3">
                     <table class="table align-items-center table-flush table-hover" id="dataTableHover">
                         <thead class="thead-light">
@@ -40,11 +64,11 @@
                                 <tr>
                                     <td>{{ $fornecedor->id }}</td>
                                     <td>{{ $fornecedor->nome }}</td>
-                                    <td>{{ $fornecedor->cnpj }}</td>
-                                    <td>{{ $fornecedor->telefone1 }}</td>
+                                    <td>{{ formatarCNPJ($fornecedor->cnpj) }}</td>
+                                    <td>{{ formatarTelefone($fornecedor->telefone1) }}</td>
                                     <td>{{ $fornecedor->status }}</td>
                                     <td>{{ $fornecedor->email }}</td>
-                                    <td>{{ $fornecedor->cep }}</td>
+                                    <td>{{ formatarCEP($fornecedor->cep) }}</td>
 
 
                                     <td>

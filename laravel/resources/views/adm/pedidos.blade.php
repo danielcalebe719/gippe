@@ -76,7 +76,7 @@
                             <td>
                                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
 
-                                    <div class="btn-group" role="group" aria-label="Ações do Pedido">
+                                    <div class="btn-group mr-2" role="group" aria-label="Ações do Pedido">
                                         <button class="btn btn-info btn-sm" onclick="mostrarDetalhes('{{ $pedido->id }}')"
                                             data-toggle="modal" data-target="#modalDetalhesPedido">
                                             Detalhes

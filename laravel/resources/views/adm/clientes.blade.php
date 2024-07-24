@@ -15,6 +15,11 @@
             <li class="breadcrumb-item">Clientes</li>
         </ol>
     </div>
+@php
+function formatarCPF($cpf) {
+    return substr($cpf, 0, 3) . '.' . substr($cpf, 3, 3) . '.' . substr($cpf, 6, 3) . '-' . substr($cpf, 9, 2);
+}
+@endphp
 
     <div class="row">
         <div class="col-lg-12">
@@ -43,7 +48,7 @@
                                 <tr>
                                     <td>{{ $cliente->id }}</td>
                                     <td>{{ $cliente->nome }}</td>
-                                    <td>{{ $cliente->cpf }}</td>
+                                    <td>{{ formatarCPF($cliente->cpf) }}</td>
                                     <td>{{ $cliente->dataNascimento }}</td>
                                     <td>{{ $cliente->status }}</td>
                                     <td>{{ $cliente->email }}</td>
