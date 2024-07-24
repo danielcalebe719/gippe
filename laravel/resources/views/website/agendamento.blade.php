@@ -141,6 +141,7 @@
                 </div>
                 <div class="modal-body">
                     Tem certeza que deseja agendar este pedido com os dados informados?
+                    <h5>Obs: <strong>Após a análise das observações os valores podem ser alteradores</strong></h5>
                 </div>
                 <div class="modal-agendamento-footer modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
