@@ -5,10 +5,10 @@
 @section('content')
 <div class="container-fluid" id="container-wrapper">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Servicos</h1>
+        <h1 class="h3 mb-0 text-gray-800">Serviços</h1>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="./">Home</a></li>
-            <li class="breadcrumb-item">Servicos</li>
+            <li class="breadcrumb-item">Serviços</li>
         </ol>
     </div>
 
@@ -16,7 +16,7 @@
         <div class="col-lg-12">
             <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Servicos</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Serviços</h6>
                     <button class="btn btn-primary" data-toggle="modal" data-target="#modalAdicionarServico">Adicionar
                         Serviço</button>
                 </div>
@@ -183,21 +183,7 @@
     </div>
 
 </div>
-</div>
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
 
-    </div>
-</footer>
-</div>
-</div>
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-
-    </div>
-</footer>
-</div>
-</div>
 
 <!-- Modal Detalhes Servico -->
 <div class="modal fade" id="modalDetalhesServico" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

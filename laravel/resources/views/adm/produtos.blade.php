@@ -274,7 +274,7 @@
                 </div>
                 <div class="form-group">
                             <label for="detalhesImgPerfil">Imagem do Produto:</label>
-                            <img id="detalhesImgPerfil" class="form-control-file" src="" alt="Imagem do Produto" style="max-width: 100%; height: auto;">
+                            <img id="detalhesImgPerfil" class="form-control-file" src="" alt="Imagem do Produto" width="100px">
                         </div>
                 <!-- <div class="form-group row">
                     <label for="detalhesImgPerfil" class="col-sm-3 col-form-label">Imagem de Perfil:</label>
@@ -368,7 +368,7 @@
                 document.getElementById('detalhesDataCadastro').value = data.dataCadastro ? formatarData(data.dataCadastro) : '';
                 document.getElementById('detalhesDataAtualizacao').value = data.dataAtualizacao ? formatarData(data.dataAtualizacao) : '';
                 // Atualize o src da imagem
-            const imgPath = data.caminhoImagem ? `/storage/GaleriaImagens/produtos/${data.caminhoImagem}` : 'default-image-path.jpg';
+            const imgPath = data.caminhoImagem ? `/storage/ImagensProdutos/${data.caminhoImagem}` : 'default-image-path.jpg';
             document.getElementById('detalhesImgPerfil').src = imgPath;
 
 

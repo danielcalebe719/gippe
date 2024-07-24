@@ -55,6 +55,11 @@
          .btn-primary{
             background-color: #276359;
          }
+
+         h6{
+            padding-left: 10px;
+            padding-top: 10px;
+         }
     </style>
 </head>
 
@@ -72,13 +77,16 @@
             
          
             <div id="operacional">
-                <h5 class="text-center">Operações</h5>
+                <h4 class="text-center">Operações</h4>
                 <li class="nav-item active">
                     <a class="nav-link" href="{{url('adm/painel-operacional')}}"><!--{{ asset('assets/img/   ') }}-->
                         <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/painel-op.png') }}" alt="">
                         <span class="text-gray-1000">Painel Operacional</span>
                     </a>
                 </li>
+                <br>
+                <hr class="sidebar-divider my-0">
+                <h6 class="" >Cadastros</h6>
                 <li class="nav-item active">
                     <a class="nav-link" href="{{url('adm/clientes')}}">
                         <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/clientes.png') }}" alt="">
@@ -86,11 +94,43 @@
                     </a>
                 </li>
                 <li class="nav-item active">
+                    <a class="nav-link" href="{{url('adm/admins')}}">
+                        <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/fornecedores.png') }}" alt="">
+                        <span class="text-gray-1000">Colaboradores</span>
+                    </a>
+                </li>
+                
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url('adm/fornecedores')}}">
+                        <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/fornecedores.png') }}" alt="">
+                        <span class="text-gray-1000">Fornecedores</span>
+                    </a>
+                </li>
+                <br>
+                <hr class="sidebar-divider my-0">
+                <h6 class="">Pedidos</h6>
+                <li class="nav-item active">
                     <a class="nav-link" href="{{url('adm/pedidos')}}">
                         <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/pedidos.png') }}" alt="">
                         <span class="text-gray-1000">Pedidos</span>
                     </a>
                 </li>
+                
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url('adm/servicos')}}">
+                        <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/servicos.png') }}" alt="">
+                        <span class="text-gray-1000">Serviços</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url('adm/agendamentos')}}">
+                        <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/agenda.png') }}" alt="">
+                        <span class="text-gray-1000">Agendamentos</span>
+                    </a>
+                </li>
+                <br>
+                <hr class="sidebar-divider my-0">
+                <h6 class="">Estoques</h6>
                 <li class="nav-item active">
                     <a class="nav-link" href="{{url('adm/produtos')}}">
                         <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/produtos.png') }}" alt="">
@@ -104,59 +144,45 @@
                     </a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{url('adm/servicos')}}">
-                        <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/servicos.png') }}" alt="">
-                        <span class="text-gray-1000">Serviços</span>
+                    <a class="nav-link" href="{{url('adm/receitasItens')}}">
+                        <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/cardapio.png') }}" alt="">
+                        <span class="text-gray-1000">Itens de Receita</span>
                     </a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{url('adm/fornecedores')}}">
-                        <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/fornecedores.png') }}" alt="">
-                        <span class="text-gray-1000">Fornecedores</span>
-                    </a>
-                </li>
+                <br>
+                <hr class="sidebar-divider my-0">
+                <h6 class="">Mensagens</h6>
                 <li class="nav-item active">
                     <a class="nav-link" href="{{url('adm/notificacoes')}}">
                         <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/notificacoes.png') }}" alt="">
                         <span class="text-gray-1000">Notificações</span>
                     </a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{url('adm/agendamentos')}}">
-                        <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/agenda.png') }}" alt="">
-                        <span class="text-gray-1000">Agendamentos</span>
-                    </a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{url('adm/receitasItens')}}">
-                        <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/cardapio.png') }}" alt="">
-                        <span class="text-gray-1000">Itens de Receita</span>
-                    </a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{url('adm/galeriaImagens')}}">
-                        <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/clientes.png') }}" alt="">
-                        <span class="text-gray-1000">Galeria de Imagens</span>
-                    </a>
-                </li>
+                
+                
+                
                 <li class="nav-item active">
                 <a href="{{url('adm/mensagens')}}" class="nav-link">
                 <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/notificacoes.png') }}" alt="">
                         <span class="text-gray-1000">Mensagens</span>
                 </a>
                 </li>
+                <br>
+                <hr class="sidebar-divider my-0">
+                <h6 class="">Galeria</h6>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{url('adm/admins')}}">
-                        <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/fornecedores.png') }}" alt="">
-                        <span class="text-gray-1000">Colaboradores</span>
+                    <a class="nav-link" href="{{url('adm/galeriaImagens')}}">
+                        <img class='fas fa-fw fa-tachometer-alt' src="{{ asset('assets/img/clientes.png') }}" alt="">
+                        <span class="text-gray-1000">Galeria de Imagens</span>
                     </a>
                 </li>
+                
             </div>
             @endif
             <hr class="sidebar-divider my-0">
             @if(Auth::guard('admin')->user()->permissoes == 1 || Auth::guard('admin')->user()->permissoes == 3)
             <div id="financeiro">
-                <h5 class="text-center">Financeiro</h5>
+                <h4 class="text-center">Financeiro</h4>
                 <li class="nav-item active">
                     <a class="nav-link" href="{{url('adm/painel-financeiro')}}">
                         <img class="fas fa-fw fa-tachometer-alt" src="{{ asset('assets/img/menu-img1.png') }}" alt="">
