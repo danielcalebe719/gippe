@@ -152,6 +152,7 @@
         </nav>
         <!-- Topbar -->
 <br>
+@if(Auth::guard('admin')->user()->permissoes == 1 || Auth::guard('admin')->user()->permissoes == 2)
         <!-- Container Fluid -->
         <div class="container-fluid" id="container-wrapper">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -160,8 +161,11 @@
           </div>
 
           <div class="row">
+            
             <div class="col-md-4 col-sm-6">
+              
               <a class="nav-link nav-link-custom" href="{{ url('adm/clientes') }}">
+
                 <button class="btn btn-menu w-100">
                   <i class="bi bi-people"></i> Clientes
                 </button>
@@ -268,6 +272,8 @@
             </div>
           </div>
           <br>
+@endif
+@if(Auth::guard('admin')->user()->permissoes == 1 || Auth::guard('admin')->user()->permissoes == 3)
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-1000">Painel Financeiro</h1>
          
@@ -299,7 +305,7 @@
         </div>
       </div>
     </div>
-
+@endif
     <footer>
       <div class="footer">
         <br><br>
